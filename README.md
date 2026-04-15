@@ -51,7 +51,7 @@ El To-Be Scenario Mapping describe cómo cambiaría la experiencia de cada User 
 
 > Elaborado en Miro. Acceso al artefacto: [Ver en Miro](https://miro.com/app/board/uXjVGiIH610=/?share_link_id=240859047074)
 
-![To-Be Scenario Map - Conductor](assets/tobe-scenario-conductor.png)
+![To-Be Scenario Map - Conductor](assets/tobescenariocarlos.jpg)
 
 | | **Planificar** | **Buscar** | **Seleccionar** | **Reservar** | **Llegar y usar** |
 |---|---|---|---|---|---|
@@ -65,7 +65,7 @@ El To-Be Scenario Mapping describe cómo cambiaría la experiencia de cada User 
 
 > Elaborado en Miro. Acceso al artefacto: [Ver en Miro](https://miro.com/app/board/uXjVGiIFZLU=/?share_link_id=511863885761)
 
-![To-Be Scenario Map - Propietario](assets/tobe-scenario-propietario.png)
+![To-Be Scenario Map - Propietario](assets/tobescenarioelena.jpg)
 
 | | **Registrar** | **Configurar** | **Recibir reserva** | **Gestionar acceso** | **Cobrar** |
 |---|---|---|---|---|---|
@@ -125,7 +125,7 @@ El Impact Map se elaboró identificando los Business Goals SMART del producto, l
 
 > Elaborado en Miro. Acceso al artefacto: [Ver en Miro](https://miro.com/app/board/uXjVGiIFZLU=/?share_link_id=410165343938)
 
-![Impact Map](assets/impact-map.png)
+![Impact Map](assets/impactmapping.jpg)
 
 ### Business Goal 1
 **"Alcanzar 500 conductores activos con al menos una reserva completada en Lima Metropolitana en los primeros 6 meses de operación."**
@@ -153,7 +153,7 @@ El Product Backlog se prioriza según el valor que cada User Story aporta al neg
 
 > Elaborado en Trello. Acceso al Product Backlog: [Ver en Trello](https://trello.com/invite/b/69df03bb02e6ebfeb10cb05b/ATTI20390e86970646ac1ef1ccb1898c24b573D43151/product-backlog)
 
-![Product Backlog](assets/product-backlog.png)
+![Product Backlog](assets/productbacklog.jpg)
 
 | # Orden | User Story ID | Título | Descripción | Story Points |
 |---|---|---|---|---|
