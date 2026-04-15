@@ -1,3 +1,5 @@
+<div align="center">
+
 # UNIVERSIDAD PERUANA DE CIENCIAS APLICADAS
 
 ![UPC Logo](https://upload.wikimedia.org/wikipedia/commons/f/fc/UPC_logo_transparente.png)
@@ -9,7 +11,9 @@
 **Profesor:** Jorge Luis Delgado Vite  
 **Sección:** 17949  
 **Startup:** ParkTeam  
-**Producto:** ParkLink  
+**Producto:** ParkLink
+
+</div>
 
 ------------------------------------
 
@@ -38,8 +42,6 @@
 ---
 
 # Capítulo III: Requirements Specification
-
-En este capítulo se especifican los requisitos del producto ParkLink a partir del análisis del contexto actual (As-Is) y la visión futura deseada (To-Be). Se incluyen los User Stories con sus criterios de aceptación, el Impact Map que relaciona los objetivos de negocio con las funcionalidades, y el Product Backlog priorizado para el Avance 1.
 
 ## 3.1. To-Be Scenario Mapping
 
