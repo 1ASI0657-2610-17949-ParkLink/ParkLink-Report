@@ -229,6 +229,8 @@ cuando implementemos una interfaz que muestre datos en tiempo real de forma senc
 
 ### 1.2.3.4	Lean UX Canvas
 
+<img width="894" height="637" alt="image" src="https://github.com/user-attachments/assets/1eabde7c-953c-4b4d-9982-7376ff9348e1" />
+
 ### 1.3. Segmentos objetivo
 
 **Segmento 1: Conductores**
