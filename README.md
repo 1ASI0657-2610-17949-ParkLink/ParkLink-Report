@@ -108,39 +108,56 @@ El producto desarrollado lleva por nombre ParkLink, una plataforma digital orien
 
 ### 1.2.2 Antecedentes y problemática
 
-En entornos urbanos, encontrar estacionamiento se ha convertido en una tarea compleja debido al crecimiento del parque automotor y la limitada disponibilidad de espacios. Esta situación obliga a los conductores a recorrer largas distancias en busca de un lugar donde estacionar.
+En entornos urbanos, encontrar estacionamiento se ha convertido en una tarea compleja debido al crecimiento exponencial del parque automotor y la limitada disponibilidad de espacios. Esta situación obliga a los conductores a recorrer largas distancias en busca de un lugar donde estacionar, generando efectos adversos en múltiples dimensiones de la vida cotidiana.
 
-Para analizar esta problemática, se aplica la técnica de las **5W’s + 2H’s**:
+El crecimiento sostenido de la circulación vehicular en las ciudades ha superado significativamente la capacidad de infraestructura disponible. Los espacios de estacionamiento públicos y privados no han aumentado en la misma proporción que el número de vehículos, creando un desequilibrio crónico entre la demanda y la oferta. Este problema se agrava especialmente en zonas comerciales, centros empresariales, instituciones educativas y áreas residenciales densamente pobladas.
+
+Para analizar esta problemática de manera integral, se aplica la técnica de las **5W's + 2H's**:
 
 #### 🟩 What (¿Qué sucede?)
-Los conductores no cuentan con información en tiempo real sobre la disponibilidad de estacionamientos, lo que los obliga a buscar manualmente.
+Los conductores no cuentan con información en tiempo real sobre la disponibilidad de estacionamientos, lo que los obliga a buscar manualmente. La falta de visibilidad sobre dónde hay espacios disponibles genera una búsqueda constante e ineficiente, donde los conductores circulan repetidamente por las mismas calles esperando encontrar un lugar libre.
 
 #### 🟩 Why (¿Por qué es un problema?)
-- Genera tráfico innecesario
-- Incrementa el consumo de combustible
-- Produce estrés en los conductores
-- Reduce la eficiencia del tiempo
+- **Tráfico innecesario**: La búsqueda de estacionamiento genera viajes adicionales que congestionan las vías urbanas
+- **Consumo de combustible**: Se desperdicia combustible buscando un espacio que podría evitarse con información previa
+- **Estrés en los conductores**: La incertidumbre y el tiempo de búsqueda prolongado generan ansiedad y frustración
+- **Eficiencia del tiempo**: El tiempo invertido en buscar estacionamiento representa una pérdida significativa de productividad
+- **Contaminación ambiental**: Los vehículos en búsqueda constante de estacionamiento contribuyen a la emisión de gases contaminantes
+- **Accidentes**: El stress y la distracción aumentan el riesgo de incidentes viales menores
 
 #### 🟩 Who (¿A quiénes afecta?)
-- Conductores urbanos
-- Propietarios de estacionamientos no utilizados
-- Ciudades en general
+- **Conductores urbanos**: Todos aquellos que utilizan vehículo para movilizarse daily en zonas de alta demanda
+- **Propietarios de estacionamientos no utilizados**: Personas o empresas con espacios disponibles que no tienen forma de monetizarlos eficientemente
+- **Ciudades en general**: El tráfico causedo por la búsqueda de estacionamiento afecta la movilidad urbana整体
+- **Comercios locales**: Los clientes potenciales pueden evitar zonas donde es difícil estacionar
+- **Medio ambiente**: El increase de emisiones afecta la calidad del aire urbano
 
 #### 🟩 When (¿Cuándo ocurre?)
-- Principalmente en horas pico o en zonas de alta demanda.
+- Principalmente en horas pico de la mañana y tarde, cuando las personas se desplazan hacia sus centros de trabajo o estudio
+- En eventos especiales, días de pago, o fechas comerciales importantes
+- Durante horarios de lunch en zonas empresariales y comerciales
+- Los fines de semana en zonas de entretenimiento, centros comerciales y áreas recreativas
 
 #### 🟩 Where (¿Dónde ocurre?)
-- En zonas urbanas, comerciales y residenciales con alta densidad vehicular.
+- En zonas urbanas, comerciales y residenciales con alta densidad vehicular
+- Centros financieros y distritos empresariales
+- Alrededores de universidades, hospitales y centros comerciales
+- Calles y avenidas principales con alta circulación
+- Espacios de estacionamiento subutilizados en residencial areas
 
 #### 🟩 How (¿Cómo sucede?)
-- Falta de plataformas digitales centralizadas
-- Información desactualizada o inexistente
-- Procesos manuales
+- **Falta de plataformas digitales centralizadas**: No existe una herramienta unificada que conecte oferta y demanda
+- **Información desactualizada o inexistente**: Los sistemas existentes no reflejan la disponibilidad real en tiempo real
+- **Procesos manuales**: tanto para propietarios como para usuarios, todo se maneja de forma tradicional
+- **Desconexión entre partes**: Los propietarios no tienen cómo dar a conocer sus espacios disponibles
+- **Ausencia de sistemas de reservas**: No hay forma de garantizar un espacio con anticipación
 
 #### 🟩 How Much (¿Cuánto cuesta o impacta?)
-- Económico: gasto adicional de combustible
-- Ambiental: aumento de emisiones
-- Social: estrés y pérdida de tiempo
+- **Económico**: Gasto adicional de combustible estimado en porcentajes significativos del presupuesto familiar
+- **Ambiental**: Aumento de emisiones de CO2 por vehículos circulando sin necesidad
+- **Social**: Estrés, pérdida de tiempo familiar y reducción de la calidad de vida
+- **Productividad**: Horas de trabajo perdidas en búsqueda de estacionamiento
+- **Económico para propietarios**: Ingresos no percibidos por espacios subutilizados
 
 ### 1.2.3 Lean UX Process
 
