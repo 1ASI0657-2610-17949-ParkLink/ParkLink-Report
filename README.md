@@ -93,14 +93,13 @@ Sostenibilidad urbana
 
 #### 1.1.2. Perfiles de integrantes del equipo
 
-| Nombre                        | Descripción                | Habilidades y conocimientos técnicos | Foto
-|-------------------------------|-------------------------|--------------------------------------------|--------------------------------------|
-|                               |                         |                                            |                                      |
-|                               |                         |                                            |                                      |
-|                               |                         |                                            |                                      |
-|                               |                         |                                            |                                      |
-|                               |                         |                                            |                                      |
-
+| Nombre                        | Descripción                                                                                                                                                                                                                                                                                                                                 | Foto |
+|-------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------|
+| **Osores Marchese, Pietro**  | Soy Pietro Osores Marchese, estudiante de Ingeniería de Sistemas con interés en el desarrollo de software y la innovación tecnológica. Mi perfil combina habilidades en programación frontend, diseño de interfaces y gestión de proyectos ágiles, con un enfoque en la creación de soluciones digitales funcionales y escalables. Me caracterizo por el trabajo en equipo, la adaptabilidad y la búsqueda constante de nuevas herramientas para optimizar procesos y experiencias de usuario. | <img width="250" alt="Image" src="https://github.com/user-attachments/assets/3299f6b1-3924-4222-af63-bf12555d01b0" /> |
+|                               |                                                                                                                                                                                                                                                                                                                                             |      |
+|                               |                                                                                                                                                                                                                                                                                                                                             |      |
+|                               |                                                                                                                                                                                                                                                                                                                                             |      |
+|                               |                                                                                                                                                                                                                                                                                                                                             |      |
 ## 1.2. Solution Profile
 
 ### 1.2.1. Nombre del producto
