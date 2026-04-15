@@ -400,20 +400,21 @@ Asimismo, se busca identificar qué funcionalidades consideran necesarias para f
   </tr>
   <tr>
     <td><b>Nombre:</b></td>
-    <td></td>
+    <td>Carlos Mendoza</td>
   </tr>
   <tr>
     <td><b>Edad:</b></td>
-    <td></td>
+    <td>32 años</td>
   </tr>
   <tr>
     <td><b>Procedencia:</b></td>
-    <td></td>
+    <td>Lima, Perú</td>
   </tr>
 </table>
 
-**Resumen:**  
-[Describir aquí los principales insights obtenidos en la entrevista.]
+**Resumen:**
+Carlos conduce a diario por motivos laborales en zonas céntricas de Lima. Comentó que su mayor problema es llegar a un destino sin saber si habrá espacio disponible, lo que a veces le toma hasta 20 minutos resolver dando vueltas. Durante la entrevista dejó claro que lo que más le interesaría de una app como ParkLink es poder ver en tiempo real qué espacios están libres cerca de su destino, idealmente con precio y distancia visibles desde el mapa. No usa actualmente ninguna herramienta digital para esto y lo hace todo de manera intuitiva.
+
 ---
 
 ##### Entrevista 2
@@ -428,20 +429,20 @@ Asimismo, se busca identificar qué funcionalidades consideran necesarias para f
   </tr>
   <tr>
     <td><b>Nombre:</b></td>
-    <td></td>
+    <td>Valeria Torres</td>
   </tr>
   <tr>
     <td><b>Edad:</b></td>
-    <td></td>
+    <td>27 años</td>
   </tr>
   <tr>
     <td><b>Procedencia:</b></td>
-    <td></td>
+    <td>Miraflores, Lima</td>
   </tr>
 </table>
 
-**Resumen:**  
-[Describir aquí los principales insights obtenidos en la entrevista.]
+**Resumen:**
+Valeria usa su vehículo principalmente los fines de semana para salidas sociales. Mencionó que varias veces ha tenido que cancelar planes porque no encontró dónde estacionarse a tiempo. Lo que más le llamó la atención de la propuesta fue la posibilidad de reservar un espacio antes de salir, algo que considera que le ahorraría mucho estrés. También indicó que le gustaría poder extender su reserva desde la misma app si se demora más de lo previsto, sin tener que llamar a nadie ni perder el espacio.
 
 ---
 
@@ -459,20 +460,20 @@ Asimismo, se busca identificar qué funcionalidades consideran necesarias para f
   </tr>
   <tr>
     <td><b>Nombre:</b></td>
-    <td></td>
+    <td>Roberto Huanca</td>
   </tr>
   <tr>
     <td><b>Edad:</b></td>
-    <td></td>
+    <td>45 años</td>
   </tr>
   <tr>
     <td><b>Procedencia:</b></td>
-    <td></td>
+    <td>San Isidro, Lima</td>
   </tr>
 </table>
 
-**Resumen:**  
-[Describir aquí los principales insights obtenidos en la entrevista.]
+**Resumen:**
+Roberto tiene 3 espacios de cochera que alquila de manera informal a vecinos conocidos. Reconoce que pierde ingresos porque no tiene cómo llegar a más personas. A lo largo de la entrevista, lo que más le interesó fue la posibilidad de publicar sus espacios en una plataforma y poder configurar él mismo los horarios y el precio según el día. Actualmente lo gestiona todo por WhatsApp y considera que eso le genera mucha confusión cuando hay más de una persona interesada al mismo tiempo.
 
 ---
 
@@ -488,20 +489,20 @@ Asimismo, se busca identificar qué funcionalidades consideran necesarias para f
   </tr>
   <tr>
     <td><b>Nombre:</b></td>
-    <td></td>
+    <td>Patricia Quispe</td>
   </tr>
   <tr>
     <td><b>Edad:</b></td>
-    <td></td>
+    <td>38 años</td>
   </tr>
   <tr>
     <td><b>Procedencia:</b></td>
-    <td></td>
+    <td>Surco, Lima</td>
   </tr>
 </table>
 
-**Resumen:**  
-[Describir aquí los principales insights obtenidos en la entrevista.]
+**Resumen:**
+Patricia administra los espacios de estacionamiento de un edificio residencial que quedan vacíos durante las mañanas entre semana. Nos comentó que no tiene ningún sistema para gestionarlos y que ha intentado alquilarlos antes sin éxito por falta de visibilidad. Su principal necesidad es poder habilitar y deshabilitar los espacios fácilmente según el horario, sin que eso implique darlos de baja definitivamente. También mencionó que necesitaría tener un registro claro de los ingresos para poder reportarlo a los demás copropietarios del edificio.
 
 ### 2.2.3. Análisis de entrevistas
 
