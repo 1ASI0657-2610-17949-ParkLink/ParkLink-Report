@@ -49,7 +49,7 @@ El To-Be Scenario Mapping describe cómo cambiaría la experiencia de cada User 
 
 ### To-Be Scenario Map — Conductor Urbano (Carlos Mendoza)
 
-> Elaborado en Miro. Acceso al artefacto: [URL del artefacto en Miro]
+> Elaborado en Miro. Acceso al artefacto: [Ver en Miro](https://miro.com/app/board/uXjVGiIH610=/?share_link_id=240859047074)
 
 ![To-Be Scenario Map - Conductor](assets/tobe-scenario-conductor.png)
 
@@ -63,7 +63,7 @@ El To-Be Scenario Mapping describe cómo cambiaría la experiencia de cada User 
 
 ### To-Be Scenario Map — Propietario de Espacio (Elena Torres)
 
-> Elaborado en Miro. Acceso al artefacto: [URL del artefacto en Miro]
+> Elaborado en Miro. Acceso al artefacto: [Ver en Miro](https://miro.com/app/board/uXjVGiIFZLU=/?share_link_id=511863885761)
 
 ![To-Be Scenario Map - Propietario](assets/tobe-scenario-propietario.png)
 
@@ -123,7 +123,7 @@ A continuación se presentan las Épicas y User Stories identificadas para ParkL
 
 El Impact Map se elaboró identificando los Business Goals SMART del producto, los actores clave (User Personas), los impactos esperados en su comportamiento y los entregables que ParkLink debe proveer para generarlos. Los User Stories se vinculan a los entregables correspondientes.
 
-> Elaborado en la herramienta indicada. Acceso al artefacto: [URL del Impact Map]
+> Elaborado en Miro. Acceso al artefacto: [Ver en Miro](https://miro.com/app/board/uXjVGiIFZLU=/?share_link_id=410165343938)
 
 ![Impact Map](assets/impact-map.png)
 
@@ -151,7 +151,7 @@ El Impact Map se elaboró identificando los Business Goals SMART del producto, l
 
 El Product Backlog se prioriza según el valor que cada User Story aporta al negocio y a los usuarios, poniendo primero las funcionalidades que entregan la propuesta de valor central de ParkLink. La estimación utiliza la escala Fibonacci (1, 2, 3, 5, 8).
 
-> Elaborado en la herramienta indicada. Acceso al Product Backlog: [URL del Product Backlog en Trello/Jira]
+> Elaborado en Trello. Acceso al Product Backlog: [Ver en Trello](https://trello.com/invite/b/69df03bb02e6ebfeb10cb05b/ATTI20390e86970646ac1ef1ccb1898c24b573D43151/product-backlog)
 
 ![Product Backlog](assets/product-backlog.png)
 
