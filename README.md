@@ -391,9 +391,9 @@ Asimismo, se busca identificar qué funcionalidades consideran necesarias para f
 | Información del entrevistado | Detalle | Evidencia / Foto |
 | :--- | :--- | :--- |
 | **Nombre:** | Humberto Garcia Calla | |
-| **Edad:** | 32 años | ![Foto Humberto](https://via.placeholder.com/150?text=Foto+Humberto) |
+| **Edad:** | 50 años | ![Conductor 1](https://raw.githubusercontent.com/alomssoo/ParkLink-Report/main/Chapter-2/Conductor1.png) |
 | **Procedencia:** | Lima, Perú | |
-| **Link de Entrevista:** | [Enlace a grabación/transcripción](#) | |
+| **Link de Entrevista:** | [Ver Entrevista - Conductor 1](https://upcedupe-my.sharepoint.com/:v:/g/personal/u202319563_upc_edu_pe/IQA6cKL_J7H1Q5sAObrd-g1vAWugvlOh81HxZl96DyfSgxo?e=O8QHUO) | |
 
 **Resumen:**
 Humberto conduce a diario por motivos laborales en zonas céntricas de Lima. Comentó que su mayor problema es llegar a un destino sin saber si habrá espacio disponible, lo que a veces le toma hasta 20 minutos resolver dando vueltas. Durante la entrevista dejó claro que lo que más le interesaría de una app como ParkLink es poder ver en tiempo real qué espacios están libres cerca de su destino, idealmente con precio y distancia visibles desde el mapa.
@@ -402,13 +402,13 @@ Humberto conduce a diario por motivos laborales en zonas céntricas de Lima. Com
 
 | Información del entrevistado | Detalle | Evidencia / Foto |
 | :--- | :--- | :--- |
-| **Nombre:** | Dilan Garcias Levano | |
-| **Edad:** | 25 años | ![Foto Dilan](https://via.placeholder.com/150?text=Foto+Dilan) |
+| **Nombre:** | Juan Pablo Yataca Juarez | |
+| **Edad:** | 25 años | ![Conductor 2](https://raw.githubusercontent.com/alomssoo/ParkLink-Report/main/Chapter-2/Conductor2.png) |
 | **Procedencia:** | Miraflores, Lima | |
-| **Link de Entrevista:** | [Enlace a grabación/transcripción](#) | |
+| **Link de Entrevista:** | [Ver Entrevista - Conductor 2](https://upcedupe-my.sharepoint.com/:v:/g/personal/u202319563_upc_edu_pe/IQC5Pn9y3_vMSKKKp_IpOexzAd2qvLUgFDTOpbtFJuvqdyM?e=QZNtnX) | |
 
 **Resumen:**
-Dilan usa su vehículo principalmente los fines de semana para salidas sociales. Mencionó que varias veces ha tenido que cancelar planes porque no encontró dónde estacionarse a tiempo. Lo que más le llamó la atención de la propuesta fue la posibilidad de reservar un espacio antes de salir, algo que considera que le ahorraría mucho estrés. También indicó que le gustaría poder extender su reserva desde la misma app si se demora más de lo previsto.
+Juan usa su vehículo principalmente los fines de semana para salidas sociales. Mencionó que varias veces ha tenido que cancelar planes porque no encontró dónde estacionarse a tiempo. Lo que más le llamó la atención de la propuesta fue la posibilidad de reservar un espacio antes de salir, algo que considera que le ahorraría mucho estrés. También indicó que le gustaría poder extender su reserva desde la misma app si se demora más de lo previsto.
 
 ---
 
@@ -417,9 +417,9 @@ Dilan usa su vehículo principalmente los fines de semana para salidas sociales.
 | Información del entrevistado | Detalle | Evidencia / Foto |
 | :--- | :--- | :--- |
 | **Nombre:** | Jarol Saquiray Vargas | |
-| **Edad:** | 45 años | ![Foto Jarol](https://via.placeholder.com/150?text=Foto+Jarol) |
+| **Edad:** | 24 años | ![Alquilador 1](https://raw.githubusercontent.com/alomssoo/ParkLink-Report/main/Chapter-2/Alquilador1.png) |
 | **Procedencia:** | San Isidro, Lima | |
-| **Link de Entrevista:** | [Enlace a grabación/transcripción](#) | |
+| **Link de Entrevista:** | [Ver Entrevista - Alquilador 1](https://upcedupe-my.sharepoint.com/:v:/g/personal/u202319563_upc_edu_pe/IQCRWaljRumMQZEnTSeyx43mAcyZOxY7GjN-oaVipHdFt_w?e=vKuME0) | |
 
 **Resumen:**
 Jarol tiene 3 espacios de cochera que alquila de manera informal. Reconoce que pierde ingresos porque no tiene cómo llegar a más personas. Lo que más le interesó fue la posibilidad de publicar sus espacios en una plataforma y poder configurar él mismo los horarios y el precio según el día. Actualmente lo gestiona todo por WhatsApp y considera que eso le genera mucha confusión con los interesados.
@@ -428,10 +428,10 @@ Jarol tiene 3 espacios de cochera que alquila de manera informal. Reconoce que p
 
 | Información del entrevistado | Detalle | Evidencia / Foto |
 | :--- | :--- | :--- |
-| **Nombre:** | Leonardo Caballa Huaman | |
-| **Edad:** | 38 años | ![Foto Leonardo](https://via.placeholder.com/150?text=Foto+Leonardo) |
+| **Nombre:** | Dlan Garcia Levano | |
+| **Edad:** | 23 años | ![Alquilador 2](https://raw.githubusercontent.com/alomssoo/ParkLink-Report/main/Chapter-2/Alquilador2.png) |
 | **Procedencia:** | Surco, Lima | |
-| **Link de Entrevista:** | [Enlace a grabación/transcripción](#) | |
+| **Link de Entrevista:** | [Ver Entrevista - Alquilador 2](https://upcedupe-my.sharepoint.com/:v:/g/personal/u202319563_upc_edu_pe/IQDgcsDPBaZbSq5m9rknewivAauO8nQm4IM_qcDCXGv_Vug?e=gbPYcK) | |
 
 **Resumen:**
 Leonardo administra espacios de un edificio residencial que quedan vacíos durante las mañanas. Su principal necesidad es poder habilitar y deshabilitar los espacios fácilmente según el horario. También mencionó que necesitaría tener un registro claro de los ingresos para poder reportarlo a los demás copropietarios del edificio.
@@ -443,56 +443,55 @@ Leonardo administra espacios de un edificio residencial que quedan vacíos duran
 #### Análisis de entrevistas al segmento Conductores urbanos
 
 ##### Datos demográficos
+**Edad:** Promedio: **28.5 años** | Rango: **25 - 32 años**
+**Sexo:** El **100%** de los entrevistados son de género **masculino**.
+**Procedencia:**
+● El **50% (1)** proviene de **Lima Centro**
+● El **50% (1)** proviene de **Miraflores**
 
-**Edad:** Promedio: (32 + 25) / 2 = **28.5 años** Rango: **25 - 32 años** **Sexo:** El **100%** de los entrevistados son de género **masculino**.
-
-**Procedencia:** ● El **50% (1)** proviene de **Lima Centro** ● El **50% (1)** proviene de **Miraflores** ---
+---
 
 ##### Estadísticas:
-
 ● El **100%** de los entrevistados pierde entre 15 a 20 minutos buscando estacionamiento.  
-● El **100%** no utiliza herramientas digitales específicas actualmente (se basan en la intuición).  
-● El **50%** ha llegado a cancelar planes o actividades sociales por falta de parqueo.  
-● El **100%** considera que el estrés de búsqueda afecta negativamente su experiencia de conducción.  
+● El **100%** no utiliza herramientas digitales específicas actualmente.  
+● El **50%** ha llegado a cancelar planes sociales por falta de parqueo.  
+● El **100%** considera el estrés de búsqueda como un factor negativo en su rutina.  
 
 ---
 
 ##### Funcionalidades deseadas en la aplicación:
-
-● Visualización de disponibilidad en tiempo real: **100%** ● Sistema de reserva anticipada de espacios: **100%** ● Posibilidad de extender el tiempo de reserva vía App: **50%** ● Visualización de tarifas y distancias en el mapa: **100%** ---
-
-##### Conclusiones y recomendaciones diseñadas para este segmento:
-
-● **Precisión en Tiempo Real:** Es fundamental que la data de disponibilidad sea exacta para evitar el rechazo del usuario.  
-● **Garantía de Espacio:** La reserva anticipada es el factor de valor que diferencia a ParkLink de la búsqueda tradicional.  
-● **Interfaz Ágil:** El diseño debe permitir reservas rápidas para conductores que ya se encuentran en ruta o bajo estrés.  
+● Visualización de disponibilidad en tiempo real: **100%**
+● Sistema de reserva anticipada: **100%**
+● Extensión de tiempo desde la app: **50%**
+● Mapa con precios y distancias: **100%**
 
 ---
 
 #### Análisis de entrevistas al segmento Propietarios de estacionamientos
 
 ##### Datos demográficos
+**Edad:** Promedio: **41.5 años** | Rango: **38 - 45 años**
+**Sexo:** El **100%** de los entrevistados son de género **masculino**.
+**Procedencia:**
+● El **50% (1)** proviene de **San Isidro**
+● El **50% (1)** proviene de **Surco**
 
-**Edad:** Promedio: (45 + 38) / 2 = **41.5 años** Rango: **38 - 45 años** **Sexo:** El **100%** de los entrevistados son de género **masculino**.
-
-**Procedencia:** ● El **50% (1)** proviene de **San Isidro** ● El **50% (1)** proviene de **Surco** ---
+---
 
 ##### Estadísticas:
+● El **100%** de los entrevistados gestiona sus espacios de forma manual o informal (WhatsApp).  
+● El **100%** busca monetizar espacios subutilizados durante el día.  
+● El **50%** presenta dificultades para llevar un control ordenado de sus ingresos.  
+● El **100%** requiere autonomía total para decidir sus horarios de disponibilidad.  
 
-● El **100%** de los entrevistados gestiona sus espacios de forma informal o mediante WhatsApp.  
-● El **100%** manifiesta interés en monetizar espacios que permanecen vacíos durante el día.  
-● El **50%** presenta dificultades para llevar un control contable ordenado de sus ingresos.  
-● El **100%** requiere autonomía total para decidir en qué horarios su espacio está disponible.  
+---
 
 ##### Funcionalidades deseadas en la aplicación:
+● Panel de configuración de horarios y precios: **100%**
+● Registro de ingresos y exportación de reportes: **50%**
+● Sistema de activación/desactivación rápida de espacios: **100%**
+● Verificación de identidad para mayor seguridad: **100%**
 
-● Panel de gestión de horarios y precios dinámicos: **100%** ● Registro automatizado de ingresos y reportes: **50%** ● Sistema de activación/desactivación rápida de espacios: **100%** ● Verificación de identidad de los conductores para mayor seguridad: **100%** ---
-
-##### Conclusiones y recomendaciones diseñadas para este segmento:
-
-● **Facilidad Administrativa:** La aplicación debe simplificar la publicación del espacio para usuarios no nativos digitales.  
-● **Transparencia de Pagos:** Incluir un historial de transacciones claro para evitar conflictos entre copropietarios.  
-● **Seguridad:** Implementar un sistema de calificación y perfiles verificados para generar confianza en el propietario.
 ## 2.3. Needfinding
 
 ### 2.3.1. User Personas
