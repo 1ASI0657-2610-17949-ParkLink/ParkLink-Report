@@ -486,3 +486,6 @@ Se identificaron patrones comunes en ambos grupos, considerando aspectos como su
 Asimismo, a partir de las respuestas recopiladas, se construyeron los User Persona incluyendo sus objetivos, motivaciones y frustraciones principales, priorizando aquellos elementos que se repitieron con mayor frecuencia durante el proceso de entrevistas.
 
 Finalmente, se realizó un análisis que permitió identificar los valores, habilidades (skills) y una frase representativa para cada perfil, con el fin de sintetizar de manera clara las características más importantes de los usuarios y facilitar la comprensión de sus necesidades dentro del desarrollo de la solución propuesta.
+<img width="837" height="1600" alt="image" src="https://github.com/user-attachments/assets/6536adf5-5c21-4f0a-a59d-075b8a30c496" />
+<img width="890" height="1600" alt="image" src="https://github.com/user-attachments/assets/c42c989c-0c6d-47e5-abd3-9ada27f07469" />
+
