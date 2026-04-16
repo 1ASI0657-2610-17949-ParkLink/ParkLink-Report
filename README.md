@@ -27,13 +27,9 @@
 
 ## Registro de Versiones del Informe
 
-| Version | Fecha      | Autor                             | Descripcion  |
-| ------- | ---------- | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Avance 1     | 14/04/2026| Javier Masaru Nikaido Vargas        |                                                                                                                                              |
-| Avance 1      | 14/04/2026 | Fabian Alejandro Oliva Lopez        |                                                                                                                                                        |
-| Avance 1      | 14/04/2026 | Pietro Osores Marchese           |                                                                                                                                           |
-| Avance 1      | 14/04/2026 | Percy Alonso Muñiz Huayanca           |                                                                                                                                                                                        |
-| Avance 1    | 14/04/2026 | Matias Rodolfo Salcedo Champi       |                                                                                                                                                                                                           |
+| Version | Fecha      | Autor                                          | Descripción de modificación                                                |
+| ------- | ---------- | ---------------------------------------------- | -------------------------------------------------------------------------- |
+| 1ra     | 15/04/2026 | Javier Masaru Nikaido Vargas,Fabian Alejandro Oliva Lopez,Pietro Osores Marchese,Percy Alonso Muñiz Huayanca,Matias Rodolfo Salcedo Champi | Avance1: En esta primera entrega se avanzo con el capitulo 1,2 y 3 de forma organizada para empezar con el pryecto de ParkLink estbleciedo la idea y un estudio del contaxto y las features. |                                                                                                                                                                                        |
 
 ## Student Outcome
 | Criterio específico | Acciones realizadas | Conclusiones |
