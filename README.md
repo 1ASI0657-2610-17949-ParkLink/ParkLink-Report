@@ -392,7 +392,7 @@ Asimismo, se busca identificar qué funcionalidades consideran necesarias para f
 | Información del entrevistado | Detalle | Evidencia / Foto |
 | :--- | :--- | :--- |
 | **Nombre:** | Humberto Garcia Calla | |
-| **Edad:** | 50 años | <img width="250" alt="Conductor 1" src="Chapter-2/Conductor1.png" /> |
+| **Edad:** | 50 años | <img width="250" alt="Conductor 1" src="Conductor1.png" /> |
 | **Procedencia:** | Lima, Perú | |
 | **Link de Entrevista:** | [Ver Entrevista - Conductor 1](https://upcedupe-my.sharepoint.com/:v:/g/personal/u202319563_upc_edu_pe/IQA6cKL_J7H1Q5sAObrd-g1vAWugvlOh81HxZl96DyfSgxo?e=O8QHUO) | |
 
@@ -404,7 +404,7 @@ Humberto conduce a diario por motivos laborales en zonas céntricas de Lima. Com
 | Información del entrevistado | Detalle | Evidencia / Foto |
 | :--- | :--- | :--- |
 | **Nombre:** | Juan Pablo Yataca Juarez | |
-| **Edad:** | 25 años | <img width="250" alt="Conductor 2" src="Chapter-2/Conductor2.png" /> |
+| **Edad:** | 25 años | <img width="250" alt="Conductor 2" src="Conductor2.png" /> |
 | **Procedencia:** | Miraflores, Lima | |
 | **Link de Entrevista:** | [Ver Entrevista - Conductor 2](https://upcedupe-my.sharepoint.com/:v:/g/personal/u202319563_upc_edu_pe/IQC5Pn9y3_vMSKKKp_IpOexzAd2qvLUgFDTOpbtFJuvqdyM?e=QZNtnX) | |
 
@@ -418,7 +418,7 @@ Juan usa su vehículo principalmente los fines de semana para salidas sociales. 
 | Información del entrevistado | Detalle | Evidencia / Foto |
 | :--- | :--- | :--- |
 | **Nombre:** | Jarol Saquiray Vargas | |
-| **Edad:** | 24 años | <img width="250" alt="Alquilador 1" src="Chapter-2/Alquilador1.png" /> |
+| **Edad:** | 24 años | <img width="250" alt="Alquilador 1" src="Alquilador1.png" /> |
 | **Procedencia:** | San Isidro, Lima | |
 | **Link de Entrevista:** | [Ver Entrevista - Alquilador 1](https://upcedupe-my.sharepoint.com/:v:/g/personal/u202319563_upc_edu_pe/IQCRWaljRumMQZEnTSeyx43mAcyZOxY7GjN-oaVipHdFt_w?e=vKuME0) | |
 
@@ -430,12 +430,13 @@ Jarol tiene 3 espacios de cochera que alquila de manera informal a vecinos conoc
 | Información del entrevistado | Detalle | Evidencia / Foto |
 | :--- | :--- | :--- |
 | **Nombre:** | Dlan Garcia Levano | |
-| **Edad:** | 23 años | <img width="250" alt="Alquilador 2" src="Chapter-2/Alquilador2.png" /> |
+| **Edad:** | 23 años | <img width="250" alt="Alquilador 2" src="Alquilador2.png" /> |
 | **Procedencia:** | Surco, Lima | |
 | **Link de Entrevista:** | [Ver Entrevista - Alquilador 2](https://upcedupe-my.sharepoint.com/:v:/g/personal/u202319563_upc_edu_pe/IQDgcsDPBaZbSq5m9rknewivAauO8nQm4IM_qcDCXGv_Vug?e=gbPYcK) | |
 
 **Resumen:**
 Dlan administra espacios de un edificio residencial que quedan vacíos durante las mañanas entre semana. Nos comentó que no tiene ningún sistema para gestionarlos y que ha intentado alquilarlos antes sin éxito por falta de visibilidad. Su principal necesidad es poder habilitar y deshabilitar los espacios fácilmente según el horario, sin que eso implique darlos de baja definitivamente.
+
 ### 2.2.3. Análisis de entrevistas
 
 #### Análisis de entrevistas al segmento Conductores urbanos
