@@ -65,6 +65,11 @@
    - [3.2. User Stories](#32-user-stories)
    - [3.3. Impact Mapping](#33-impact-mapping)
    - [3.4. Product Backlog](#34-product-backlog)
+- [2.5. Strategic-Level Domain-Driven Design](#25-strategic-level-domain-driven-design)
+    - [2.5.3. Software Architecture](#253-software-architecture)
+    - [2.5.3.1. Software Architecture Context Level Diagrams](#2531-software-architecture-context-level-diagrams)
+    - [2.5.3.2. Software Architecture Container Level Diagrams](#2532-software-architecture-container-level-diagrams)
+    - [2.5.3.3. Software Architecture Deployment Diagrams](#2533-software-architecture-deployment-diagrams)
   
 # Capítulo I: Introducción
 
@@ -897,3 +902,116 @@ El Product Backlog se prioriza según el valor que cada User Story aporta al neg
 | 18 | US17 | Registrarse como conductor | Como usuario nuevo, deseo registrarme como conductor, para acceder a la búsqueda y reserva de estacionamientos. | 3 |
 | 19 | US18 | Registrarse como propietario | Como usuario nuevo, deseo registrarme como propietario, para publicar mis espacios y recibir reservas. | 3 |
 | 20 | US19 | Iniciar sesión | Como usuario registrado, deseo iniciar sesión, para acceder a mi cuenta y funcionalidades de la app. | 2 |
+
+---
+
+## 2.5. Strategic-Level Domain-Driven Design
+
+### 2.5.3. Software Architecture
+
+En esta sección se presenta la representación de la Arquitectura de Software para la solución ParkLink, aplicando el modelo C4 (Context, Container, Component, Code) y utilizando Structurizr como herramienta de diagramación. La arquitectura abarca todos los productos digitales que forman parte del alcance de la solución: el Landing Page, la aplicación movil multiplataforma, los Web Services RESTful y los servicios externos integrados.
+
+ParkLink adopta una arquitectura basada en Domain-Driven Design (DDD), donde los bounded contexts identificados durante el proceso de EventStorming se reflejan directamente en la organización de los componentes del sistema. La solución se estructura en torno a los siguientes bounded contexts principales:
+
+- **Parking Space Management**: Gestión de espacios de estacionamiento, publicación, configuración de horarios y precios.
+- **Reservation Management**: Creación, cancelación y extensión de reservas de estacionamiento.
+- **Payment Processing**: Procesamiento de pagos, reembolsos y generación de comprobantes.
+- **Identity & Access Management (IAM)**: Registro, autenticación y gestión de perfiles de usuario (conductores y propietarios).
+- **Notification Management**: Envío de notificaciones push y correos electrónicos sobre el estado de reservas y espacios.
+
+A continuación se presentan los diagramas de arquitectura en los niveles de Context, Container y Deployment.
+
+---
+
+#### 2.5.3.1. Software Architecture Context Level Diagrams
+
+El diagrama de contexto muestra el sistema ParkLink como una unidad central, rodeado por los actores (usuarios) que interactúan con él y los sistemas externos de los cuales depende. Este nivel de abstracción permite visualizar el alcance general de la solución y sus fronteras.
+
+**Actores del sistema:**
+
+| Actor | Tipo | Descripcion |
+|---|---|---|
+| Conductor Urbano | Persona | Busca, reserva y paga estacionamientos a traves de la aplicacion movil. |
+| Propietario de Estacionamiento | Persona | Publica, configura y gestiona sus espacios de estacionamiento, visualiza reservas e ingresos. |
+| Visitante | Persona | Accede al Landing Page para conocer el modelo de negocio y las caracteristicas de ParkLink. |
+
+**Sistemas externos:**
+
+| Sistema Externo | Descripcion |
+|---|---|
+| Payment Gateway (Stripe/MercadoPago) | Procesa pagos con tarjeta y billeteras digitales, gestiona reembolsos y genera comprobantes de transacciones. |
+| Email Service (SendGrid) | Envia correos electronicos transaccionales como confirmaciones de reserva, reembolsos y verificacion de cuentas. |
+| Push Notification Service (Firebase Cloud Messaging) | Envia notificaciones push a dispositivos moviles sobre el estado de reservas y alertas del sistema. |
+| Maps & Geolocation API (Google Maps Platform) | Provee servicios de geolocalizacion, calculo de distancias y visualizacion de mapas interactivos con marcadores de estacionamientos. |
+
+**Descripcion del diagrama:**
+
+El sistema ParkLink se posiciona en el centro del diagrama. Los conductores urbanos interactuan con el sistema principalmente a traves de la aplicacion movil para buscar y reservar estacionamientos. Los propietarios utilizan la misma aplicacion para publicar y gestionar sus espacios. Los visitantes acceden al Landing Page para informarse sobre la plataforma. El sistema se conecta con el Payment Gateway para procesar transacciones financieras, con el Email Service para comunicaciones transaccionales, con el Push Notification Service para alertas en tiempo real, y con la Maps API para funcionalidades de geolocalizacion y visualizacion cartografica.
+
+> Elaborado en Structurizr. Acceso al diagrama: [Pendiente - Insertar enlace al workspace de Structurizr]
+
+![Software Architecture Context Diagram](assets/context-diagram.png)
+
+---
+
+#### 2.5.3.2. Software Architecture Container Level Diagrams
+
+El diagrama de contenedores muestra los elementos de alto nivel de la arquitectura de software de ParkLink y como se distribuyen las responsabilidades entre ellos. Se presentan las principales decisiones de tecnologia y la forma en que los containers se comunican entre si.
+
+**Containers identificados:**
+
+| Container | Tecnologia | Descripcion |
+|---|---|---|
+| Landing Page | HTML5, CSS3, JavaScript | Sitio web estatico que presenta el modelo de negocio de ParkLink, las caracteristicas del producto, planes de servicio y permite la descarga de la aplicacion movil. Desplegado en GitHub Pages o Netlify. |
+| Mobile Application | Flutter (Dart) / Kotlin Multiplatform | Aplicacion movil nativa y multiplataforma que permite a conductores buscar y reservar estacionamientos, y a propietarios publicar y gestionar sus espacios. Incluye almacenamiento local con SQLite/Hive, acceso a GPS del dispositivo e integracion con servicios REST internos y APIs externas. |
+| API Gateway | Spring Cloud Gateway / Nginx | Punto de entrada unico para todas las solicitudes de la aplicacion movil hacia los servicios backend. Gestiona el enrutamiento, rate limiting y autenticacion de tokens JWT. |
+| RESTful Web Services | Spring Boot (Java) / .NET Core | Backend que expone endpoints RESTful organizados por bounded contexts. Implementa la logica de negocio, reglas de dominio y orquestacion de procesos. Documentado con OpenAPI/Swagger. |
+| Database | PostgreSQL / MySQL | Base de datos relacional que persiste la informacion de usuarios, espacios de estacionamiento, reservas, transacciones de pago y configuraciones del sistema. |
+| Cache Layer | Redis | Capa de cache para almacenar datos de sesion, tokens de autenticacion y resultados de consultas frecuentes como disponibilidad de espacios en tiempo real. |
+
+**Comunicacion entre containers:**
+
+- La **Mobile Application** se comunica con el **API Gateway** mediante solicitudes HTTPS (REST/JSON).
+- El **API Gateway** enruta las solicitudes hacia los **RESTful Web Services** correspondientes segun el bounded context.
+- Los **RESTful Web Services** persisten y consultan datos en la **Database** mediante JPA/Hibernate.
+- Los **RESTful Web Services** utilizan la **Cache Layer** para optimizar consultas de alta frecuencia como la disponibilidad de espacios.
+- Los **RESTful Web Services** se integran con sistemas externos (Payment Gateway, Email Service, Push Notifications, Maps API) mediante clientes HTTP y SDKs oficiales.
+- El **Landing Page** es independiente y no tiene comunicacion directa con el backend; funciona como sitio estatico informativo.
+
+> Elaborado en Structurizr. Acceso al diagrama: [Pendiente - Insertar enlace al workspace de Structurizr]
+
+![Software Architecture Container Diagram](assets/container-diagram.png)
+
+---
+
+#### 2.5.3.3. Software Architecture Deployment Diagrams
+
+El diagrama de despliegue muestra la distribucion fisica del sistema ParkLink, destacando como los componentes del software se despliegan sobre la infraestructura de hardware y servicios en la nube. Este diagrama visualiza los servidores, servicios cloud, redes y dispositivos que alojan el software, asi como las relaciones y dependencias entre los distintos nodos.
+
+**Nodos de despliegue:**
+
+| Nodo | Tipo | Descripcion |
+|---|---|---|
+| Dispositivo Movil del Usuario | Device | Smartphone Android o iOS donde se ejecuta la aplicacion movil ParkLink. Incluye almacenamiento local (SQLite/Hive) y acceso a sensores del dispositivo (GPS, camara). |
+| GitHub Pages / Netlify | Cloud Service | Plataforma de hosting estatico donde se despliega el Landing Page. Provee CDN, certificado SSL y despliegue automatizado desde el repositorio de GitHub. |
+| Cloud Provider (AWS / Azure / Railway) | Cloud Infrastructure | Infraestructura en la nube que aloja los servicios backend. Incluye instancias de computo para los Web Services, base de datos gestionada y servicios de cache. |
+| Compute Instance | Virtual Server | Instancia de computo (EC2 / App Service / Railway Container) que ejecuta los RESTful Web Services empaquetados como contenedores Docker o JARs ejecutables. |
+| Managed Database | Database Service | Servicio de base de datos gestionado (RDS / Azure Database / Railway PostgreSQL) que aloja la base de datos PostgreSQL con backups automaticos y alta disponibilidad. |
+| Redis Cloud | Cache Service | Servicio de cache gestionado (ElastiCache / Redis Cloud) para almacenamiento en memoria de sesiones, tokens y datos de disponibilidad en tiempo real. |
+| Firebase | Mobile Service | Plataforma que provee Firebase Cloud Messaging para notificaciones push y Firebase App Distribution para la distribucion de versiones de prueba de la aplicacion movil. |
+
+**Flujo de despliegue:**
+
+1. El **Landing Page** se despliega automaticamente en GitHub Pages/Netlify mediante un pipeline de CI/CD vinculado al repositorio de GitHub. Los visitantes acceden a traves de un navegador web via HTTPS.
+
+2. Los **RESTful Web Services** se empaquetan como contenedores Docker y se despliegan en la instancia de computo del cloud provider. El proceso de despliegue sigue un pipeline de CI/CD que ejecuta pruebas automatizadas, construye la imagen Docker y la despliega en el entorno de produccion.
+
+3. La **Mobile Application** se distribuye a traves de Firebase App Distribution durante las fases de prueba y validacion. La version final se publica en Google Play Store y Apple App Store. La aplicacion se comunica con los Web Services a traves de HTTPS via el API Gateway desplegado en el cloud provider.
+
+4. La **Database** se ejecuta como un servicio gestionado en el cloud provider, con conexion privada hacia las instancias de computo que alojan los Web Services. Se configuran backups automaticos diarios y replicacion para alta disponibilidad.
+
+5. Los **servicios externos** (Payment Gateway, Email Service, Maps API) se integran mediante conexiones HTTPS salientes desde los Web Services, utilizando las API keys y credenciales configuradas como variables de entorno en el entorno de despliegue.
+
+> Elaborado en Structurizr. Acceso al diagrama: [Pendiente - Insertar enlace al workspace de Structurizr]
+
+![Software Architecture Deployment Diagram](assets/deployment-diagram.png)
