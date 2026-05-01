@@ -916,7 +916,7 @@ La arquitectura de software de ParkLink se define a partir de los principales pr
 
 La separación por bounded contexts permite reducir acoplamiento entre capacidades que evolucionan por motivos distintos. La búsqueda de estacionamientos cambia por criterios de experiencia de usuario, mapas, filtros y disponibilidad visible; la reserva cambia por reglas transaccionales de bloqueo, cancelación y extensión; la publicación y monetización cambian por reglas de oferta, precios, pagos, reembolsos y comprobantes; y la identidad cambia por seguridad, autenticación y control de roles. Esta división evita concentrar todo el comportamiento en un único módulo ambiguo y permite que cada parte del sistema sea diseñada, probada y escalada según sus propios drivers arquitectónicos.
 
-ParkLink utiliza el C4 Model para representar la arquitectura en niveles progresivos. El System Landscape Diagram muestra el ecosistema completo, actores externos, sistemas externos y bounded contexts principales. Los Context Level Diagrams explican las responsabilidades y dependencias de cada bounded context. El Container Level Diagram muestra los contenedores ejecutables y de datos que soportan la solución, incluyendo aplicaciones cliente, API Gateway o Backend API, módulos backend, base de datos, cache de disponibilidad, object storage, pasarela de pagos, servicio de mapas y servicio de notificaciones.
+ParkLink utiliza el C4 Model para representar la arquitectura en niveles progresivos. Los diagramas se documentan mediante Structurizr DSL, ya que esta notación permite declarar explícitamente el modelo arquitectónico, sus relaciones y sus vistas. El System Landscape Diagram muestra el ecosistema completo, actores externos, sistemas externos y bounded contexts principales. Los Context Level Diagrams explican las responsabilidades y dependencias de cada bounded context. El Container Level Diagram muestra los contenedores ejecutables y de datos que soportan la solución, incluyendo aplicaciones cliente, API Gateway o Backend API, módulos backend, base de datos, cache de disponibilidad, object storage, pasarela de pagos, servicio de mapas y servicio de notificaciones.
 
 La comunicación entre contextos combina interacciones síncronas y eventos de dominio. Las consultas de búsqueda, autenticación y obtención de detalles se atienden mediante APIs REST/JSON sobre HTTPS. Las operaciones críticas, como crear una reserva, bloquear un espacio, confirmar un pago, cancelar una reserva o generar un reembolso, se tratan como comandos transaccionales donde el contexto propietario de la regla de negocio mantiene la consistencia. Para efectos secundarios como notificaciones, actualización de disponibilidad visible, emisión de comprobantes o sincronización de vistas de propietario, se utilizan eventos de dominio internos, de modo que la operación principal no dependa directamente de procesos secundarios.
 
@@ -937,42 +937,52 @@ La seguridad se aborda de forma transversal, pero la responsabilidad primaria re
 
 El System Landscape Diagram muestra a ParkLink como sistema principal dentro del ecosistema de movilidad urbana. Los conductores interactúan con la plataforma para buscar, comparar, reservar, pagar y consultar sus reservas. Los propietarios o empresarios de estacionamientos interactúan con la plataforma para publicar espacios, configurar horarios y precios, gestionar reservas recibidas y consultar ingresos.
 
-```mermaid
-flowchart LR
-    Driver["Conductor urbano"]
-    Owner["Propietario o empresario de estacionamientos"]
+```structurizr
+workspace "ParkLink - System Landscape" "C4 System Landscape de ParkLink." {
+    model {
+        driver = person "Conductor urbano" "Usuario que busca, compara, reserva y paga espacios de estacionamiento."
+        owner = person "Propietario o empresario de estacionamientos" "Usuario que publica espacios, configura disponibilidad y monetiza cocheras."
 
-    subgraph ParkLink["ParkLink Platform"]
-        UI["Web Application / Mobile Application"]
-        Identity["User & Identity Context"]
-        Discovery["Parking Discovery Context"]
-        Reservation["Reservation Management Context"]
-        Supply["Parking Supply & Monetization Context"]
+        group "ParkLink Platform" {
+            clientApp = softwareSystem "Web/Mobile Application" "Interfaz digital para conductores y propietarios."
+            identityContext = softwareSystem "User & Identity Context" "Gestiona registro, autenticación JWT, roles y perfiles."
+            discoveryContext = softwareSystem "Parking Discovery Context" "Resuelve búsqueda, filtros, mapa, comparación y disponibilidad visible."
+            reservationContext = softwareSystem "Reservation Management Context" "Controla creación, bloqueo, cancelación, extensión e historial de reservas."
+            supplyContext = softwareSystem "Parking Supply & Monetization Context" "Gestiona publicación de espacios, precios, pagos, reembolsos e ingresos."
+        }
 
-        UI --> Identity
-        UI --> Discovery
-        UI --> Reservation
-        UI --> Supply
-        Discovery --> Reservation
-        Discovery --> Supply
-        Reservation --> Supply
-        Reservation --> Identity
-        Supply --> Identity
-    end
+        paymentGateway = softwareSystem "Pasarela de pagos" "Procesa cobros, reembolsos y comprobantes." "External System"
+        mapsService = softwareSystem "Servicio de mapas y geolocalización" "Provee mapas, geocodificación, distancia y marcadores." "External System"
+        notificationService = softwareSystem "Servicio de notificaciones y correo" "Envia verificación de cuenta, confirmaciones y avisos transaccionales." "External System"
+        objectStorage = softwareSystem "Object Storage compatible con S3" "Almacena fotografías de espacios de estacionamiento." "External System"
 
-    Payment["Pasarela de pagos"]
-    Maps["Servicio de mapas y geolocalización"]
-    Notifications["Servicio de notificaciones y correo"]
-    Storage["Object Storage compatible con S3"]
+        driver -> clientApp "Busca, compara, reserva y paga"
+        owner -> clientApp "Publica, configura y monetiza espacios"
+        clientApp -> identityContext "Solicita registro, login y perfil"
+        clientApp -> discoveryContext "Consulta búsqueda, mapa y detalle"
+        clientApp -> reservationContext "Ejecuta comandos de reserva"
+        clientApp -> supplyContext "Administra espacios, pagos e ingresos"
+        discoveryContext -> reservationContext "Consulta disponibilidad visible y estados"
+        discoveryContext -> supplyContext "Consulta espacios publicados y condiciones comerciales"
+        reservationContext -> supplyContext "Consulta precio, horario y reglas económicas"
+        reservationContext -> identityContext "Valida conductor autenticado"
+        supplyContext -> identityContext "Valida propietario o conductor autorizado"
+        discoveryContext -> mapsService "Calcula ubicación, distancia y mapa"
+        supplyContext -> paymentGateway "Procesa cobros, reembolsos y comprobantes"
+        reservationContext -> notificationService "Solicita confirmaciones y cambios de reserva"
+        identityContext -> notificationService "Solicita verificación y recuperación de cuenta"
+        supplyContext -> objectStorage "Almacena fotos de espacios"
+        discoveryContext -> objectStorage "Consulta imágenes publicadas"
+    }
 
-    Driver -->|Busca, compara, reserva y paga| UI
-    Owner -->|Publica, configura y monetiza espacios| UI
-    Discovery -->|Calcula ubicación, distancia y mapa| Maps
-    Supply -->|Procesa cobros, reembolsos y comprobantes| Payment
-    Reservation -->|Confirma, cancela y actualiza reservas| Notifications
-    Identity -->|Verificación de cuenta y recuperación| Notifications
-    Supply -->|Almacena fotos de espacios| Storage
-    Discovery -->|Consulta imágenes publicadas| Storage
+    views {
+        systemLandscape "SystemLandscape" {
+            title "ParkLink - System Landscape Diagram"
+            include *
+            autoLayout lr
+        }
+    }
+}
 ```
 
 En el paisaje del sistema, ParkLink se ubica como el sistema que coordina la relación entre demanda y oferta de estacionamientos. La integración con el servicio de mapas y geolocalización sustenta las historias US01, US02, US03 y US04, donde el conductor necesita visualizar espacios cercanos, disponibilidad, precio, horario, distancia y valoración. La pasarela de pagos sustenta US14, US15 y US16, relacionadas con pago en línea, reembolsos y comprobantes. El servicio de notificaciones y correo sustenta EP06 y US20, además de flujos de verificación de cuenta. El object storage compatible con S3 se justifica por US04 y US09, donde los espacios requieren fotografías para ser publicados y evaluados por el conductor antes de reservar.
@@ -983,25 +993,36 @@ Los diagramas de contexto muestran cada bounded context como una unidad funciona
 
 ##### User & Identity Context
 
-```mermaid
-flowchart LR
-    Driver["Conductor"]
-    Owner["Propietario"]
-    App["Web/Mobile Application"]
-    Identity["User & Identity Context"]
-    Discovery["Parking Discovery Context"]
-    Reservation["Reservation Management Context"]
-    Supply["Parking Supply & Monetization Context"]
-    Email["Servicio de correo/notificaciones"]
+```structurizr
+workspace "ParkLink - User & Identity Context" "C4 System Context del bounded context de identidad." {
+    model {
+        driver = person "Conductor" "Usuario que se registra, inicia sesión y reserva estacionamientos."
+        owner = person "Propietario" "Usuario que se registra, inicia sesión y administra espacios."
+        app = softwareSystem "Web/Mobile Application" "Canal de acceso para conductores y propietarios."
+        identityContext = softwareSystem "User & Identity Context" "Gestiona registro, inicio de sesión, JWT, roles y perfiles."
+        discoveryContext = softwareSystem "Parking Discovery Context" "Consume identidad y permisos para búsquedas autorizadas."
+        reservationContext = softwareSystem "Reservation Management Context" "Consume identidad para validar conductores antes de reservar."
+        supplyContext = softwareSystem "Parking Supply & Monetization Context" "Consume identidad para validar propietarios y conductores en operaciones comerciales."
+        notificationService = softwareSystem "Servicio de correo/notificaciones" "Envia correos de verificación y mensajes transaccionales." "External System"
 
-    Driver -->|Registro, login, perfil de conductor| App
-    Owner -->|Registro, login, perfil de propietario| App
-    App -->|Credenciales, datos de perfil, rol solicitado| Identity
-    Identity -->|JWT, rol, perfil autorizado| App
-    Identity -->|Valida usuario y rol| Discovery
-    Identity -->|Valida conductor para reservar| Reservation
-    Identity -->|Valida propietario para publicar y cobrar| Supply
-    Identity -->|Correo de verificación| Email
+        driver -> app "Registro, login y perfil de conductor"
+        owner -> app "Registro, login y perfil de propietario"
+        app -> identityContext "Envia credenciales, datos de perfil y rol solicitado" "HTTPS REST/JSON"
+        identityContext -> app "Devuelve JWT, rol y perfil autorizado" "HTTPS REST/JSON"
+        identityContext -> discoveryContext "Valida usuario y rol"
+        identityContext -> reservationContext "Valida conductor para reservar"
+        identityContext -> supplyContext "Valida propietario para publicar y cobrar"
+        identityContext -> notificationService "Solicita correo de verificación"
+    }
+
+    views {
+        systemContext identityContext "UserIdentityContext" {
+            title "User & Identity Context - Context Level Diagram"
+            include driver owner app identityContext discoveryContext reservationContext supplyContext notificationService
+            autoLayout lr
+        }
+    }
+}
 ```
 
 | Aspecto | Descripción |
@@ -1018,23 +1039,34 @@ Este contexto se separa porque la identidad es una capacidad transversal y gené
 
 ##### Parking Discovery Context
 
-```mermaid
-flowchart LR
-    Driver["Conductor"]
-    App["Mobile Application"]
-    Discovery["Parking Discovery Context"]
-    Supply["Parking Supply & Monetization Context"]
-    Reservation["Reservation Management Context"]
-    Maps["Servicio de mapas/geolocalización"]
-    Storage["Object Storage S3-compatible"]
+```structurizr
+workspace "ParkLink - Parking Discovery Context" "C4 System Context del bounded context de discovery." {
+    model {
+        driver = person "Conductor" "Usuario que busca estacionamientos cercanos y compara alternativas."
+        mobileApp = softwareSystem "Mobile Application" "Aplicación usada para buscar por ubicación, filtros y mapa."
+        discoveryContext = softwareSystem "Parking Discovery Context" "Resuelve búsqueda, filtros, mapa, disponibilidad visible y recomendación."
+        supplyContext = softwareSystem "Parking Supply & Monetization Context" "Provee espacios publicados, precio, horario y valoración."
+        reservationContext = softwareSystem "Reservation Management Context" "Provee estados de disponibilidad derivados de reservas."
+        mapsService = softwareSystem "Servicio de mapas/geolocalización" "Provee ubicación, distancia, geocodificación y mapa." "External System"
+        objectStorage = softwareSystem "Object Storage S3-compatible" "Provee fotografías publicadas de espacios." "External System"
 
-    Driver -->|Destino, filtros, selección de espacio| App
-    App -->|Consulta búsqueda y detalle| Discovery
-    Discovery -->|Espacios publicados, precio, horario, valoración| Supply
-    Discovery -->|Estados disponible, reservado u ocupado| Reservation
-    Discovery -->|Ubicación, distancia y mapa| Maps
-    Discovery -->|Fotos de espacios| Storage
-    Discovery -->|Resultados, comparación y recomendación| App
+        driver -> mobileApp "Ingresa destino, filtros y selecciona espacio"
+        mobileApp -> discoveryContext "Consulta búsqueda, detalle y recomendación" "HTTPS REST/JSON"
+        discoveryContext -> supplyContext "Consulta espacios publicados, precio, horario y valoración"
+        discoveryContext -> reservationContext "Consulta estados disponible, reservado u ocupado"
+        discoveryContext -> mapsService "Consulta ubicación, distancia y mapa"
+        discoveryContext -> objectStorage "Consulta fotos de espacios"
+        discoveryContext -> mobileApp "Devuelve resultados, comparación y recomendación" "HTTPS REST/JSON"
+    }
+
+    views {
+        systemContext discoveryContext "ParkingDiscoveryContext" {
+            title "Parking Discovery Context - Context Level Diagram"
+            include driver mobileApp discoveryContext supplyContext reservationContext mapsService objectStorage
+            autoLayout lr
+        }
+    }
+}
 ```
 
 | Aspecto | Descripción |
@@ -1051,23 +1083,34 @@ Este contexto se separa porque sus reglas son principalmente de consulta, presen
 
 ##### Reservation Management Context
 
-```mermaid
-flowchart LR
-    Driver["Conductor"]
-    App["Mobile Application"]
-    Reservation["Reservation Management Context"]
-    Identity["User & Identity Context"]
-    Supply["Parking Supply & Monetization Context"]
-    Discovery["Parking Discovery Context"]
-    Notifications["Servicio de notificaciones/correo"]
+```structurizr
+workspace "ParkLink - Reservation Management Context" "C4 System Context del bounded context de reservas." {
+    model {
+        driver = person "Conductor" "Usuario que crea, cancela, extiende y consulta reservas."
+        mobileApp = softwareSystem "Mobile Application" "Canal donde el conductor ejecuta operaciones de reserva."
+        reservationContext = softwareSystem "Reservation Management Context" "Controla ciclo de vida, bloqueo, cancelación, extensión, historial y estados de reserva."
+        identityContext = softwareSystem "User & Identity Context" "Valida identidad y rol de conductor."
+        supplyContext = softwareSystem "Parking Supply & Monetization Context" "Provee espacio, precio, horario y condiciones comerciales."
+        discoveryContext = softwareSystem "Parking Discovery Context" "Consume cambios de disponibilidad visible."
+        notificationService = softwareSystem "Servicio de notificaciones/correo" "Envia confirmaciones y cambios de estado." "External System"
 
-    Driver -->|Crear, cancelar, extender y consultar reservas| App
-    App -->|Comandos de reserva| Reservation
-    Reservation -->|Valida identidad y rol conductor| Identity
-    Reservation -->|Consulta espacio, precio, horario y disponibilidad base| Supply
-    Reservation -->|Publica cambios de disponibilidad| Discovery
-    Reservation -->|Reserva confirmada, cancelada o extendida| Notifications
-    Reservation -->|Confirmación, código, historial y estado| App
+        driver -> mobileApp "Crea, cancela, extiende y consulta reservas"
+        mobileApp -> reservationContext "Envia comandos de reserva" "HTTPS REST/JSON"
+        reservationContext -> identityContext "Valida identidad y rol conductor"
+        reservationContext -> supplyContext "Consulta espacio, precio, horario y disponibilidad base"
+        reservationContext -> discoveryContext "Publica cambios de disponibilidad"
+        reservationContext -> notificationService "Solicita aviso de reserva confirmada, cancelada o extendida"
+        reservationContext -> mobileApp "Devuelve confirmación, código, historial y estado" "HTTPS REST/JSON"
+    }
+
+    views {
+        systemContext reservationContext "ReservationManagementContext" {
+            title "Reservation Management Context - Context Level Diagram"
+            include driver mobileApp reservationContext identityContext supplyContext discoveryContext notificationService
+            autoLayout lr
+        }
+    }
+}
 ```
 
 | Aspecto | Descripción |
@@ -1084,28 +1127,39 @@ Este contexto se separa porque representa el Core Domain. La reserva tiene regla
 
 ##### Parking Supply & Monetization Context
 
-```mermaid
-flowchart LR
-    Owner["Propietario"]
-    Driver["Conductor"]
-    App["Web/Mobile Application"]
-    Supply["Parking Supply & Monetization Context"]
-    Identity["User & Identity Context"]
-    Discovery["Parking Discovery Context"]
-    Reservation["Reservation Management Context"]
-    Payment["Pasarela de pagos"]
-    Storage["Object Storage S3-compatible"]
-    Notifications["Servicio de notificaciones/correo"]
+```structurizr
+workspace "ParkLink - Parking Supply & Monetization Context" "C4 System Context del bounded context de oferta y monetización." {
+    model {
+        owner = person "Propietario" "Usuario que publica espacios, configura horarios y precios, y consulta ingresos."
+        driver = person "Conductor" "Usuario que paga reservas, solicita reembolsos y consulta comprobantes."
+        app = softwareSystem "Web/Mobile Application" "Canal de gestión para propietarios y conductores."
+        supplyContext = softwareSystem "Parking Supply & Monetization Context" "Gestiona publicación, precios, disponibilidad comercial, pagos, reembolsos, comprobantes e ingresos."
+        identityContext = softwareSystem "User & Identity Context" "Valida propietarios y conductores autorizados."
+        discoveryContext = softwareSystem "Parking Discovery Context" "Consume espacios publicados y condiciones comerciales para búsqueda."
+        reservationContext = softwareSystem "Reservation Management Context" "Consume precio, disponibilidad base y reglas económicas para reservas."
+        paymentGateway = softwareSystem "Pasarela de pagos" "Procesa cobros, reembolsos y comprobantes." "External System"
+        objectStorage = softwareSystem "Object Storage S3-compatible" "Almacena fotografías de espacios." "External System"
+        notificationService = softwareSystem "Servicio de notificaciones/correo" "Envia avisos de pago, reembolso y reserva recibida." "External System"
 
-    Owner -->|Publica espacios, configura horarios y precios| App
-    Driver -->|Paga, solicita reembolso, consulta comprobante| App
-    App -->|Comandos de publicación, precio, pago e ingresos| Supply
-    Supply -->|Valida propietario y conductor| Identity
-    Supply -->|Expone espacios publicados y condiciones comerciales| Discovery
-    Supply -->|Entrega precio, disponibilidad base y reglas económicas| Reservation
-    Supply -->|Cobro, reembolso y comprobante| Payment
-    Supply -->|Fotos de espacios| Storage
-    Supply -->|Avisos de pago, reembolso y reserva recibida| Notifications
+        owner -> app "Publica espacios y configura horarios y precios"
+        driver -> app "Paga, solicita reembolso y consulta comprobante"
+        app -> supplyContext "Envia comandos de publicación, precio, pago e ingresos" "HTTPS REST/JSON"
+        supplyContext -> identityContext "Valida propietario y conductor"
+        supplyContext -> discoveryContext "Expone espacios publicados y condiciones comerciales"
+        supplyContext -> reservationContext "Entrega precio, disponibilidad base y reglas económicas"
+        supplyContext -> paymentGateway "Procesa cobro, reembolso y comprobante" "HTTPS"
+        supplyContext -> objectStorage "Almacena fotos de espacios" "HTTPS"
+        supplyContext -> notificationService "Solicita avisos de pago, reembolso y reserva recibida"
+    }
+
+    views {
+        systemContext supplyContext "ParkingSupplyMonetizationContext" {
+            title "Parking Supply & Monetization Context - Context Level Diagram"
+            include owner driver app supplyContext identityContext discoveryContext reservationContext paymentGateway objectStorage notificationService
+            autoLayout lr
+        }
+    }
+}
 ```
 
 | Aspecto | Descripción |
@@ -1124,66 +1178,73 @@ Este contexto se separa porque combina reglas de oferta y monetización que pert
 
 El Container Level Diagram muestra cómo los productos digitales y servicios técnicos soportan los bounded contexts. La arquitectura puede implementarse inicialmente como backend modular con módulos alineados a los contextos, manteniendo la posibilidad de extraerlos como microservicios si el crecimiento del producto lo requiere.
 
-```mermaid
-flowchart TB
-    Driver["Conductor"]
-    Owner["Propietario / Empresario"]
+```structurizr
+workspace "ParkLink - Container Level" "C4 Container Diagram de ParkLink." {
+    model {
+        driver = person "Conductor" "Usuario que busca, reserva, paga y consulta historial."
+        owner = person "Propietario / Empresario" "Usuario que publica espacios, gestiona reservas recibidas e ingresos."
 
-    subgraph Clients["Client Applications"]
-        Mobile["Mobile Application"]
-        Web["Web Application"]
-    end
+        paymentGateway = softwareSystem "Payment Gateway" "Procesa pagos, reembolsos y confirmaciones de transacción." "External System"
+        mapsApi = softwareSystem "Maps & Geolocation API" "Provee mapas, geocodificación, distancias y marcadores." "External System"
+        notificationService = softwareSystem "Notification / Email Service" "Envia correos y notificaciones push." "External System"
+        objectStorage = softwareSystem "Object Storage S3-compatible" "Almacena imágenes de espacios de estacionamiento." "External System"
 
-    Gateway["API Gateway / Backend API"]
+        parklink = softwareSystem "ParkLink Platform" "Plataforma para descubrir, reservar y monetizar estacionamientos urbanos." {
+            mobileApp = container "Mobile Application" "Permite buscar, comparar, reservar, pagar, cancelar, extender reservas y consultar historial." "Aplicación móvil multiplataforma"
+            webApp = container "Web Application" "Permite a propietarios administrar espacios, horarios, precios, reservas recibidas e ingresos." "Aplicación web responsive"
+            apiGateway = container "API Gateway / Backend API" "Centraliza entrada al backend, valida JWT, enruta solicitudes y expone OpenAPI." "RESTful API"
+            identityService = container "User & Identity Service" "Gestiona registro, login, JWT, roles y perfiles." "Backend REST module"
+            discoveryService = container "Parking Discovery Service" "Resuelve búsquedas, filtros, detalle, mapa, disponibilidad visible y recomendación." "Backend REST module"
+            reservationService = container "Reservation Management Service" "Crea reservas, bloquea espacios, cancela, extiende, consulta historial y controla estados." "Backend REST module"
+            supplyService = container "Parking Supply & Monetization Service" "Publica espacios, configura precios, gestiona ingresos, pagos, reembolsos y comprobantes." "Backend REST module"
+            eventBus = container "Internal Domain Event Bus" "Desacopla notificaciones, disponibilidad visible y sincronización de vistas." "Message broker interno"
+            mainDatabase = container "Main Relational Database" "Persiste usuarios, espacios, reservas, pagos, comprobantes, reseñas y notificaciones." "MySQL" "Database"
+            availabilityCache = container "Availability Cache" "Acelera consultas de disponibilidad visible para búsquedas frecuentes." "Redis" "Database"
+        }
 
-    subgraph Backend["ParkLink Backend - RESTful Services / Modules"]
-        IdentitySvc["User & Identity Service"]
-        DiscoverySvc["Parking Discovery Service"]
-        ReservationSvc["Reservation Management Service"]
-        SupplySvc["Parking Supply & Monetization Service"]
-        EventBus["Internal Domain Event Bus"]
-    end
+        driver -> mobileApp "Busca, reserva, paga y consulta historial"
+        owner -> mobileApp "Gestiona funciones principales desde móvil"
+        owner -> webApp "Administra espacios, reservas recibidas e ingresos"
 
-    Database[("Main Relational Database")]
-    Cache[("Availability Cache")]
-    ObjectStorage["Object Storage S3-compatible"]
-    Payment["Payment Gateway"]
-    Maps["Maps & Geolocation API"]
-    Notifications["Notification / Email Service"]
+        mobileApp -> apiGateway "Consume APIs protegidas" "HTTPS REST/JSON"
+        webApp -> apiGateway "Consume APIs protegidas" "HTTPS REST/JSON"
 
-    Driver --> Mobile
-    Owner --> Mobile
-    Owner --> Web
+        apiGateway -> identityService "Enruta autenticación, perfil y autorización"
+        apiGateway -> discoveryService "Enruta búsquedas, filtros y detalle"
+        apiGateway -> reservationService "Enruta comandos y consultas de reserva"
+        apiGateway -> supplyService "Enruta publicación, precios, pagos e ingresos"
 
-    Mobile -->|HTTPS REST/JSON| Gateway
-    Web -->|HTTPS REST/JSON| Gateway
+        identityService -> mainDatabase "Lee y escribe usuarios, roles y perfiles" "SQL"
+        discoveryService -> mainDatabase "Consulta espacios, reseñas y datos publicados" "SQL"
+        reservationService -> mainDatabase "Lee y escribe reservas y estados" "SQL"
+        supplyService -> mainDatabase "Lee y escribe espacios, precios, pagos e ingresos" "SQL"
 
-    Gateway --> IdentitySvc
-    Gateway --> DiscoverySvc
-    Gateway --> ReservationSvc
-    Gateway --> SupplySvc
+        discoveryService -> availabilityCache "Consulta disponibilidad visible" "Redis protocol"
+        reservationService -> availabilityCache "Actualiza disponibilidad al bloquear, cancelar o extender" "Redis protocol"
+        supplyService -> availabilityCache "Actualiza disponibilidad comercial" "Redis protocol"
 
-    IdentitySvc --> Database
-    DiscoverySvc --> Database
-    ReservationSvc --> Database
-    SupplySvc --> Database
+        discoveryService -> mapsApi "Consulta mapas, geocodificación y distancias" "HTTPS"
+        discoveryService -> objectStorage "Recupera fotos de espacios" "HTTPS"
+        supplyService -> objectStorage "Sube y administra fotos de espacios" "HTTPS"
+        supplyService -> paymentGateway "Procesa cobros, reembolsos y comprobantes" "HTTPS"
+        reservationService -> notificationService "Solicita confirmaciones y cambios de reserva"
+        supplyService -> notificationService "Solicita avisos de pago, reembolso y reserva recibida"
+        identityService -> notificationService "Solicita verificación y recuperación de cuenta"
 
-    DiscoverySvc --> Cache
-    ReservationSvc --> Cache
-    SupplySvc --> Cache
+        reservationService -> eventBus "Publica eventos de dominio"
+        supplyService -> eventBus "Publica eventos comerciales y de disponibilidad"
+        eventBus -> discoveryService "Entrega eventos para actualizar disponibilidad visible"
+        eventBus -> notificationService "Entrega eventos para notificaciones"
+    }
 
-    DiscoverySvc --> Maps
-    DiscoverySvc --> ObjectStorage
-    SupplySvc --> ObjectStorage
-    SupplySvc --> Payment
-    ReservationSvc --> Notifications
-    SupplySvc --> Notifications
-    IdentitySvc --> Notifications
-
-    ReservationSvc --> EventBus
-    SupplySvc --> EventBus
-    EventBus --> DiscoverySvc
-    EventBus --> Notifications
+    views {
+        container parklink "ContainerLevel" {
+            title "ParkLink - Container Level Diagram"
+            include *
+            autoLayout tb
+        }
+    }
+}
 ```
 
 | Contenedor | Responsabilidad | Tecnología sugerida | Comunicación | Bounded context soportado |
