@@ -65,11 +65,12 @@
    - [3.2. User Stories](#32-user-stories)
    - [3.3. Impact Mapping](#33-impact-mapping)
    - [3.4. Product Backlog](#34-product-backlog)
-- [2.5. Strategic-Level Domain-Driven Design](#25-strategic-level-domain-driven-design)
-    - [2.5.3. Software Architecture](#253-software-architecture)
-    - [2.5.3.1. Software Architecture Context Level Diagrams](#2531-software-architecture-context-level-diagrams)
-    - [2.5.3.2. Software Architecture Container Level Diagrams](#2532-software-architecture-container-level-diagrams)
-    - [2.5.3.3. Software Architecture Deployment Diagrams](#2533-software-architecture-deployment-diagrams)
+- [Capítulo IV: Product Architecture Design](#capítulo-iv-product-architecture-design)
+    - [4.1. Strategic-Level Domain-Driven Design](#41-strategic-level-domain-driven-design)
+    - [4.1.3. Software Architecture](#413-software-architecture)
+    - [4.1.3.1. Software Architecture System Landscape Diagram](#4131-software-architecture-system-landscape-diagram)
+    - [4.1.3.2. Software Architecture Context Level Diagrams](#4132-software-architecture-context-level-diagrams)
+    - [4.1.3.3. Software Architecture Container Level Diagrams](#4133-software-architecture-container-level-diagrams)
   
 # Capítulo I: Introducción
 
@@ -905,120 +906,310 @@ El Product Backlog se prioriza según el valor que cada User Story aporta al neg
 
 ---
 
-## 2.5. Strategic-Level Domain-Driven Design
+# Capítulo IV: Product Architecture Design
 
-### 2.5.3. Software Architecture
+## 4.1. Strategic-Level Domain-Driven Design
 
-En esta sección se presenta la representación de la Arquitectura de Software para la solución ParkLink, aplicando el modelo C4 (Context, Container, Component, Code) y utilizando Structurizr como herramienta de diagramación. La arquitectura abarca todos los productos digitales que forman parte del alcance de la solución: el Landing Page, la aplicación movil multiplataforma, los Web Services RESTful y los servicios externos integrados.
+### 4.1.3. Software Architecture
 
-ParkLink adopta una arquitectura basada en Domain-Driven Design (DDD), donde los bounded contexts identificados durante el proceso de EventStorming se reflejan directamente en la organización de los componentes del sistema. La solución se estructura en torno a los siguientes bounded contexts principales:
+La arquitectura de software de ParkLink se define a partir de los principales procesos del dominio identificados en las épicas, user stories y technical stories del proyecto. ParkLink conecta a conductores que necesitan encontrar y reservar estacionamientos con propietarios o empresarios que desean publicar, administrar y monetizar sus cocheras. Por ello, la arquitectura se organiza mediante Domain-Driven Design estratégico, separando el sistema en bounded contexts con responsabilidades explícitas y vocabulario propio.
 
-- **Parking Space Management**: Gestión de espacios de estacionamiento, publicación, configuración de horarios y precios.
-- **Reservation Management**: Creación, cancelación y extensión de reservas de estacionamiento.
-- **Payment Processing**: Procesamiento de pagos, reembolsos y generación de comprobantes.
-- **Identity & Access Management (IAM)**: Registro, autenticación y gestión de perfiles de usuario (conductores y propietarios).
-- **Notification Management**: Envío de notificaciones push y correos electrónicos sobre el estado de reservas y espacios.
+La separación por bounded contexts permite reducir acoplamiento entre capacidades que evolucionan por motivos distintos. La búsqueda de estacionamientos cambia por criterios de experiencia de usuario, mapas, filtros y disponibilidad visible; la reserva cambia por reglas transaccionales de bloqueo, cancelación y extensión; la publicación y monetización cambian por reglas de oferta, precios, pagos, reembolsos y comprobantes; y la identidad cambia por seguridad, autenticación y control de roles. Esta división evita concentrar todo el comportamiento en un único módulo ambiguo y permite que cada parte del sistema sea diseñada, probada y escalada según sus propios drivers arquitectónicos.
 
-A continuación se presentan los diagramas de arquitectura en los niveles de Context, Container y Deployment.
+ParkLink utiliza el C4 Model para representar la arquitectura en niveles progresivos. El System Landscape Diagram muestra el ecosistema completo, actores externos, sistemas externos y bounded contexts principales. Los Context Level Diagrams explican las responsabilidades y dependencias de cada bounded context. El Container Level Diagram muestra los contenedores ejecutables y de datos que soportan la solución, incluyendo aplicaciones cliente, API Gateway o Backend API, módulos backend, base de datos, cache de disponibilidad, object storage, pasarela de pagos, servicio de mapas y servicio de notificaciones.
 
----
+La comunicación entre contextos combina interacciones síncronas y eventos de dominio. Las consultas de búsqueda, autenticación y obtención de detalles se atienden mediante APIs REST/JSON sobre HTTPS. Las operaciones críticas, como crear una reserva, bloquear un espacio, confirmar un pago, cancelar una reserva o generar un reembolso, se tratan como comandos transaccionales donde el contexto propietario de la regla de negocio mantiene la consistencia. Para efectos secundarios como notificaciones, actualización de disponibilidad visible, emisión de comprobantes o sincronización de vistas de propietario, se utilizan eventos de dominio internos, de modo que la operación principal no dependa directamente de procesos secundarios.
 
-#### 2.5.3.1. Software Architecture Context Level Diagrams
+Desde el punto de vista de clasificación estratégica, el Core Domain de ParkLink es el Reservation Management Context. Este contexto captura la propuesta de valor central del producto: asegurar que un conductor pueda reservar un espacio real, bloquearlo durante el intervalo correspondiente, extenderlo si existe disponibilidad, cancelarlo bajo reglas definidas y mantener trazabilidad del ciclo de vida de la reserva. Si este contexto falla, ParkLink pierde confianza operativa aunque la búsqueda, los pagos o la autenticación funcionen correctamente.
 
-El diagrama de contexto muestra el sistema ParkLink como una unidad central, rodeado por los actores (usuarios) que interactúan con él y los sistemas externos de los cuales depende. Este nivel de abstracción permite visualizar el alcance general de la solución y sus fronteras.
-
-**Actores del sistema:**
-
-| Actor | Tipo | Descripcion |
+| Bounded Context | Clasificación estratégica | Sustento en el informe |
 |---|---|---|
-| Conductor Urbano | Persona | Busca, reserva y paga estacionamientos a traves de la aplicacion movil. |
-| Propietario de Estacionamiento | Persona | Publica, configura y gestiona sus espacios de estacionamiento, visualiza reservas e ingresos. |
-| Visitante | Persona | Accede al Landing Page para conocer el modelo de negocio y las caracteristicas de ParkLink. |
+| Reservation Management Context | Core Domain | Soporta EP02, US05, US06, US07, US08, TS01 y TS04. Controla el ciclo de vida de reservas, bloqueo de espacios, cancelaciones, extensiones e historial. |
+| Parking Discovery Context | Supporting Domain | Soporta EP01, US01, US02, US03, US04, TS02 y RNF02. Habilita búsqueda, mapa, filtros, detalle, disponibilidad visible y recomendación de opciones convenientes. |
+| Parking Supply & Monetization Context | Supporting Domain | Soporta EP03, EP04, US09 a US16, TS05 y TS06. Gestiona publicación de espacios, horarios, precios, ingresos, pagos, reembolsos y comprobantes. |
+| User & Identity Context | Generic Domain | Soporta EP05, US17, US18, US19 y TS03. Gestiona registro, autenticación JWT, roles y perfiles, capacidades comunes en sistemas digitales. |
 
-**Sistemas externos:**
+La arquitectura también prepara la escalabilidad futura. Inicialmente, los bounded contexts pueden implementarse como módulos dentro de un backend modular expuesto por una API RESTful. Sin embargo, sus límites explícitos permiten evolucionar hacia microservicios independientes cuando el volumen de reservas, búsquedas o pagos lo justifique. Esta decisión evita sobrediseñar el sistema desde el inicio, pero conserva una frontera clara para separar despliegue, base de datos o colas de eventos más adelante.
 
-| Sistema Externo | Descripcion |
+La seguridad se aborda de forma transversal, pero la responsabilidad primaria recae en el User & Identity Context mediante registro, autenticación con JWT, control de roles y separación de permisos entre conductor y propietario. Las operaciones críticas se protegen con validaciones de autorización, idempotencia en pagos, consistencia ACID en reservas y pagos, y separación entre la base de datos como fuente de verdad y la cache de disponibilidad como mecanismo de consulta rápida. Así, ParkLink evita que una disponibilidad mostrada en el mapa sea tratada como confirmación definitiva hasta que Reservation Management bloquee formalmente el espacio.
+
+#### 4.1.3.1. Software Architecture System Landscape Diagram
+
+El System Landscape Diagram muestra a ParkLink como sistema principal dentro del ecosistema de movilidad urbana. Los conductores interactúan con la plataforma para buscar, comparar, reservar, pagar y consultar sus reservas. Los propietarios o empresarios de estacionamientos interactúan con la plataforma para publicar espacios, configurar horarios y precios, gestionar reservas recibidas y consultar ingresos.
+
+```mermaid
+flowchart LR
+    Driver["Conductor urbano"]
+    Owner["Propietario o empresario de estacionamientos"]
+
+    subgraph ParkLink["ParkLink Platform"]
+        UI["Web Application / Mobile Application"]
+        Identity["User & Identity Context"]
+        Discovery["Parking Discovery Context"]
+        Reservation["Reservation Management Context"]
+        Supply["Parking Supply & Monetization Context"]
+
+        UI --> Identity
+        UI --> Discovery
+        UI --> Reservation
+        UI --> Supply
+        Discovery --> Reservation
+        Discovery --> Supply
+        Reservation --> Supply
+        Reservation --> Identity
+        Supply --> Identity
+    end
+
+    Payment["Pasarela de pagos"]
+    Maps["Servicio de mapas y geolocalización"]
+    Notifications["Servicio de notificaciones y correo"]
+    Storage["Object Storage compatible con S3"]
+
+    Driver -->|Busca, compara, reserva y paga| UI
+    Owner -->|Publica, configura y monetiza espacios| UI
+    Discovery -->|Calcula ubicación, distancia y mapa| Maps
+    Supply -->|Procesa cobros, reembolsos y comprobantes| Payment
+    Reservation -->|Confirma, cancela y actualiza reservas| Notifications
+    Identity -->|Verificación de cuenta y recuperación| Notifications
+    Supply -->|Almacena fotos de espacios| Storage
+    Discovery -->|Consulta imágenes publicadas| Storage
+```
+
+En el paisaje del sistema, ParkLink se ubica como el sistema que coordina la relación entre demanda y oferta de estacionamientos. La integración con el servicio de mapas y geolocalización sustenta las historias US01, US02, US03 y US04, donde el conductor necesita visualizar espacios cercanos, disponibilidad, precio, horario, distancia y valoración. La pasarela de pagos sustenta US14, US15 y US16, relacionadas con pago en línea, reembolsos y comprobantes. El servicio de notificaciones y correo sustenta EP06 y US20, además de flujos de verificación de cuenta. El object storage compatible con S3 se justifica por US04 y US09, donde los espacios requieren fotografías para ser publicados y evaluados por el conductor antes de reservar.
+
+#### 4.1.3.2. Software Architecture Context Level Diagrams
+
+Los diagramas de contexto muestran cada bounded context como una unidad funcional con propósito definido, actores, entradas, salidas, dependencias internas y sistemas externos relacionados. Esta separación permite defender la arquitectura desde DDD estratégico: cada contexto encapsula reglas propias y evita que conceptos como usuario, disponibilidad, reserva, espacio, pago o ingreso sean mezclados sin control.
+
+##### User & Identity Context
+
+```mermaid
+flowchart LR
+    Driver["Conductor"]
+    Owner["Propietario"]
+    App["Web/Mobile Application"]
+    Identity["User & Identity Context"]
+    Discovery["Parking Discovery Context"]
+    Reservation["Reservation Management Context"]
+    Supply["Parking Supply & Monetization Context"]
+    Email["Servicio de correo/notificaciones"]
+
+    Driver -->|Registro, login, perfil de conductor| App
+    Owner -->|Registro, login, perfil de propietario| App
+    App -->|Credenciales, datos de perfil, rol solicitado| Identity
+    Identity -->|JWT, rol, perfil autorizado| App
+    Identity -->|Valida usuario y rol| Discovery
+    Identity -->|Valida conductor para reservar| Reservation
+    Identity -->|Valida propietario para publicar y cobrar| Supply
+    Identity -->|Correo de verificación| Email
+```
+
+| Aspecto | Descripción |
 |---|---|
-| Payment Gateway (Stripe/MercadoPago) | Procesa pagos con tarjeta y billeteras digitales, gestiona reembolsos y genera comprobantes de transacciones. |
-| Email Service (SendGrid) | Envia correos electronicos transaccionales como confirmaciones de reserva, reembolsos y verificacion de cuentas. |
-| Push Notification Service (Firebase Cloud Messaging) | Envia notificaciones push a dispositivos moviles sobre el estado de reservas y alertas del sistema. |
-| Maps & Geolocation API (Google Maps Platform) | Provee servicios de geolocalizacion, calculo de distancias y visualizacion de mapas interactivos con marcadores de estacionamientos. |
+| Propósito | Gestionar registro, inicio de sesión, autenticación JWT, roles y perfiles de conductor y propietario. |
+| Actores | Conductores y propietarios. |
+| Contextos relacionados | Parking Discovery, Reservation Management y Parking Supply & Monetization consumen identidad, rol y permisos. |
+| Sistemas externos | Servicio de correo/notificaciones para verificación de cuenta y mensajes transaccionales. |
+| Entradas principales | Datos de registro, credenciales de inicio de sesión, selección de rol, datos de perfil de conductor o propietario. |
+| Salidas principales | JWT, usuario autenticado, perfil autorizado, rol de conductor o propietario, eventos de verificación de cuenta. |
+| Responsabilidad dentro del dominio | Proteger el acceso a funcionalidades y evitar que usuarios sin rol válido ejecuten acciones de reserva, publicación o monetización. |
 
-**Descripcion del diagrama:**
+Este contexto se separa porque la identidad es una capacidad transversal y genérica. No debe contener reglas de disponibilidad, reserva, precio o pago; su responsabilidad es autenticar, autorizar y proveer información confiable de usuario a los demás contextos.
 
-El sistema ParkLink se posiciona en el centro del diagrama. Los conductores urbanos interactuan con el sistema principalmente a traves de la aplicacion movil para buscar y reservar estacionamientos. Los propietarios utilizan la misma aplicacion para publicar y gestionar sus espacios. Los visitantes acceden al Landing Page para informarse sobre la plataforma. El sistema se conecta con el Payment Gateway para procesar transacciones financieras, con el Email Service para comunicaciones transaccionales, con el Push Notification Service para alertas en tiempo real, y con la Maps API para funcionalidades de geolocalizacion y visualizacion cartografica.
+##### Parking Discovery Context
 
-> Elaborado en Structurizr. Acceso al diagrama: [Pendiente - Insertar enlace al workspace de Structurizr]
+```mermaid
+flowchart LR
+    Driver["Conductor"]
+    App["Mobile Application"]
+    Discovery["Parking Discovery Context"]
+    Supply["Parking Supply & Monetization Context"]
+    Reservation["Reservation Management Context"]
+    Maps["Servicio de mapas/geolocalización"]
+    Storage["Object Storage S3-compatible"]
 
-![Software Architecture Context Diagram](assets/context-diagram.png)
+    Driver -->|Destino, filtros, selección de espacio| App
+    App -->|Consulta búsqueda y detalle| Discovery
+    Discovery -->|Espacios publicados, precio, horario, valoración| Supply
+    Discovery -->|Estados disponible, reservado u ocupado| Reservation
+    Discovery -->|Ubicación, distancia y mapa| Maps
+    Discovery -->|Fotos de espacios| Storage
+    Discovery -->|Resultados, comparación y recomendación| App
+```
 
----
+| Aspecto | Descripción |
+|---|---|
+| Propósito | Permitir búsqueda de estacionamientos, visualización en mapa, disponibilidad visible, comparación por precio, distancia, horario y valoración, y recomendación de la opción más conveniente. |
+| Actores | Conductores. |
+| Contextos relacionados | Consulta espacios publicados en Parking Supply & Monetization y estados de reserva en Reservation Management. |
+| Sistemas externos | Servicio de mapas/geolocalización y object storage para imágenes. |
+| Entradas principales | Destino, ubicación del conductor, filtros de precio, horario, distancia, selección de espacio. |
+| Salidas principales | Listado de espacios, marcadores de mapa, detalle del espacio, disponibilidad visible, recomendación de alternativa conveniente. |
+| Responsabilidad dentro del dominio | Convertir la oferta publicada y la disponibilidad de reservas en información útil para que el conductor tome una decisión informada. |
 
-#### 2.5.3.2. Software Architecture Container Level Diagrams
+Este contexto se separa porque sus reglas son principalmente de consulta, presentación y comparación. No debe confirmar reservas ni cobrar pagos. Esa separación evita que una búsqueda en mapa modifique accidentalmente el estado real de un espacio.
 
-El diagrama de contenedores muestra los elementos de alto nivel de la arquitectura de software de ParkLink y como se distribuyen las responsabilidades entre ellos. Se presentan las principales decisiones de tecnologia y la forma en que los containers se comunican entre si.
+##### Reservation Management Context
 
-**Containers identificados:**
+```mermaid
+flowchart LR
+    Driver["Conductor"]
+    App["Mobile Application"]
+    Reservation["Reservation Management Context"]
+    Identity["User & Identity Context"]
+    Supply["Parking Supply & Monetization Context"]
+    Discovery["Parking Discovery Context"]
+    Notifications["Servicio de notificaciones/correo"]
 
-| Container | Tecnologia | Descripcion |
-|---|---|---|
-| Landing Page | HTML5, CSS3, JavaScript | Sitio web estatico que presenta el modelo de negocio de ParkLink, las caracteristicas del producto, planes de servicio y permite la descarga de la aplicacion movil. Desplegado en GitHub Pages o Netlify. |
-| Mobile Application | Flutter (Dart) / Kotlin Multiplatform | Aplicacion movil nativa y multiplataforma que permite a conductores buscar y reservar estacionamientos, y a propietarios publicar y gestionar sus espacios. Incluye almacenamiento local con SQLite/Hive, acceso a GPS del dispositivo e integracion con servicios REST internos y APIs externas. |
-| API Gateway | Spring Cloud Gateway / Nginx | Punto de entrada unico para todas las solicitudes de la aplicacion movil hacia los servicios backend. Gestiona el enrutamiento, rate limiting y autenticacion de tokens JWT. |
-| RESTful Web Services | Spring Boot (Java) / .NET Core | Backend que expone endpoints RESTful organizados por bounded contexts. Implementa la logica de negocio, reglas de dominio y orquestacion de procesos. Documentado con OpenAPI/Swagger. |
-| Database | PostgreSQL / MySQL | Base de datos relacional que persiste la informacion de usuarios, espacios de estacionamiento, reservas, transacciones de pago y configuraciones del sistema. |
-| Cache Layer | Redis | Capa de cache para almacenar datos de sesion, tokens de autenticacion y resultados de consultas frecuentes como disponibilidad de espacios en tiempo real. |
+    Driver -->|Crear, cancelar, extender y consultar reservas| App
+    App -->|Comandos de reserva| Reservation
+    Reservation -->|Valida identidad y rol conductor| Identity
+    Reservation -->|Consulta espacio, precio, horario y disponibilidad base| Supply
+    Reservation -->|Publica cambios de disponibilidad| Discovery
+    Reservation -->|Reserva confirmada, cancelada o extendida| Notifications
+    Reservation -->|Confirmación, código, historial y estado| App
+```
 
-**Comunicacion entre containers:**
+| Aspecto | Descripción |
+|---|---|
+| Propósito | Controlar el ciclo de vida de la reserva: creación, bloqueo de espacio, cancelación, extensión, historial y estados. |
+| Actores | Conductores; propietarios como receptores de reservas recibidas mediante el contexto de supply. |
+| Contextos relacionados | User & Identity para validar usuarios, Parking Supply & Monetization para datos de espacio y reglas económicas, Parking Discovery para publicar cambios de disponibilidad. |
+| Sistemas externos | Servicio de notificaciones/correo para confirmaciones y cambios de estado. |
+| Entradas principales | Espacio seleccionado, fecha, hora de inicio, duración, solicitud de cancelación, solicitud de extensión. |
+| Salidas principales | Reserva confirmada, código de confirmación, espacio bloqueado, reserva cancelada, reserva extendida, historial de reservas. |
+| Responsabilidad dentro del dominio | Garantizar consistencia operacional y evitar sobre-reservas mediante reglas transaccionales sobre el estado de cada reserva. |
 
-- La **Mobile Application** se comunica con el **API Gateway** mediante solicitudes HTTPS (REST/JSON).
-- El **API Gateway** enruta las solicitudes hacia los **RESTful Web Services** correspondientes segun el bounded context.
-- Los **RESTful Web Services** persisten y consultan datos en la **Database** mediante JPA/Hibernate.
-- Los **RESTful Web Services** utilizan la **Cache Layer** para optimizar consultas de alta frecuencia como la disponibilidad de espacios.
-- Los **RESTful Web Services** se integran con sistemas externos (Payment Gateway, Email Service, Push Notifications, Maps API) mediante clientes HTTP y SDKs oficiales.
-- El **Landing Page** es independiente y no tiene comunicacion directa con el backend; funciona como sitio estatico informativo.
+Este contexto se separa porque representa el Core Domain. La reserva tiene reglas de consistencia más estrictas que la búsqueda o la publicación: debe bloquear un espacio, controlar estados y coordinar cambios sin depender de vistas cacheadas. Mezclar esta lógica con búsqueda o pagos aumentaría el riesgo de sobreventa, cancelaciones incorrectas o extensiones inconsistentes.
 
-> Elaborado en Structurizr. Acceso al diagrama: [Pendiente - Insertar enlace al workspace de Structurizr]
+##### Parking Supply & Monetization Context
 
-![Software Architecture Container Diagram](assets/container-diagram.png)
+```mermaid
+flowchart LR
+    Owner["Propietario"]
+    Driver["Conductor"]
+    App["Web/Mobile Application"]
+    Supply["Parking Supply & Monetization Context"]
+    Identity["User & Identity Context"]
+    Discovery["Parking Discovery Context"]
+    Reservation["Reservation Management Context"]
+    Payment["Pasarela de pagos"]
+    Storage["Object Storage S3-compatible"]
+    Notifications["Servicio de notificaciones/correo"]
 
----
+    Owner -->|Publica espacios, configura horarios y precios| App
+    Driver -->|Paga, solicita reembolso, consulta comprobante| App
+    App -->|Comandos de publicación, precio, pago e ingresos| Supply
+    Supply -->|Valida propietario y conductor| Identity
+    Supply -->|Expone espacios publicados y condiciones comerciales| Discovery
+    Supply -->|Entrega precio, disponibilidad base y reglas económicas| Reservation
+    Supply -->|Cobro, reembolso y comprobante| Payment
+    Supply -->|Fotos de espacios| Storage
+    Supply -->|Avisos de pago, reembolso y reserva recibida| Notifications
+```
 
-#### 2.5.3.3. Software Architecture Deployment Diagrams
+| Aspecto | Descripción |
+|---|---|
+| Propósito | Gestionar publicación de espacios, horarios, precios, habilitación/deshabilitación, reservas recibidas por propietarios, ingresos, pagos, reembolsos y comprobantes. |
+| Actores | Propietarios o empresarios de estacionamientos y conductores cuando realizan pagos o consultan comprobantes. |
+| Contextos relacionados | User & Identity para roles, Parking Discovery para visibilidad de espacios, Reservation Management para precio, reserva activa, cancelaciones y extensión. |
+| Sistemas externos | Pasarela de pagos, object storage compatible con S3 y servicio de notificaciones/correo. |
+| Entradas principales | Datos del espacio, fotos, dirección, precio por hora, horario disponible, cambio de estado, solicitud de pago, cancelación con reembolso, consulta de ingresos. |
+| Salidas principales | Espacio publicado, espacio oculto, precio vigente, comprobante, reembolso, historial de ingresos, notificación al propietario. |
+| Responsabilidad dentro del dominio | Administrar la oferta monetizable de estacionamientos y las reglas económicas asociadas al cobro, reembolso e ingreso del propietario. |
 
-El diagrama de despliegue muestra la distribucion fisica del sistema ParkLink, destacando como los componentes del software se despliegan sobre la infraestructura de hardware y servicios en la nube. Este diagrama visualiza los servidores, servicios cloud, redes y dispositivos que alojan el software, asi como las relaciones y dependencias entre los distintos nodos.
+Este contexto se separa porque combina reglas de oferta y monetización que pertenecen al propietario y al flujo financiero. Aunque se comunica con Reservation Management, no debe decidir el ciclo de vida completo de una reserva; su responsabilidad es proveer condiciones comerciales, procesar pagos y registrar ingresos.
 
-**Nodos de despliegue:**
+#### 4.1.3.3. Software Architecture Container Level Diagrams
 
-| Nodo | Tipo | Descripcion |
-|---|---|---|
-| Dispositivo Movil del Usuario | Device | Smartphone Android o iOS donde se ejecuta la aplicacion movil ParkLink. Incluye almacenamiento local (SQLite/Hive) y acceso a sensores del dispositivo (GPS, camara). |
-| GitHub Pages / Netlify | Cloud Service | Plataforma de hosting estatico donde se despliega el Landing Page. Provee CDN, certificado SSL y despliegue automatizado desde el repositorio de GitHub. |
-| Cloud Provider (AWS / Azure / Railway) | Cloud Infrastructure | Infraestructura en la nube que aloja los servicios backend. Incluye instancias de computo para los Web Services, base de datos gestionada y servicios de cache. |
-| Compute Instance | Virtual Server | Instancia de computo (EC2 / App Service / Railway Container) que ejecuta los RESTful Web Services empaquetados como contenedores Docker o JARs ejecutables. |
-| Managed Database | Database Service | Servicio de base de datos gestionado (RDS / Azure Database / Railway PostgreSQL) que aloja la base de datos PostgreSQL con backups automaticos y alta disponibilidad. |
-| Redis Cloud | Cache Service | Servicio de cache gestionado (ElastiCache / Redis Cloud) para almacenamiento en memoria de sesiones, tokens y datos de disponibilidad en tiempo real. |
-| Firebase | Mobile Service | Plataforma que provee Firebase Cloud Messaging para notificaciones push y Firebase App Distribution para la distribucion de versiones de prueba de la aplicacion movil. |
+El Container Level Diagram muestra cómo los productos digitales y servicios técnicos soportan los bounded contexts. La arquitectura puede implementarse inicialmente como backend modular con módulos alineados a los contextos, manteniendo la posibilidad de extraerlos como microservicios si el crecimiento del producto lo requiere.
 
-**Flujo de despliegue:**
+```mermaid
+flowchart TB
+    Driver["Conductor"]
+    Owner["Propietario / Empresario"]
 
-1. El **Landing Page** se despliega automaticamente en GitHub Pages/Netlify mediante un pipeline de CI/CD vinculado al repositorio de GitHub. Los visitantes acceden a traves de un navegador web via HTTPS.
+    subgraph Clients["Client Applications"]
+        Mobile["Mobile Application"]
+        Web["Web Application"]
+    end
 
-2. Los **RESTful Web Services** se empaquetan como contenedores Docker y se despliegan en la instancia de computo del cloud provider. El proceso de despliegue sigue un pipeline de CI/CD que ejecuta pruebas automatizadas, construye la imagen Docker y la despliega en el entorno de produccion.
+    Gateway["API Gateway / Backend API"]
 
-3. La **Mobile Application** se distribuye a traves de Firebase App Distribution durante las fases de prueba y validacion. La version final se publica en Google Play Store y Apple App Store. La aplicacion se comunica con los Web Services a traves de HTTPS via el API Gateway desplegado en el cloud provider.
+    subgraph Backend["ParkLink Backend - RESTful Services / Modules"]
+        IdentitySvc["User & Identity Service"]
+        DiscoverySvc["Parking Discovery Service"]
+        ReservationSvc["Reservation Management Service"]
+        SupplySvc["Parking Supply & Monetization Service"]
+        EventBus["Internal Domain Event Bus"]
+    end
 
-4. La **Database** se ejecuta como un servicio gestionado en el cloud provider, con conexion privada hacia las instancias de computo que alojan los Web Services. Se configuran backups automaticos diarios y replicacion para alta disponibilidad.
+    Database[("Main Relational Database")]
+    Cache[("Availability Cache")]
+    ObjectStorage["Object Storage S3-compatible"]
+    Payment["Payment Gateway"]
+    Maps["Maps & Geolocation API"]
+    Notifications["Notification / Email Service"]
 
-5. Los **servicios externos** (Payment Gateway, Email Service, Maps API) se integran mediante conexiones HTTPS salientes desde los Web Services, utilizando las API keys y credenciales configuradas como variables de entorno en el entorno de despliegue.
+    Driver --> Mobile
+    Owner --> Mobile
+    Owner --> Web
 
-> Elaborado en Structurizr. Acceso al diagrama: [Pendiente - Insertar enlace al workspace de Structurizr]
+    Mobile -->|HTTPS REST/JSON| Gateway
+    Web -->|HTTPS REST/JSON| Gateway
 
-![Software Architecture Deployment Diagram](assets/deployment-diagram.png)
+    Gateway --> IdentitySvc
+    Gateway --> DiscoverySvc
+    Gateway --> ReservationSvc
+    Gateway --> SupplySvc
 
-## 4.1.5 Relational / Non-Relational Database Diagram
+    IdentitySvc --> Database
+    DiscoverySvc --> Database
+    ReservationSvc --> Database
+    SupplySvc --> Database
 
-### Justificación del modelo relacional
+    DiscoverySvc --> Cache
+    ReservationSvc --> Cache
+    SupplySvc --> Cache
+
+    DiscoverySvc --> Maps
+    DiscoverySvc --> ObjectStorage
+    SupplySvc --> ObjectStorage
+    SupplySvc --> Payment
+    ReservationSvc --> Notifications
+    SupplySvc --> Notifications
+    IdentitySvc --> Notifications
+
+    ReservationSvc --> EventBus
+    SupplySvc --> EventBus
+    EventBus --> DiscoverySvc
+    EventBus --> Notifications
+```
+
+| Contenedor | Responsabilidad | Tecnología sugerida | Comunicación | Bounded context soportado |
+|---|---|---|---|---|
+| Mobile Application | Permitir a conductores buscar, comparar, reservar, pagar, cancelar, extender reservas y consultar historial; también permite a propietarios gestionar funciones principales desde móvil si el flujo lo requiere. | Aplicación móvil multiplataforma permitida por la guía del curso. | Consume API Gateway mediante HTTPS REST/JSON; usa GPS del dispositivo para búsquedas por ubicación. | User & Identity, Parking Discovery, Reservation Management, Parking Supply & Monetization. |
+| Web Application | Permitir a propietarios o empresarios administrar espacios, horarios, precios, reservas recibidas e ingresos desde una interfaz más adecuada para gestión. | Aplicación web responsive con HTML, CSS, JavaScript o framework web compatible con el stack del equipo. | Consume API Gateway mediante HTTPS REST/JSON. | User & Identity, Parking Supply & Monetization, Reservation Management. |
+| API Gateway / Backend API | Centralizar entrada al backend, validar tokens JWT, enrutar solicitudes a módulos por bounded context y exponer documentación OpenAPI. | RESTful API; Node.js/Express.js o framework REST equivalente permitido por la guía. | Recibe HTTPS desde aplicaciones cliente; enruta a servicios internos. | Transversal a los cuatro bounded contexts. |
+| User & Identity Service | Gestionar registro, login, JWT, roles, perfiles de conductor y propietario. | Módulo backend REST con hashing seguro de contraseñas y JWT. | Lee/escribe en base de datos; envía correos de verificación; provee identidad a otros módulos. | User & Identity Context. |
+| Parking Discovery Service | Resolver búsquedas, filtros, detalle, disponibilidad visible, mapa y recomendación de estacionamientos. | Módulo backend REST optimizado para consultas e integración con mapas. | Consulta base de datos, cache de disponibilidad, Maps API y object storage. | Parking Discovery Context. |
+| Reservation Management Service | Crear reservas, bloquear espacios, cancelar, extender, consultar historial y controlar estados de reserva. | Módulo backend REST con reglas transaccionales y validaciones de concurrencia. | Lee/escribe en base de datos; actualiza cache; emite eventos; solicita notificaciones. | Reservation Management Context. |
+| Parking Supply & Monetization Service | Publicar espacios, configurar horarios y precios, habilitar/deshabilitar disponibilidad, gestionar reservas recibidas, ingresos, pagos, reembolsos y comprobantes. | Módulo backend REST con integración a pasarela de pagos y object storage. | Lee/escribe en base de datos; se integra con Payment Gateway, object storage y notificaciones. | Parking Supply & Monetization Context. |
+| Main Relational Database | Persistir usuarios, perfiles, espacios, disponibilidad base, reservas, pagos, comprobantes, reseñas y notificaciones. | MySQL, coherente con la justificación relacional del informe. | Accedida únicamente por servicios backend; cada contexto mantiene propiedad lógica de sus datos. | Soporte persistente para los cuatro bounded contexts. |
+| Availability Cache | Acelerar consultas de disponibilidad visible y reducir carga sobre la base de datos en búsquedas frecuentes. | Redis. | Actualizada por Reservation Management y Supply; consultada por Parking Discovery. | Parking Discovery y Reservation Management. |
+| Internal Domain Event Bus | Desacoplar efectos secundarios como notificaciones, actualización de disponibilidad visible y sincronización de vistas. | Bus de eventos interno o message broker según evolución del despliegue. | Recibe eventos desde servicios de dominio y los entrega a consumidores internos. | Principalmente Reservation Management, Parking Discovery y Parking Supply & Monetization. |
+| Object Storage S3-compatible | Almacenar imágenes de espacios de estacionamiento publicadas por propietarios. | Servicio compatible con S3. | Supply sube imágenes; Discovery recupera imágenes para detalle de espacios. | Parking Supply & Monetization y Parking Discovery. |
+| Payment Gateway | Procesar pagos en línea, reembolsos y confirmación de transacciones. | Stripe, MercadoPago o proveedor equivalente. | Integración HTTPS desde Parking Supply & Monetization. | Parking Supply & Monetization. |
+| Maps & Geolocation API | Proveer mapas, geocodificación, distancias y visualización de marcadores. | Google Maps Platform o proveedor equivalente. | Consultado por Parking Discovery. | Parking Discovery Context. |
+| Notification / Email Service | Enviar correos y notificaciones push sobre verificación de cuenta, confirmación de reserva, cancelación, reembolso y reserva recibida. | Firebase Cloud Messaging y servicio SMTP/SendGrid. | Recibe solicitudes o eventos desde Identity, Reservation y Supply. | User & Identity, Reservation Management, Parking Supply & Monetization. |
+
+Esta estructura soporta las user stories principales del backlog. US01 a US04 se resuelven mediante Mobile Application, API Gateway, Parking Discovery Service, Maps API, cache de disponibilidad y object storage. US05 a US08 se resuelven mediante Reservation Management Service, base de datos relacional, cache y eventos de notificación. US09 a US13 se resuelven mediante Parking Supply & Monetization Service, Web/Mobile Application, object storage y base de datos. US14 a US16 se resuelven mediante la integración entre Parking Supply & Monetization Service y Payment Gateway. US17 a US19 se resuelven mediante User & Identity Service con JWT y roles. US20 se resuelve mediante eventos de reserva confirmada y el servicio de notificaciones/correo.
+
+La base de datos relacional se mantiene como fuente de verdad para reservas y pagos porque estas operaciones requieren consistencia fuerte. La cache no reemplaza esa fuente de verdad; solo acelera la lectura de disponibilidad para el conductor. Esta decisión es clave: una disponibilidad mostrada en el mapa no equivale a una reserva confirmada hasta que el Reservation Management Context haya bloqueado el espacio y registrado el estado correspondiente.
+
+### 4.1.5 Relational / Non-Relational Database Diagram
+
+#### Justificación del modelo relacional
 
 Los datos de ParkLink tienen una estructura bien definida y relaciones claras:
 
@@ -1030,9 +1221,9 @@ Los datos de ParkLink tienen una estructura bien definida y relaciones claras:
 
 ---
 
-##  Diagrama Entidad-Relación
+#### Diagrama Entidad-Relación
 
-###  Descripción de Tablas
+##### Descripción de Tablas
 
 | Tabla | Propósito | Columnas clave |
 |------|----------|---------------|
@@ -1044,7 +1235,7 @@ Los datos de ParkLink tienen una estructura bien definida y relaciones claras:
 | **REVIEWS** | Reseñas | review_id (PK), reservation_id (FK), driver_id (FK), rating, comment |
 | **NOTIFICATIONS** | Notificaciones | notification_id (PK), user_id (FK), type, message, is_read, sent_at |
 
-##  4.1.6 Design Patterns
+### 4.1.6 Design Patterns
 
 | ID | Patrón | Categoría | Uso |
 |----|--------|----------|-----|
@@ -1059,6 +1250,4 @@ Los datos de ParkLink tienen una estructura bien definida y relaciones claras:
 | DP-09 | CQRS | Arquitectural | Separación lectura/escritura |
 | DP-10 | State | Comportamental | Estados de reservas |
 
-## 4.1.7 Tactics
-
-
+### 4.1.7 Tactics
