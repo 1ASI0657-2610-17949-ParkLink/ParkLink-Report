@@ -1126,34 +1126,180 @@ _Pendiente de completar._
 
 ## 4.2. Architectural Drivers
 
+Los **Architectural Drivers** de **ParkLink** representan los requerimientos funcionales clave, atributos de calidad, restricciones y preocupaciones arquitectónicas que influyen directamente en el diseño de la solución.
+
+ParkLink busca resolver el problema de la dificultad para encontrar estacionamiento en entornos urbanos, conectando a **conductores** que necesitan reservar espacios con **propietarios** que desean monetizar sus cocheras. A nivel arquitectónico, esto exige una solución que soporte:
+
+- búsqueda de espacios en tiempo real,
+- gestión de disponibilidad,
+- reservas confiables,
+- pagos seguros,
+- roles diferenciados,
+- y notificaciones oportunas.
+  
 ### 4.1.8. Design Purpose
 
-_Pendiente de completar._
+El propósito de diseño de **ParkLink** es definir una arquitectura de software que soporte de manera eficiente, segura y escalable la **búsqueda, reserva, publicación, administración y monetización de espacios de estacionamiento**.
+
+La solución debe permitir:
+
+- a los **conductores**, buscar y reservar estacionamientos disponibles;
+- a los **propietarios**, publicar, configurar y gestionar sus espacios;
+- al sistema, procesar pagos, cancelaciones, reembolsos y notificaciones;
+- y a la plataforma, crecer de forma modular y mantenible.
+
+### Tabla: Design Purpose de ParkLink
+
+| Elemento | Descripción |
+|---|---|
+| **Propósito del negocio** | Reducir el tiempo de búsqueda de estacionamiento y monetizar espacios subutilizados. |
+| **Propósito del sistema** | Proveer una plataforma digital para búsqueda, reserva, publicación, administración y pago de estacionamientos. |
+| **Stakeholders principales** | Conductores, propietarios de estacionamientos, administradores del sistema y servicios externos. |
+| **Valor esperado** | Mejorar la movilidad urbana, reducir estrés y tiempo perdido, y generar ingresos para propietarios. |
+| **Implicancia arquitectónica** | Se requiere modularidad, seguridad, integridad transaccional, buena experiencia de usuario y capacidad de escalamiento. |
 
 ---
 
 ### 4.1.9. Primary Functionality (Primary User Stories)
 
-_Pendiente de completar._
 
+La funcionalidad primaria de ParkLink se deriva de las **user stories** más importantes del backlog, especialmente aquellas que soportan la propuesta de valor principal del sistema.
+
+### Tabla: Primary User Stories de ParkLink
+
+| Prioridad | User Story ID | Título | Actor | Relevancia arquitectónica |
+|---|---|---|---|---|
+| 1 | **US01** | Buscar estacionamientos por ubicación | Conductor | Requiere geolocalización, búsquedas rápidas y consulta de espacios disponibles. |
+| 2 | **US02** | Ver disponibilidad en tiempo real | Conductor | Exige consistencia y actualización de estados de espacios. |
+| 3 | **US05** | Reservar un espacio de estacionamiento | Conductor | Requiere validación, bloqueo de espacio y control de concurrencia. |
+| 4 | **US14** | Pagar una reserva en línea | Conductor | Exige integración con pasarela de pago y trazabilidad. |
+| 5 | **US09** | Registrar un espacio de estacionamiento | Propietario | Requiere gestión estructurada de espacios y datos del propietario. |
+| 6 | **US10** | Configurar horarios y precio del espacio | Propietario | Obliga a definir disponibilidad configurable y reglas de monetización. |
+| 7 | **US11** | Habilitar y deshabilitar un espacio | Propietario | Requiere actualización inmediata de estado y sincronización con las búsquedas. |
+| 8 | **US12** | Ver reservas activas de mi espacio | Propietario | Necesita panel de gestión y visualización clara de reservas. |
+| 9 | **US15** | Recibir reembolso por cancelación | Conductor | Requiere consistencia en la lógica de pagos y cancelaciones. |
+| 10 | **US20** | Recibir notificación de reserva confirmada | Conductor | Exige un módulo desacoplado de notificaciones. |
+
+### Funcionalidades primarias agrupadas
+
+#### 1. Búsqueda y descubrimiento de estacionamientos
+
+- Buscar estacionamientos por ubicación.
+- Ver disponibilidad en tiempo real.
+- Filtrar por precio y horario.
+- Ver el detalle completo de un espacio.
+
+#### 2. Reserva y gestión de reservas
+
+- Reservar un espacio.
+- Cancelar una reserva.
+- Ver historial de reservas.
+- Extender tiempo de reserva activa.
+
+#### 3. Publicación y gestión de espacios
+
+- Registrar un espacio.
+- Configurar horarios y precio.
+- Habilitar/deshabilitar disponibilidad.
+- Ver reservas activas.
+- Ver historial de ingresos.
+
+#### 4. Pagos y monetización
+
+- Pagar una reserva en línea.
+- Recibir reembolso por cancelación.
+- Ver comprobantes de pago.
+
+#### 5. Gestión de usuarios y acceso
+
+- Registrarse como conductor.
+- Registrarse como propietario.
+- Iniciar sesión.
+
+#### 6. Notificaciones
+
+- Recibir confirmación de reserva y eventos asociados.
 ---
 
 ### 4.1.10. Quality Attribute Scenarios
 
-_Pendiente de completar._
+Los siguientes escenarios de atributos de calidad permiten definir el comportamiento esperado del sistema desde una perspectiva no funcional.
 
+### Tabla: Quality Attribute Scenarios
+
+| ID | Atributo | Fuente | Estímulo | Entorno | Artefacto | Respuesta esperada | Métrica |
+|---|---|---|---|---|---|---|---|
+| **QAS-01** | Performance | Conductor | Busca estacionamientos por ubicación | Operación normal | Servicio de búsqueda | El sistema muestra resultados cercanos con precio, horario y distancia. | 95% de búsquedas en **≤ 3 segundos**. |
+| **QAS-02** | Performance / Consistency | Conductor | Intenta reservar un espacio disponible | Alta concurrencia | Servicio de reservas | El sistema valida disponibilidad y confirma la reserva sin duplicidad. | Confirmación en **≤ 5 segundos** y **0 dobles reservas**. |
+| **QAS-03** | Availability | Usuario | Se presenta una falla parcial del sistema | Producción | Plataforma general | El sistema recupera servicios críticos y mantiene continuidad operativa. | Disponibilidad mensual de **99.5%**. |
+| **QAS-04** | Security | Usuario / atacante | Intenta acceder a datos o transacciones sin autorización | Producción | Servicios de autenticación y pagos | El sistema protege credenciales, roles y transacciones. | 100% tráfico bajo **HTTPS**, contraseñas cifradas. |
+| **QAS-05** | Usability | Propietario | Registra un nuevo espacio | Operación normal | Módulo de publicación | El sistema guía al usuario de forma sencilla y clara. | Registro exitoso en **≤ 10 minutos**. |
+| **QAS-06** | Scalability | Negocio | Aumenta la cantidad de usuarios y reservas | Crecimiento de demanda | Arquitectura del sistema | El sistema mantiene un desempeño aceptable al escalar. | Soportar crecimiento sin degradación crítica. |
+| **QAS-07** | Modifiability | Equipo de desarrollo | Se necesita integrar otra pasarela de pago o canal de notificación | Evolución del sistema | Módulos de integración | El cambio puede implementarse con bajo impacto en el resto del sistema. | Afectar como máximo **1 o 2 módulos principales**. |
+| **QAS-08** | Interoperability | Servicio externo | Se conecta un servicio de mapas o pagos | Producción | Adaptadores e integraciones | El sistema intercambia información correctamente con APIs externas. | Integración exitosa mediante **REST APIs**. |
+
+### Atributos de calidad prioritarios
+
+Los atributos más importantes para ParkLink son:
+
+- **Performance**, por la necesidad de búsquedas y reservas rápidas.
+- **Consistency**, para evitar reservas duplicadas.
+- **Security**, debido al manejo de credenciales y pagos.
+- **Availability**, porque el usuario necesita la plataforma cuando se moviliza.
+- **Usability**, tanto para conductores como propietarios.
+- **Modifiability**, para facilitar futuras mejoras e integraciones.
 ---
 
 ### 4.1.11. Constraints
 
-_Pendiente de completar._
+Las restricciones delimitan las decisiones arquitectónicas y el alcance técnico de la solución.
+
+### Tabla: Constraints de ParkLink
+
+| ID | Tipo | Restricción | Implicancia arquitectónica |
+|---|---|---|---|
+| **C-01** | Negocio | La solución se enfoca en dos segmentos principales: conductores y propietarios. | La arquitectura debe manejar roles y permisos diferenciados. |
+| **C-02** | Alcance | El MVP se centra en búsqueda, reserva, publicación de espacios, pagos y notificaciones. | Se priorizan módulos esenciales del dominio. |
+| **C-03** | Dominio | El sistema debe evitar dobles reservas para un mismo espacio y horario. | Se requiere control transaccional y validación concurrente. |
+| **C-04** | Técnico | Debe integrarse con servicios de mapas/geolocalización y pasarelas de pago. | Se necesitan adaptadores o capas de integración desacopladas. |
+| **C-05** | Plataforma | La solución debe ser accesible desde web y dispositivos móviles. | Debe contemplarse arquitectura responsive o mobile-friendly. |
+| **C-06** | Seguridad | No se deben almacenar datos sensibles de pago de forma insegura. | Es obligatorio usar pasarelas externas y buenas prácticas de protección. |
+| **C-07** | Proyecto | El sistema se desarrolla en un contexto académico con tiempo y recursos limitados. | Se debe priorizar claridad, modularidad y foco en el MVP. |
+| **C-08** | Evolución | La solución debe permitir crecimiento futuro hacia más usuarios y ubicaciones. | La arquitectura debe ser escalable y mantenible. |
+| **C-09** | Arquitectura | El sistema debe mantener separación de responsabilidades por dominio. | Justifica el uso de bounded contexts. |
+| **C-10** | Trazabilidad | Las operaciones críticas deben quedar registradas. | Requiere persistencia confiable y seguimiento de eventos de negocio. |
 
 ---
 
 ### 4.1.12. Architectural Concerns
 
-_Pendiente de completar._
+Las preocupaciones arquitectónicas representan los aspectos que más importan a los stakeholders y que deben influir directamente en el diseño.
 
+### Tabla: Architectural Concerns de ParkLink
+
+| ID | Stakeholder | Concern | Descripción | Impacto arquitectónico |
+|---|---|---|---|---|
+| **AC-01** | Conductores | Disponibilidad real de espacios | Los usuarios necesitan confiar en la disponibilidad que ven en la app. | Exige sincronización y actualización confiable de estados. |
+| **AC-02** | Conductores / Propietarios | Conflictos de reserva | No deben ocurrir reservas simultáneas sobre el mismo espacio. | Requiere validación fuerte y control de concurrencia. |
+| **AC-03** | Conductores | Rapidez de búsqueda y reserva | El valor principal del producto es ahorrar tiempo. | Obliga a optimizar consultas, filtros y respuestas. |
+| **AC-04** | Propietarios | Facilidad para publicar y administrar espacios | Si el proceso es complejo, el propietario no adoptará la plataforma. | Se necesita una interfaz simple y flujos claros. |
+| **AC-05** | Todos los usuarios | Seguridad y confianza | Los usuarios deben confiar en el sistema para registrarse, reservar y pagar. | Requiere autenticación robusta, autorización por roles y pagos seguros. |
+| **AC-06** | Startup | Integración con servicios externos | El sistema depende de mapas, pagos y posiblemente notificaciones push o correo. | La arquitectura debe desacoplar integraciones externas. |
+| **AC-07** | Startup | Escalabilidad del producto | La plataforma debe crecer en número de usuarios y zonas disponibles. | Se favorece diseño modular y separación por contextos. |
+| **AC-08** | Equipo de desarrollo | Mantenibilidad | La solución evolucionará con nuevas funcionalidades. | Es clave mantener bajo acoplamiento y alta cohesión. |
+| **AC-09** | Negocio | Trazabilidad de operaciones | Reservas, cancelaciones, pagos y reembolsos deben quedar registrados. | Obliga a contar con persistencia clara e historial de operaciones. |
+| **AC-10** | Usuario final | Experiencia móvil | Muchos usuarios accederán desde el celular mientras se movilizan. | Debe priorizarse la experiencia móvil y tiempos de respuesta bajos. |
+
+### Concerns más críticos
+
+Los concerns más críticos para ParkLink son:
+
+1. **Exactitud de la disponibilidad de espacios**
+2. **Prevención de doble reserva**
+3. **Seguridad en autenticación y pagos**
+4. **Rendimiento de búsqueda y reserva**
+5. **Facilidad de uso para conductores y propietarios**
+6. **Capacidad de crecimiento e integración**
 ---
 
 ## 4.3. ADD Iterations
