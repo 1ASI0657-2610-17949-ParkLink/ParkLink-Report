@@ -1015,3 +1015,50 @@ El diagrama de despliegue muestra la distribucion fisica del sistema ParkLink, d
 > Elaborado en Structurizr. Acceso al diagrama: [Pendiente - Insertar enlace al workspace de Structurizr]
 
 ![Software Architecture Deployment Diagram](assets/deployment-diagram.png)
+
+## 4.1.5 Relational / Non-Relational Database Diagram
+
+### Justificación del modelo relacional
+
+Los datos de ParkLink tienen una estructura bien definida y relaciones claras:
+
+> reservas → espacios → usuarios → pagos
+
+- ✅ MySQL es compatible con Node.js/Express.js y soporta claves foráneas.
+- ✅ El negocio requiere consistencia **ACID** (reservas, pagos, cancelaciones).
+- ✅ Las consultas (filtros por ubicación, precio, horario) se optimizan con **índices y JOINs**.
+
+---
+
+##  Diagrama Entidad-Relación
+
+###  Descripción de Tablas
+
+| Tabla | Propósito | Columnas clave |
+|------|----------|---------------|
+| **USERS** | Perfil de usuario | user_id (PK), name, email, password_hash, role, phone, created_at |
+| **PARKING_SPACES** | Espacios registrados | space_id (PK), owner_id (FK), address, latitude, longitude, price_per_hour, status |
+| **AVAILABILITY** | Horarios disponibles | availability_id (PK), space_id (FK), day_of_week, start_time, end_time |
+| **RESERVATIONS** | Reservas realizadas | reservation_id (PK), driver_id (FK), space_id (FK), start_datetime, end_datetime, status, total_amount |
+| **PAYMENTS** | Pagos | payment_id (PK), reservation_id (FK), amount, method, status, transaction_date |
+| **REVIEWS** | Reseñas | review_id (PK), reservation_id (FK), driver_id (FK), rating, comment |
+| **NOTIFICATIONS** | Notificaciones | notification_id (PK), user_id (FK), type, message, is_read, sent_at |
+
+##  4.1.6 Design Patterns
+
+| ID | Patrón | Categoría | Uso |
+|----|--------|----------|-----|
+| DP-01 | Repository | Acceso a datos | Abstrae MySQL y facilita testing |
+| DP-02 | Observer / Event Bus | Comportamental | Manejo de eventos desacoplados |
+| DP-03 | Strategy | Comportamental | Métodos de pago intercambiables |
+| DP-04 | Chain of Responsibility | Comportamental | Validación paso a paso |
+| DP-05 | Singleton | Creacional | Instancia única de servicios |
+| DP-06 | Factory Method | Creacional | Creación de notificaciones |
+| DP-07 | Command | Comportamental | Encapsulación de reservas |
+| DP-08 | Decorator | Estructural | Añade funcionalidades dinámicas |
+| DP-09 | CQRS | Arquitectural | Separación lectura/escritura |
+| DP-10 | State | Comportamental | Estados de reservas |
+
+## 4.1.7 Tactics
+
+
