@@ -63,7 +63,9 @@
  - [Capítulo III: Requirements Specification](#capítulo-iii-requirements-specification)
    - [3.1. To-Be Scenario Mapping](#31-to-be-scenario-mapping)
    - [3.2. User Stories](#32-user-stories)
+   - [3.2.1. Technical Stories y requisitos no funcionales](#321-technical-stories-y-requisitos-no-funcionales)
    - [3.3. Impact Mapping](#33-impact-mapping)
+   - [3.3.1. Principales riesgos de la aplicación](#331-principales-riesgos-de-la-aplicación)
    - [3.4. Product Backlog](#34-product-backlog)
 - [2.5. Strategic-Level Domain-Driven Design](#25-strategic-level-domain-driven-design)
     - [2.5.3. Software Architecture](#253-software-architecture)
@@ -95,11 +97,11 @@ Sostenibilidad urbana
 #### 1.1.2. Perfiles de integrantes del equipo
 | Nombre                          | Descripción                                                                                                                                                                                                                                                                                                                                 | Foto |
 |---------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------|
-| Fabian Alejandro Oliva Lopez     | Me considero una persona activa en los proyectos, impulsando al equipo a realizar buenos trabajos. Mi objetivo es brindar apoyo y dar lo mejor de mí para fomentar un ambiente colaborativo y de respeto.                                                                                                                                 | <img width="250" alt="Image" src="https://github.com/user-attachments/assets/27855fbd-50e4-4f2f-a1a4-55f9f6f6e174" /> |
-| Javier Masaru Nikaido Vargas     | Estudiante de Ingeniería de Software con enfoque en el desarrollo organizado y eficiente de soluciones. Me caracterizo por trabajar de manera estructurada, priorizando la planificación y el cumplimiento de plazos, manteniendo un ambiente de trabajo tranquilo y productivo.                                                      | <img width="250" alt="Image" src="https://github.com/user-attachments/assets/5c822b03-b836-4b76-aa38-f2920ab5ae96" /> |
-| Pietro Osores Marchese           | Soy Pietro Osores Marchese, estudiante de Ingeniería de Sistemas con interés en el desarrollo de software y la innovación tecnológica. Mi perfil combina habilidades en programación frontend, diseño de interfaces y gestión de proyectos ágiles, con un enfoque en la creación de soluciones digitales funcionales y escalables. Me caracterizo por el trabajo en equipo, la adaptabilidad y la búsqueda constante de nuevas herramientas para optimizar procesos y experiencias de usuario. | <img width="250" alt="Image" src="https://github.com/user-attachments/assets/3299f6b1-3924-4222-af63-bf12555d01b0" /> |
-| Matias Rodolfo Salcedo Champi    | Soy un estudiante de Ingeniería de Software con experiencia en el desarrollo de aplicaciones móviles y web. He participado en proyectos de investigación y desarrollo, y manejo tecnologías como Flutter, Dart, Node.js, Express.js, MongoDB, PostgreSQL, Git y GitHub.                                                             | <img width="250" alt="Image" src="https://github.com/user-attachments/assets/bd1cd1ed-4754-4abc-95f0-10e3bcea3027" /> |
-| Percy Alonso Muñiz Huayanca      | Soy un estudiante de Ingeniería de Software apasionado por el desarrollo backend y el análisis de datos. Me considero una persona proactiva y resiliente, siempre enfocado en el aprendizaje continuo y en la implementación de soluciones tecnológicas eficientes. Mi objetivo es aportar mis habilidades técnicas en IA y gestión de datos para impulsar el éxito del equipo en cada proyecto. | <img width="250" alt="Image" src="https://github.com/user-attachments/assets/8a3e21d8-4e93-46ce-9695-addf14f7b89c" /> |
+| Fabian Alejandro Oliva Lopez     | Me considero una persona activa en los proyectos, impulsando al equipo a realizar buenos trabajos. Mi objetivo es brindar apoyo y dar lo mejor de mí para fomentar un ambiente colaborativo y de respeto.                                                                                                                                 | <img width="250" alt="Fabian Alejandro Oliva Lopez" src="assets/fabian.jpg" /> |
+| Javier Masaru Nikaido Vargas     | Estudiante de Ingeniería de Software con enfoque en el desarrollo organizado y eficiente de soluciones. Me caracterizo por trabajar de manera estructurada, priorizando la planificación y el cumplimiento de plazos, manteniendo un ambiente de trabajo tranquilo y productivo.                                                      | <img width="250" alt="Javier Masaru Nikaido Vargas" src="assets/javier.jpg" /> |
+| Pietro Osores Marchese           | Soy Pietro Osores Marchese, estudiante de Ingeniería de Sistemas con interés en el desarrollo de software y la innovación tecnológica. Mi perfil combina habilidades en programación frontend, diseño de interfaces y gestión de proyectos ágiles, con un enfoque en la creación de soluciones digitales funcionales y escalables. Me caracterizo por el trabajo en equipo, la adaptabilidad y la búsqueda constante de nuevas herramientas para optimizar procesos y experiencias de usuario. | <img width="250" alt="Pietro Osores Marchese" src="assets/pietro.jpg" /> |
+| Matias Rodolfo Salcedo Champi    | Soy un estudiante de Ingeniería de Software con experiencia en el desarrollo de aplicaciones móviles y web. He participado en proyectos de investigación y desarrollo, y manejo tecnologías como Flutter, Dart, Node.js, Express.js, MongoDB, PostgreSQL, Git y GitHub.                                                             | <img width="250" alt="Matias Rodolfo Salcedo Champi" src="assets/matias-profile.jpg" /> |
+| Percy Alonso Muñiz Huayanca      | Soy un estudiante de Ingeniería de Software apasionado por el desarrollo backend y el análisis de datos. Me considero una persona proactiva y resiliente, siempre enfocado en el aprendizaje continuo y en la implementación de soluciones tecnológicas eficientes. Mi objetivo es aportar mis habilidades técnicas en IA y gestión de datos para impulsar el éxito del equipo en cada proyecto. | <img width="250" alt="Percy Alonso Muñiz Huayanca" src="assets/percy.jpg" /> |
 
 
 ## 1.2. Solution Profile
@@ -248,7 +250,7 @@ cuando implementemos una interfaz que muestre datos en tiempo real de forma senc
 
 ### 1.2.3.4	Lean UX Canvas
 
-<img width="894" height="637" alt="image" src="https://github.com/user-attachments/assets/1eabde7c-953c-4b4d-9982-7376ff9348e1" />
+<img width="894" height="637" alt="Lean UX Canvas ParkLink" src="assets/lean-ux-canvas.png" />
 
 ### 1.3. Segmentos objetivo
 
@@ -264,14 +266,15 @@ cuando implementemos una interfaz que muestre datos en tiempo real de forma senc
   - Reservar anticipadamente
   - Pago seguro
 
-**Segmento 2: Propietarios de estacionamientos**
+**Segmento 2: Empresarios y propietarios de estacionamientos**
 - **Características:**
   - Personas o empresas con espacios disponibles
   - Interés en generar ingresos
+  - Responsables de administrar cocheras propias, edificios residenciales o pequeños estacionamientos privados
     
 - **Necesidades:**
   - Publicar espacios fácilmente
-  - Gestionar reservas
+  - Gestionar reservas y accesos
   - Definir precios
   - Recibir pagos seguros
 
@@ -296,7 +299,7 @@ cuando implementemos una interfaz que muestre datos en tiempo real de forma senc
     <th></th>
     <th>ParkLink</th>
     <th>Apparka</th>
-    <th>Parkopedia</th>
+    <th>Park</th>
     <th>Quadra</th>
   </tr>
 
@@ -310,7 +313,7 @@ cuando implementemos una interfaz que muestre datos en tiempo real de forma senc
       Aplicación peruana enfocada en el pago digital de estacionamientos en vía pública, facilitando la gestión del tiempo de estacionamiento sin necesidad de efectivo.
     </td>
     <td>
-      Plataforma global que ofrece un amplio directorio de estacionamientos en múltiples ciudades del mundo, proporcionando información de ubicación, precios y disponibilidad aproximada.
+      Aplicación móvil orientada a ubicar estacionamientos cercanos con información básica de ubicación y tarifas referenciales.
     </td>
     <td>
       Aplicación enfocada en la gestión y administración de estacionamientos, orientada a mejorar la eficiencia del uso de espacios mediante herramientas tecnológicas.
@@ -326,7 +329,7 @@ cuando implementemos una interfaz que muestre datos en tiempo real de forma senc
       Alta adopción local y facilidad de uso para pagos digitales en zonas reguladas por municipalidades.
     </td>
     <td>
-      Gran cobertura internacional y base de datos extensa de estacionamientos.
+      Experiencia simple para consultar estacionamientos cercanos y revisar precios aproximados.
     </td>
     <td>
       Enfoque en optimización operativa y uso eficiente de espacios a través de tecnología.
@@ -342,7 +345,7 @@ cuando implementemos una interfaz que muestre datos en tiempo real de forma senc
       Comodidad en el pago, eliminación del uso de efectivo y facilidad para gestionar el tiempo de estacionamiento.
     </td>
     <td>
-      Acceso a información amplia sobre ubicaciones de estacionamiento en diferentes ciudades.
+      Consulta rápida de ubicaciones y tarifas, aunque sin garantía fuerte de reserva ni gestión para empresarios.
     </td>
     <td>
       Mejora en la organización y control de estacionamientos, especialmente en contextos institucionales.
@@ -359,7 +362,7 @@ cuando implementemos una interfaz que muestre datos en tiempo real de forma senc
       Conductores en zonas urbanas del Perú donde el estacionamiento es regulado.
     </td>
     <td>
-      Conductores a nivel global que requieren información sobre estacionamientos en distintas ciudades.
+      Conductores urbanos que buscan opciones cercanas de estacionamiento desde el móvil.
     </td>
     <td>
       Municipalidades, empresas privadas y operadores de estacionamientos.
@@ -375,7 +378,7 @@ cuando implementemos una interfaz que muestre datos en tiempo real de forma senc
       Implementación mediante convenios con municipalidades y campañas locales de adopción.
     </td>
     <td>
-      Posicionamiento SEO, presencia global y partnerships con plataformas de movilidad.
+      Presencia digital y propuesta centrada en la consulta rápida de estacionamientos.
     </td>
     <td>
       Estrategias B2B y acuerdos institucionales con entidades públicas y privadas.
@@ -392,7 +395,7 @@ cuando implementemos una interfaz que muestre datos en tiempo real de forma senc
       Aplicación móvil para pago de estacionamientos en vía pública.
     </td>
     <td>
-      Plataforma web y móvil para consulta de estacionamientos.
+      Aplicación móvil para búsqueda y consulta de estacionamientos.
     </td>
     <td>
       Aplicación móvil orientada a la gestión y administración de estacionamientos.
@@ -408,7 +411,7 @@ cuando implementemos una interfaz que muestre datos en tiempo real de forma senc
       Pago por uso según tiempo de estacionamiento.
     </td>
     <td>
-      Acceso gratuito con posibles servicios premium o integraciones comerciales.
+      Consulta gratuita con precios referenciales por estacionamiento.
     </td>
     <td>
       Modelo basado en licencias o contratos con instituciones.
@@ -434,7 +437,7 @@ cuando implementemos una interfaz que muestre datos en tiempo real de forma senc
       Aplicación consolidada en el mercado local con alta adopción y facilidad de uso.
     </td>
     <td>
-      Amplia base de datos global y reconocimiento internacional.
+      Consulta rápida desde el móvil y baja fricción para usuarios que solo necesitan información.
     </td>
     <td>
       Capacidad de optimizar el uso de espacios mediante soluciones tecnológicas especializadas.
@@ -450,7 +453,7 @@ cuando implementemos una interfaz que muestre datos en tiempo real de forma senc
       Limitado a pagos, sin funcionalidades de reserva o predicción de disponibilidad.
     </td>
     <td>
-      No garantiza disponibilidad en tiempo real ni permite reservas.
+      No garantiza disponibilidad en tiempo real, no recomienda la opción más conveniente por costo total y no resuelve la administración del empresario.
     </td>
     <td>
       Enfoque limitado al sector institucional, con poca orientación al usuario final.
@@ -494,10 +497,10 @@ cuando implementemos una interfaz que muestre datos en tiempo real de forma senc
 
 ### 2.1.2. Estrategias y tácticas frente a competidores
 
-A partir del análisis competitivo realizado en la sección anterior, se identificaron diversas oportunidades y debilidades en los competidores actuales (Apparka, Parkopedia y Quadra). En base a estos hallazgos, se plantean las siguientes estrategias y tácticas para posicionar a ParkLink como una solución diferenciada en el mercado:
+A partir del análisis competitivo realizado en la sección anterior, se identificaron diversas oportunidades y debilidades en los competidores actuales (Apparka, Park y Quadra). En base a estos hallazgos, se plantean las siguientes estrategias y tácticas para posicionar a ParkLink como una solución diferenciada en el mercado:
 
 #### 1. Diferenciación mediante reservas en tiempo real
-Se identificó que competidores como Parkopedia no ofrecen disponibilidad en tiempo real ni permiten realizar reservas anticipadas, mientras que Apparka se limita únicamente al pago.
+Se identificó que competidores como Park no ofrecen disponibilidad confirmada en tiempo real ni permiten realizar reservas anticipadas, mientras que Apparka se limita principalmente al pago.
 
 **Estrategia:**
 Implementar un sistema de reservas en tiempo real que permita a los usuarios asegurar un espacio antes de llegar a su destino.
@@ -510,7 +513,7 @@ Implementar un sistema de reservas en tiempo real que permita a los usuarios ase
 ---
 
 #### 2. Plataforma integral 
-Los competidores actuales ofrecen soluciones parciales: Apparka se enfoca en pagos, Parkopedia en información y Quadra en gestión.
+Los competidores actuales ofrecen soluciones parciales: Apparka se enfoca en pagos, Park en búsqueda básica y Quadra en gestión.
 
 **Estrategia:**
 Ofrecer una plataforma integral que combine búsqueda, reserva, pago y gestión en un solo sistema.
@@ -585,6 +588,29 @@ Implementar un modelo de mejora continua basado en datos y feedback de usuarios.
 - Análisis del comportamiento del usuario.
 - Actualizaciones frecuentes con nuevas funcionalidades.
 
+---
+
+#### 8. Análisis de tarifas y recomendación por precio
+La propuesta debe ayudar al conductor a decidir, no solo mostrar una lista de espacios. Por ello, ParkLink evaluará el costo total estimado de cada alternativa considerando tarifa por hora, duración de la reserva, comisión de servicio, distancia al destino y valoración del espacio. La opción recomendada será aquella que entregue el menor costo total ajustado por conveniencia y confiabilidad.
+
+**Criterio de comparación:**
+
+| Variable | Uso en la recomendación |
+|---|---|
+| Tarifa por hora | Base del cálculo de costo para la duración solicitada. |
+| Comisión de servicio | Se suma al precio final antes de recomendar. |
+| Distancia al destino | Penaliza opciones lejanas aunque sean más baratas. |
+| Disponibilidad confirmada | Prioriza espacios que puedan bloquearse inmediatamente. |
+| Valoración del espacio | Reduce riesgo de mala experiencia o cancelación. |
+
+**Ejemplo de recomendación:**
+
+| Opción | Tarifa | Distancia | Duración | Costo estimado | Resultado |
+|---|---:|---:|---:|---:|---|
+| Estacionamiento A | S/ 6.00/h | 250 m | 2 h | S/ 12.00 | Recomendado por menor costo y cercanía. |
+| Estacionamiento B | S/ 5.00/h | 900 m | 2 h | S/ 10.00 | Más barato, pero menos conveniente por distancia. |
+| Estacionamiento C | S/ 8.00/h | 150 m | 2 h | S/ 16.00 | Cercano, pero no recomendado por precio. |
+
 ## 2.2.Entrevistas.
 Esta parte del informe presentará la parte objetiva de las entrevistas junto con el análisis 
 relevante de cada una de ellas
@@ -597,6 +623,15 @@ En esta sección se presenta el diseño de entrevistas aplicado a los segmentos 
 A través de estas entrevistas se busca obtener información cualitativa relevante que permita validar el problema identificado, así como identificar oportunidades de mejora y funcionalidades clave para el desarrollo de la solución propuesta.
 
 ---
+
+**Muestra de entrevistas por segmento**
+
+| Segmento | Perfil entrevistado | Cantidad | Objetivo de aprendizaje |
+|---|---|---:|---|
+| Conductores urbanos | Personas que usan vehículo propio en Lima y enfrentan dificultad para estacionar. | 2 | Validar problemas de búsqueda, reserva, precio, seguridad y tiempo perdido. |
+| Empresarios y propietarios de estacionamientos | Personas que administran cocheras propias o espacios de estacionamiento disponibles. | 2 | Validar necesidades de publicación, control de disponibilidad, tarifas, reservas e ingresos. |
+
+La muestra no se limita a conductores. Se entrevistó a ambos lados del marketplace: usuarios que demandan estacionamiento y empresarios/propietarios que ofrecen espacios.
 
 #### Segmento #1 Conductores urbanos
 
@@ -621,9 +656,9 @@ Además, buscamos entender qué funcionalidades consideran más importantes en u
 
 ---
 
-#### Segmento #2 Propietarios de estacionamientos
+#### Segmento #2 Empresarios y propietarios de estacionamientos
 
-Nuestra solución también se enfoca en propietarios de espacios de estacionamiento, ya sean personas naturales o empresas, que cuentan con espacios disponibles y buscan una forma eficiente de gestionarlos y monetizarlos.
+Nuestra solución también se enfoca en empresarios y propietarios de espacios de estacionamiento, ya sean personas naturales o empresas, que cuentan con espacios disponibles y buscan una forma eficiente de gestionarlos y monetizarlos.
 
 Actualmente, muchos de estos espacios no son aprovechados adecuadamente debido a la falta de herramientas digitales que faciliten su administración, visibilidad y control. Por ello, el objetivo de estas entrevistas es comprender cómo gestionan actualmente sus espacios, qué dificultades enfrentan y qué necesidades tienen en cuanto a una plataforma digital.
 
@@ -674,7 +709,7 @@ Juan usa su vehículo principalmente los fines de semana para salidas sociales. 
 
 ---
 
-#### Segmento: Propietarios de estacionamientos
+#### Segmento: Empresarios y propietarios de estacionamientos
 
 | Información del entrevistado | Detalle | Evidencia / Foto |
 | :--- | :--- | :--- |
@@ -703,7 +738,7 @@ Dlan administra espacios de un edificio residencial que quedan vacíos durante l
 #### Análisis de entrevistas al segmento Conductores urbanos
 
 ##### Datos demográficos
-**Edad:** Promedio: **28.5 años** | Rango: **25 - 32 años**
+**Edad:** Promedio: **37.5 años** | Rango: **25 - 50 años**
 **Sexo:** El **100%** de los entrevistados son de género **masculino**.
 **Procedencia:**
 ● El **50% (1)** proviene de **Lima Centro**
@@ -727,10 +762,10 @@ Dlan administra espacios de un edificio residencial que quedan vacíos durante l
 
 ---
 
-#### Análisis de entrevistas al segmento Propietarios de estacionamientos
+#### Análisis de entrevistas al segmento Empresarios y propietarios de estacionamientos
 
 ##### Datos demográficos
-**Edad:** Promedio: **41.5 años** | Rango: **38 - 45 años**
+**Edad:** Promedio: **23.5 años** | Rango: **23 - 24 años**
 **Sexo:** El **100%** de los entrevistados son de género **masculino**.
 **Procedencia:**
 ● El **50% (1)** proviene de **San Isidro**
@@ -756,25 +791,86 @@ Dlan administra espacios de un edificio residencial que quedan vacíos durante l
 
 ### 2.3.1. User Personas
 
-Para la elaboración de nuestros User Persona se tomaron en cuenta los datos obtenidos y analizados en las entrevistas realizadas a los segmentos de conductores urbanos y propietarios de estacionamientos.
+Para la elaboración de nuestros User Persona se tomaron en cuenta los datos obtenidos y analizados en las entrevistas realizadas a los segmentos de conductores urbanos y empresarios/propietarios de estacionamientos.
 
 Se identificaron patrones comunes en ambos grupos, considerando aspectos como sus necesidades, comportamientos, problemas frecuentes y expectativas frente a una posible solución digital. En base a ello, se definieron perfiles representativos que reflejan las características más relevantes de cada segmento.
 
 Asimismo, a partir de las respuestas recopiladas, se construyeron los User Persona incluyendo sus objetivos, motivaciones y frustraciones principales, priorizando aquellos elementos que se repitieron con mayor frecuencia durante el proceso de entrevistas.
 
 Finalmente, se realizó un análisis que permitió identificar los valores, habilidades (skills) y una frase representativa para cada perfil, con el fin de sintetizar de manera clara las características más importantes de los usuarios y facilitar la comprensión de sus necesidades dentro del desarrollo de la solución propuesta.
-<img width="837" height="1600" alt="image" src="https://github.com/user-attachments/assets/6536adf5-5c21-4f0a-a59d-075b8a30c496" />
-<img width="890" height="1600" alt="image" src="https://github.com/user-attachments/assets/c42c989c-0c6d-47e5-abd3-9ada27f07469" />
+<img width="837" height="1600" alt="User Persona Conductor" src="assets/user-persona-conductor.png" />
+<img width="890" height="1600" alt="User Persona Empresario" src="assets/user-persona-empresario.png" />
+
+### 2.3.2. User Task Matrix
+
+La matriz de tareas permite conectar las actividades reales de los segmentos entrevistados con las funcionalidades que debe cubrir ParkLink. Se consideran los dos perfiles principales: conductor urbano y empresario/propietario de estacionamientos.
+
+| Usuario | Tarea principal | Frecuencia | Importancia | Situación actual | Oportunidad para ParkLink | Requisitos relacionados |
+|---|---|---|---|---|---|---|
+| Conductor urbano | Encontrar estacionamiento cercano al destino. | Alta | Crítica | Busca manualmente y pierde entre 15 y 20 minutos. | Mostrar espacios disponibles en mapa con disponibilidad actualizada. | US01, US02 |
+| Conductor urbano | Comparar precio, distancia y horario antes de decidir. | Alta | Alta | Decide con información incompleta o cuando ya llegó al lugar. | Calcular costo total y sugerir la opción más conveniente por precio y cercanía. | US03, US04, TS02 |
+| Conductor urbano | Reservar y pagar un espacio antes de llegar. | Media | Crítica | No puede garantizar disponibilidad antes del traslado. | Bloquear el espacio y confirmar pago desde la aplicación móvil. | US05, US14 |
+| Conductor urbano | Cancelar o extender una reserva activa. | Media | Media | Debe negociar manualmente o pagar cargos no planificados. | Gestionar cambios desde la app con reglas claras de disponibilidad y reembolso. | US06, US08, US15 |
+| Empresario/propietario | Publicar un espacio con foto, ubicación, horarios y tarifa. | Media | Crítica | Usa WhatsApp o acuerdos informales con poca visibilidad. | Registro guiado y publicación inmediata en el marketplace. | US09, US10, TS05 |
+| Empresario/propietario | Habilitar o deshabilitar disponibilidad por horario. | Alta | Alta | Control manual con riesgo de doble reserva. | Panel de disponibilidad con cambios reflejados en tiempo real. | US10, US11, TS01 |
+| Empresario/propietario | Gestionar reservas y acceso de conductores. | Alta | Alta | No cuenta con trazabilidad de quién usa el espacio. | Calendario de reservas, datos del conductor y notificaciones. | US12, US20 |
+| Empresario/propietario | Revisar ingresos y comprobantes. | Media | Alta | Lleva control informal de pagos y cobros. | Historial financiero con pagos, reembolsos y reportes. | US13, US16 |
+
+### 2.3.3. Empathy Mapping
+
+El Empathy Mapping permite sintetizar lo que cada segmento dice, piensa, hace y siente frente al problema de estacionamiento. Este artefacto se construyó a partir de los hallazgos de entrevistas, User Personas y patrones observados en la búsqueda y gestión actual de espacios.
+
+#### Empathy Map — Conductor Urbano
+
+| Dimensión | Hallazgos |
+|---|---|
+| **Says** | "Quiero saber si habrá estacionamiento antes de salir"; "me interesa ver precio y distancia desde el mapa"; "me gustaría reservar para no llegar y perder tiempo". |
+| **Thinks** | Necesita reducir incertidumbre antes de trasladarse y comparar opciones sin revisar manualmente cada cochera. |
+| **Does** | Busca estacionamiento recorriendo calles, pregunta en locales cercanos o acepta la primera opción disponible cuando está presionado por el tiempo. |
+| **Feels** | Estrés, frustración e inseguridad al no saber si encontrará un espacio disponible cerca de su destino. |
+| **Pains** | Pérdida de 15 a 20 minutos, gasto de combustible, falta de información de disponibilidad y ausencia de comparación clara por tarifa. |
+| **Gains** | Llegar directo a un espacio reservado, pagar desde la aplicación, recibir confirmación y elegir una opción conveniente por precio y cercanía. |
+
+#### Empathy Map — Empresario/Propietario de Estacionamiento
+
+| Dimensión | Hallazgos |
+|---|---|
+| **Says** | "Quiero publicar mis espacios fácilmente"; "necesito controlar horarios y precios"; "me interesa saber quién reserva y cuánto ingreso genero". |
+| **Thinks** | Busca monetizar espacios subutilizados sin perder control operativo ni exponerse a reservas desordenadas. |
+| **Does** | Gestiona disponibilidad por WhatsApp o acuerdos informales, registra ingresos manualmente y habilita espacios según disponibilidad del día. |
+| **Feels** | Interés por generar ingresos, pero preocupación por seguridad, control de acceso, pagos y doble reserva. |
+| **Pains** | Baja visibilidad de sus espacios, poca trazabilidad de reservas, control manual de ingresos y riesgo de confusión en horarios. |
+| **Gains** | Publicar espacios en menos tiempo, configurar tarifas, recibir reservas confirmadas, controlar disponibilidad y revisar ingresos desde un panel. |
+
+### 2.3.4. As-is Scenario Mapping
+
+El As-is Scenario Mapping resume cómo se resuelven actualmente las tareas sin ParkLink. Este análisis permite evidenciar los puntos de dolor que luego se corrigen en el To-Be Scenario Mapping.
+
+#### As-is Scenario Map — Conductor Urbano
+
+| | **Planificar** | **Buscar** | **Comparar** | **Estacionar** | **Pagar** |
+|---|---|---|---|---|---|
+| **Doing** | Sale sin saber si habrá espacio disponible. | Recorre calles o pregunta en estacionamientos cercanos. | Compara precio de forma manual y con presión de tiempo. | Acepta el primer espacio disponible aunque no sea el más conveniente. | Paga en efectivo o con el método disponible en el local. |
+| **Thinking** | "Espero encontrar algo cerca". | "Estoy perdiendo tiempo y combustible". | "No sé si este precio es justo". | "Ya no puedo seguir buscando". | "No tengo un comprobante claro". |
+| **Feeling** | Inseguro | Frustrado | Presionado | Resignado | Poco confiado |
+
+#### As-is Scenario Map — Empresario/Propietario
+
+| | **Ofrecer espacio** | **Coordinar disponibilidad** | **Recibir conductor** | **Cobrar** | **Controlar ingresos** |
+|---|---|---|---|---|---|
+| **Doing** | Publica por contactos o grupos informales. | Coordina horarios por mensajes. | Verifica manualmente quién usará la cochera. | Cobra por transferencia o efectivo. | Registra ingresos de forma manual. |
+| **Thinking** | "No llego a suficientes clientes". | "Puedo confundirme con los horarios". | "Necesito saber quién entra". | "Tengo que confirmar si pagó". | "No sé cuánto gané en el mes". |
+| **Feeling** | Limitado | Preocupado | Desconfiado | Cansado | Desorganizado |
 
 # Capítulo III: Requirements Specification
 
 ## 3.1. To-Be Scenario Mapping
 
-El To-Be Scenario Mapping describe cómo cambiaría la experiencia de cada User Persona al contar con ParkLink como solución. El proceso de elaboración siguió las etapas de preparación, lluvia de ideas individual, revisión, identificación de fases y comparación con el As-Is Scenario Mapping para evidenciar las mejoras que la solución introduce. Los mapas fueron elaborados en la herramienta Miro.
+El To-Be Scenario Mapping describe cómo cambiaría la experiencia de cada User Persona al contar con ParkLink como solución. El proceso de elaboración siguió las etapas de preparación, lluvia de ideas individual, revisión, identificación de fases y comparación con el As-is Scenario Mapping para evidenciar las mejoras que la solución introduce. Los mapas fueron elaborados en la herramienta Miro.
 
 ### To-Be Scenario Map — Conductor Urbano (Carlos Mendoza)
 
-> Elaborado en Miro. Acceso al artefacto: [Ver en Miro](https://miro.com/app/board/uXjVGiIH610=/?share_link_id=240859047074)
+Artefacto incluido como imagen local del repositorio.
 
 ![To-Be Scenario Map - Conductor](assets/tobescenariocarlos.jpg)
 
@@ -786,11 +882,11 @@ El To-Be Scenario Mapping describe cómo cambiaría la experiencia de cada User 
 
 ---
 
-### To-Be Scenario Map — Propietario de Espacio (Elena Torres)
+### To-Be Scenario Map — Empresaria/Propietaria de Espacio (Elena Torres)
 
-> Elaborado en Miro. Acceso al artefacto: [Ver en Miro](https://miro.com/app/board/uXjVGiIFZLU=/?share_link_id=511863885761)
+Artefacto incluido como imagen local del repositorio.
 
-![To-Be Scenario Map - Propietario](assets/tobescenarioelena.jpg)
+![To-Be Scenario Map - Empresaria/Propietaria](assets/tobescenarioelena.jpg)
 
 | | **Registrar** | **Configurar** | **Recibir reserva** | **Gestionar acceso** | **Cobrar** |
 |---|---|---|---|---|---|
@@ -823,34 +919,53 @@ A continuación se presentan las Épicas y User Stories identificadas para ParkL
 |---|---|---|---|---|---|
 | EP01 | US01 | Buscar estacionamientos por ubicación | Como conductor, deseo buscar estacionamientos disponibles cerca de mi destino, para planificar mi llegada sin perder tiempo buscando en la calle. | **Given** que el conductor ha ingresado un destino en la app, **When** ejecuta la búsqueda, **Then** el sistema muestra en el mapa todos los espacios disponibles en un radio de 1 km con precio, horario y distancia. | EP01 |
 | EP01 | US02 | Ver disponibilidad en tiempo real | Como conductor, deseo ver en tiempo real si un espacio está disponible, para no llegar a un lugar ya ocupado. | **Given** que el conductor visualiza un espacio en el mapa, **When** selecciona el espacio, **Then** el sistema muestra su disponibilidad actualizada al momento con estados: disponible, reservado u ocupado. | EP01 |
-| EP01 | US03 | Filtrar estacionamientos por precio y horario | Como conductor, deseo filtrar los estacionamientos disponibles por rango de precio y horario, para encontrar la opción que mejor se ajusta a mis necesidades. | **Given** que el conductor ha realizado una búsqueda, **When** aplica filtros de precio (mínimo/máximo) y horario, **Then** el mapa actualiza los resultados mostrando solo los espacios que cumplen los criterios seleccionados. | EP01 |
+| EP01 | US03 | Comparar tarifas y recomendar opción conveniente | Como conductor, deseo comparar estacionamientos por precio total, distancia y horario, para elegir la alternativa más conveniente antes de reservar. | **Given** que el conductor ha realizado una búsqueda, **When** define duración, horario y criterios de precio, **Then** el sistema calcula el costo total estimado y resalta la opción recomendada por mejor relación precio-cercanía-disponibilidad. | EP01 |
 | EP01 | US04 | Ver detalle de un espacio de estacionamiento | Como conductor, deseo ver el detalle completo de un espacio antes de reservarlo, para tomar una decisión informada. | **Given** que el conductor selecciona un espacio en el mapa, **When** accede al detalle, **Then** el sistema muestra foto, dirección exacta, precio por hora, horario disponible, valoración promedio y reseñas de otros usuarios. | EP01 |
 | EP02 | US05 | Reservar un espacio de estacionamiento | Como conductor, deseo reservar un espacio de estacionamiento con anticipación, para asegurar mi lugar antes de llegar al destino. | **Given** que el conductor ha seleccionado un espacio disponible, **When** elige la fecha, hora de inicio y duración y confirma la reserva, **Then** el sistema bloquea el espacio, genera un código de confirmación y notifica al propietario. | EP02 |
 | EP02 | US06 | Cancelar una reserva | Como conductor, deseo poder cancelar una reserva realizada, para liberar el espacio si ya no lo necesito. | **Given** que el conductor tiene una reserva activa, **When** selecciona cancelar con al menos 1 hora de anticipación, **Then** el sistema cancela la reserva, libera el espacio y procesa el reembolso correspondiente según la política de cancelación. | EP02 |
 | EP02 | US07 | Ver historial de reservas | Como conductor, deseo ver el historial de mis reservas anteriores, para llevar control de mis gastos de estacionamiento. | **Given** que el conductor accede a su perfil, **When** navega a "Mis reservas", **Then** el sistema muestra un listado con todas las reservas pasadas incluyendo fecha, espacio, duración, costo y estado (completada, cancelada). | EP02 |
 | EP02 | US08 | Extender tiempo de reserva activa | Como conductor, deseo poder extender el tiempo de mi reserva activa, para evitar cargos por sobrepasar el tiempo sin haberlo planificado. | **Given** que el conductor tiene una reserva en curso, **When** solicita extender el tiempo antes de que expire, **Then** el sistema valida disponibilidad del espacio, agrega el tiempo adicional y cobra la diferencia automáticamente si el espacio sigue libre. | EP02 |
-| EP03 | US09 | Registrar un espacio de estacionamiento | Como propietario, deseo registrar mi espacio de estacionamiento en la plataforma, para empezar a recibir reservas y generar ingresos. | **Given** que el propietario accede a "Publicar espacio", **When** completa los datos (dirección, foto, precio por hora, horario disponible) y confirma, **Then** el sistema publica el espacio en el mapa y lo hace visible para búsquedas de conductores. | EP03 |
-| EP03 | US10 | Configurar horarios y precio del espacio | Como propietario, deseo configurar los horarios disponibles y el precio de mi cochera, para tener control total sobre cuándo y a qué precio se alquila. | **Given** que el propietario accede a la configuración de su espacio, **When** modifica los horarios y precio, **Then** el sistema actualiza la información en tiempo real y aplica los nuevos parámetros a partir de la siguiente reserva disponible. | EP03 |
-| EP03 | US11 | Habilitar y deshabilitar un espacio | Como propietario, deseo poder habilitar o deshabilitar mi espacio temporalmente, para no recibir reservas cuando no esté disponible sin eliminarlo de la plataforma. | **Given** que el propietario accede a la gestión de su espacio, **When** cambia el estado a "No disponible", **Then** el sistema oculta el espacio del mapa de búsqueda y cancela automáticamente las reservas futuras notificando a los conductores afectados. | EP03 |
-| EP03 | US12 | Ver reservas activas de mi espacio | Como propietario, deseo ver las reservas activas de mis espacios, para saber quién usará mi cochera y en qué momento. | **Given** que el propietario accede a su panel de gestión, **When** navega a "Mis reservas", **Then** el sistema muestra un calendario con todas las reservas confirmadas, incluyendo datos del conductor, horario y monto a cobrar. | EP03 |
-| EP03 | US13 | Ver historial de ingresos | Como propietario, deseo ver el historial de ingresos generados por mis espacios, para hacer seguimiento de mis ganancias. | **Given** que el propietario accede a su panel financiero, **When** selecciona un rango de fechas, **Then** el sistema muestra el total de ingresos, número de reservas completadas y detalle por espacio en el período seleccionado. | EP03 |
+| EP03 | US09 | Registrar un espacio de estacionamiento | Como empresario/propietario, deseo registrar mi espacio de estacionamiento en la plataforma, para empezar a recibir reservas y generar ingresos. | **Given** que el empresario accede a "Publicar espacio", **When** completa los datos (dirección, foto, precio por hora, horario disponible) y confirma, **Then** el sistema publica el espacio en el mapa y lo hace visible para búsquedas de conductores. | EP03 |
+| EP03 | US10 | Configurar horarios y precio del espacio | Como empresario/propietario, deseo configurar los horarios disponibles y el precio de mi cochera, para tener control total sobre cuándo y a qué precio se alquila. | **Given** que el empresario accede a la configuración de su espacio, **When** modifica los horarios y precio, **Then** el sistema actualiza la información en tiempo real y aplica los nuevos parámetros a partir de la siguiente reserva disponible. | EP03 |
+| EP03 | US11 | Habilitar y deshabilitar un espacio | Como empresario/propietario, deseo poder habilitar o deshabilitar mi espacio temporalmente, para no recibir reservas cuando no esté disponible sin eliminarlo de la plataforma. | **Given** que el empresario accede a la gestión de su espacio, **When** cambia el estado a "No disponible", **Then** el sistema oculta el espacio del mapa de búsqueda y cancela automáticamente las reservas futuras notificando a los conductores afectados. | EP03 |
+| EP03 | US12 | Ver reservas activas de mi espacio | Como empresario/propietario, deseo ver las reservas activas de mis espacios, para saber quién usará mi cochera y en qué momento. | **Given** que el empresario accede a su panel de gestión, **When** navega a "Mis reservas", **Then** el sistema muestra un calendario con todas las reservas confirmadas, incluyendo datos del conductor, horario y monto a cobrar. | EP03 |
+| EP03 | US13 | Ver historial de ingresos | Como empresario/propietario, deseo ver el historial de ingresos generados por mis espacios, para hacer seguimiento de mis ganancias. | **Given** que el empresario accede a su panel financiero, **When** selecciona un rango de fechas, **Then** el sistema muestra el total de ingresos, número de reservas completadas y detalle por espacio en el período seleccionado. | EP03 |
 | EP04 | US14 | Pagar una reserva en línea | Como conductor, deseo pagar mi reserva directamente en la app con tarjeta o billetera digital, para no manejar efectivo y tener comprobante inmediato. | **Given** que el conductor confirma una reserva, **When** selecciona su método de pago y confirma el cobro, **Then** el sistema procesa el pago de forma segura, genera un comprobante digital y activa la reserva. | EP04 |
 | EP04 | US15 | Recibir reembolso por cancelación | Como conductor, deseo recibir un reembolso automático si cancelo con anticipación suficiente, para no perder dinero por cambios de planes. | **Given** que el conductor cancela una reserva dentro del plazo de política de cancelación, **When** confirma la cancelación, **Then** el sistema procesa el reembolso al método de pago original en un plazo máximo de 3 días hábiles. | EP04 |
 | EP04 | US16 | Ver comprobante de pago | Como conductor, deseo poder ver y descargar el comprobante de cada pago realizado, para tener respaldo de mis transacciones. | **Given** que el conductor accede a una reserva completada o confirmada, **When** selecciona "Ver comprobante", **Then** el sistema muestra el detalle del pago (monto, fecha, espacio, duración) con opción de descarga en PDF. | EP04 |
 | EP05 | US17 | Registrarse como conductor | Como usuario nuevo, deseo registrarme como conductor en ParkLink, para acceder a la búsqueda y reserva de estacionamientos. | **Given** que un usuario accede a la pantalla de registro, **When** completa sus datos (nombre, correo, contraseña, número de placa) y confirma, **Then** el sistema crea su cuenta, envía un correo de verificación y le permite iniciar sesión. | EP05 |
-| EP05 | US18 | Registrarse como propietario | Como usuario nuevo, deseo registrarme como propietario en ParkLink, para publicar mis espacios y recibir reservas. | **Given** que un usuario accede al registro y selecciona el rol "Propietario", **When** completa sus datos personales y bancarios para recibir pagos y confirma, **Then** el sistema crea su cuenta con perfil de propietario y le habilita el panel de gestión de espacios. | EP05 |
+| EP05 | US18 | Registrarse como empresario/propietario | Como usuario nuevo, deseo registrarme como empresario/propietario en ParkLink, para publicar mis espacios y recibir reservas. | **Given** que un usuario accede al registro y selecciona el rol "Empresario/Propietario", **When** completa sus datos personales y bancarios para recibir pagos y confirma, **Then** el sistema crea su cuenta con perfil de propietario y le habilita el panel de gestión de espacios. | EP05 |
 | EP05 | US19 | Iniciar sesión | Como usuario registrado, deseo iniciar sesión con mi correo y contraseña, para acceder a mi cuenta y funcionalidades de la app. | **Given** que el usuario ingresa su correo y contraseña correctos, **When** presiona "Iniciar sesión", **Then** el sistema autentica al usuario y lo redirige a su pantalla principal según su rol (conductor o propietario). | EP05 |
 | EP06 | US20 | Recibir notificación de reserva confirmada | Como conductor, deseo recibir una notificación cuando mi reserva sea confirmada, para tener certeza de que el espacio está asegurado. | **Given** que el sistema procesa una reserva exitosa, **When** el pago es aprobado, **Then** el conductor recibe una notificación push y correo electrónico con los datos de la reserva (dirección, hora, código de acceso). | EP06 |
 
 ---
 
+### 3.2.1. Technical Stories y requisitos no funcionales
+
+Además de las 20 historias funcionales, se incorporan Technical Stories (TS) y requisitos no funcionales (RNF) para evidenciar las decisiones de arquitectura de software que soportan seguridad, disponibilidad, rendimiento, almacenamiento y operación del producto.
+
+| ID | Tipo | Descripción | Criterios de aceptación | Relación |
+|---|---|---|---|---|
+| TS01 | Technical Story | Implementar servicio de disponibilidad en tiempo real para evitar doble reserva de espacios. | **Given** múltiples usuarios consultan el mismo espacio, **When** uno confirma una reserva, **Then** el estado se actualiza y bloquea para los demás en menos de 5 segundos. | US01, US02, US05 |
+| TS02 | Technical Story | Implementar motor de recomendación de tarifa conveniente. | **Given** existen varias opciones disponibles, **When** el conductor define duración y destino, **Then** el sistema calcula costo total estimado y recomienda la opción más conveniente por precio, distancia y disponibilidad. | US03 |
+| TS03 | Technical Story | Implementar autenticación con JWT, roles y autorización por perfil. | **Given** un usuario autenticado accede al sistema, **When** solicita una funcionalidad, **Then** el backend valida token, rol y permisos antes de responder. | US17, US18, US19 |
+| TS04 | Technical Story | Registrar auditoría de reservas, pagos, reembolsos y cambios de disponibilidad. | **Given** ocurre una transacción crítica, **When** cambia el estado de reserva o pago, **Then** se guarda un evento auditable con usuario, fecha, estado anterior y estado nuevo. | US05, US06, US14, US15 |
+| TS05 | Technical Story | Almacenar fotos de estacionamientos en Object Storage compatible con S3. | **Given** el empresario sube una foto del espacio, **When** confirma la publicación, **Then** la imagen se guarda en un bucket privado y se expone mediante URL firmada o recurso controlado por backend. | US04, US09 |
+| TS06 | Technical Story | Implementar manejo idempotente de pagos y webhooks. | **Given** el proveedor de pagos envía una confirmación repetida, **When** el backend recibe el webhook, **Then** procesa una sola vez la transacción y mantiene la reserva en estado consistente. | US14, US15 |
+| RNF01 | No funcional | Disponibilidad del servicio principal. | El sistema debe mantener disponibilidad mensual mínima de 99.5% para búsqueda, reserva y pago. | Arquitectura |
+| RNF02 | No funcional | Rendimiento de búsqueda. | El 95% de consultas de espacios disponibles debe responder en 2 segundos o menos bajo carga normal. | US01, US02 |
+| RNF03 | No funcional | Seguridad y privacidad de datos. | Los datos personales, placas, pagos y documentos deben transmitirse por HTTPS y almacenarse con controles de acceso por rol. | US14, US17, US18 |
+| RNF04 | No funcional | Observabilidad operativa. | Los servicios backend deben exponer logs estructurados, métricas y trazas para diagnosticar fallas de reserva, pago y notificaciones. | Arquitectura |
+
+La decisión de usar Object Storage compatible con S3 queda vinculada al requisito TS05, ya que las imágenes de cocheras y evidencias no deben almacenarse directamente en la base de datos relacional.
+
+---
+
 ## 3.3. Impact Mapping
 
-El Impact Map se elaboró identificando los Business Goals SMART del producto, los actores clave (User Personas), los impactos esperados en su comportamiento y los entregables que ParkLink debe proveer para generarlos. Los User Stories se vinculan a los entregables correspondientes.
+El Impact Map se rehízo identificando los Business Goals SMART del producto, los actores clave, los impactos esperados, los entregables de software y los principales riesgos que pueden impedir el logro de cada objetivo. La imagen se incluye como artefacto local del repositorio.
 
-> Elaborado en Miro. Acceso al artefacto: [Ver en Miro](https://miro.com/app/board/uXjVGiIFZLU=/?share_link_id=410165343938)
-
-![Impact Map](assets/impactmapping.jpg)
+![Impact Map actualizado con riesgos](assets/impact-map-riesgos.svg)
 
 ### Business Goal 1
 **"Alcanzar 500 conductores activos con al menos una reserva completada en Lima Metropolitana en los primeros 6 meses de operación."**
@@ -866,9 +981,30 @@ El Impact Map se elaboró identificando los Business Goals SMART del producto, l
 
 | Actor | Impact | Deliverable | User Stories |
 |---|---|---|---|
-| Elena Torres (Propietaria) | Publicar su cochera en menos de 10 minutos sin necesidad de soporte técnico | Flujo de registro de espacio simple con foto, precio y horario | US09, US10 |
-| Elena Torres (Propietaria) | Gestionar sus reservas y acceso desde el panel de propietario | Panel de gestión con reservas activas y control de disponibilidad | US11, US12 |
-| Elena Torres (Propietaria) | Recibir pagos automáticos y ver su historial de ingresos | Sistema de cobro automático e historial financiero | US13, US15 |
+| Elena Torres (Empresaria/propietaria) | Publicar su cochera en menos de 10 minutos sin necesidad de soporte técnico | Flujo de registro de espacio simple con foto, precio y horario | US09, US10 |
+| Elena Torres (Empresaria/propietaria) | Gestionar sus reservas y acceso desde el panel de propietario | Panel de gestión con reservas activas y control de disponibilidad | US11, US12 |
+| Elena Torres (Empresaria/propietaria) | Recibir pagos automáticos y ver su historial de ingresos | Sistema de cobro automático e historial financiero | US13, US15 |
+
+### Business Goal 3
+**"Lograr que el 70% de las búsquedas muestre una recomendación de tarifa conveniente y que al menos el 40% de reservas se realice desde la opción recomendada durante los primeros 6 meses."**
+
+| Actor | Impact | Deliverable | User Stories / TS |
+|---|---|---|---|
+| Carlos Mendoza (Conductor) | Comparar opciones sin revisar manualmente cada estacionamiento | Comparador de costo total por duración, distancia y comisión | US03, TS02 |
+| Carlos Mendoza (Conductor) | Elegir una alternativa confiable y no solo la más barata | Recomendación explicable con precio, cercanía, disponibilidad y valoración | US03, US04, TS02 |
+| ParkTeam | Aprender qué variables influyen en la conversión de reservas | Métricas de selección, precio promedio y tasa de aceptación de recomendación | TS02, RNF04 |
+
+### 3.3.1. Principales riesgos de la aplicación
+
+| Riesgo | Impacto en el producto | Mitigación propuesta | Relación |
+|---|---|---|---|
+| Disponibilidad desactualizada de espacios | Puede generar doble reserva o pérdida de confianza. | Servicio de disponibilidad en tiempo real, bloqueo temporal de espacio y cache con invalidación controlada. | TS01, RNF02 |
+| Fallas o duplicidad en pagos | Puede confirmar reservas sin cobro o cobrar dos veces. | Procesamiento idempotente, webhooks verificados y auditoría de transacciones. | TS04, TS06 |
+| Baja oferta inicial de estacionamientos | Reduce el valor para conductores aunque la app funcione. | Onboarding simple para empresarios, publicación rápida y métricas de oferta por zona. | US09, US10, RNF04 |
+| Riesgo de seguridad en accesos | Puede permitir uso indebido de espacios o exposición de datos personales. | Autenticación por roles, verificación de usuario, auditoría y comunicación por canales controlados. | TS03, TS04, RNF03 |
+| Exposición de fotos o evidencias | Puede comprometer privacidad de espacios y usuarios. | Uso de Object Storage S3 compatible con bucket privado, URLs firmadas y control desde backend. | TS05, RNF03 |
+| Dependencia de mapas, pagos y notificaciones externos | Puede afectar búsqueda, cobro o confirmaciones si un tercero falla. | Adaptadores por proveedor, manejo de errores, reintentos y monitoreo de disponibilidad. | TS06, RNF04 |
+| Recomendación de precio poco transparente | El conductor podría desconfiar si no entiende por qué se sugiere una opción. | Mostrar costo total, variables consideradas y razón de recomendación. | US03, TS02 |
 
 ---
 
@@ -884,23 +1020,23 @@ El Product Backlog se prioriza según el valor que cada User Story aporta al neg
 |---|---|---|---|---|
 | 1 | US01 | Buscar estacionamientos por ubicación | Como conductor, deseo buscar estacionamientos disponibles cerca de mi destino, para planificar mi llegada sin perder tiempo buscando en la calle. | 8 |
 | 2 | US02 | Ver disponibilidad en tiempo real | Como conductor, deseo ver en tiempo real si un espacio está disponible, para no llegar a un lugar ya ocupado. | 8 |
-| 3 | US09 | Registrar un espacio de estacionamiento | Como propietario, deseo registrar mi espacio de estacionamiento en la plataforma, para empezar a recibir reservas y generar ingresos. | 5 |
+| 3 | US09 | Registrar un espacio de estacionamiento | Como empresario/propietario, deseo registrar mi espacio de estacionamiento en la plataforma, para empezar a recibir reservas y generar ingresos. | 5 |
 | 4 | US05 | Reservar un espacio de estacionamiento | Como conductor, deseo reservar un espacio de estacionamiento con anticipación, para asegurar mi lugar antes de llegar al destino. | 8 |
 | 5 | US14 | Pagar una reserva en línea | Como conductor, deseo pagar mi reserva directamente en la app, para no manejar efectivo y tener comprobante inmediato. | 8 |
-| 6 | US10 | Configurar horarios y precio del espacio | Como propietario, deseo configurar los horarios y precio de mi cochera, para tener control total sobre cuándo y a qué precio se alquila. | 5 |
-| 7 | US03 | Filtrar estacionamientos por precio y horario | Como conductor, deseo filtrar los estacionamientos por precio y horario, para encontrar la opción que mejor se ajusta a mis necesidades. | 3 |
+| 6 | US10 | Configurar horarios y precio del espacio | Como empresario/propietario, deseo configurar los horarios y precio de mi cochera, para tener control total sobre cuándo y a qué precio se alquila. | 5 |
+| 7 | US03 | Comparar tarifas y recomendar opción conveniente | Como conductor, deseo comparar estacionamientos por precio total, distancia y horario, para elegir la alternativa más conveniente antes de reservar. | 5 |
 | 8 | US04 | Ver detalle de un espacio de estacionamiento | Como conductor, deseo ver el detalle completo de un espacio antes de reservarlo, para tomar una decisión informada. | 3 |
-| 9 | US12 | Ver reservas activas de mi espacio | Como propietario, deseo ver las reservas activas de mis espacios, para saber quién usará mi cochera y cuándo. | 5 |
+| 9 | US12 | Ver reservas activas de mi espacio | Como empresario/propietario, deseo ver las reservas activas de mis espacios, para saber quién usará mi cochera y cuándo. | 5 |
 | 10 | US20 | Recibir notificación de reserva confirmada | Como conductor, deseo recibir una notificación cuando mi reserva sea confirmada, para tener certeza de que el espacio está asegurado. | 3 |
-| 11 | US11 | Habilitar y deshabilitar un espacio | Como propietario, deseo habilitar o deshabilitar mi espacio temporalmente, para no recibir reservas cuando no esté disponible. | 3 |
+| 11 | US11 | Habilitar y deshabilitar un espacio | Como empresario/propietario, deseo habilitar o deshabilitar mi espacio temporalmente, para no recibir reservas cuando no esté disponible. | 3 |
 | 12 | US06 | Cancelar una reserva | Como conductor, deseo cancelar una reserva realizada, para liberar el espacio si ya no lo necesito. | 5 |
 | 13 | US15 | Recibir reembolso por cancelación | Como conductor, deseo recibir un reembolso automático si cancelo con anticipación, para no perder dinero por cambios de planes. | 5 |
 | 14 | US08 | Extender tiempo de reserva activa | Como conductor, deseo extender el tiempo de mi reserva activa, para evitar cargos por sobrepasar el tiempo contratado. | 5 |
-| 15 | US13 | Ver historial de ingresos | Como propietario, deseo ver el historial de ingresos de mis espacios, para hacer seguimiento de mis ganancias. | 3 |
+| 15 | US13 | Ver historial de ingresos | Como empresario/propietario, deseo ver el historial de ingresos de mis espacios, para hacer seguimiento de mis ganancias. | 3 |
 | 16 | US16 | Ver comprobante de pago | Como conductor, deseo ver y descargar el comprobante de cada pago, para tener respaldo de mis transacciones. | 2 |
 | 17 | US07 | Ver historial de reservas | Como conductor, deseo ver el historial de mis reservas anteriores, para llevar control de mis gastos. | 2 |
 | 18 | US17 | Registrarse como conductor | Como usuario nuevo, deseo registrarme como conductor, para acceder a la búsqueda y reserva de estacionamientos. | 3 |
-| 19 | US18 | Registrarse como propietario | Como usuario nuevo, deseo registrarme como propietario, para publicar mis espacios y recibir reservas. | 3 |
+| 19 | US18 | Registrarse como empresario/propietario | Como usuario nuevo, deseo registrarme como empresario/propietario, para publicar mis espacios y recibir reservas. | 3 |
 | 20 | US19 | Iniciar sesión | Como usuario registrado, deseo iniciar sesión, para acceder a mi cuenta y funcionalidades de la app. | 2 |
 
 ---
@@ -918,6 +1054,8 @@ ParkLink adopta una arquitectura basada en Domain-Driven Design (DDD), donde los
 - **Payment Processing**: Procesamiento de pagos, reembolsos y generación de comprobantes.
 - **Identity & Access Management (IAM)**: Registro, autenticación y gestión de perfiles de usuario (conductores y propietarios).
 - **Notification Management**: Envío de notificaciones push y correos electrónicos sobre el estado de reservas y espacios.
+- **Pricing & Recommendation**: Cálculo de costo total, comparación de tarifas y recomendación de la opción más conveniente.
+- **Media Management**: Gestión segura de fotos de espacios y evidencias mediante almacenamiento de objetos compatible con S3.
 
 A continuación se presentan los diagramas de arquitectura en los niveles de Context, Container y Deployment.
 
@@ -932,7 +1070,7 @@ El diagrama de contexto muestra el sistema ParkLink como una unidad central, rod
 | Actor | Tipo | Descripcion |
 |---|---|---|
 | Conductor Urbano | Persona | Busca, reserva y paga estacionamientos a traves de la aplicacion movil. |
-| Propietario de Estacionamiento | Persona | Publica, configura y gestiona sus espacios de estacionamiento, visualiza reservas e ingresos. |
+| Empresario/Propietario de Estacionamiento | Persona | Publica, configura y gestiona sus espacios de estacionamiento, visualiza reservas e ingresos. |
 | Visitante | Persona | Accede al Landing Page para conocer el modelo de negocio y las caracteristicas de ParkLink. |
 
 **Sistemas externos:**
@@ -946,11 +1084,9 @@ El diagrama de contexto muestra el sistema ParkLink como una unidad central, rod
 
 **Descripcion del diagrama:**
 
-El sistema ParkLink se posiciona en el centro del diagrama. Los conductores urbanos interactuan con el sistema principalmente a traves de la aplicacion movil para buscar y reservar estacionamientos. Los propietarios utilizan la misma aplicacion para publicar y gestionar sus espacios. Los visitantes acceden al Landing Page para informarse sobre la plataforma. El sistema se conecta con el Payment Gateway para procesar transacciones financieras, con el Email Service para comunicaciones transaccionales, con el Push Notification Service para alertas en tiempo real, y con la Maps API para funcionalidades de geolocalizacion y visualizacion cartografica.
+El sistema ParkLink se posiciona en el centro del diagrama. Los conductores urbanos interactuan con el sistema principalmente a traves de la aplicacion movil para buscar, comparar tarifas y reservar estacionamientos. Los empresarios/propietarios utilizan la misma aplicacion para publicar y gestionar sus espacios. Los visitantes acceden al Landing Page para informarse sobre la plataforma. El sistema se conecta con el Payment Gateway para procesar transacciones financieras, con el Email Service para comunicaciones transaccionales, con el Push Notification Service para alertas en tiempo real, y con la Maps API para funcionalidades de geolocalizacion y visualizacion cartografica.
 
-> Elaborado en Structurizr. Acceso al diagrama: [Pendiente - Insertar enlace al workspace de Structurizr]
-
-![Software Architecture Context Diagram](assets/context-diagram.png)
+![Software Architecture Context Diagram](assets/context-diagram.svg)
 
 ---
 
@@ -963,11 +1099,12 @@ El diagrama de contenedores muestra los elementos de alto nivel de la arquitectu
 | Container | Tecnologia | Descripcion |
 |---|---|---|
 | Landing Page | HTML5, CSS3, JavaScript | Sitio web estatico que presenta el modelo de negocio de ParkLink, las caracteristicas del producto, planes de servicio y permite la descarga de la aplicacion movil. Desplegado en GitHub Pages o Netlify. |
-| Mobile Application | Flutter (Dart) / Kotlin Multiplatform | Aplicacion movil nativa y multiplataforma que permite a conductores buscar y reservar estacionamientos, y a propietarios publicar y gestionar sus espacios. Incluye almacenamiento local con SQLite/Hive, acceso a GPS del dispositivo e integracion con servicios REST internos y APIs externas. |
+| Mobile Application | Flutter (Dart) / Kotlin Multiplatform | Aplicacion movil nativa y multiplataforma que permite a conductores buscar, comparar tarifas y reservar estacionamientos, y a empresarios/propietarios publicar y gestionar sus espacios. Incluye almacenamiento local con SQLite/Hive, acceso a GPS del dispositivo e integracion con servicios REST internos y APIs externas. |
 | API Gateway | Spring Cloud Gateway / Nginx | Punto de entrada unico para todas las solicitudes de la aplicacion movil hacia los servicios backend. Gestiona el enrutamiento, rate limiting y autenticacion de tokens JWT. |
 | RESTful Web Services | Spring Boot (Java) / .NET Core | Backend que expone endpoints RESTful organizados por bounded contexts. Implementa la logica de negocio, reglas de dominio y orquestacion de procesos. Documentado con OpenAPI/Swagger. |
 | Database | PostgreSQL / MySQL | Base de datos relacional que persiste la informacion de usuarios, espacios de estacionamiento, reservas, transacciones de pago y configuraciones del sistema. |
 | Cache Layer | Redis | Capa de cache para almacenar datos de sesion, tokens de autenticacion y resultados de consultas frecuentes como disponibilidad de espacios en tiempo real. |
+| Object Storage | Amazon S3 o servicio compatible | Almacenamiento privado de fotos de estacionamientos y evidencias, referenciado desde la base de datos mediante URLs controladas por backend. |
 
 **Comunicacion entre containers:**
 
@@ -975,12 +1112,11 @@ El diagrama de contenedores muestra los elementos de alto nivel de la arquitectu
 - El **API Gateway** enruta las solicitudes hacia los **RESTful Web Services** correspondientes segun el bounded context.
 - Los **RESTful Web Services** persisten y consultan datos en la **Database** mediante JPA/Hibernate.
 - Los **RESTful Web Services** utilizan la **Cache Layer** para optimizar consultas de alta frecuencia como la disponibilidad de espacios.
+- Los **RESTful Web Services** almacenan fotos y evidencias en **Object Storage** para no guardar binarios pesados en la base de datos.
 - Los **RESTful Web Services** se integran con sistemas externos (Payment Gateway, Email Service, Push Notifications, Maps API) mediante clientes HTTP y SDKs oficiales.
 - El **Landing Page** es independiente y no tiene comunicacion directa con el backend; funciona como sitio estatico informativo.
 
-> Elaborado en Structurizr. Acceso al diagrama: [Pendiente - Insertar enlace al workspace de Structurizr]
-
-![Software Architecture Container Diagram](assets/container-diagram.png)
+![Software Architecture Container Diagram](assets/container-diagram.svg)
 
 ---
 
@@ -998,6 +1134,7 @@ El diagrama de despliegue muestra la distribucion fisica del sistema ParkLink, d
 | Compute Instance | Virtual Server | Instancia de computo (EC2 / App Service / Railway Container) que ejecuta los RESTful Web Services empaquetados como contenedores Docker o JARs ejecutables. |
 | Managed Database | Database Service | Servicio de base de datos gestionado (RDS / Azure Database / Railway PostgreSQL) que aloja la base de datos PostgreSQL con backups automaticos y alta disponibilidad. |
 | Redis Cloud | Cache Service | Servicio de cache gestionado (ElastiCache / Redis Cloud) para almacenamiento en memoria de sesiones, tokens y datos de disponibilidad en tiempo real. |
+| Object Storage S3 compatible | Storage Service | Bucket privado para fotos de espacios, evidencias de publicación y recursos multimedia asociados a estacionamientos. |
 | Firebase | Mobile Service | Plataforma que provee Firebase Cloud Messaging para notificaciones push y Firebase App Distribution para la distribucion de versiones de prueba de la aplicacion movil. |
 
 **Flujo de despliegue:**
@@ -1010,8 +1147,8 @@ El diagrama de despliegue muestra la distribucion fisica del sistema ParkLink, d
 
 4. La **Database** se ejecuta como un servicio gestionado en el cloud provider, con conexion privada hacia las instancias de computo que alojan los Web Services. Se configuran backups automaticos diarios y replicacion para alta disponibilidad.
 
-5. Los **servicios externos** (Payment Gateway, Email Service, Maps API) se integran mediante conexiones HTTPS salientes desde los Web Services, utilizando las API keys y credenciales configuradas como variables de entorno en el entorno de despliegue.
+5. El **Object Storage S3 compatible** almacena las fotos de estacionamientos en buckets privados. Los Web Services generan referencias controladas para que la aplicacion movil cargue las imagenes autorizadas.
 
-> Elaborado en Structurizr. Acceso al diagrama: [Pendiente - Insertar enlace al workspace de Structurizr]
+6. Los **servicios externos** (Payment Gateway, Email Service, Maps API) se integran mediante conexiones HTTPS salientes desde los Web Services, utilizando las API keys y credenciales configuradas como variables de entorno en el entorno de despliegue.
 
-![Software Architecture Deployment Diagram](assets/deployment-diagram.png)
+![Software Architecture Deployment Diagram](assets/deployment-diagram.svg)

@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680">
+  <rect width="1200" height="680" fill="#F8FAFC"/>
+  <text x="48" y="54" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" fill="#0F172A">ParkLink - Diagrama de contexto</text>
+  <text x="48" y="84" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#475569">Sistema central, usuarios y servicios externos</text>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#334155"/>
+    </marker>
+  </defs>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <rect x="438" y="210" width="324" height="198" rx="18" fill="#0F766E"/>
+    <text x="600" y="276" text-anchor="middle" font-size="30" font-weight="700" fill="#FFFFFF">ParkLink</text>
+    <text x="600" y="316" text-anchor="middle" font-size="16" fill="#D9FFFB">Aplicación móvil + backend REST</text>
+    <text x="600" y="344" text-anchor="middle" font-size="16" fill="#D9FFFB">Reserva, pago, gestión y recomendación</text>
+
+    <rect x="72" y="150" width="250" height="88" rx="12" fill="#FFFFFF" stroke="#94A3B8" stroke-width="2"/>
+    <text x="197" y="185" text-anchor="middle" font-size="17" font-weight="700" fill="#0F172A">Conductor urbano</text>
+    <text x="197" y="210" text-anchor="middle" font-size="13" fill="#475569">Busca, compara, reserva y paga</text>
+    <rect x="72" y="280" width="250" height="88" rx="12" fill="#FFFFFF" stroke="#94A3B8" stroke-width="2"/>
+    <text x="197" y="315" text-anchor="middle" font-size="17" font-weight="700" fill="#0F172A">Empresario/Propietario</text>
+    <text x="197" y="340" text-anchor="middle" font-size="13" fill="#475569">Publica espacios y gestiona ingresos</text>
+    <rect x="72" y="410" width="250" height="88" rx="12" fill="#FFFFFF" stroke="#94A3B8" stroke-width="2"/>
+    <text x="197" y="445" text-anchor="middle" font-size="17" font-weight="700" fill="#0F172A">Visitante</text>
+    <text x="197" y="470" text-anchor="middle" font-size="13" fill="#475569">Consulta landing page</text>
+
+    <rect x="878" y="108" width="250" height="70" rx="12" fill="#FFFFFF" stroke="#94A3B8" stroke-width="2"/>
+    <text x="1003" y="137" text-anchor="middle" font-size="16" font-weight="700" fill="#0F172A">Payment Gateway</text>
+    <text x="1003" y="158" text-anchor="middle" font-size="12" fill="#475569">Pagos y reembolsos</text>
+    <rect x="878" y="212" width="250" height="70" rx="12" fill="#FFFFFF" stroke="#94A3B8" stroke-width="2"/>
+    <text x="1003" y="241" text-anchor="middle" font-size="16" font-weight="700" fill="#0F172A">Email Service</text>
+    <text x="1003" y="262" text-anchor="middle" font-size="12" fill="#475569">Verificación y comprobantes</text>
+    <rect x="878" y="316" width="250" height="70" rx="12" fill="#FFFFFF" stroke="#94A3B8" stroke-width="2"/>
+    <text x="1003" y="345" text-anchor="middle" font-size="16" font-weight="700" fill="#0F172A">Push Notifications</text>
+    <text x="1003" y="366" text-anchor="middle" font-size="12" fill="#475569">Confirmaciones en móvil</text>
+    <rect x="878" y="420" width="250" height="70" rx="12" fill="#FFFFFF" stroke="#94A3B8" stroke-width="2"/>
+    <text x="1003" y="449" text-anchor="middle" font-size="16" font-weight="700" fill="#0F172A">Maps API</text>
+    <text x="1003" y="470" text-anchor="middle" font-size="12" fill="#475569">Mapa, rutas y distancia</text>
+
+    <path d="M322 194 L438 270" stroke="#334155" stroke-width="3" marker-end="url(#arrow)"/>
+    <path d="M322 324 L438 318" stroke="#334155" stroke-width="3" marker-end="url(#arrow)"/>
+    <path d="M322 454 L438 370" stroke="#334155" stroke-width="3" marker-end="url(#arrow)"/>
+    <path d="M762 250 L878 143" stroke="#334155" stroke-width="3" marker-end="url(#arrow)"/>
+    <path d="M762 288 L878 247" stroke="#334155" stroke-width="3" marker-end="url(#arrow)"/>
+    <path d="M762 330 L878 351" stroke="#334155" stroke-width="3" marker-end="url(#arrow)"/>
+    <path d="M762 370 L878 455" stroke="#334155" stroke-width="3" marker-end="url(#arrow)"/>
+  </g>
+</svg>

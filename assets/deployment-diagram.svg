@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+  <rect width="1200" height="720" fill="#F8FAFC"/>
+  <text x="48" y="54" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700" fill="#0F172A">ParkLink - Diagrama de despliegue</text>
+  <text x="48" y="84" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#475569">Distribución física propuesta para móvil, landing page y backend</text>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#334155"/>
+    </marker>
+  </defs>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <rect x="56" y="164" width="220" height="110" rx="14" fill="#DBEAFE" stroke="#2563EB" stroke-width="2"/>
+    <text x="166" y="206" text-anchor="middle" font-size="18" font-weight="700" fill="#1E3A8A">Dispositivo móvil</text>
+    <text x="166" y="233" text-anchor="middle" font-size="13" fill="#1E40AF">App ParkLink, GPS, cámara</text>
+    <rect x="56" y="364" width="220" height="110" rx="14" fill="#E0F2FE" stroke="#0284C7" stroke-width="2"/>
+    <text x="166" y="406" text-anchor="middle" font-size="18" font-weight="700" fill="#075985">Navegador web</text>
+    <text x="166" y="433" text-anchor="middle" font-size="13" fill="#0369A1">Landing page</text>
+
+    <rect x="358" y="144" width="760" height="430" rx="20" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="3"/>
+    <text x="738" y="181" text-anchor="middle" font-size="20" font-weight="700" fill="#334155">Cloud Provider</text>
+    <text x="738" y="207" text-anchor="middle" font-size="13" fill="#64748B">Red segura, HTTPS, variables de entorno, monitoreo</text>
+
+    <rect x="394" y="254" width="180" height="92" rx="12" fill="#ECFDF5" stroke="#059669" stroke-width="2"/>
+    <text x="484" y="289" text-anchor="middle" font-size="16" font-weight="700" fill="#065F46">API Gateway</text>
+    <text x="484" y="314" text-anchor="middle" font-size="12" fill="#047857">HTTPS + JWT</text>
+    <rect x="640" y="254" width="210" height="92" rx="12" fill="#FEF3C7" stroke="#D97706" stroke-width="2"/>
+    <text x="745" y="289" text-anchor="middle" font-size="16" font-weight="700" fill="#92400E">Compute Instance</text>
+    <text x="745" y="314" text-anchor="middle" font-size="12" fill="#92400E">RESTful Web Services</text>
+    <rect x="902" y="254" width="180" height="92" rx="12" fill="#FCE7F3" stroke="#DB2777" stroke-width="2"/>
+    <text x="992" y="289" text-anchor="middle" font-size="16" font-weight="700" fill="#9D174D">External APIs</text>
+    <text x="992" y="314" text-anchor="middle" font-size="12" fill="#9D174D">Pagos, email, push, maps</text>
+
+    <rect x="420" y="422" width="170" height="82" rx="12" fill="#F1F5F9" stroke="#64748B" stroke-width="2"/>
+    <text x="505" y="453" text-anchor="middle" font-size="15" font-weight="700" fill="#334155">Managed DB</text>
+    <text x="505" y="476" text-anchor="middle" font-size="12" fill="#475569">PostgreSQL/RDS</text>
+    <rect x="654" y="422" width="170" height="82" rx="12" fill="#F1F5F9" stroke="#64748B" stroke-width="2"/>
+    <text x="739" y="453" text-anchor="middle" font-size="15" font-weight="700" fill="#334155">Redis Cloud</text>
+    <text x="739" y="476" text-anchor="middle" font-size="12" fill="#475569">Cache y sesiones</text>
+    <rect x="888" y="422" width="170" height="82" rx="12" fill="#F1F5F9" stroke="#64748B" stroke-width="2"/>
+    <text x="973" y="453" text-anchor="middle" font-size="15" font-weight="700" fill="#334155">Object Storage</text>
+    <text x="973" y="476" text-anchor="middle" font-size="12" fill="#475569">S3 compatible</text>
+
+    <rect x="394" y="604" width="250" height="58" rx="12" fill="#E0F2FE" stroke="#0284C7" stroke-width="2"/>
+    <text x="519" y="639" text-anchor="middle" font-size="15" font-weight="700" fill="#075985">GitHub Pages / Netlify CDN</text>
+    <rect x="740" y="604" width="250" height="58" rx="12" fill="#DCFCE7" stroke="#16A34A" stroke-width="2"/>
+    <text x="865" y="639" text-anchor="middle" font-size="15" font-weight="700" fill="#166534">Firebase App Distribution</text>
+
+    <path d="M276 219 L394 300" stroke="#334155" stroke-width="3" marker-end="url(#arrow)"/>
+    <path d="M574 300 L640 300" stroke="#334155" stroke-width="3" marker-end="url(#arrow)"/>
+    <path d="M850 300 L902 300" stroke="#334155" stroke-width="3" marker-end="url(#arrow)"/>
+    <path d="M708 346 L542 422" stroke="#334155" stroke-width="3" marker-end="url(#arrow)"/>
+    <path d="M745 346 L739 422" stroke="#334155" stroke-width="3" marker-end="url(#arrow)"/>
+    <path d="M790 346 L944 422" stroke="#334155" stroke-width="3" marker-end="url(#arrow)"/>
+    <path d="M276 419 L394 633" stroke="#334155" stroke-width="3" marker-end="url(#arrow)"/>
+    <path d="M166 274 L865 604" stroke="#94A3B8" stroke-width="2" stroke-dasharray="8 8" marker-end="url(#arrow)"/>
+  </g>
+</svg>
