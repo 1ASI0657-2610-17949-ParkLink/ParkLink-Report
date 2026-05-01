@@ -1390,6 +1390,8 @@ workspace "ParkLink - Iteration 3 Containers" "Container View refinada con cross
 }
 ```
 
+![Container View Iter 3](assets/iter3/ContainersIter3.png)
+
 ##### 4.3.3.6.2. Dynamic View — Pago con Webhook Idempotente
 
 Modela el flujo end-to-end de un cobro: solicitud del conductor, llamado al proveedor, webhook entrante de confirmación y deduplicación por `Idempotency-Key`.
@@ -1453,6 +1455,8 @@ workspace "ParkLink - Payment Webhook Flow" "Dynamic view: cobro idempotente con
 }
 ```
 
+![Payment Webhook Flow](assets/iter3/PaymentWebhookFlow.png)
+
 ##### 4.3.3.6.3. Dynamic View — Subida de Foto via Pre-Signed URL
 
 Modela el flujo en que el propietario sube una foto directamente al Object Storage sin pasar por el backend, mediante una URL firmada de corta duración.
@@ -1474,14 +1478,14 @@ workspace "ParkLink - Media Upload Flow" "Dynamic view: subida de foto via signe
 
         owner -> mobileApp "Sube foto del espacio"
         mobileApp -> apiGateway "POST /media/upload-url"
-        apiGateway -> mediaService "Forward"
+        apiGateway -> mediaService "Forward solicitud de URL"
         mediaService -> s3Adapter "getUploadUrl(key, ttl=15m)"
         s3Adapter -> mediaService "Pre-signed URL"
         mediaService -> mobileApp "200 OK + signed URL"
         mobileApp -> s3 "PUT binary directo (HTTPS)"
         s3 -> mobileApp "200 OK"
         mobileApp -> apiGateway "POST /media (key, space_id)"
-        apiGateway -> mediaService "Forward"
+        apiGateway -> mediaService "Forward registro de referencia"
         mediaService -> db "INSERT media reference"
         mediaService -> mobileApp "201 Created"
     }
@@ -1490,14 +1494,14 @@ workspace "ParkLink - Media Upload Flow" "Dynamic view: subida de foto via signe
         dynamic parkLink "MediaUploadFlow" "Upload via signed URL." {
             owner -> mobileApp "1. Selecciona foto"
             mobileApp -> apiGateway "2. POST /media/upload-url"
-            apiGateway -> mediaService "3. Forward"
+            apiGateway -> mediaService "3. Forward solicitud de URL"
             mediaService -> s3Adapter "4. getUploadUrl(key, ttl=15m)"
             s3Adapter -> mediaService "5. Signed URL"
             mediaService -> mobileApp "6. 200 OK + signed URL"
             mobileApp -> s3 "7. PUT binary directo"
             s3 -> mobileApp "8. 200 OK"
             mobileApp -> apiGateway "9. POST /media (registrar)"
-            apiGateway -> mediaService "10. Forward"
+            apiGateway -> mediaService "10. Forward registro de referencia"
             mediaService -> db "11. INSERT reference"
             mediaService -> mobileApp "12. 201 Created"
             autolayout lr
@@ -1505,6 +1509,8 @@ workspace "ParkLink - Media Upload Flow" "Dynamic view: subida de foto via signe
     }
 }
 ```
+
+![Media Upload Flow](assets/iter3/MediaUploadFlow.png)
 
 ##### 4.3.3.6.4. Component View — Notification Context Event-Driven
 
@@ -1564,6 +1570,8 @@ workspace "ParkLink - Notification Components" "Component view: notification wor
     }
 }
 ```
+
+![Notification Components](assets/iter3/NotificationComponents.png)
 
 ##### 4.3.3.6.5. Class Diagram — Adapter Pattern de Proveedores
 
@@ -1640,6 +1648,8 @@ CircuitBreakerDecorator o-- NotificationProvider : decorates
 
 @enduml
 ```
+
+![Adapter Pattern - Payment & Notification Providers](assets/iter3/AdapterPattern-PaymentandNotificationProviders.png)
 
 **Design Decisions registradas (ADR-style):**
 
