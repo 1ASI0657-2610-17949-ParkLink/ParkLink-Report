@@ -2,18 +2,23 @@
 
 ![UPC Logo](https://upload.wikimedia.org/wikipedia/commons/f/fc/UPC_logo_transparente.png)
 
+**Carrera:** Ingeniería de Software  
+**Ciclo:** 7
+
+**Curso:** 1ASI0657 - Fundamentos de Arquitectura de Software
+
+**Sección:** 17949
+
+**Profesor:** Jorge Luis Delgado Vite
+
 ## "Informe de Trabajo Final"
 
-**1ASI0657-2610-17949 - Fundamentos de Arquitectura de Software - Ciclo 7**
-
-**Profesor:** Jorge Luis Delgado Vite  
-**Sección:** 17949  
-**Startup:** ParkTeam          
-**Producto:** ParkLink       
+**Startup:** ParkTeam  
+**Producto:** ParkLink
 
 -------------------------------
 
-### Integrantes:
+### Relación de integrantes:
 
 | Nombre                                | Código       |
 |---------------------------------------|--------------|
@@ -67,10 +72,26 @@
    - [3.4. Product Backlog](#34-product-backlog)
 - [Capítulo IV: Product Architecture Design](#capítulo-iv-product-architecture-design)
     - [4.1. Strategic-Level Domain-Driven Design](#41-strategic-level-domain-driven-design)
+    - [4.1.1. Principles Statements](#411-principles-statements)
+    - [4.1.2. Approaches Statements Architectural Styles & Patterns](#412-approaches-statements-architectural-styles--patterns)
     - [4.1.3. Software Architecture](#413-software-architecture)
     - [4.1.3.1. Software Architecture System Landscape Diagram](#4131-software-architecture-system-landscape-diagram)
     - [4.1.3.2. Software Architecture Context Level Diagrams](#4132-software-architecture-context-level-diagrams)
     - [4.1.3.3. Software Architecture Container Level Diagrams](#4133-software-architecture-container-level-diagrams)
+    - [4.1.4. Approach driven ViewPoints Diagrams](#414-approach-driven-viewpoints-diagrams)
+    - [4.1.5. Relational / Non-Relational Database Diagram](#415-relational--non-relational-database-diagram)
+    - [4.1.6. Design Patterns](#416-design-patterns)
+    - [4.1.7. Tactics](#417-tactics)
+    - [4.2. Architectural Drivers](#42-architectural-drivers)
+    - [4.1.8. Design Purpose](#418-design-purpose)
+    - [4.1.9. Primary Functionality (Primary User Stories)](#419-primary-functionality-primary-user-stories)
+    - [4.1.10. Quality Attribute Scenarios](#4110-quality-attribute-scenarios)
+    - [4.1.11. Constraints](#4111-constraints)
+    - [4.1.12. Architectural Concerns](#4112-architectural-concerns)
+    - [4.3. ADD Iterations](#43-add-iterations)
+    - [4.3.1. Iteration 1: Establish Overall System Structure](#431-iteration-1-establish-overall-system-structure)
+    - [4.3.2. Iteration 2: Address Critical Quality Attributes](#432-iteration-2-address-critical-quality-attributes)
+    - [4.3.3. Iteration 3: External Integrations & Cross-Cutting Concerns](#433-iteration-3-external-integrations--cross-cutting-concerns)
   
 # Capítulo I: Introducción
 
@@ -910,6 +931,18 @@ El Product Backlog se prioriza según el valor que cada User Story aporta al neg
 
 ## 4.1. Strategic-Level Domain-Driven Design
 
+### 4.1.1. Principles Statements
+
+_Pendiente de completar._
+
+---
+
+### 4.1.2. Approaches Statements Architectural Styles & Patterns
+
+_Pendiente de completar._
+
+---
+
 ### 4.1.3. Software Architecture
 
 La arquitectura de software de ParkLink se define a partir de los principales procesos del dominio identificados en las épicas, user stories y technical stories del proyecto. ParkLink conecta a conductores que necesitan encontrar y reservar estacionamientos con propietarios o empresarios que desean publicar, administrar y monetizar sus cocheras. Por ello, la arquitectura se organiza mediante Domain-Driven Design estratégico, separando el sistema en bounded contexts con responsabilidades explícitas y vocabulario propio.
@@ -1036,6 +1069,12 @@ Esta estructura soporta las user stories principales del backlog. US01 a US04 se
 
 La base de datos relacional se mantiene como fuente de verdad para reservas y pagos porque estas operaciones requieren consistencia fuerte. La cache no reemplaza esa fuente de verdad; solo acelera la lectura de disponibilidad para el conductor. Esta decisión es clave: una disponibilidad mostrada en el mapa no equivale a una reserva confirmada hasta que el Reservation Management Context haya bloqueado el espacio y registrado el estado correspondiente.
 
+### 4.1.4. Approach driven ViewPoints Diagrams
+
+_Pendiente de completar._
+
+---
+
 ### 4.1.5 Relational / Non-Relational Database Diagram
 
 #### Justificación del modelo relacional
@@ -1080,3 +1119,555 @@ Los datos de ParkLink tienen una estructura bien definida y relaciones claras:
 | DP-10 | State | Comportamental | Estados de reservas |
 
 ### 4.1.7 Tactics
+
+_Pendiente de completar._
+
+---
+
+## 4.2. Architectural Drivers
+
+### 4.1.8. Design Purpose
+
+_Pendiente de completar._
+
+---
+
+### 4.1.9. Primary Functionality (Primary User Stories)
+
+_Pendiente de completar._
+
+---
+
+### 4.1.10. Quality Attribute Scenarios
+
+_Pendiente de completar._
+
+---
+
+### 4.1.11. Constraints
+
+_Pendiente de completar._
+
+---
+
+### 4.1.12. Architectural Concerns
+
+_Pendiente de completar._
+
+---
+
+## 4.3. ADD Iterations
+
+El diseño arquitectónico de ParkLink se desarrolla aplicando el método **Attribute-Driven Design (ADD 3.0)** del SEI (Cervantes & Kazman, 2016). Se ejecutan **3 iteraciones** sucesivas, cada una refinando la arquitectura mediante la selección de drivers (functional requirements, quality attributes, constraints y architectural concerns) y la toma documentada de decisiones de diseño.
+
+| Iteración | Nombre | Foco principal |
+|---|---|---|
+| 1 | Establish Overall System Structure | Reference architecture, módulos top-level y primary functionality |
+| 2 | Address Critical Quality Attributes | Disponibilidad en tiempo real, seguridad y consistencia transaccional |
+| 3 | External Integrations & Cross-Cutting Concerns | Pagos idempotentes, media segura, auditoría, resiliencia ante terceros |
+
+Cada iteración produce un Architectural Design Backlog actualizado, un Iteration Goal explícito, decisiones de diseño documentadas (ADRs), vistas C4/UML refinadas y un análisis Kanban de drivers atendidos.
+
+---
+
+### 4.3.1. Iteration 1: Establish Overall System Structure
+
+#### 4.3.1.1. Architectural Design Backlog
+
+_Pendiente de completar._
+
+#### 4.3.1.2. Establish Iteration Goal by Selecting Drivers
+
+_Pendiente de completar._
+
+#### 4.3.1.3. Choose One or More Elements of the System to Refine
+
+_Pendiente de completar._
+
+#### 4.3.1.4. Choose One or More Design Concepts That Satisfy the Selected Drivers
+
+_Pendiente de completar._
+
+#### 4.3.1.5. Instantiate Architectural Elements, Allocate Responsibilities, and Define Interfaces
+
+_Pendiente de completar._
+
+#### 4.3.1.6. Sketch Views (C4 & UML) and Record Design Decisions
+
+_Pendiente de completar._
+
+#### 4.3.1.7. Analysis of Current Design and Review Iteration Goal (Kanban Board)
+
+_Pendiente de completar._
+
+---
+
+### 4.3.2. Iteration 2: Address Critical Quality Attributes
+
+#### 4.3.2.1. Architectural Design Backlog
+
+_Pendiente de completar._
+
+#### 4.3.2.2. Establish Iteration Goal by Selecting Drivers
+
+_Pendiente de completar._
+
+#### 4.3.2.3. Choose One or More Elements of the System to Refine
+
+_Pendiente de completar._
+
+#### 4.3.2.4. Choose One or More Design Concepts That Satisfy the Selected Drivers
+
+_Pendiente de completar._
+
+#### 4.3.2.5. Instantiate Architectural Elements, Allocate Responsibilities, and Define Interfaces
+
+_Pendiente de completar._
+
+#### 4.3.2.6. Sketch Views (C4 & UML) and Record Design Decisions
+
+_Pendiente de completar._
+
+#### 4.3.2.7. Analysis of Current Design and Review Iteration Goal (Kanban Board)
+
+_Pendiente de completar._
+
+---
+
+### 4.3.3. Iteration 3: External Integrations & Cross-Cutting Concerns
+
+Esta iteración aborda los drivers vinculados a integraciones con proveedores externos (pasarela de pagos, almacenamiento de objetos, notificaciones, mapas) y capacidades transversales como auditoría y resiliencia. El objetivo es desacoplar el dominio de los proveedores, garantizar que las operaciones críticas sean idempotentes y trazables, y aislar al sistema de fallos en terceros.
+
+#### 4.3.3.1. Architectural Design Backlog
+
+Drivers que entran a la iteración:
+
+| Tipo | ID | Descripción | Estado pre-iteración |
+|---|---|---|---|
+| Technical Story | TS04 | Auditoría de reservas, pagos, reembolsos y cambios de disponibilidad | Backlog |
+| Technical Story | TS05 | Almacenamiento de fotos en Object Storage compatible con S3 | Backlog |
+| Technical Story | TS06 | Manejo idempotente de pagos y webhooks | Backlog |
+| Quality Attribute | RNF04 | Disponibilidad ante fallos de proveedores externos (mapas, pagos, notificaciones) | Backlog |
+| User Story | US14 | Pagar una reserva en línea | Partially addressed (Iter 2) |
+| User Story | US15 | Recibir reembolso por cancelación | Backlog |
+| User Story | US16 | Ver comprobante de pago | Backlog |
+| User Story | US20 | Recibir notificación de reserva confirmada | Backlog |
+| Constraint | C-INT | Integración con Stripe/MercadoPago, SendGrid, Firebase Cloud Messaging y Google Maps | Vigente |
+| Concern | CC-OBS | Trazabilidad de transacciones financieras pa cumplimiento regulatorio | Backlog |
+
+#### 4.3.3.2. Establish Iteration Goal by Selecting Drivers
+
+**Iteration Goal:** Diseñar los mecanismos de integración con sistemas externos y las capacidades transversales del sistema de modo que:
+
+1. Los pagos se procesen sin duplicidad ante reintentos o webhooks repetidos.
+2. Las fotos de estacionamientos se almacenen de forma privada y sólo accesibles mediante autorización explícita del backend.
+3. Las transacciones críticas dejen un rastro auditable e inmutable.
+4. El sistema continúe operando aceptablemente cuando un proveedor externo falle o degrade su servicio.
+5. Las notificaciones al usuario se entreguen sin bloquear las operaciones principales.
+
+**Drivers primarios seleccionados:** TS04, TS05, TS06, RNF04.
+**Drivers secundarios:** US14, US15, US16, US20, CC-OBS.
+
+#### 4.3.3.3. Choose One or More Elements of the System to Refine
+
+Elementos a refinar dentro de la arquitectura previamente establecida:
+
+- **Payment Processing Context** (Parking Supply & Monetization)
+- **Media Management Context**
+- **Notification Management Context**
+- **Audit Logging** — capacidad transversal nueva
+- **API Gateway** — extensión con rate limiting, retry y circuit breaker hacia proveedores
+- **Domain Event Bus** — mecanismo de comunicación asíncrona entre contextos
+
+#### 4.3.3.4. Choose One or More Design Concepts That Satisfy the Selected Drivers
+
+| Driver | Design Concept / Pattern | Justificación |
+|---|---|---|
+| TS06 (idempotencia pagos) | **Idempotency Key Pattern** + tabla `processed_webhooks` con UNIQUE(provider, event_id) | Cobro repetido ante reintento de red o webhook duplicado se descarta |
+| TS06 (webhooks seguros) | **HMAC Signature Verification** | Valida firma del proveedor, evita spoofing |
+| TS05 (fotos) | **Object Storage S3-compatible + Pre-signed URLs** (TTL 15 min) | Bucket privado, acceso temporal autorizado por backend |
+| TS04 (auditoría) | **Append-only Audit Log Table** + **Domain Events** | Registro inmutable indexado por entidad, actor y tiempo |
+| RNF04 (resiliencia terceros) | **Circuit Breaker** + **Retry con backoff exponencial** + **Bulkhead** | Aísla fallos de proveedor, evita propagación |
+| US20 (notificaciones) | **Event-Driven Architecture** con worker asíncrono | Desacopla operación principal de envío de notificación |
+| C-INT (multi-proveedor) | **Adapter Pattern** por proveedor | Cambio Stripe ↔ MercadoPago sin tocar dominio |
+| CC-OBS (observabilidad) | **Structured Logging** + **Correlation IDs** | Trazabilidad de request end-to-end |
+
+#### 4.3.3.5. Instantiate Architectural Elements, Allocate Responsibilities, and Define Interfaces
+
+| Componente | Responsabilidad | Interfaz pública |
+|---|---|---|
+| `PaymentService` | Orquestar cobro, gestionar idempotency key, exponer webhook | `POST /payments` (con header `Idempotency-Key`), `POST /payments/webhook`, `GET /payments/{id}` |
+| `StripeAdapter` / `MercadoPagoAdapter` | Comunicar con API del proveedor, mapear errores y respuestas al modelo de dominio | `createCharge(amount, currency, customer)`, `refund(transactionId, amount)` |
+| `WebhookVerifier` | Validar firma HMAC del webhook entrante | `verify(payload, signature, secret) → boolean` |
+| `MediaService` | Emitir URLs firmadas de subida y descarga, persistir referencia en BD | `POST /media/upload-url`, `GET /media/{id}` |
+| `S3StorageAdapter` | Generar pre-signed URLs, validar buckets | `getUploadUrl(key, ttl)`, `getDownloadUrl(key, ttl)` |
+| `NotificationService` | Consumir eventos de dominio, decidir canal y enviar | Subscriber de eventos `ReservationConfirmed`, `PaymentSucceeded`, `RefundIssued` |
+| `FCMAdapter` / `SendGridAdapter` | Enviar push/email mediante proveedor | `sendPush(token, payload)`, `sendEmail(to, template, data)` |
+| `AuditLogger` | Registrar eventos auditables append-only | `log(actor, action, entityType, entityId, before, after, timestamp)` |
+| `CircuitBreaker` | Envolver llamadas externas, abrir circuito ante fallos | `execute(callable) → result | fallback` |
+| `EventBus` | Publicar y enrutar eventos de dominio asíncronos | `publish(event)`, `subscribe(eventType, handler)` |
+
+#### 4.3.3.6. Sketch Views (C4 & UML) and Record Design Decisions
+
+Las vistas se modelan en **Structurizr DSL**, manteniendo coherencia con los diagramas C4 ya producidos en la sección 4.1.3. Cada bloque define un workspace independiente con su modelo y vistas asociadas.
+
+##### 4.3.3.6.1. Container View — Cross-Cutting Refinement
+
+Refina el Container Diagram agregando los containers introducidos en esta iteración: `Payment Adapter`, `Notification Worker`, `Object Storage`, `Audit Log Store` y el `Event Bus`.
+
+```structurizr
+workspace "ParkLink - Iteration 3 Containers" "Container View refinada con cross-cutting concerns." {
+
+    model {
+        driver = person "Conductor urbano" "Reserva y paga estacionamientos."
+        owner = person "Propietario" "Publica espacios y recibe ingresos."
+
+        paymentGateway = softwareSystem "Pasarela de Pagos" "Stripe / MercadoPago." "External"
+        emailProvider = softwareSystem "SendGrid" "Envío de correos transaccionales." "External"
+        pushProvider = softwareSystem "Firebase Cloud Messaging" "Notificaciones push." "External"
+        mapsProvider = softwareSystem "Google Maps Platform" "Geolocalización y mapas." "External"
+
+        parkLink = softwareSystem "ParkLink" "Plataforma de reserva de estacionamientos." {
+            mobileApp = container "Mobile Application" "Conductores y propietarios." "Flutter"
+            apiGateway = container "API Gateway" "Routing, rate limiting, JWT." "Spring Cloud Gateway"
+
+            paymentService = container "Payment Service" "Cobros, reembolsos, idempotencia." "Spring Boot"
+            paymentAdapter = container "Payment Adapter" "Adapter por proveedor + Circuit Breaker." "Resilience4j"
+            mediaService = container "Media Service" "Emite signed URLs, persiste referencias." "Spring Boot"
+            notificationWorker = container "Notification Worker" "Consume eventos, despacha notif." "Spring Boot"
+            reservationService = container "Reservation Service" "Core: crear, cancelar, extender reservas." "Spring Boot"
+
+            eventBus = container "Event Bus" "Pub/Sub de eventos de dominio." "RabbitMQ / Kafka"
+            db = container "Relational Database" "Reservas, pagos, usuarios, espacios." "PostgreSQL"
+            auditStore = container "Audit Log Store" "Tabla append-only de eventos auditables." "PostgreSQL"
+            objectStorage = container "Object Storage" "Bucket privado de fotos." "S3-compatible"
+        }
+
+        driver -> mobileApp "Reserva, paga, consulta"
+        owner -> mobileApp "Publica, configura, ve ingresos"
+        mobileApp -> apiGateway "HTTPS/REST"
+
+        apiGateway -> paymentService "Routing"
+        apiGateway -> mediaService "Routing"
+        apiGateway -> reservationService "Routing"
+
+        paymentService -> paymentAdapter "Solicita cobro/reembolso"
+        paymentAdapter -> paymentGateway "HTTPS + HMAC verify" "External"
+        paymentService -> db "Persiste idempotency keys, transacciones"
+        paymentService -> auditStore "Registra evento auditable"
+        paymentService -> eventBus "Publica PaymentSucceeded / RefundIssued"
+
+        mediaService -> objectStorage "Genera signed URL (TTL 15 min)"
+        mediaService -> db "Persiste referencia a foto"
+        mobileApp -> objectStorage "Upload/download via signed URL" "HTTPS"
+
+        reservationService -> db "Persiste reservas"
+        reservationService -> auditStore "Registra cambios de estado"
+        reservationService -> eventBus "Publica ReservationConfirmed / ReservationCancelled"
+
+        eventBus -> notificationWorker "Entrega evento"
+        notificationWorker -> emailProvider "sendEmail" "External"
+        notificationWorker -> pushProvider "sendPush" "External"
+        notificationWorker -> auditStore "Registra envío"
+    }
+
+    views {
+        container parkLink "ContainersIter3" {
+            include *
+            autolayout lr
+        }
+
+        styles {
+            element "External" {
+                background #999999
+                color #ffffff
+            }
+            element "Person" {
+                shape Person
+            }
+        }
+    }
+}
+```
+
+##### 4.3.3.6.2. Dynamic View — Pago con Webhook Idempotente
+
+Modela el flujo end-to-end de un cobro: solicitud del conductor, llamado al proveedor, webhook entrante de confirmación y deduplicación por `Idempotency-Key`.
+
+```structurizr
+workspace "ParkLink - Payment Webhook Flow" "Dynamic view: cobro idempotente con webhook." {
+
+    model {
+        driver = person "Conductor"
+        stripe = softwareSystem "Stripe" "Pasarela de pagos externa." "External"
+
+        parkLink = softwareSystem "ParkLink" {
+            mobileApp = container "Mobile App" "" "Flutter"
+            apiGateway = container "API Gateway" "" "Spring Cloud Gateway"
+            paymentService = container "Payment Service" "" "Spring Boot"
+            webhookVerifier = container "Webhook Verifier" "Valida firma HMAC SHA-256." "Spring Boot"
+            paymentAdapter = container "Stripe Adapter" "Circuit Breaker." "Resilience4j"
+            db = container "Database" "" "PostgreSQL" {
+                tags "Database"
+            }
+        }
+
+        driver -> mobileApp "Confirma pago de reserva"
+        mobileApp -> apiGateway "POST /payments con header Idempotency-Key=UUID"
+        apiGateway -> paymentService "Forward request"
+        paymentService -> db "SELECT por idempotency_key"
+        paymentService -> paymentAdapter "createCharge(amount, currency, customer)"
+        paymentAdapter -> stripe "POST /v1/charges" "HTTPS"
+        stripe -> paymentAdapter "201 Created + charge_id"
+        paymentAdapter -> paymentService "Charge result"
+        paymentService -> db "INSERT transaction + idempotency_key"
+        paymentService -> mobileApp "200 OK"
+
+        stripe -> webhookVerifier "POST /payments/webhook + Stripe-Signature"
+        webhookVerifier -> webhookVerifier "verify(payload, signature, secret)"
+        webhookVerifier -> paymentService "Forward verified event"
+        paymentService -> db "SELECT processed_webhooks WHERE event_id"
+        paymentService -> db "INSERT processed_webhooks (UNIQUE constraint)"
+        paymentService -> db "UPDATE transaction SET status='confirmed'"
+    }
+
+    views {
+        dynamic parkLink "PaymentWebhookFlow" "Cobro con webhook idempotente." {
+            driver -> mobileApp "1. Confirma pago"
+            mobileApp -> apiGateway "2. POST /payments + Idempotency-Key"
+            apiGateway -> paymentService "3. Forward"
+            paymentService -> db "4. Verifica idempotency_key"
+            paymentService -> paymentAdapter "5. createCharge()"
+            paymentAdapter -> stripe "6. POST /v1/charges"
+            stripe -> paymentAdapter "7. 201 + charge_id"
+            paymentAdapter -> paymentService "8. Resultado"
+            paymentService -> db "9. INSERT transaction"
+            paymentService -> mobileApp "10. 200 OK"
+            stripe -> webhookVerifier "11. POST /webhook + signature"
+            webhookVerifier -> paymentService "12. Evento verificado"
+            paymentService -> db "13. INSERT processed_webhooks (UNIQUE)"
+            paymentService -> db "14. UPDATE transaction status"
+            autolayout lr
+        }
+    }
+}
+```
+
+##### 4.3.3.6.3. Dynamic View — Subida de Foto via Pre-Signed URL
+
+Modela el flujo en que el propietario sube una foto directamente al Object Storage sin pasar por el backend, mediante una URL firmada de corta duración.
+
+```structurizr
+workspace "ParkLink - Media Upload Flow" "Dynamic view: subida de foto via signed URL." {
+
+    model {
+        owner = person "Propietario"
+
+        parkLink = softwareSystem "ParkLink" {
+            mobileApp = container "Mobile App" "" "Flutter"
+            apiGateway = container "API Gateway" "" "Spring Cloud Gateway"
+            mediaService = container "Media Service" "" "Spring Boot"
+            s3Adapter = container "S3 Storage Adapter" "" "AWS SDK"
+            db = container "Database" "" "PostgreSQL"
+            s3 = container "Object Storage" "Bucket privado." "S3-compatible"
+        }
+
+        owner -> mobileApp "Sube foto del espacio"
+        mobileApp -> apiGateway "POST /media/upload-url"
+        apiGateway -> mediaService "Forward"
+        mediaService -> s3Adapter "getUploadUrl(key, ttl=15m)"
+        s3Adapter -> mediaService "Pre-signed URL"
+        mediaService -> mobileApp "200 OK + signed URL"
+        mobileApp -> s3 "PUT binary directo (HTTPS)"
+        s3 -> mobileApp "200 OK"
+        mobileApp -> apiGateway "POST /media (key, space_id)"
+        apiGateway -> mediaService "Forward"
+        mediaService -> db "INSERT media reference"
+        mediaService -> mobileApp "201 Created"
+    }
+
+    views {
+        dynamic parkLink "MediaUploadFlow" "Upload via signed URL." {
+            owner -> mobileApp "1. Selecciona foto"
+            mobileApp -> apiGateway "2. POST /media/upload-url"
+            apiGateway -> mediaService "3. Forward"
+            mediaService -> s3Adapter "4. getUploadUrl(key, ttl=15m)"
+            s3Adapter -> mediaService "5. Signed URL"
+            mediaService -> mobileApp "6. 200 OK + signed URL"
+            mobileApp -> s3 "7. PUT binary directo"
+            s3 -> mobileApp "8. 200 OK"
+            mobileApp -> apiGateway "9. POST /media (registrar)"
+            apiGateway -> mediaService "10. Forward"
+            mediaService -> db "11. INSERT reference"
+            mediaService -> mobileApp "12. 201 Created"
+            autolayout lr
+        }
+    }
+}
+```
+
+##### 4.3.3.6.4. Component View — Notification Context Event-Driven
+
+Vista de componentes internos del Notification Worker mostrando cómo consume eventos del bus y enruta a los adapters de proveedor.
+
+```structurizr
+workspace "ParkLink - Notification Components" "Component view: notification worker event-driven." {
+
+    model {
+        parkLink = softwareSystem "ParkLink" {
+            eventBus = container "Event Bus" "Pub/Sub." "RabbitMQ"
+
+            notificationWorker = container "Notification Worker" "Consume eventos y despacha notif." "Spring Boot" {
+                eventConsumer = component "Event Consumer" "Subscribe a topics ReservationConfirmed, PaymentSucceeded." "Spring AMQP"
+                routingPolicy = component "Routing Policy" "Decide canal (push/email) y plantilla por tipo de evento." "Spring Bean"
+                templateRenderer = component "Template Renderer" "Renderiza payload con datos del evento." "Thymeleaf"
+                pushAdapter = component "FCM Adapter" "Envía push via FCM." "Firebase Admin SDK"
+                emailAdapter = component "SendGrid Adapter" "Envía email via SendGrid." "SendGrid SDK"
+                circuitBreaker = component "Circuit Breaker" "Aísla fallos de proveedores externos." "Resilience4j"
+                retryHandler = component "Retry Handler" "Reintento con backoff + dead-letter queue." "Spring Retry"
+                auditClient = component "Audit Client" "Registra envío en audit_events." "JPA"
+            }
+
+            auditStore = container "Audit Log Store" "" "PostgreSQL"
+        }
+
+        fcm = softwareSystem "Firebase Cloud Messaging" "" "External"
+        sendgrid = softwareSystem "SendGrid" "" "External"
+
+        eventBus -> eventConsumer "Entrega evento"
+        eventConsumer -> routingPolicy "Determina canal y plantilla"
+        routingPolicy -> templateRenderer "Renderiza payload"
+        templateRenderer -> pushAdapter "Push payload"
+        templateRenderer -> emailAdapter "Email payload"
+        pushAdapter -> circuitBreaker "Wrap call"
+        emailAdapter -> circuitBreaker "Wrap call"
+        circuitBreaker -> fcm "sendPush" "External"
+        circuitBreaker -> sendgrid "sendEmail" "External"
+        circuitBreaker -> retryHandler "On failure"
+        retryHandler -> circuitBreaker "Retry con backoff"
+        eventConsumer -> auditClient "Registra recepción y envío"
+        auditClient -> auditStore "INSERT audit_event"
+    }
+
+    views {
+        component notificationWorker "NotificationComponents" "Componentes del Notification Worker." {
+            include *
+            autolayout lr
+        }
+
+        styles {
+            element "External" {
+                background #999999
+                color #ffffff
+            }
+        }
+    }
+}
+```
+
+##### 4.3.3.6.5. Class Diagram — Adapter Pattern de Proveedores
+
+Vista de clases del Adapter Pattern aplicado a proveedores de pago y notificación. Como Structurizr DSL no modela diagramas de clases, se utiliza **PlantUML** embebido.
+
+```plantuml
+@startuml
+title Adapter Pattern - Payment & Notification Providers
+
+interface PaymentProvider {
+  +createCharge(amount: Money, customer: CustomerId): ChargeResult
+  +refund(transactionId: TransactionId, amount: Money): RefundResult
+  +verifyWebhook(payload: String, signature: String): boolean
+}
+
+class StripeAdapter implements PaymentProvider {
+  -apiKey: String
+  -webhookSecret: String
+  -httpClient: HttpClient
+  +createCharge(amount, customer): ChargeResult
+  +refund(transactionId, amount): RefundResult
+  +verifyWebhook(payload, signature): boolean
+}
+
+class MercadoPagoAdapter implements PaymentProvider {
+  -accessToken: String
+  -webhookSecret: String
+  -httpClient: HttpClient
+  +createCharge(amount, customer): ChargeResult
+  +refund(transactionId, amount): RefundResult
+  +verifyWebhook(payload, signature): boolean
+}
+
+class PaymentService {
+  -provider: PaymentProvider
+  -repository: TransactionRepository
+  -auditLogger: AuditLogger
+  +processPayment(request: PaymentRequest, idempotencyKey: UUID): PaymentResult
+  +handleWebhook(payload: String, signature: String): void
+  +refund(transactionId: TransactionId): RefundResult
+}
+
+interface NotificationProvider {
+  +send(recipient: Recipient, payload: NotificationPayload): SendResult
+}
+
+class FCMAdapter implements NotificationProvider {
+  -firebaseApp: FirebaseApp
+  +send(recipient, payload): SendResult
+}
+
+class SendGridAdapter implements NotificationProvider {
+  -apiKey: String
+  -fromAddress: String
+  +send(recipient, payload): SendResult
+}
+
+class CircuitBreakerDecorator implements NotificationProvider {
+  -delegate: NotificationProvider
+  -circuitBreaker: CircuitBreaker
+  +send(recipient, payload): SendResult
+}
+
+class NotificationService {
+  -providers: Map<Channel, NotificationProvider>
+  -routingPolicy: RoutingPolicy
+  +onReservationConfirmed(event: ReservationConfirmed): void
+  +onPaymentSucceeded(event: PaymentSucceeded): void
+}
+
+PaymentService --> PaymentProvider : depends on
+NotificationService --> NotificationProvider : depends on
+CircuitBreakerDecorator o-- NotificationProvider : decorates
+
+@enduml
+```
+
+**Design Decisions registradas (ADR-style):**
+
+| ADR | Decisión | Status | Driver | Razonamiento |
+|---|---|---|---|---|
+| ADR-301 | Cobros usan header `Idempotency-Key` (UUID v4 generado por cliente) persistido junto a la transacción | Accepted | TS06 | Reintento de red no genera doble cargo |
+| ADR-302 | Webhooks verificados con HMAC SHA-256; tabla `processed_webhooks` con `UNIQUE(provider, event_id)` descarta duplicados | Accepted | TS06 | Garantiza procesamiento exactly-once |
+| ADR-303 | Fotos en bucket S3-compatible privado; descarga sólo via pre-signed URL con TTL 15 min emitida por backend | Accepted | TS05, RNF03 | Privacidad de evidencias, no exposición pública |
+| ADR-304 | Audit log en tabla append-only `audit_events(id, actor_id, action, entity_type, entity_id, before_json, after_json, occurred_at)` indexada por `entity` y `occurred_at` | Accepted | TS04, CC-OBS | Trazabilidad regulatoria, no `UPDATE`/`DELETE` |
+| ADR-305 | Circuit Breaker (Resilience4j en Java o Polly en .NET) envuelve llamadas a Stripe, MercadoPago, FCM, SendGrid y Google Maps | Accepted | RNF04 | Aislamiento de fallos, fail-fast con fallback |
+| ADR-306 | Notificaciones procesadas asíncronamente vía Event Bus; operación principal commit-ea sin esperar al envío | Accepted | US20, RNF04 | Reserva no falla si proveedor de notificación está caído |
+| ADR-307 | Adapter Pattern por proveedor; el dominio depende de la interfaz `PaymentProvider`/`NotificationProvider`, no del SDK concreto | Accepted | C-INT, RNF04 | Cambio de proveedor sin tocar reglas de negocio |
+| ADR-308 | Correlation ID propagado vía header `X-Correlation-Id` en toda llamada interna y log estructurado | Accepted | CC-OBS | Trazabilidad end-to-end de request |
+
+#### 4.3.3.7. Analysis of Current Design and Review Iteration Goal (Kanban Board)
+
+| Driver | Status pre-iter | Status post-iter | Evidencia |
+|---|---|---|---|
+| TS04 Auditoría | Backlog | **Addressed** | ADR-304 + tabla `audit_events` definida |
+| TS05 Object Storage | Backlog | **Addressed** | ADR-303 + signed URLs en `MediaService` |
+| TS06 Idempotencia pagos | Backlog | **Addressed** | ADR-301, ADR-302 + `processed_webhooks` |
+| RNF04 Resiliencia terceros | Backlog | **Addressed** | ADR-305 circuit breaker en todos los adapters |
+| US14 Pago | Partially addressed | **Fully addressed** | Idempotencia + webhook completan el flujo |
+| US15 Reembolso | Backlog | **Addressed** | `PaymentService.refund` + audit log |
+| US16 Comprobante | Backlog | **Addressed** | Generación a partir de `audit_events` y referencia en S3 |
+| US20 Notificación | Backlog | **Addressed** | ADR-306 event-driven async |
+| CC-OBS Observabilidad | Backlog | **Partially addressed** | ADR-308 correlation IDs; falta dashboard de métricas |
+
+**Iteration goal:** ✅ alcanzado. Todos los drivers primarios atendidos.
+
+**Refinamientos pendientes pa iteraciones futuras (post-TB2):** dashboard de métricas y SLOs, disaster recovery procedure, performance testing bajo carga real de producción, política de retención del audit log.
