@@ -69,6 +69,7 @@
  - [Capítulo III: Requirements Specification](#capítulo-iii-requirements-specification)
    - [3.1. To-Be Scenario Mapping](#31-to-be-scenario-mapping)
    - [3.2. User Stories](#32-user-stories)
+   - [3.2.1. Technical Stories](#321-technical-stories)
    - [3.3. Impact Mapping](#33-impact-mapping)
    - [3.4. Product Backlog](#34-product-backlog)
 - [Capítulo IV: Product Architecture Design](#capítulo-iv-product-architecture-design)
@@ -825,7 +826,7 @@ El To-Be Scenario Mapping describe cómo cambiaría la experiencia de cada User 
 
 ## 3.2. User Stories
 
-A continuación se presentan las Épicas y User Stories identificadas para ParkLink. Cada User Story incluye su descripción siguiendo el patrón "Como [rol], deseo [característica], para [beneficio]" y sus criterios de aceptación en formato Given-When-Then.
+A continuación se presentan las Épicas, User Stories y Technical Stories identificadas para ParkLink. Cada User Story incluye su descripción siguiendo el patrón "Como [rol], deseo [característica], para [beneficio]" y sus criterios de aceptación en formato Given-When-Then. Las Technical Stories recuperan los requisitos técnicos que sostienen la arquitectura, la seguridad, la consistencia transaccional y las integraciones externas del producto.
 
 ### Épicas
 
@@ -864,6 +865,19 @@ A continuación se presentan las Épicas y User Stories identificadas para ParkL
 | EP05 | US18 | Registrarse como propietario | Como usuario nuevo, deseo registrarme como propietario en ParkLink, para publicar mis espacios y recibir reservas. | **Given** que un usuario accede al registro y selecciona el rol "Propietario", **When** completa sus datos personales y bancarios para recibir pagos y confirma, **Then** el sistema crea su cuenta con perfil de propietario y le habilita el panel de gestión de espacios. | EP05 |
 | EP05 | US19 | Iniciar sesión | Como usuario registrado, deseo iniciar sesión con mi correo y contraseña, para acceder a mi cuenta y funcionalidades de la app. | **Given** que el usuario ingresa su correo y contraseña correctos, **When** presiona "Iniciar sesión", **Then** el sistema autentica al usuario y lo redirige a su pantalla principal según su rol (conductor o propietario). | EP05 |
 | EP06 | US20 | Recibir notificación de reserva confirmada | Como conductor, deseo recibir una notificación cuando mi reserva sea confirmada, para tener certeza de que el espacio está asegurado. | **Given** que el sistema procesa una reserva exitosa, **When** el pago es aprobado, **Then** el conductor recibe una notificación push y correo electrónico con los datos de la reserva (dirección, hora, código de acceso). | EP06 |
+
+### 3.2.1. Technical Stories
+
+Las Technical Stories documentan necesidades técnicas del producto que no representan una interacción visible del usuario, pero que son necesarias para cumplir las User Stories, los atributos de calidad y las decisiones arquitectónicas posteriores del Capítulo IV.
+
+| Technical Story ID | Título | Descripción | Criterios de Aceptación | Relacionado con |
+|---|---|---|---|---|
+| TS01 | Control transaccional de reservas concurrentes | Como equipo técnico, necesitamos asegurar que dos conductores no puedan reservar el mismo espacio en el mismo intervalo, para proteger la confianza operativa del sistema. | **Given** que dos conductores intentan reservar el mismo espacio y horario, **When** el sistema procesa ambas solicitudes, **Then** sólo una reserva queda confirmada y la otra recibe una respuesta de no disponibilidad sin generar doble reserva. | EP02, US05, US08, C-03 |
+| TS02 | Proyección de disponibilidad para búsqueda rápida | Como equipo técnico, necesitamos mantener una proyección de disponibilidad consultable rápidamente, para que la búsqueda y el mapa respondan sin depender de cálculos pesados en cada consulta. | **Given** que cambia el estado de un espacio por reserva, cancelación o configuración del propietario, **When** se actualiza la disponibilidad, **Then** la proyección de búsqueda refleja el nuevo estado y la base de datos relacional se mantiene como fuente de verdad. | EP01, US01, US02, US03, US04, RNF02 |
+| TS03 | Autenticación y autorización por roles | Como equipo técnico, necesitamos proteger las operaciones mediante autenticación segura y autorización por rol, para separar permisos entre conductores, propietarios y operaciones administrativas. | **Given** que un usuario autenticado intenta acceder a una operación protegida, **When** el sistema valida su token y rol, **Then** permite la acción sólo si el rol tiene permiso y rechaza accesos no autorizados. | EP05, US17, US18, US19, QAS-04 |
+| TS04 | Auditoría de reservas, pagos, reembolsos y cambios de disponibilidad | Como equipo técnico, necesitamos registrar eventos auditables de operaciones críticas, para mantener trazabilidad de cambios relevantes y sustentar reclamos o revisiones posteriores. | **Given** que ocurre una reserva, cancelación, pago, reembolso o cambio de disponibilidad, **When** la operación se confirma, **Then** el sistema guarda un evento de auditoría inmutable con actor, acción, entidad afectada y fecha. | EP02, EP04, US05, US06, US14, US15, US16 |
+| TS05 | Almacenamiento de fotos en Object Storage compatible con S3 | Como equipo técnico, necesitamos almacenar fotos de estacionamientos en un servicio de objetos privado, para evitar cargar binarios en la base de datos y controlar el acceso a evidencias visuales. | **Given** que un propietario sube fotos de su espacio, **When** el sistema genera la carga, **Then** las imágenes se almacenan en un bucket privado y se accede a ellas mediante URLs firmadas o endpoints autorizados. | EP03, US04, US09, RNF03 |
+| TS06 | Manejo idempotente de pagos y webhooks | Como equipo técnico, necesitamos procesar pagos y webhooks de forma idempotente, para evitar cobros duplicados o cambios de estado repetidos ante reintentos de red o eventos duplicados del proveedor. | **Given** que una solicitud de pago o webhook llega más de una vez con la misma clave o identificador de evento, **When** el sistema procesa la repetición, **Then** reconoce que ya fue atendida y no duplica el cobro ni el cambio de estado. | EP04, US14, US15, US16, C-INT |
 
 ---
 
