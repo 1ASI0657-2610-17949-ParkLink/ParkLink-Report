@@ -1318,33 +1318,156 @@ Cada iteración produce un Architectural Design Backlog actualizado, un Iteratio
 
 ### 4.3.1. Iteration 1: Establish Overall System Structure
 
+Esta iteración establece la estructura general del sistema ParkLink definiendo los módulos top-level, la referencia arquitectónica base y la distribución de responsabilidades entre bounded contexts. El foco está en tomar las decisiones fundacionales que condicionarán todas las iteraciones siguientes: qué contextos existen, cómo se comunican, dónde reside cada responsabilidad y cómo se protege el acceso. Sin esta base, los atributos de calidad críticos como consistencia, seguridad y rendimiento no tendrían un lugar concreto donde implementarse.
+
 #### 4.3.1.1. Architectural Design Backlog
 
-_Pendiente de completar._
+Esta iteración toma como entrada los drivers fundamentales que definen la estructura base del sistema. ParkLink no solo debe conectar conductores con propietarios; debe hacerlo sobre una arquitectura que tenga responsabilidades claras por dominio, un punto de acceso seguro y módulos que puedan evolucionar de forma independiente. Sin definir esta estructura primero, no es posible atacar atributos de calidad como rendimiento, consistencia o seguridad en iteraciones posteriores.
+
+### Drivers que entran a la iteración
+
+| Tipo | ID | Descripción | Estado pre-iteración |
+|------|----|------------|----------------------|
+| Primary Functionality | US01 | Buscar estacionamientos por ubicación | Backlog |
+| Primary Functionality | US02 | Ver disponibilidad en tiempo real | Backlog |
+| Primary Functionality | US05 | Reservar un espacio de estacionamiento | Backlog |
+| Primary Functionality | US09 | Registrar un espacio de estacionamiento | Backlog |
+| Primary Functionality | US14 | Pagar una reserva en línea | Backlog |
+| Primary Functionality | US17 | Registrarse como conductor | Backlog |
+| Primary Functionality | US18 | Registrarse como propietario | Backlog |
+| Primary Functionality | US19 | Iniciar sesión | Backlog |
+| Quality Attribute | QAS-01 | Performance: búsquedas respondidas en ≤ 3 segundos | Backlog |
+| Quality Attribute | QAS-02 | Consistency: confirmación de reserva en ≤ 5 segundos sin dobles reservas | Backlog |
+| Quality Attribute | QAS-04 | Security: autenticación, roles y tráfico bajo HTTPS | Backlog |
+| Quality Attribute | QAS-06 | Scalability: arquitectura que soporte crecimiento sin degradación | Backlog |
+| Constraint | C-01 | Roles diferenciados: conductor y propietario | Vigente |
+| Constraint | C-02 | MVP centrado en búsqueda, reserva, publicación, pagos y notificaciones | Vigente |
+| Constraint | C-09 | Separación de responsabilidades por dominio (bounded contexts) | Vigente |
+| Architectural Concern | AC-07 | Escalabilidad modular del producto | Backlog |
+| Architectural Concern | AC-08 | Mantenibilidad y bajo acoplamiento | Backlog |
 
 #### 4.3.1.2. Establish Iteration Goal by Selecting Drivers
 
-_Pendiente de completar._
+**Iteration Goal:** Establecer la estructura general del sistema ParkLink definiendo los módulos top-level, la referencia arquitectónica base y la distribución de responsabilidades entre bounded contexts, de modo que:
+
+- El sistema cuente con una arquitectura modular alineada a DDD estratégico con bounded contexts explícitos.
+- Exista un punto de entrada único al backend (API Gateway) que centralice routing, autenticación JWT y control de acceso por roles.
+- Cada bounded context tenga responsabilidades claras y no comparta lógica de negocio con otros.
+- La arquitectura soporte las funcionalidades primarias: búsqueda, reserva, publicación, pagos y gestión de usuarios.
+- El diseño permita escalar módulos de forma independiente cuando el volumen lo justifique.
+
+**Drivers primarios seleccionados:** US01, US05, US09, US17, US19, QAS-01, QAS-04, C-09.  
+
+**Drivers secundarios:** US02, US14, US18, QAS-02, QAS-06, AC-07, AC-08.
 
 #### 4.3.1.3. Choose One or More Elements of the System to Refine
 
-_Pendiente de completar._
+Elementos a refinar dentro de la arquitectura en esta primera iteración
+
+- **Sistema completo ParkLink** — definición de bounded contexts y sus responsabilidades.
+- **API Gateway** — punto de entrada único, validación JWT y routing.
+- **User & Identity Context** — registro, login, gestión de roles y generación de JWT.
+- **Parking Discovery Context** — búsqueda, visualización en mapa, filtros y disponibilidad.
+- **Reservation Management Context** — gestión del ciclo de vida de reservas (Core Domain).
+- **Parking Supply & Monetization Context** — publicación de espacios, gestión de precios, pagos e ingresos.
+- **Main Relational Database** — fuente de verdad para todos los bounded contexts.
+- **Availability Cache** — mecanismo de lectura rápida para disponibilidad en búsquedas.
 
 #### 4.3.1.4. Choose One or More Design Concepts That Satisfy the Selected Drivers
 
-_Pendiente de completar._
+| Driver | Design Concept / Pattern | Justificación |
+|--------|--------------------------|--------------|
+| C-09 (bounded contexts) | Domain-Driven Design estratégico con 4 bounded contexts explícitos | Cada contexto encapsula sus reglas, evita mezclar disponibilidad, reserva, pago e identidad. |
+| QAS-04 (seguridad) | JWT + API Gateway como único punto de entrada con validación de token y rol | Centraliza autenticación y evita que cada servicio repita la lógica de seguridad. |
+| QAS-01 (performance búsqueda) | CQRS liviano + Redis cache para disponibilidad visible | Separa lecturas de escrituras; la cache acelera búsquedas sin cargar la BD transaccional. |
+| QAS-02 (consistencia reserva) | Transacciones ACID en Reservation Management + bloqueo optimista | Previene dobles reservas bajo concurrencia sin sacrificar rendimiento general. |
+| AC-07 (escalabilidad) | Arquitectura modular con separación por bounded context | Permite extraer módulos como microservicios cuando el volumen lo justifique. |
+| AC-08 (mantenibilidad) | Repository Pattern + Layered Architecture por contexto | Abstrae acceso a datos y facilita testing y evolución independiente. |
+| US17, US18, US19 (identidad) | Stateless authentication con JWT | Token portátil verificable por cualquier módulo sin consultar BD en cada request. |
+| US01, US02 (búsqueda) | Adapter Pattern para Maps & Geolocation API | Desacopla el proveedor de mapas del dominio de búsqueda. |
 
 #### 4.3.1.5. Instantiate Architectural Elements, Allocate Responsibilities, and Define Interfaces
 
-_Pendiente de completar._
+| Componente | Responsabilidad | Interfaz pública |
+|------------|----------------|------------------|
+| `API Gateway` | Centralizar entrada al backend, validar JWT, enrutar por bounded context, rate limiting | Recibe todas las solicitudes HTTPS; enruta a servicios internos |
+| `UserIdentityService` | Registro, login, emisión de JWT, gestión de roles y perfiles | `POST /auth/register`, `POST /auth/login`, `GET /users/{id}/profile` |
+| `ParkingDiscoveryService` | Búsqueda de espacios, filtros, detalle, disponibilidad visible, mapa | `GET /spaces?lat&lng&radius`, `GET /spaces/{id}`, `GET /spaces/{id}/availability` |
+| `ReservationService` | Crear, cancelar, extender reservas; consultar historial; bloquear espacio | `POST /reservations`, `DELETE /reservations/{id}`, `PATCH /reservations/{id}/extend`, `GET /reservations` |
+| `ParkingSupplyService` | Publicar espacios, configurar horarios y precios, habilitar/deshabilitar, ver ingresos | `POST /spaces`, `PUT /spaces/{id}`, `PATCH /spaces/{id}/status`, `GET /spaces/{id}/earnings` |
+| `PaymentService` | Procesar pagos, reembolsos y comprobantes | `POST /payments`, `POST /payments/{id}/refund`, `GET /payments/{id}/receipt` |
+| `MainDatabase` | Persistir usuarios, espacios, reservas, pagos, reseñas y notificaciones | Accedida únicamente por servicios backend vía ORM/JDBC |
+| `AvailabilityCache` | Acelerar consultas de disponibilidad visible para búsquedas frecuentes | Consultada por `ParkingDiscoveryService`; actualizada por `ReservationService` y `ParkingSupplyService` |
+| `MapsAdapter` | Proveer geocodificación, distancias y marcadores de mapa | `resolveLocation(address)`, `getNearbySpaces(lat, lng, radius)` |
 
 #### 4.3.1.6. Sketch Views (C4 & UML) and Record Design Decisions
 
-_Pendiente de completar._
+Las vistas se modelan en Structurizr DSL, manteniendo coherencia con los diagramas C4. Cada bloque define un workspace independiente con su modelo y vistas asociadas.
+
+##### 4.3.1.6.1. System Context View — ParkLink Overall Structure
+
+Vista de contexto del sistema completo mostrando actores, sistemas externos y ParkLink como sistema central.
+
+<img width="2380" height="2100" alt="SiSystemContext" src="https://github.com/user-attachments/assets/edba5d10-9f24-4481-851e-b07c2734dfb8" />
+
+#### 4.3.1.6.2. Container View — Top-Level Modules
+
+Vista de contenedores mostrando los módulos top-level de ParkLink y sus relaciones con sistemas externos.
+
+<img width="5613" height="2899" alt="ContairnerContainersIter1" src="https://github.com/user-attachments/assets/2dced8dc-ad6d-4ba4-a825-60b1b90919e5" />
+
+#### 4.3.1.6.3. Dynamic View — Flujo de Registro e Inicio de Sesión
+
+Modela el flujo end-to-end de registro de un conductor y su posterior inicio de sesión
+
+<img width="4060" height="1229" alt="Sign InAuthFlow" src="https://github.com/user-attachments/assets/39e7c104-b4dc-4aed-b165-5c9b71d4c3e9" />
+
+#### 4.3.1.6.4. Dynamic View — Flujo de Búsqueda y Reserva
+
+Modela el flujo completo desde que el conductor busca un espacio hasta que confirma la reserva, incluyendo el bloqueo del espacio y la actualización del cache.
+
+<img width="4110" height="1929" alt="SearchSearchReserveFlow" src="https://github.com/user-attachments/assets/ba9eea51-55b9-46bf-a75e-75111bd54b22" />
+
+#### 4.3.1.6.5. Class Diagram — Domain Model Core Bounded Contexts
+
+Vista de clases del modelo de dominio de los bounded contexts principales.
+
+<img width="1936" height="534" alt="PlantUML" src="https://github.com/user-attachments/assets/06efa807-2a84-4dd0-ae73-165a944ef2bd" />
+
+## Design Decisions registradas (ADR-style)
+
+| ADR | Decisión | Status | Driver | Razonamiento |
+|-----|----------|--------|--------|--------------|
+| `ADR-101` | Arquitectura modular con 4 bounded contexts: User & Identity, Parking Discovery, Reservation Management, Parking Supply & Monetization | Accepted | `C-09`, `AC-07` | Cada contexto encapsula sus reglas; permite evolución y despliegue independiente |
+| `ADR-102` | API Gateway como único punto de entrada al backend con validación JWT centralizada | Accepted | `QAS-04`, `C-01` | Evita duplicar lógica de autenticación; centraliza rate limiting y routing |
+| `ADR-103` | Autenticación stateless con JWT incluyendo claim de rol (`DRIVER` / `OWNER`) | Accepted | `QAS-04`, `US17`, `US18`, `US19` | Token portable verificable por cualquier módulo sin consultar BD en cada request |
+| `ADR-104` | Redis como cache de disponibilidad visible; MySQL como fuente de verdad para reservas y pagos | Accepted | `QAS-01`, `QAS-02` | Cache acelera búsquedas sin comprometer consistencia transaccional del Core Domain |
+| `ADR-105` | Reservation Management como Core Domain con transacciones ACID y bloqueo optimista para prevenir dobles reservas | Accepted | `QAS-02`, `AC-09` | La reserva es la propuesta de valor central; su consistencia no puede sacrificarse |
+| `ADR-106` | Repository Pattern por bounded context para abstraer el acceso a MySQL | Accepted | `AC-08`, `C-09` | Facilita testing unitario y permite cambiar el motor de BD sin afectar el dominio |
+| `ADR-107` | Adapter Pattern para Google Maps Platform; el dominio depende de interfaz `GeoLocationProvider`, no del SDK de Google | Accepted | `AC-08`, `C-INT` | Cambio de proveedor de mapas sin tocar lógica de búsqueda |
 
 #### 4.3.1.7. Analysis of Current Design and Review Iteration Goal (Kanban Board)
 
-_Pendiente de completar._
+| Driver | Status pre-iter | Status post-iter | Evidencia |
+|--------|----------------|------------------|-----------|
+| `US01` Búsqueda por ubicación | Backlog | Addressed | ParkingDiscoveryService + MapsAdapter + cache definidos |
+| `US02` Disponibilidad en tiempo real | Backlog | Addressed | Redis cache actualizada por ReservationService y ParkingSupplyService |
+| `US05` Reserva de espacio | Backlog | Addressed | ReservationService con ACID + bloqueo optimista (`ADR-105`) |
+| `US09` Registro de espacio | Backlog | Addressed | ParkingSupplyService con ParkingSpace aggregate definido |
+| `US17` Registro conductor | Backlog | Addressed | UserIdentityService + flujo completo en Dynamic View |
+| `US18` Registro propietario | Backlog | Addressed | Mismo servicio con rol `OWNER` diferenciado |
+| `US19` Inicio de sesión | Backlog | Addressed | JWT con claim de rol, `ADR-103` |
+| `QAS-01` Performance búsqueda | Backlog | Addressed | Redis cache + CQRS liviano (`ADR-104`) |
+| `QAS-02` Consistencia reserva | Backlog | Addressed | ACID + bloqueo optimista en Core Domain (`ADR-105`) |
+| `QAS-04` Seguridad | Backlog | Addressed | API Gateway + JWT + HTTPS (`ADR-102`, `ADR-103`) |
+| `QAS-06` Escalabilidad | Backlog | Partially addressed | Módulos separados por contexto; extracción a microservicios pendiente |
+| `C-09` Separación por dominio | Vigente | Addressed | 4 bounded contexts con responsabilidades explícitas (`ADR-101`) |
+| `AC-07` Escalabilidad modular | Backlog | Partially addressed | Estructura modular definida; falta estrategia de despliegue independiente |
+| `AC-08` Mantenibilidad | Backlog | Addressed | Repository Pattern + Adapter Pattern por bounded context (`ADR-106`, `ADR-107`) |
+| `US14` Pago en línea | Backlog | Partially addressed | PaymentService identificado en estructura; flujo completo en Iteration 2 |
+
+**Iteration Goal:** Alcanzado todos los drivers primarios han sido atendidos. La estructura general del sistema queda definida con bounded contexts explícitos, API Gateway centralizado, autenticación JWT y separación entre cache y fuente de verdad.
+
 
 ---
 
