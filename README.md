@@ -1350,6 +1350,8 @@ _Pendiente de completar._
 
 ### 4.3.2. Iteration 2: Address Critical Quality Attributes
 
+Esta iteración refina la estructura general definida en Iteration 1 para atacar los riesgos arquitectónicos más sensibles del MVP: disponibilidad visible, prevención de doble reserva, seguridad de acceso y preparación del flujo de pago asociado a una reserva. El foco sigue estando dentro del núcleo transaccional de ParkLink; las integraciones externas completas se dejan para Iteration 3.
+
 #### 4.3.2.1. Architectural Design Backlog
 
 Esta iteración toma como entrada los drivers críticos que no pueden quedar como decisiones superficiales, porque afectan directamente la confianza operativa del producto. ParkLink no sólo debe mostrar estacionamientos; debe garantizar que la disponibilidad visible sea confiable, que una reserva no se duplique, que el acceso esté protegido por roles y que la búsqueda responda rápido mientras el usuario está en movimiento.
@@ -1365,6 +1367,7 @@ Drivers que entran a la iteración:
 | User Story | US08 | Extender tiempo de reserva activa | Backlog arquitectónico |
 | User Story | US10 | Configurar horarios y precio del espacio | Backlog arquitectónico |
 | User Story | US11 | Habilitar y deshabilitar un espacio | Backlog arquitectónico |
+| User Story | US14 | Pagar una reserva en línea | Backlog arquitectónico parcial |
 | Quality Attribute | QAS-01 | 95% de búsquedas respondidas en 3 segundos o menos | Backlog arquitectónico |
 | Quality Attribute | QAS-02 | Confirmación de reserva en 5 segundos o menos y 0 dobles reservas | Backlog arquitectónico |
 | Quality Attribute | QAS-03 | Disponibilidad mensual objetivo de 99.5% | Backlog arquitectónico |
@@ -1387,11 +1390,12 @@ El backlog se prioriza con base en riesgo arquitectónico. La doble reserva y la
 3. No existan dobles reservas para el mismo espacio y rango horario.
 4. Los cambios de horario, cancelación, extensión o deshabilitación de un espacio actualicen la disponibilidad visible.
 5. Las operaciones críticas estén protegidas por autenticación JWT, autorización por rol y validaciones de ownership.
-6. El diseño mantenga bajo acoplamiento entre búsqueda, reserva, publicación e identidad.
+6. El ciclo de reserva quede preparado para el pago mediante un estado `PendingPayment`, sin acoplar todavía el dominio al proveedor externo.
+7. El diseño mantenga bajo acoplamiento entre búsqueda, reserva, publicación, identidad y monetización.
 
 **Drivers primarios seleccionados:** US02, US05, QAS-02, C-03, AC-01, AC-02.
 
-**Drivers secundarios:** US01, US06, US08, US10, US11, QAS-01, QAS-03, QAS-04, AC-03, AC-05.
+**Drivers secundarios:** US01, US06, US08, US10, US11, US14, QAS-01, QAS-03, QAS-04, AC-03, AC-05.
 
 La iteración no intenta resolver todavía el detalle avanzado de proveedores externos, webhooks de pago, signed URLs de media o resiliencia contra terceros. Esos elementos quedan para Iteration 3. Acá se define el núcleo interno que hace posible confiar en el estado de una reserva.
 
@@ -1404,6 +1408,7 @@ Elementos seleccionados para refinamiento:
 | `Reservation Management Service` | Es el Core Domain y debe controlar creación, cancelación, extensión, estados y bloqueo de espacios. | US05, US06, US08, QAS-02, C-03, AC-02 |
 | `Parking Discovery Service` | Debe responder búsquedas rápidas usando disponibilidad visible y filtros sin modificar el estado real de reservas. | US01, US02, QAS-01, AC-03 |
 | `Parking Supply & Monetization Service` | Define horarios, precios, habilitación y deshabilitación de espacios que afectan la disponibilidad base. | US10, US11, AC-01 |
+| `Payment Authorization Boundary` | Representa el punto de integración interno entre una reserva retenida y el flujo de pago, sin definir todavía provider, webhook o reembolso. | US14, C-06 |
 | `User & Identity Service` | Debe autenticar usuarios, emitir tokens y separar permisos de conductor y propietario. | QAS-04, AC-05, C-06 |
 | `Availability Cache` | Debe acelerar lecturas frecuentes de disponibilidad sin reemplazar a la base de datos relacional. | US02, QAS-01, QAS-03 |
 | `Main Relational Database` | Debe garantizar consistencia fuerte en reservas mediante transacciones, locks e índices. | QAS-02, C-03, AC-02 |
@@ -1421,6 +1426,7 @@ El refinamiento mantiene el enfoque de backend modular. No se separan microservi
 | US02, QAS-01 | **CQRS ligero** para separar lectura de disponibilidad visible y escritura transaccional de reservas | La búsqueda puede ser optimizada sin comprometer la consistencia del comando de reserva. |
 | US02, QAS-03 | **Cache-Aside + Event-Driven Cache Invalidation** | Redis acelera consultas, pero se invalida mediante eventos de dominio después de cambios relevantes. |
 | US06, US08, US11 | **Domain Events** (`ReservationConfirmed`, `ReservationCancelled`, `ReservationExtended`, `SpaceAvailabilityChanged`) | Propagan cambios de estado sin acoplar directamente Discovery, Reservation y Supply. |
+| US14, C-06 | **Payment Authorization Boundary** + estado `PendingPayment` | La reserva puede retener disponibilidad mientras espera pago, sin implementar todavía webhooks ni adapters externos. |
 | QAS-04, AC-05 | **JWT Authentication + Role-Based Access Control** | Separa acciones de conductor, propietario y administrador. |
 | QAS-04 | **Ownership Authorization Checks** | Un propietario sólo modifica sus espacios y un conductor sólo gestiona sus reservas. |
 | QAS-01 | **Database Indexing Strategy** sobre ubicación, estado, precio, horario y fechas de reserva | Reduce tiempos de respuesta en búsquedas y validaciones de solapamiento. |
@@ -1440,6 +1446,7 @@ La decisión clave es separar disponibilidad visible de disponibilidad confirmab
 | `AvailabilityRepository` | Bloquear filas de disponibilidad base y actualizar estado transaccional. | `lockSlot(spaceId, start, end)`, `markReserved(...)`, `markReleased(...)` |
 | `ParkingDiscoveryService` | Resolver búsquedas, filtros y detalle usando proyección de disponibilidad visible. | `GET /parking-spaces/search`, `GET /parking-spaces/{id}` |
 | `AvailabilityProjectionUpdater` | Consumir eventos de dominio y actualizar Redis. | Subscriber de `ReservationConfirmed`, `ReservationCancelled`, `ReservationExtended`, `SpaceAvailabilityChanged` |
+| `PaymentAuthorizationPort` | Exponer un contrato interno para solicitar autorización de pago antes de confirmar definitivamente una reserva. | `authorize(reservationId, amount, driverId)`, `markPaymentApproved(reservationId)`, `markPaymentRejected(reservationId)` |
 | `AvailabilityCache` | Mantener claves de disponibilidad visible por espacio, zona y rango horario. | `availability:{spaceId}:{date}`, `search:{geoHash}:{date}:{hour}` |
 | `IdentityService` | Emitir JWT y proveer datos de rol/perfil. | `POST /auth/login`, `POST /auth/register`, `GET /me` |
 | `AuthorizationMiddleware` | Validar token, rol y ownership antes de ejecutar operaciones críticas. | Middleware en API Gateway / Backend API |
@@ -1451,6 +1458,7 @@ Modelo de datos refinado:
 | `RESERVATIONS` | `reservation_id`, `driver_id`, `space_id`, `start_datetime`, `end_datetime`, `status`, `version`, `created_at` | Estados controlados por `ReservationService`; índice por `space_id`, `start_datetime`, `end_datetime`, `status`. |
 | `AVAILABILITY` | `availability_id`, `space_id`, `day_of_week`, `start_time`, `end_time`, `status`, `version` | Fuente de disponibilidad base configurada por propietario. |
 | `AVAILABILITY_LOCKS` | `lock_id`, `space_id`, `start_datetime`, `end_datetime`, `reservation_id`, `expires_at` | Soporte para bloqueo temporal o confirmación transaccional del espacio. |
+| `PAYMENT_AUTHORIZATIONS` | `authorization_id`, `reservation_id`, `amount`, `status`, `requested_at`, `expires_at` | Registro mínimo para enlazar reserva y pago; provider, webhook e idempotencia se refinan en Iteration 3. |
 | `USERS` | `user_id`, `email`, `password_hash`, `role`, `status` | Separación explícita de roles `DRIVER`, `OWNER` y `ADMIN`. |
 
 Interfaces de eventos:
@@ -1458,13 +1466,14 @@ Interfaces de eventos:
 | Evento | Productor | Consumidores | Payload mínimo |
 |---|---|---|---|
 | `ReservationConfirmed` | `ReservationService` | `AvailabilityProjectionUpdater`, `NotificationService` | `reservationId`, `spaceId`, `driverId`, `start`, `end`, `occurredAt` |
+| `ReservationPaymentRequested` | `ReservationService` | `PaymentAuthorizationPort`, `ParkingSupplyService` | `reservationId`, `driverId`, `amount`, `expiresAt`, `occurredAt` |
 | `ReservationCancelled` | `ReservationService` | `AvailabilityProjectionUpdater`, `ParkingSupplyService` | `reservationId`, `spaceId`, `reason`, `occurredAt` |
 | `ReservationExtended` | `ReservationService` | `AvailabilityProjectionUpdater`, `ParkingSupplyService` | `reservationId`, `previousEnd`, `newEnd`, `occurredAt` |
 | `SpaceAvailabilityChanged` | `ParkingSupplyService` | `AvailabilityProjectionUpdater`, `ParkingDiscoveryService` | `spaceId`, `status`, `effectiveFrom`, `occurredAt` |
 
 #### 4.3.2.6. Sketch Views (C4 & UML) and Record Design Decisions
 
-Las vistas de esta iteración refinan el Container Diagram y agregan vistas UML para explicar el comportamiento crítico de reserva. Las imágenes fueron generadas a partir de modelos C4/Structurizr y PlantUML para evitar que el informe muestre código de diagramas como artefacto final.
+Las vistas de esta iteración mantienen el mismo nivel de detalle usado en Iteration 3: una vista C4 de containers, dos vistas dinámicas para flujos críticos, una vista de componentes y una vista UML de clases/estado. Las imágenes fueron generadas a partir de modelos C4/Structurizr y PlantUML para evitar que el informe muestre código de diagramas como artefacto final.
 
 ##### 4.3.2.6.1. Container View — Critical Quality Attributes Refinement
 
@@ -1472,15 +1481,31 @@ Esta vista muestra cómo `Reservation Management Service`, `Parking Discovery Se
 
 ![Iteration 2 Container View](assets/iter2/ContainersIter2.png)
 
-##### 4.3.2.6.2. UML Sequence Diagram — Reserva con control de concurrencia
+##### 4.3.2.6.2. Dynamic View — Reserva con control de concurrencia y retención de pago
 
-El flujo muestra que la confirmación de reserva se realiza dentro de una transacción. La cache se actualiza después del commit; por lo tanto, nunca decide por sí sola si una reserva queda confirmada.
+Modela el flujo principal de una reserva: validación de JWT, bloqueo transaccional de disponibilidad, creación del estado `PendingPayment`, registro de autorización de pago y publicación del evento interno. La cache se actualiza después del commit; por lo tanto, nunca decide por sí sola si una reserva queda confirmada.
 
 ![Reservation Concurrency Flow](assets/iter2/ReservationConcurrencyFlow.png)
 
-##### 4.3.2.6.3. UML State Machine — Ciclo de vida de reserva
+##### 4.3.2.6.3. Dynamic View — Actualización de disponibilidad visible
 
-La máquina de estados evita transiciones ambiguas. Una reserva no puede pasar directamente de `Requested` a `Completed`; primero debe ser confirmada, cancelada, extendida o rechazada según reglas explícitas.
+Modela cómo los cambios de reserva o disponibilidad se propagan mediante eventos internos hacia la proyección de lectura usada por `Parking Discovery Service`. Esta vista justifica la separación entre disponibilidad visible y disponibilidad confirmable.
+
+![Availability Projection Flow](assets/iter2/AvailabilityProjectionFlow.png)
+
+##### 4.3.2.6.4. Component View — Reservation Management Context
+
+Vista los componentes internos de `Reservation Management Service`, mostrando cómo se separan el controlador, la política de disponibilidad, los repositorios transaccionales, el puerto de autorización de pago y el publicador de eventos de dominio.
+
+![Reservation Management Components](assets/iter2/ReservationComponents.png)
+
+##### 4.3.2.6.5. Class Diagram — Reservation and Availability Rules
+
+Vista de clases del modelo de reserva y disponibilidad. Explicita los estados `PendingPayment`, `Confirmed`, `Cancelled`, `Extended` y los objetos que participan en la validación de solapamientos y autorización de pago.
+
+![Reservation Domain Model](assets/iter2/ReservationDomainModel.png)
+
+La máquina de estados complementa el diagrama de clases y evita transiciones ambiguas. Una reserva no puede pasar directamente de `Requested` a `Completed`; primero debe ser retenida para pago, confirmada, cancelada, extendida, expirada o rechazada según reglas explícitas.
 
 ![Reservation State Machine](assets/iter2/ReservationStateMachine.png)
 
@@ -1495,6 +1520,7 @@ La máquina de estados evita transiciones ambiguas. Una reserva no puede pasar d
 | ADR-205 | Cambios de reserva y disponibilidad publican eventos de dominio internos. | Accepted | US06, US08, US11 | Desacopla actualización de búsqueda, notificaciones y vistas de propietario. |
 | ADR-206 | El API Gateway valida JWT y cada servicio aplica checks de ownership. | Accepted | QAS-04, AC-05 | Evita que usuarios operen reservas o espacios ajenos. |
 | ADR-207 | Las búsquedas se optimizan con índices por ubicación, estado, precio y rangos horarios. | Accepted | QAS-01, AC-03 | Reduce latencia de búsqueda para usuarios móviles. |
+| ADR-208 | La reserva incorpora estado `PendingPayment` y contrato `PaymentAuthorizationPort`, pero deja webhooks, idempotencia y providers para Iteration 3. | Accepted | US14, C-06 | Permite afirmar que pago queda parcialmente atendido sin sobrediseñar la integración externa. |
 
 #### 4.3.2.7. Analysis of Current Design and Review Iteration Goal (Kanban Board)
 
@@ -1507,6 +1533,7 @@ La máquina de estados evita transiciones ambiguas. Una reserva no puede pasar d
 | US08 Extender reserva | Backlog | **Addressed** | Validación de disponibilidad futura y transición de estado `Extended`. |
 | US10 Configurar horarios/precio | Backlog | **Partially addressed** | `ParkingSupplyService` actualiza disponibilidad base; monetización profunda queda en Iteration 3. |
 | US11 Habilitar/deshabilitar espacio | Backlog | **Addressed** | Evento `SpaceAvailabilityChanged` actualiza proyección de búsqueda. |
+| US14 Pago en línea | Backlog | **Partially addressed** | Estado `PendingPayment` + `PaymentAuthorizationPort`; webhooks e idempotencia quedan en Iteration 3. |
 | QAS-01 Performance búsqueda | Backlog | **Addressed** | CQRS ligero, Redis e índices de consulta. |
 | QAS-02 Consistencia reserva | Backlog | **Addressed** | ADR-201, ADR-202 y ADR-203. |
 | QAS-03 Disponibilidad plataforma | Backlog | **Partially addressed** | Graceful degradation de cache; resiliencia ante terceros queda en Iteration 3. |
@@ -1522,8 +1549,8 @@ La máquina de estados evita transiciones ambiguas. Una reserva no puede pasar d
 | To Do | In Progress | Done |
 |---|---|---|
 | Resiliencia avanzada ante proveedores externos | Observabilidad completa con métricas y dashboards | Diseño de transacción de reserva |
-| Política detallada de reembolso y comprobantes | Pruebas de carga reales con datos productivos | Diseño de disponibilidad visible con Redis |
-| Tolerancia a fallos de pasarela de pagos | Ajuste fino de TTL e invalidación de cache | RBAC, JWT y ownership checks |
+| Política detallada de reembolso, comprobantes y webhooks | Pruebas de carga reales con datos productivos | Diseño de disponibilidad visible con Redis |
+| Tolerancia a fallos de pasarela de pagos | Ajuste fino de TTL e invalidación de cache | RBAC, JWT, ownership checks y `PendingPayment` |
 | Disaster recovery y backup operativo | Evaluación futura de partición por zona geográfica | Eventos internos de disponibilidad y reserva |
 
 **Iteration goal:** alcanzado para los drivers primarios. El diseño reduce los riesgos más graves del MVP: disponibilidad falsa, doble reserva y acceso no autorizado. Los pendientes no invalidan la iteración; quedan correctamente derivados hacia Iteration 3 o hacia validación empírica posterior mediante pruebas de carga y monitoreo operativo.
