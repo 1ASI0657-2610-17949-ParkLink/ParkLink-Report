@@ -1133,9 +1133,269 @@ Esta estructura soporta las user stories principales del backlog. US01 a US04 se
 
 La base de datos relacional se mantiene como fuente de verdad para reservas y pagos porque estas operaciones requieren consistencia fuerte. La cache no reemplaza esa fuente de verdad; solo acelera la lectura de disponibilidad para el conductor. Esta decisión es clave: una disponibilidad mostrada en el mapa no equivale a una reserva confirmada hasta que el Reservation Management Context haya bloqueado el espacio y registrado el estado correspondiente.
 
-### 4.1.4. Approach driven ViewPoints Diagrams
+### 4.1.4. Approach Driven ViewPoints Diagrams
 
-_Pendiente de completar._
+Los ViewPoints Diagrams complementan los diagramas C4 mostrando la arquitectura de ParkLink desde cuatro perspectivas distintas, cada una orientada a un stakeholder específico. Esta representación permite defender decisiones arquitectónicas frente a preocupaciones concretas como rendimiento, seguridad, escalabilidad y mantenibilidad.
+
+---
+
+#### ViewPoint 1: Functional Viewpoint — Flujo de Reserva End-to-End
+
+**Stakeholder:** Conductor urbano
+**Driver:** US05, US14, QAS-02, AC-02
+**Preocupación:** ¿Cómo garantiza el sistema que mi reserva es confirmada sin duplicados y con pago procesado correctamente?
+
+Este viewpoint muestra el flujo funcional completo desde que el conductor selecciona un espacio hasta que recibe confirmación de reserva y pago. La decisión arquitectónica central es la separación entre disponibilidad visible (Redis) y disponibilidad confirmable (MySQL con bloqueo transaccional), que previene la doble reserva bajo concurrencia.
+
+<table>
+  <thead>
+    <tr>
+      <th>Paso</th>
+      <th>Actor / Componente</th>
+      <th>Acción</th>
+      <th>Decisión arquitectónica aplicada</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Conductor → Parking Discovery Service</td>
+      <td>Busca espacios cercanos con precio, horario y distancia</td>
+      <td>CQRS ligero: lectura desde Redis Cache sin tocar MySQL</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Conductor → API Gateway</td>
+      <td>Confirma reserva sobre un espacio seleccionado</td>
+      <td>JWT validado en API Gateway; rol DRIVER verificado</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>API Gateway → Reservation Service</td>
+      <td>Enruta solicitud al Core Domain</td>
+      <td>Routing centralizado; sin lógica de negocio en el gateway</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Reservation Service → MySQL</td>
+      <td>Abre transacción ACID y bloquea disponibilidad con SELECT FOR UPDATE</td>
+      <td>Locking pesimista; previene doble reserva bajo concurrencia</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Reservation Service → Event Bus</td>
+      <td>Persiste reserva en estado PendingPayment y emite ReservationPaymentRequested</td>
+      <td>Estado intermedio desacopla reserva de confirmación de pago</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>Payment Service → Stripe Adapter → Stripe</td>
+      <td>Procesa cobro con Idempotency-Key</td>
+      <td>Idempotency Key Pattern; reintentos de red no generan doble cargo</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>Payment Service → Event Bus</td>
+      <td>Emite PaymentSucceeded tras confirmación del proveedor</td>
+      <td>Event-Driven; la operación principal no espera notificación</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>Event Bus → Availability Cache + Notification Worker</td>
+      <td>Actualiza Redis e informa al conductor</td>
+      <td>Cache-Aside Invalidation; consistencia eventual en la proyección de lectura</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+#### ViewPoint 2: Security Viewpoint — Autenticación, Autorización y Protección de Datos
+
+**Stakeholder:** Equipo de desarrollo y usuarios de la plataforma
+**Driver:** QAS-04, C-06, AC-05
+**Preocupación:** ¿Cómo protege el sistema las credenciales, los pagos y el acceso a recursos propios de cada usuario?
+
+Este viewpoint muestra las capas de seguridad aplicadas de forma transversal en ParkLink. La seguridad no es una capa añadida a posteriori sino un principio integrado desde el diseño de cada endpoint y operación crítica (P-04).
+
+<table>
+  <thead>
+    <tr>
+      <th>Capa</th>
+      <th>Mecanismo</th>
+      <th>Alcance</th>
+      <th>ADR relacionado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><b>Transporte</b></td>
+      <td>HTTPS obligatorio en todo el tráfico externo</td>
+      <td>Todas las comunicaciones cliente-servidor y con proveedores externos</td>
+      <td>ADR-102</td>
+    </tr>
+    <tr>
+      <td><b>Autenticación</b></td>
+      <td>JWT stateless emitido por User & Identity Service con claim de rol (DRIVER / OWNER)</td>
+      <td>Todos los endpoints protegidos; verificable por cualquier módulo sin consultar BD</td>
+      <td>ADR-103</td>
+    </tr>
+    <tr>
+      <td><b>Autorización</b></td>
+      <td>Role-Based Access Control (RBAC) en API Gateway + Ownership checks en cada servicio</td>
+      <td>Operaciones de reserva, gestión de espacios y pagos; un usuario no puede operar recursos ajenos</td>
+      <td>ADR-206</td>
+    </tr>
+    <tr>
+      <td><b>Contraseñas</b></td>
+      <td>Hashing con bcrypt; nunca almacenadas en texto plano</td>
+      <td>Registro y login de conductores y propietarios</td>
+      <td>ADR-103</td>
+    </tr>
+    <tr>
+      <td><b>Datos de pago</b></td>
+      <td>Procesados exclusivamente por pasarela externa; ParkLink no almacena datos de tarjeta</td>
+      <td>Flujo completo de cobro, reembolso y comprobante</td>
+      <td>ADR-301, C-06</td>
+    </tr>
+    <tr>
+      <td><b>Media (fotos)</b></td>
+      <td>Bucket S3 privado; acceso solo mediante pre-signed URLs con TTL de 15 minutos emitidas por backend</td>
+      <td>Subida y descarga de imágenes de espacios de estacionamiento</td>
+      <td>ADR-303</td>
+    </tr>
+    <tr>
+      <td><b>Webhooks</b></td>
+      <td>Verificación de firma HMAC SHA-256 antes de procesar cualquier evento del proveedor de pagos</td>
+      <td>Endpoint POST /payments/webhook; descarta eventos no firmados o duplicados</td>
+      <td>ADR-302</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+#### ViewPoint 3: Performance & Scalability Viewpoint — Búsqueda Rápida y Crecimiento
+
+**Stakeholder:** Equipo de producto y negocio
+**Driver:** QAS-01, QAS-06, AC-03, AC-07
+**Preocupación:** ¿Puede el sistema responder búsquedas en menos de 3 segundos y soportar el crecimiento de usuarios sin degradación?
+
+Este viewpoint muestra las decisiones que optimizan el rendimiento actual y habilitan el crecimiento futuro sin reescribir la arquitectura base. El objetivo es que la escalabilidad sea una consecuencia del diseño modular, no un esfuerzo extraordinario posterior.
+
+<table>
+  <thead>
+    <tr>
+      <th>Decisión arquitectónica</th>
+      <th>Impacto en rendimiento</th>
+      <th>Impacto en escalabilidad</th>
+      <th>ADR relacionado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Redis como proyección de disponibilidad visible</td>
+      <td>Búsquedas responden sin consultar MySQL; latencia sub-milisegundo en lecturas de cache</td>
+      <td>Cache puede replicarse horizontalmente sin afectar la fuente de verdad</td>
+      <td>ADR-104, ADR-204</td>
+    </tr>
+    <tr>
+      <td>Índices en space_id, start_datetime, end_datetime y status en RESERVATIONS</td>
+      <td>Validación de solapamientos en milisegundos incluso con alto volumen de reservas</td>
+      <td>Los índices mantienen su eficiencia al crecer el volumen de datos con una buena estrategia de partición</td>
+      <td>ADR-207</td>
+    </tr>
+    <tr>
+      <td>CQRS ligero: lecturas desde cache, escrituras en MySQL</td>
+      <td>Desacopla la carga de lectura frecuente de la carga transaccional de comandos</td>
+      <td>Read replicas pueden añadirse al modelo de lectura sin cambiar el dominio transaccional</td>
+      <td>ADR-104</td>
+    </tr>
+    <tr>
+      <td>Bounded contexts con módulos independientes</td>
+      <td>Sin impacto directo en rendimiento actual del MVP</td>
+      <td>Cada contexto puede extraerse como microservicio con escalado independiente cuando el volumen lo justifique</td>
+      <td>ADR-101</td>
+    </tr>
+    <tr>
+      <td>Circuit Breaker en proveedores externos</td>
+      <td>Evita que una llamada lenta a Stripe o Google Maps bloquee hilos de operaciones no relacionadas</td>
+      <td>Protege la plataforma ante degradación de terceros sin añadir capacidad de cómputo</td>
+      <td>ADR-305</td>
+    </tr>
+    <tr>
+      <td>Notificaciones asíncronas vía Event Bus</td>
+      <td>La confirmación de reserva no espera el envío del correo o push; el usuario recibe respuesta inmediata</td>
+      <td>El Notification Worker puede escalar de forma independiente al resto del sistema</td>
+      <td>ADR-306</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+#### ViewPoint 4: Maintainability Viewpoint — Evolución y Mantenimiento del Sistema
+
+**Stakeholder:** Equipo de desarrollo
+**Driver:** QAS-07, AC-08, C-07
+**Preocupación:** ¿Cómo puede el equipo añadir nuevas funcionalidades, cambiar proveedores o corregir errores sin afectar el resto del sistema?
+
+Este viewpoint muestra cómo la arquitectura facilita el cambio controlado. El principio P-05 de desacoplamiento de proveedores y el P-08 de modularidad orientada al crecimiento son los que más directamente responden a esta preocupación.
+
+<table>
+  <thead>
+    <tr>
+      <th>Escenario de cambio</th>
+      <th>Módulos afectados</th>
+      <th>Mecanismo de aislamiento</th>
+      <th>ADR relacionado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Cambiar de Stripe a MercadoPago como pasarela de pagos</td>
+      <td>Solo StripeAdapter → nueva implementación MercadoPagoAdapter</td>
+      <td>Adapter Pattern; el dominio depende de la interfaz PaymentProvider, no del SDK concreto</td>
+      <td>ADR-307</td>
+    </tr>
+    <tr>
+      <td>Añadir nuevo canal de notificación (ej. SMS)</td>
+      <td>Nuevo SMSAdapter + registro en RoutingPolicy del Notification Worker</td>
+      <td>Adapter Pattern + Open/Closed Principle; no se modifica lógica existente</td>
+      <td>ADR-307</td>
+    </tr>
+    <tr>
+      <td>Cambiar proveedor de mapas (ej. Google Maps → Mapbox)</td>
+      <td>Solo MapsAdapter → nueva implementación</td>
+      <td>Interfaz GeoLocationProvider desacopla al dominio del SDK de Google Maps</td>
+      <td>ADR-107</td>
+    </tr>
+    <tr>
+      <td>Añadir nueva regla de cancelación o extensión</td>
+      <td>AvailabilityPolicy dentro de Reservation Management Context</td>
+      <td>Política encapsulada en su bounded context; no afecta Discovery ni Supply & Monetization</td>
+      <td>ADR-101, ADR-202</td>
+    </tr>
+    <tr>
+      <td>Extraer Reservation Management como microservicio independiente</td>
+      <td>Solo el módulo de reservas y su esquema de base de datos</td>
+      <td>Bounded context ya tiene interfaces, repositorios y eventos de dominio bien definidos</td>
+      <td>ADR-101</td>
+    </tr>
+    <tr>
+      <td>Añadir nueva épica de funcionalidad (ej. suscripciones premium)</td>
+      <td>Nuevo bounded context o extensión de Parking Supply & Monetization</td>
+      <td>La separación de contextos evita modificar el Core Domain de reservas</td>
+      <td>ADR-101</td>
+    </tr>
+    <tr>
+      <td>Investigar un incidente en una transacción financiera</td>
+      <td>Solo consulta a la tabla audit_events y correlación por X-Correlation-Id</td>
+      <td>Audit log append-only + Correlation IDs propagados en todos los servicios</td>
+      <td>ADR-304, ADR-308</td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
