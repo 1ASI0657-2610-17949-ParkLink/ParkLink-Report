@@ -1,0 +1,204 @@
+{"kind":"textbox","slide":1,"role":"university","text":"UNIVERSIDAD PERUANA DE CIENCIAS APLICADAS","textChars":41,"bbox":[56,52,410,38]}
+{"kind":"textbox","slide":1,"role":"deck title","text":"ParkLink","textChars":8,"bbox":[56,164,460,92]}
+{"kind":"textbox","slide":1,"role":"subtitle","text":"Gestión y reserva de estacionamientos","textChars":37,"bbox":[60,266,360,70]}
+{"kind":"textbox","slide":1,"role":"course data","text":"ParkTeam\n1ACC0238 - NRC 17949\nAbril 2026","textChars":40,"bbox":[60,498,330,105]}
+{"kind":"textbox","slide":1,"role":"card title","text":"Objetivo","textChars":8,"bbox":[540,168,260,28]}
+{"kind":"textbox","slide":1,"role":"card body","text":"Presentar la corrección del reporte, el alcance de ParkLink y las decisiones de arquitectura que sostienen el producto.","textChars":119,"bbox":[540,208,260,98]}
+{"kind":"textbox","slide":1,"role":"card title","text":"Enfoque","textChars":7,"bbox":[872,168,260,28]}
+{"kind":"textbox","slide":1,"role":"card body","text":"Marketplace móvil que conecta conductores con empresarios/propietarios de espacios disponibles.","textChars":95,"bbox":[872,208,260,98]}
+{"kind":"textbox","slide":1,"role":"card title","text":"Diferenciador","textChars":13,"bbox":[540,378,260,28]}
+{"kind":"textbox","slide":1,"role":"card body","text":"Reserva anticipada, pago digital, comparación de tarifas y recomendación por precio total.","textChars":90,"bbox":[540,418,260,98]}
+{"kind":"textbox","slide":1,"role":"card title","text":"Arquitectura","textChars":12,"bbox":[872,378,260,28]}
+{"kind":"textbox","slide":1,"role":"card body","text":"DDD, RESTful Web Services, cache de disponibilidad, almacenamiento S3 compatible y servicios externos.","textChars":102,"bbox":[872,418,260,98]}
+{"kind":"textbox","slide":1,"role":"footer","text":"Fundamentos de Arquitectura de Software - TB1 - Abril 2026","textChars":58,"bbox":[52,674,900,22]}
+{"kind":"textbox","slide":2,"role":"header","text":"PARKTEAM / PARKLINK","textChars":19,"bbox":[52,28,360,24]}
+{"kind":"textbox","slide":2,"role":"slide number","text":"02 / 11","textChars":7,"bbox":[1120,28,110,24]}
+{"kind":"textbox","slide":2,"role":"title","text":"Equipo de trabajo","textChars":17,"bbox":[52,86,860,62]}
+{"kind":"textbox","slide":2,"role":"member name","text":"Fabian Alejandro\nOliva Lopez","textChars":28,"bbox":[80,402,174,72]}
+{"kind":"textbox","slide":2,"role":"member code","text":"U202312013","textChars":10,"bbox":[80,486,174,26]}
+{"kind":"textbox","slide":2,"role":"member name","text":"Javier Masaru\nNikaido Vargas","textChars":28,"bbox":[316,402,174,72]}
+{"kind":"textbox","slide":2,"role":"member code","text":"U20221G099","textChars":10,"bbox":[316,486,174,26]}
+{"kind":"textbox","slide":2,"role":"member name","text":"Pietro\nOsores Marchese","textChars":22,"bbox":[552,402,174,72]}
+{"kind":"textbox","slide":2,"role":"member code","text":"U202310971","textChars":10,"bbox":[552,486,174,26]}
+{"kind":"textbox","slide":2,"role":"member name","text":"Matias Rodolfo\nSalcedo Champi","textChars":29,"bbox":[788,402,174,72]}
+{"kind":"textbox","slide":2,"role":"member code","text":"U202319698","textChars":10,"bbox":[788,486,174,26]}
+{"kind":"textbox","slide":2,"role":"member name","text":"Percy Alonso\nMuñiz Huayanca","textChars":27,"bbox":[1024,402,174,72]}
+{"kind":"textbox","slide":2,"role":"member code","text":"U202319563","textChars":10,"bbox":[1024,486,174,26]}
+{"kind":"textbox","slide":2,"role":"team participation","text":"Todos los integrantes participan en la elaboración del reporte, investigación, especificación de requisitos y análisis de arquitectura.","textChars":135,"bbox":[96,606,1088,46]}
+{"kind":"textbox","slide":2,"role":"footer","text":"Fundamentos de Arquitectura de Software - TB1 - Abril 2026","textChars":58,"bbox":[52,674,900,22]}
+{"kind":"textbox","slide":3,"role":"header","text":"PARKTEAM / PARKLINK","textChars":19,"bbox":[52,28,360,24]}
+{"kind":"textbox","slide":3,"role":"slide number","text":"03 / 11","textChars":7,"bbox":[1120,28,110,24]}
+{"kind":"textbox","slide":3,"role":"title","text":"Problema y segmentos","textChars":20,"bbox":[52,86,860,62]}
+{"kind":"textbox","slide":3,"role":"card title","text":"Problema","textChars":8,"bbox":[92,194,305,28]}
+{"kind":"textbox","slide":3,"role":"card body","text":"Los conductores pierden tiempo buscando estacionamiento sin información confiable de disponibilidad, precio ni distancia.","textChars":121,"bbox":[92,234,305,104]}
+{"kind":"textbox","slide":3,"role":"card title","text":"Conductor","textChars":9,"bbox":[488,194,305,28]}
+{"kind":"textbox","slide":3,"role":"card body","text":"Necesita encontrar, comparar, reservar y pagar espacios disponibles antes de llegar al destino.","textChars":95,"bbox":[488,234,305,104]}
+{"kind":"textbox","slide":3,"role":"card title","text":"Empresario","textChars":10,"bbox":[884,194,305,28]}
+{"kind":"textbox","slide":3,"role":"card body","text":"Necesita publicar espacios, controlar horarios, definir tarifas y recibir ingresos con trazabilidad.","textChars":100,"bbox":[884,234,305,104]}
+{"kind":"textbox","slide":3,"role":"metric","text":"100%","textChars":4,"bbox":[130,458,100,50]}
+{"kind":"textbox","slide":3,"role":"metric label","text":"pierde 15 a 20 minutos buscando estacionamiento","textChars":47,"bbox":[236,456,150,70]}
+{"kind":"textbox","slide":3,"role":"metric","text":"100%","textChars":4,"bbox":[490,458,100,50]}
+{"kind":"textbox","slide":3,"role":"metric label","text":"quiere disponibilidad visible en tiempo real","textChars":44,"bbox":[596,456,150,70]}
+{"kind":"textbox","slide":3,"role":"metric","text":"2 + 2","textChars":5,"bbox":[850,458,100,50]}
+{"kind":"textbox","slide":3,"role":"metric label","text":"entrevistas por segmento","textChars":24,"bbox":[956,456,150,70]}
+{"kind":"textbox","slide":3,"role":"footer","text":"Fundamentos de Arquitectura de Software - TB1 - Abril 2026","textChars":58,"bbox":[52,674,900,22]}
+{"kind":"textbox","slide":4,"role":"header","text":"PARKTEAM / PARKLINK","textChars":19,"bbox":[52,28,360,24]}
+{"kind":"textbox","slide":4,"role":"slide number","text":"04 / 11","textChars":7,"bbox":[1120,28,110,24]}
+{"kind":"textbox","slide":4,"role":"title","text":"Lean UX y entrevistas","textChars":21,"bbox":[52,86,860,62]}
+{"kind":"textbox","slide":4,"role":"card title","text":"Lean UX","textChars":7,"bbox":[590,190,230,28]}
+{"kind":"textbox","slide":4,"role":"card body","text":"Comprender, esbozar, probar y medir con hipótesis centradas en búsqueda, reserva y monetización.","textChars":96,"bbox":[590,230,230,58]}
+{"kind":"textbox","slide":4,"role":"card title","text":"Conductores","textChars":11,"bbox":[890,190,230,28]}
+{"kind":"textbox","slide":4,"role":"card body","text":"Validan tiempo perdido, estrés, necesidad de reserva, precio y distancia visible.","textChars":81,"bbox":[890,230,230,58]}
+{"kind":"textbox","slide":4,"role":"card title","text":"Empresarios","textChars":11,"bbox":[590,358,230,28]}
+{"kind":"textbox","slide":4,"role":"card body","text":"Validan publicación de cocheras, control de horarios, tarifas y cobros.","textChars":71,"bbox":[590,398,230,58]}
+{"kind":"textbox","slide":4,"role":"card title","text":"Aprendizaje","textChars":11,"bbox":[890,358,230,28]}
+{"kind":"textbox","slide":4,"role":"card body","text":"El producto debe resolver valor operativo y no quedarse solo en funcionalidades visibles.","textChars":89,"bbox":[890,398,230,58]}
+{"kind":"textbox","slide":4,"role":"segment clarification","text":"La muestra se separa en dos segmentos del marketplace para evitar interpretar las entrevistas como si fueran solo a conductores.","textChars":128,"bbox":[574,520,568,56]}
+{"kind":"textbox","slide":4,"role":"footer","text":"Fundamentos de Arquitectura de Software - TB1 - Abril 2026","textChars":58,"bbox":[52,674,900,22]}
+{"kind":"textbox","slide":5,"role":"header","text":"PARKTEAM / PARKLINK","textChars":19,"bbox":[52,28,360,24]}
+{"kind":"textbox","slide":5,"role":"slide number","text":"05 / 11","textChars":7,"bbox":[1120,28,110,24]}
+{"kind":"textbox","slide":5,"role":"title","text":"Competidores y diferenciación","textChars":29,"bbox":[52,86,860,62]}
+{"kind":"textbox","slide":5,"role":"table header","text":"Criterio","textChars":8,"bbox":[104,194,190,26]}
+{"kind":"textbox","slide":5,"role":"competitor header","text":"ParkLink","textChars":8,"bbox":[316,194,180,26]}
+{"kind":"textbox","slide":5,"role":"competitor header","text":"Apparka","textChars":7,"bbox":[516,194,180,26]}
+{"kind":"textbox","slide":5,"role":"competitor header","text":"Park","textChars":4,"bbox":[716,194,180,26]}
+{"kind":"textbox","slide":5,"role":"competitor header","text":"Quadra","textChars":6,"bbox":[916,194,180,26]}
+{"kind":"textbox","slide":5,"role":"criterion","text":"Reserva anticipada","textChars":18,"bbox":[104,248,200,34]}
+{"kind":"textbox","slide":5,"role":"comparison value","text":"Sí","textChars":2,"bbox":[331,250,130,22]}
+{"kind":"textbox","slide":5,"role":"comparison value","text":"No","textChars":2,"bbox":[531,250,130,22]}
+{"kind":"textbox","slide":5,"role":"comparison value","text":"Limitada","textChars":8,"bbox":[731,250,130,22]}
+{"kind":"textbox","slide":5,"role":"comparison value","text":"Parcial","textChars":7,"bbox":[931,250,130,22]}
+{"kind":"textbox","slide":5,"role":"criterion","text":"Pago digital","textChars":12,"bbox":[104,312,200,34]}
+{"kind":"textbox","slide":5,"role":"comparison value","text":"Sí","textChars":2,"bbox":[331,314,130,22]}
+{"kind":"textbox","slide":5,"role":"comparison value","text":"Sí","textChars":2,"bbox":[531,314,130,22]}
+{"kind":"textbox","slide":5,"role":"comparison value","text":"No central","textChars":10,"bbox":[731,314,130,22]}
+{"kind":"textbox","slide":5,"role":"comparison value","text":"Parcial","textChars":7,"bbox":[931,314,130,22]}
+{"kind":"textbox","slide":5,"role":"criterion","text":"Gestión para empresarios","textChars":24,"bbox":[104,376,200,34]}
+{"kind":"textbox","slide":5,"role":"comparison value","text":"Sí","textChars":2,"bbox":[331,378,130,22]}
+{"kind":"textbox","slide":5,"role":"comparison value","text":"No","textChars":2,"bbox":[531,378,130,22]}
+{"kind":"textbox","slide":5,"role":"comparison value","text":"No","textChars":2,"bbox":[731,378,130,22]}
+{"kind":"textbox","slide":5,"role":"comparison value","text":"Sí","textChars":2,"bbox":[931,378,130,22]}
+{"kind":"textbox","slide":5,"role":"criterion","text":"Recomendación por precio","textChars":24,"bbox":[104,440,200,34]}
+{"kind":"textbox","slide":5,"role":"comparison value","text":"Sí","textChars":2,"bbox":[331,442,130,22]}
+{"kind":"textbox","slide":5,"role":"comparison value","text":"No","textChars":2,"bbox":[531,442,130,22]}
+{"kind":"textbox","slide":5,"role":"comparison value","text":"No","textChars":2,"bbox":[731,442,130,22]}
+{"kind":"textbox","slide":5,"role":"comparison value","text":"No","textChars":2,"bbox":[931,442,130,22]}
+{"kind":"textbox","slide":5,"role":"card title","text":"Diferenciación","textChars":14,"bbox":[210,562,860,24]}
+{"kind":"textbox","slide":5,"role":"card body","text":"ParkLink no solo lista estacionamientos: combina reserva, pago, gestión del empresario y recomendación de tarifa conveniente.","textChars":125,"bbox":[210,590,860,22]}
+{"kind":"textbox","slide":5,"role":"footer","text":"Fundamentos de Arquitectura de Software - TB1 - Abril 2026","textChars":58,"bbox":[52,674,900,22]}
+{"kind":"textbox","slide":6,"role":"header","text":"PARKTEAM / PARKLINK","textChars":19,"bbox":[52,28,360,24]}
+{"kind":"textbox","slide":6,"role":"slide number","text":"06 / 11","textChars":7,"bbox":[1120,28,110,24]}
+{"kind":"textbox","slide":6,"role":"title","text":"Tarifas y recomendación por precio","textChars":34,"bbox":[52,86,860,62]}
+{"kind":"textbox","slide":6,"role":"formula","text":"Costo total = tarifa por hora x duración + comisión + penalización por distancia + ajuste por valoración","textChars":104,"bbox":[84,166,1040,34]}
+{"kind":"textbox","slide":6,"role":"option","text":"A","textChars":1,"bbox":[116,269,46,24]}
+{"kind":"textbox","slide":6,"role":"price","text":"S/ 6.00/h","textChars":9,"bbox":[206,264,160,30]}
+{"kind":"textbox","slide":6,"role":"distance","text":"250 m","textChars":5,"bbox":[412,264,150,30]}
+{"kind":"textbox","slide":6,"role":"total cost","text":"S/ 12.00","textChars":8,"bbox":[612,264,180,30]}
+{"kind":"textbox","slide":6,"role":"recommendation","text":"Recomendado","textChars":11,"bbox":[842,264,180,30]}
+{"kind":"textbox","slide":6,"role":"option","text":"B","textChars":1,"bbox":[116,385,46,24]}
+{"kind":"textbox","slide":6,"role":"price","text":"S/ 5.00/h","textChars":9,"bbox":[206,380,160,30]}
+{"kind":"textbox","slide":6,"role":"distance","text":"900 m","textChars":5,"bbox":[412,380,150,30]}
+{"kind":"textbox","slide":6,"role":"total cost","text":"S/ 10.00","textChars":8,"bbox":[612,380,180,30]}
+{"kind":"textbox","slide":6,"role":"recommendation","text":"Lejano","textChars":6,"bbox":[842,380,180,30]}
+{"kind":"textbox","slide":6,"role":"option","text":"C","textChars":1,"bbox":[116,501,46,24]}
+{"kind":"textbox","slide":6,"role":"price","text":"S/ 8.00/h","textChars":9,"bbox":[206,496,160,30]}
+{"kind":"textbox","slide":6,"role":"distance","text":"150 m","textChars":5,"bbox":[412,496,150,30]}
+{"kind":"textbox","slide":6,"role":"total cost","text":"S/ 16.00","textChars":8,"bbox":[612,496,180,30]}
+{"kind":"textbox","slide":6,"role":"recommendation","text":"Costoso","textChars":7,"bbox":[842,496,180,30]}
+{"kind":"textbox","slide":6,"role":"card title","text":"Decisión de producto","textChars":20,"bbox":[174,606,870,24]}
+{"kind":"textbox","slide":6,"role":"card body","text":"La recomendación explica por qué una opción es conveniente. No siempre el precio más bajo es la mejor elección si la distancia o confiabilidad penalizan la experiencia.","textChars":168,"bbox":[174,634,870,16]}
+{"kind":"textbox","slide":6,"role":"footer","text":"Fundamentos de Arquitectura de Software - TB1 - Abril 2026","textChars":58,"bbox":[52,674,900,22]}
+{"kind":"textbox","slide":7,"role":"header","text":"PARKTEAM / PARKLINK","textChars":19,"bbox":[52,28,360,24]}
+{"kind":"textbox","slide":7,"role":"slide number","text":"07 / 11","textChars":7,"bbox":[1120,28,110,24]}
+{"kind":"textbox","slide":7,"role":"title","text":"User Task Matrix y escenarios","textChars":29,"bbox":[52,86,860,62]}
+{"kind":"textbox","slide":7,"role":"card title","text":"Conductor","textChars":9,"bbox":[104,192,290,24]}
+{"kind":"textbox","slide":7,"role":"card body","text":"Encontrar espacio\nUS01, US02","textChars":28,"bbox":[104,220,290,60]}
+{"kind":"textbox","slide":7,"role":"card title","text":"Conductor","textChars":9,"bbox":[474,192,290,24]}
+{"kind":"textbox","slide":7,"role":"card body","text":"Comparar tarifa\nUS03, TS02","textChars":26,"bbox":[474,220,290,60]}
+{"kind":"textbox","slide":7,"role":"card title","text":"Conductor","textChars":9,"bbox":[844,192,290,24]}
+{"kind":"textbox","slide":7,"role":"card body","text":"Reservar y pagar\nUS05, US14","textChars":27,"bbox":[844,220,290,60]}
+{"kind":"textbox","slide":7,"role":"card title","text":"Empresario","textChars":10,"bbox":[104,342,290,24]}
+{"kind":"textbox","slide":7,"role":"card body","text":"Publicar espacio\nUS09, TS05","textChars":27,"bbox":[104,370,290,60]}
+{"kind":"textbox","slide":7,"role":"card title","text":"Empresario","textChars":10,"bbox":[474,342,290,24]}
+{"kind":"textbox","slide":7,"role":"card body","text":"Gestionar acceso\nUS11, US12","textChars":27,"bbox":[474,370,290,60]}
+{"kind":"textbox","slide":7,"role":"card title","text":"Empresario","textChars":10,"bbox":[844,342,290,24]}
+{"kind":"textbox","slide":7,"role":"card body","text":"Revisar ingresos\nUS13, US16","textChars":27,"bbox":[844,370,290,60]}
+{"kind":"textbox","slide":7,"role":"as is label","text":"As-Is","textChars":5,"bbox":[168,540,96,28]}
+{"kind":"textbox","slide":7,"role":"as is text","text":"Búsqueda manual, coordinación informal, baja trazabilidad.","textChars":58,"bbox":[278,540,270,34]}
+{"kind":"textbox","slide":7,"role":"to be label","text":"To-Be","textChars":5,"bbox":[722,540,96,28]}
+{"kind":"textbox","slide":7,"role":"to be text","text":"Reserva confirmada, pago digital, gestión y recomendación.","textChars":58,"bbox":[832,540,270,34]}
+{"kind":"textbox","slide":7,"role":"footer","text":"Fundamentos de Arquitectura de Software - TB1 - Abril 2026","textChars":58,"bbox":[52,674,900,22]}
+{"kind":"textbox","slide":8,"role":"header","text":"PARKTEAM / PARKLINK","textChars":19,"bbox":[52,28,360,24]}
+{"kind":"textbox","slide":8,"role":"slide number","text":"08 / 11","textChars":7,"bbox":[1120,28,110,24]}
+{"kind":"textbox","slide":8,"role":"title","text":"Historias de usuario","textChars":20,"bbox":[52,86,860,62]}
+{"kind":"textbox","slide":8,"role":"card title","text":"EP01","textChars":4,"bbox":[102,192,290,24]}
+{"kind":"textbox","slide":8,"role":"card body","text":"Búsqueda y descubrimiento","textChars":25,"bbox":[102,220,290,48]}
+{"kind":"textbox","slide":8,"role":"card title","text":"EP02","textChars":4,"bbox":[476,192,290,24]}
+{"kind":"textbox","slide":8,"role":"card body","text":"Reserva y gestión","textChars":17,"bbox":[476,220,290,48]}
+{"kind":"textbox","slide":8,"role":"card title","text":"EP03","textChars":4,"bbox":[850,192,290,24]}
+{"kind":"textbox","slide":8,"role":"card body","text":"Publicación de espacios","textChars":23,"bbox":[850,220,290,48]}
+{"kind":"textbox","slide":8,"role":"card title","text":"EP04","textChars":4,"bbox":[102,324,290,24]}
+{"kind":"textbox","slide":8,"role":"card body","text":"Pagos y facturación","textChars":19,"bbox":[102,352,290,48]}
+{"kind":"textbox","slide":8,"role":"card title","text":"EP05","textChars":4,"bbox":[476,324,290,24]}
+{"kind":"textbox","slide":8,"role":"card body","text":"Cuenta y autenticación","textChars":22,"bbox":[476,352,290,48]}
+{"kind":"textbox","slide":8,"role":"card title","text":"EP06","textChars":4,"bbox":[850,324,290,24]}
+{"kind":"textbox","slide":8,"role":"card body","text":"Notificaciones","textChars":14,"bbox":[850,352,290,48]}
+{"kind":"textbox","slide":8,"role":"count","text":"6","textChars":1,"bbox":[208,524,72,44]}
+{"kind":"textbox","slide":8,"role":"count label","text":"épicas","textChars":6,"bbox":[292,530,126,34]}
+{"kind":"textbox","slide":8,"role":"count","text":"20","textChars":2,"bbox":[523,524,72,44]}
+{"kind":"textbox","slide":8,"role":"count label","text":"historias funcionales","textChars":21,"bbox":[607,530,126,34]}
+{"kind":"textbox","slide":8,"role":"count","text":"10","textChars":2,"bbox":[838,524,72,44]}
+{"kind":"textbox","slide":8,"role":"count label","text":"TS/RNF agregados","textChars":16,"bbox":[922,530,126,34]}
+{"kind":"textbox","slide":8,"role":"footer","text":"Fundamentos de Arquitectura de Software - TB1 - Abril 2026","textChars":58,"bbox":[52,674,900,22]}
+{"kind":"textbox","slide":9,"role":"header","text":"PARKTEAM / PARKLINK","textChars":19,"bbox":[52,28,360,24]}
+{"kind":"textbox","slide":9,"role":"slide number","text":"09 / 11","textChars":7,"bbox":[1120,28,110,24]}
+{"kind":"textbox","slide":9,"role":"title","text":"Impact mapping y riesgos","textChars":24,"bbox":[52,86,860,62]}
+{"kind":"textbox","slide":9,"role":"card title","text":"Disponibilidad","textChars":14,"bbox":[98,188,290,24]}
+{"kind":"textbox","slide":9,"role":"card body","text":"Doble reserva\nMitigación: TS01","textChars":30,"bbox":[98,216,290,60]}
+{"kind":"textbox","slide":9,"role":"card title","text":"Pagos","textChars":5,"bbox":[472,188,290,24]}
+{"kind":"textbox","slide":9,"role":"card body","text":"Cobros duplicados\nMitigación: TS06","textChars":34,"bbox":[472,216,290,60]}
+{"kind":"textbox","slide":9,"role":"card title","text":"Oferta","textChars":6,"bbox":[846,188,290,24]}
+{"kind":"textbox","slide":9,"role":"card body","text":"Pocos espacios activos\nMitigación: US09","textChars":39,"bbox":[846,216,290,60]}
+{"kind":"textbox","slide":9,"role":"card title","text":"Privacidad","textChars":10,"bbox":[98,338,290,24]}
+{"kind":"textbox","slide":9,"role":"card body","text":"Fotos expuestas\nMitigación: TS05","textChars":32,"bbox":[98,366,290,60]}
+{"kind":"textbox","slide":9,"role":"card title","text":"Externos","textChars":8,"bbox":[472,338,290,24]}
+{"kind":"textbox","slide":9,"role":"card body","text":"Fallas de APIs\nMitigación: RNF04","textChars":32,"bbox":[472,366,290,60]}
+{"kind":"textbox","slide":9,"role":"card title","text":"Precio","textChars":6,"bbox":[846,338,290,24]}
+{"kind":"textbox","slide":9,"role":"card body","text":"Recomendación opaca\nMitigación: TS02","textChars":36,"bbox":[846,366,290,60]}
+{"kind":"textbox","slide":9,"role":"card title","text":"Impacto corregido","textChars":17,"bbox":[202,524,820,24]}
+{"kind":"textbox","slide":9,"role":"card body","text":"El mapa de impacto ahora incluye metas SMART, actores, entregables y riesgos principales vinculados a historias, TS y RNF.","textChars":122,"bbox":[202,552,820,40]}
+{"kind":"textbox","slide":9,"role":"footer","text":"Fundamentos de Arquitectura de Software - TB1 - Abril 2026","textChars":58,"bbox":[52,674,900,22]}
+{"kind":"textbox","slide":10,"role":"header","text":"PARKTEAM / PARKLINK","textChars":19,"bbox":[52,28,360,24]}
+{"kind":"textbox","slide":10,"role":"slide number","text":"10 / 11","textChars":7,"bbox":[1120,28,110,24]}
+{"kind":"textbox","slide":10,"role":"title","text":"Arquitectura de software","textChars":24,"bbox":[52,86,860,62]}
+{"kind":"textbox","slide":10,"role":"mobile container","text":"Mobile App\nFlutter/KMM","textChars":22,"bbox":[94,206,170,42]}
+{"kind":"textbox","slide":10,"role":"gateway","text":"API Gateway\nHTTPS + JWT","textChars":23,"bbox":[390,206,170,42]}
+{"kind":"textbox","slide":10,"role":"backend","text":"RESTful Web Services\nDDD bounded contexts","textChars":41,"bbox":[690,184,212,54]}
+{"kind":"textbox","slide":10,"role":"bounded contexts","text":"Parking, Reservation, Payment, IAM, Pricing, Media","textChars":50,"bbox":[694,250,204,34]}
+{"kind":"textbox","slide":10,"role":"database","text":"PostgreSQL","textChars":10,"bbox":[1036,172,134,24]}
+{"kind":"textbox","slide":10,"role":"cache","text":"Redis","textChars":5,"bbox":[1036,274,134,24]}
+{"kind":"textbox","slide":10,"role":"storage","text":"S3 compatible","textChars":13,"bbox":[1036,376,134,24]}
+{"kind":"textbox","slide":10,"role":"card title","text":"Rendimiento","textChars":11,"bbox":[140,518,260,24]}
+{"kind":"textbox","slide":10,"role":"card body","text":"Cache de disponibilidad y respuesta p95 menor o igual a 2 segundos.","textChars":67,"bbox":[140,546,260,52]}
+{"kind":"textbox","slide":10,"role":"card title","text":"Seguridad","textChars":9,"bbox":[510,518,260,24]}
+{"kind":"textbox","slide":10,"role":"card body","text":"JWT, roles, HTTPS, auditoría de pagos y reservas.","textChars":49,"bbox":[510,546,260,52]}
+{"kind":"textbox","slide":10,"role":"card title","text":"Media","textChars":5,"bbox":[880,518,260,24]}
+{"kind":"textbox","slide":10,"role":"card body","text":"Fotos y evidencias fuera de la base de datos, en bucket privado.","textChars":64,"bbox":[880,546,260,52]}
+{"kind":"textbox","slide":10,"role":"footer","text":"Fundamentos de Arquitectura de Software - TB1 - Abril 2026","textChars":58,"bbox":[52,674,900,22]}
+{"kind":"textbox","slide":11,"role":"header","text":"PARKTEAM / PARKLINK","textChars":19,"bbox":[52,28,360,24]}
+{"kind":"textbox","slide":11,"role":"slide number","text":"11 / 11","textChars":7,"bbox":[1120,28,110,24]}
+{"kind":"textbox","slide":11,"role":"title","text":"Backlog y cierre de correcciones","textChars":32,"bbox":[52,86,860,62]}
+{"kind":"textbox","slide":11,"role":"card title","text":"PPT","textChars":3,"bbox":[110,186,446,24]}
+{"kind":"textbox","slide":11,"role":"card body","text":"Presentación creada con formato de entrega.","textChars":43,"bbox":[110,214,446,36]}
+{"kind":"textbox","slide":11,"role":"card title","text":"User task","textChars":9,"bbox":[650,186,446,24]}
+{"kind":"textbox","slide":11,"role":"card body","text":"Matriz agregada y conectada con HU/TS.","textChars":38,"bbox":[650,214,446,36]}
+{"kind":"textbox","slide":11,"role":"card title","text":"Impacto","textChars":7,"bbox":[110,312,446,24]}
+{"kind":"textbox","slide":11,"role":"card body","text":"Mapa rehecho con riesgos principales.","textChars":37,"bbox":[110,340,446,36]}
+{"kind":"textbox","slide":11,"role":"card title","text":"TS/RNF","textChars":6,"bbox":[650,312,446,24]}
+{"kind":"textbox","slide":11,"role":"card body","text":"Requisitos técnicos incorporados.","textChars":33,"bbox":[650,340,446,36]}
+{"kind":"textbox","slide":11,"role":"card title","text":"Tarifas","textChars":7,"bbox":[110,438,446,24]}
+{"kind":"textbox","slide":11,"role":"card body","text":"Comparación y recomendación por precio.","textChars":39,"bbox":[110,466,446,36]}
+{"kind":"textbox","slide":11,"role":"card title","text":"S3","textChars":2,"bbox":[650,438,446,24]}
+{"kind":"textbox","slide":11,"role":"card body","text":"Uso explicado en TS05 y arquitectura.","textChars":37,"bbox":[650,466,446,36]}
+{"kind":"textbox","slide":11,"role":"next step","text":"Siguiente paso: exportar el informe corregido a PDF y subir junto con esta presentación al aula virtual.","textChars":104,"bbox":[136,584,1010,42]}
+{"kind":"textbox","slide":11,"role":"footer","text":"Fundamentos de Arquitectura de Software - TB1 - Abril 2026","textChars":58,"bbox":[52,674,900,22]}
