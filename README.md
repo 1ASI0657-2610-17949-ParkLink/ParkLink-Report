@@ -1661,29 +1661,23 @@ Esta iteración establece la estructura general del sistema ParkLink definiendo 
 
 #### 4.3.1.1. Architectural Design Backlog
 
-Esta iteración toma como entrada los drivers fundamentales que definen la estructura base del sistema. ParkLink no solo debe conectar conductores con propietarios; debe hacerlo sobre una arquitectura que tenga responsabilidades claras por dominio, un punto de acceso seguro y módulos que puedan evolucionar de forma independiente. Sin definir esta estructura primero, no es posible atacar atributos de calidad como rendimiento, consistencia o seguridad en iteraciones posteriores.
+Esta iteración toma como entrada los drivers fundamentales que definen la estructura base del sistema. Para mantener trazabilidad con el Capítulo III, el backlog se expresa sólo como User Stories y Technical Stories; los atributos de calidad, restricciones y concerns funcionan como criterios de decisión, pero no como filas separadas del backlog. ParkLink no solo debe conectar conductores con propietarios; debe hacerlo sobre una arquitectura que tenga responsabilidades claras por dominio, un punto de acceso seguro y módulos que puedan evolucionar de forma independiente.
 
 ### Drivers que entran a la iteración
 
 | Tipo | ID | Descripción | Estado pre-iteración |
 |------|----|------------|----------------------|
-| Primary Functionality | US01 | Buscar estacionamientos por ubicación | Backlog |
-| Primary Functionality | US02 | Ver disponibilidad en tiempo real | Backlog |
-| Primary Functionality | US05 | Reservar un espacio de estacionamiento | Backlog |
-| Primary Functionality | US09 | Registrar un espacio de estacionamiento | Backlog |
-| Primary Functionality | US14 | Pagar una reserva en línea | Backlog |
-| Primary Functionality | US17 | Registrarse como conductor | Backlog |
-| Primary Functionality | US18 | Registrarse como propietario | Backlog |
-| Primary Functionality | US19 | Iniciar sesión | Backlog |
-| Quality Attribute | QAS-01 | Performance: búsquedas respondidas en ≤ 3 segundos | Backlog |
-| Quality Attribute | QAS-02 | Consistency: confirmación de reserva en ≤ 5 segundos sin dobles reservas | Backlog |
-| Quality Attribute | QAS-04 | Security: autenticación, roles y tráfico bajo HTTPS | Backlog |
-| Quality Attribute | QAS-06 | Scalability: arquitectura que soporte crecimiento sin degradación | Backlog |
-| Constraint | C-01 | Roles diferenciados: conductor y propietario | Vigente |
-| Constraint | C-02 | MVP centrado en búsqueda, reserva, publicación, pagos y notificaciones | Vigente |
-| Constraint | C-09 | Separación de responsabilidades por dominio (bounded contexts) | Vigente |
-| Architectural Concern | AC-07 | Escalabilidad modular del producto | Backlog |
-| Architectural Concern | AC-08 | Mantenibilidad y bajo acoplamiento | Backlog |
+| User Story | US01 | Buscar estacionamientos por ubicación | Backlog |
+| User Story | US02 | Ver disponibilidad en tiempo real | Backlog |
+| User Story | US05 | Reservar un espacio de estacionamiento | Backlog |
+| User Story | US09 | Registrar un espacio de estacionamiento | Backlog |
+| User Story | US14 | Pagar una reserva en línea | Backlog |
+| User Story | US17 | Registrarse como conductor | Backlog |
+| User Story | US18 | Registrarse como propietario | Backlog |
+| User Story | US19 | Iniciar sesión | Backlog |
+| Technical Story | TS01 | Control transaccional de reservas concurrentes | Backlog estructural |
+| Technical Story | TS02 | Proyección de disponibilidad para búsqueda rápida | Backlog estructural |
+| Technical Story | TS03 | Autenticación y autorización por roles | Backlog estructural |
 
 #### 4.3.1.2. Establish Iteration Goal by Selecting Drivers
 
@@ -1693,50 +1687,51 @@ Esta iteración toma como entrada los drivers fundamentales que definen la estru
 - Exista un punto de entrada único al backend (API Gateway) que centralice routing, autenticación JWT y control de acceso por roles.
 - Cada bounded context tenga responsabilidades claras y no comparta lógica de negocio con otros.
 - La arquitectura soporte las funcionalidades primarias: búsqueda, reserva, publicación, pagos y gestión de usuarios.
+- Las Technical Stories TS01, TS02 y TS03 queden ubicadas en contextos responsables antes de refinar sus mecanismos internos.
 - El diseño permita escalar módulos de forma independiente cuando el volumen lo justifique.
 
-**Drivers primarios seleccionados:** US01, US05, US09, US17, US19, QAS-01, QAS-04, C-09.  
+**Drivers primarios seleccionados:** US01, US05, US09, US17, US19, TS02, TS03.
 
-**Drivers secundarios:** US02, US14, US18, QAS-02, QAS-06, AC-07, AC-08.
+**Drivers secundarios:** US02, US14, US18, TS01.
 
 #### 4.3.1.3. Choose One or More Elements of the System to Refine
 
 Elementos a refinar dentro de la arquitectura en esta primera iteración
 
 - **Sistema completo ParkLink** — definición de bounded contexts y sus responsabilidades.
-- **API Gateway** — punto de entrada único, validación JWT y routing.
-- **User & Identity Context** — registro, login, gestión de roles y generación de JWT.
-- **Parking Discovery Context** — búsqueda, visualización en mapa, filtros y disponibilidad.
-- **Reservation Management Context** — gestión del ciclo de vida de reservas (Core Domain).
-- **Parking Supply & Monetization Context** — publicación de espacios, gestión de precios, pagos e ingresos.
-- **Main Relational Database** — fuente de verdad para todos los bounded contexts.
-- **Availability Cache** — mecanismo de lectura rápida para disponibilidad en búsquedas.
+- **API Gateway** — punto de entrada único, validación JWT y routing para soportar TS03.
+- **User & Identity Context** — registro, login, gestión de roles y generación de JWT para US17, US18, US19 y TS03.
+- **Parking Discovery Context** — búsqueda, visualización en mapa, filtros y disponibilidad visible para US01, US02 y TS02.
+- **Reservation Management Context** — gestión del ciclo de vida de reservas y base estructural de TS01.
+- **Parking Supply & Monetization Context** — publicación de espacios, gestión de precios, pagos e ingresos; sus cambios alimentan TS02.
+- **Main Relational Database** — fuente de verdad para reservas, disponibilidad confirmable y soporte transaccional de TS01.
+- **Availability Cache** — mecanismo de lectura rápida para disponibilidad en búsquedas, alineado con TS02.
 
 #### 4.3.1.4. Choose One or More Design Concepts That Satisfy the Selected Drivers
 
 | Driver | Design Concept / Pattern | Justificación |
 |--------|--------------------------|--------------|
-| C-09 (bounded contexts) | Domain-Driven Design estratégico con 4 bounded contexts explícitos | Cada contexto encapsula sus reglas, evita mezclar disponibilidad, reserva, pago e identidad. |
-| QAS-04 (seguridad) | JWT + API Gateway como único punto de entrada con validación de token y rol | Centraliza autenticación y evita que cada servicio repita la lógica de seguridad. |
-| QAS-01 (performance búsqueda) | CQRS liviano + Redis cache para disponibilidad visible | Separa lecturas de escrituras; la cache acelera búsquedas sin cargar la BD transaccional. |
-| QAS-02 (consistencia reserva) | Transacciones ACID en Reservation Management + bloqueo optimista | Previene dobles reservas bajo concurrencia sin sacrificar rendimiento general. |
-| AC-07 (escalabilidad) | Arquitectura modular con separación por bounded context | Permite extraer módulos como microservicios cuando el volumen lo justifique. |
-| AC-08 (mantenibilidad) | Repository Pattern + Layered Architecture por contexto | Abstrae acceso a datos y facilita testing y evolución independiente. |
-| US17, US18, US19 (identidad) | Stateless authentication con JWT | Token portátil verificable por cualquier módulo sin consultar BD en cada request. |
-| US01, US02 (búsqueda) | Adapter Pattern para Maps & Geolocation API | Desacopla el proveedor de mapas del dominio de búsqueda. |
+| US01, US05, US09, US14, US17, US19 | Domain-Driven Design estratégico con 4 bounded contexts explícitos | Cada contexto encapsula sus reglas, evita mezclar disponibilidad, reserva, pago e identidad. |
+| TS03, US17, US18, US19 | JWT + API Gateway como único punto de entrada con validación de token y rol | Centraliza autenticación y evita que cada servicio repita la lógica de seguridad. |
+| TS02, US01, US02 | CQRS liviano + Redis cache para disponibilidad visible | Separa lecturas de escrituras; la cache acelera búsquedas sin cargar la BD transaccional. |
+| TS01, US05 | Transacciones ACID en Reservation Management + bloqueo optimista | Previene dobles reservas bajo concurrencia sin sacrificar rendimiento general. |
+| US09, US14, TS01, TS02, TS03 | Arquitectura modular con separación por bounded context | Permite extraer módulos como microservicios cuando el volumen lo justifique. |
+| TS01, TS02, TS03 | Repository Pattern + Layered Architecture por contexto | Abstrae acceso a datos y facilita testing y evolución independiente. |
+| TS03, US17, US18, US19 | Stateless authentication con JWT | Token portátil verificable por cualquier módulo sin consultar BD en cada request. |
+| TS02, US01, US02 | Adapter Pattern para Maps & Geolocation API | Desacopla el proveedor de mapas del dominio de búsqueda. |
 
 #### 4.3.1.5. Instantiate Architectural Elements, Allocate Responsibilities, and Define Interfaces
 
 | Componente | Responsabilidad | Interfaz pública |
 |------------|----------------|------------------|
-| `API Gateway` | Centralizar entrada al backend, validar JWT, enrutar por bounded context, rate limiting | Recibe todas las solicitudes HTTPS; enruta a servicios internos |
-| `UserIdentityService` | Registro, login, emisión de JWT, gestión de roles y perfiles | `POST /auth/register`, `POST /auth/login`, `GET /users/{id}/profile` |
-| `ParkingDiscoveryService` | Búsqueda de espacios, filtros, detalle, disponibilidad visible, mapa | `GET /spaces?lat&lng&radius`, `GET /spaces/{id}`, `GET /spaces/{id}/availability` |
-| `ReservationService` | Crear, cancelar, extender reservas; consultar historial; bloquear espacio | `POST /reservations`, `DELETE /reservations/{id}`, `PATCH /reservations/{id}/extend`, `GET /reservations` |
-| `ParkingSupplyService` | Publicar espacios, configurar horarios y precios, habilitar/deshabilitar, ver ingresos | `POST /spaces`, `PUT /spaces/{id}`, `PATCH /spaces/{id}/status`, `GET /spaces/{id}/earnings` |
+| `API Gateway` | Centralizar entrada al backend, validar JWT, enrutar por bounded context, rate limiting y sostener TS03 | Recibe todas las solicitudes HTTPS; enruta a servicios internos |
+| `UserIdentityService` | Registro, login, emisión de JWT, gestión de roles y perfiles para TS03 | `POST /auth/register`, `POST /auth/login`, `GET /users/{id}/profile` |
+| `ParkingDiscoveryService` | Búsqueda de espacios, filtros, detalle, disponibilidad visible, mapa y base de TS02 | `GET /spaces?lat&lng&radius`, `GET /spaces/{id}`, `GET /spaces/{id}/availability` |
+| `ReservationService` | Crear, cancelar, extender reservas; consultar historial; bloquear espacio y preparar TS01 | `POST /reservations`, `DELETE /reservations/{id}`, `PATCH /reservations/{id}/extend`, `GET /reservations` |
+| `ParkingSupplyService` | Publicar espacios, configurar horarios y precios, habilitar/deshabilitar, ver ingresos y alimentar TS02 | `POST /spaces`, `PUT /spaces/{id}`, `PATCH /spaces/{id}/status`, `GET /spaces/{id}/earnings` |
 | `PaymentService` | Procesar pagos, reembolsos y comprobantes | `POST /payments`, `POST /payments/{id}/refund`, `GET /payments/{id}/receipt` |
-| `MainDatabase` | Persistir usuarios, espacios, reservas, pagos, reseñas y notificaciones | Accedida únicamente por servicios backend vía ORM/JDBC |
-| `AvailabilityCache` | Acelerar consultas de disponibilidad visible para búsquedas frecuentes | Consultada por `ParkingDiscoveryService`; actualizada por `ReservationService` y `ParkingSupplyService` |
+| `MainDatabase` | Persistir usuarios, espacios, reservas, pagos, reseñas y notificaciones; fuente de verdad para TS01 | Accedida únicamente por servicios backend vía ORM/JDBC |
+| `AvailabilityCache` | Acelerar consultas de disponibilidad visible para búsquedas frecuentes según TS02 | Consultada por `ParkingDiscoveryService`; actualizada por `ReservationService` y `ParkingSupplyService` |
 | `MapsAdapter` | Proveer geocodificación, distancias y marcadores de mapa | `resolveLocation(address)`, `getNearbySpaces(lat, lng, radius)` |
 
 #### 4.3.1.6. Sketch Views (C4 & UML) and Record Design Decisions
@@ -1777,13 +1772,13 @@ Vista de clases del modelo de dominio de los bounded contexts principales.
 
 | ADR | Decisión | Status | Driver | Razonamiento |
 |-----|----------|--------|--------|--------------|
-| `ADR-101` | Arquitectura modular con 4 bounded contexts: User & Identity, Parking Discovery, Reservation Management, Parking Supply & Monetization | Accepted | `C-09`, `AC-07` | Cada contexto encapsula sus reglas; permite evolución y despliegue independiente |
-| `ADR-102` | API Gateway como único punto de entrada al backend con validación JWT centralizada | Accepted | `QAS-04`, `C-01` | Evita duplicar lógica de autenticación; centraliza rate limiting y routing |
-| `ADR-103` | Autenticación stateless con JWT incluyendo claim de rol (`DRIVER` / `OWNER`) | Accepted | `QAS-04`, `US17`, `US18`, `US19` | Token portable verificable por cualquier módulo sin consultar BD en cada request |
-| `ADR-104` | Redis como cache de disponibilidad visible; MySQL como fuente de verdad para reservas y pagos | Accepted | `QAS-01`, `QAS-02` | Cache acelera búsquedas sin comprometer consistencia transaccional del Core Domain |
-| `ADR-105` | Reservation Management como Core Domain con transacciones ACID y bloqueo optimista para prevenir dobles reservas | Accepted | `QAS-02`, `AC-09` | La reserva es la propuesta de valor central; su consistencia no puede sacrificarse |
-| `ADR-106` | Repository Pattern por bounded context para abstraer el acceso a MySQL | Accepted | `AC-08`, `C-09` | Facilita testing unitario y permite cambiar el motor de BD sin afectar el dominio |
-| `ADR-107` | Adapter Pattern para Google Maps Platform; el dominio depende de interfaz `GeoLocationProvider`, no del SDK de Google | Accepted | `AC-08`, `C-INT` | Cambio de proveedor de mapas sin tocar lógica de búsqueda |
+| `ADR-101` | Arquitectura modular con 4 bounded contexts: User & Identity, Parking Discovery, Reservation Management, Parking Supply & Monetization | Accepted | `US01`, `US05`, `US09`, `US14`, `TS01`, `TS02`, `TS03` | Cada contexto encapsula sus reglas; permite evolución y despliegue independiente |
+| `ADR-102` | API Gateway como único punto de entrada al backend con validación JWT centralizada | Accepted | `TS03` | Evita duplicar lógica de autenticación; centraliza rate limiting y routing |
+| `ADR-103` | Autenticación stateless con JWT incluyendo claim de rol (`DRIVER` / `OWNER`) | Accepted | `TS03`, `US17`, `US18`, `US19` | Token portable verificable por cualquier módulo sin consultar BD en cada request |
+| `ADR-104` | Redis como cache de disponibilidad visible; MySQL como fuente de verdad para reservas y pagos | Accepted | `TS02`, `TS01` | Cache acelera búsquedas sin comprometer consistencia transaccional del Core Domain |
+| `ADR-105` | Reservation Management como Core Domain con transacciones ACID y bloqueo optimista para prevenir dobles reservas | Accepted | `TS01`, `US05` | La reserva es la propuesta de valor central; su consistencia no puede sacrificarse |
+| `ADR-106` | Repository Pattern por bounded context para abstraer el acceso a MySQL | Accepted | `TS01`, `TS02`, `TS03` | Facilita testing unitario y permite cambiar el motor de BD sin afectar el dominio |
+| `ADR-107` | Adapter Pattern para Google Maps Platform; el dominio depende de interfaz `GeoLocationProvider`, no del SDK de Google | Accepted | `TS02`, `US01`, `US02` | Cambio de proveedor de mapas sin tocar lógica de búsqueda |
 
 #### 4.3.1.7. Analysis of Current Design and Review Iteration Goal (Kanban Board)
 
@@ -1796,13 +1791,9 @@ Vista de clases del modelo de dominio de los bounded contexts principales.
 | `US17` Registro conductor | Backlog | Addressed | UserIdentityService + flujo completo en Dynamic View |
 | `US18` Registro propietario | Backlog | Addressed | Mismo servicio con rol `OWNER` diferenciado |
 | `US19` Inicio de sesión | Backlog | Addressed | JWT con claim de rol, `ADR-103` |
-| `QAS-01` Performance búsqueda | Backlog | Addressed | Redis cache + CQRS liviano (`ADR-104`) |
-| `QAS-02` Consistencia reserva | Backlog | Addressed | ACID + bloqueo optimista en Core Domain (`ADR-105`) |
-| `QAS-04` Seguridad | Backlog | Addressed | API Gateway + JWT + HTTPS (`ADR-102`, `ADR-103`) |
-| `QAS-06` Escalabilidad | Backlog | Partially addressed | Módulos separados por contexto; extracción a microservicios pendiente |
-| `C-09` Separación por dominio | Vigente | Addressed | 4 bounded contexts con responsabilidades explícitas (`ADR-101`) |
-| `AC-07` Escalabilidad modular | Backlog | Partially addressed | Estructura modular definida; falta estrategia de despliegue independiente |
-| `AC-08` Mantenibilidad | Backlog | Addressed | Repository Pattern + Adapter Pattern por bounded context (`ADR-106`, `ADR-107`) |
+| `TS01` Control transaccional de reservas concurrentes | Backlog estructural | Partially addressed | Reservation Management queda como Core Domain; el bloqueo detallado se refina en Iteration 2 |
+| `TS02` Proyección de disponibilidad para búsqueda rápida | Backlog estructural | Partially addressed | Availability Cache y Discovery Context quedan definidos; invalidación se refina en Iteration 2 |
+| `TS03` Autenticación y autorización por roles | Backlog estructural | Addressed | API Gateway + JWT + claim de rol (`ADR-102`, `ADR-103`) |
 | `US14` Pago en línea | Backlog | Partially addressed | PaymentService identificado en estructura; flujo completo en Iteration 2 |
 
 **Iteration Goal:** Alcanzado todos los drivers primarios han sido atendidos. La estructura general del sistema queda definida con bounded contexts explícitos, API Gateway centralizado, autenticación JWT y separación entre cache y fuente de verdad.
@@ -1816,7 +1807,7 @@ Esta iteración refina la estructura general definida en Iteration 1 para atacar
 
 #### 4.3.2.1. Architectural Design Backlog
 
-Esta iteración toma como entrada los drivers críticos que no pueden quedar como decisiones superficiales, porque afectan directamente la confianza operativa del producto. ParkLink no sólo debe mostrar estacionamientos; debe garantizar que la disponibilidad visible sea confiable, que una reserva no se duplique, que el acceso esté protegido por roles y que la búsqueda responda rápido mientras el usuario está en movimiento.
+Esta iteración toma como entrada las User Stories y Technical Stories críticas que no pueden quedar como decisiones superficiales, porque afectan directamente la confianza operativa del producto. ParkLink no sólo debe mostrar estacionamientos; debe garantizar que la disponibilidad visible sea confiable, que una reserva no se duplique, que el acceso esté protegido por roles y que la búsqueda responda rápido mientras el usuario está en movimiento.
 
 Drivers que entran a la iteración:
 
@@ -1830,18 +1821,11 @@ Drivers que entran a la iteración:
 | User Story | US10 | Configurar horarios y precio del espacio | Backlog arquitectónico |
 | User Story | US11 | Habilitar y deshabilitar un espacio | Backlog arquitectónico |
 | User Story | US14 | Pagar una reserva en línea | Backlog arquitectónico parcial |
-| Quality Attribute | QAS-01 | 95% de búsquedas respondidas en 3 segundos o menos | Backlog arquitectónico |
-| Quality Attribute | QAS-02 | Confirmación de reserva en 5 segundos o menos y 0 dobles reservas | Backlog arquitectónico |
-| Quality Attribute | QAS-03 | Disponibilidad mensual objetivo de 99.5% | Backlog arquitectónico |
-| Quality Attribute | QAS-04 | Protección de credenciales, roles y transacciones | Backlog arquitectónico |
-| Constraint | C-03 | El sistema debe evitar dobles reservas para el mismo espacio y horario | Vigente |
-| Constraint | C-06 | No almacenar datos sensibles de pago de forma insegura | Vigente |
-| Concern | AC-01 | Disponibilidad real de espacios | Backlog arquitectónico |
-| Concern | AC-02 | Conflictos de reserva | Backlog arquitectónico |
-| Concern | AC-03 | Rapidez de búsqueda y reserva | Backlog arquitectónico |
-| Concern | AC-05 | Seguridad y confianza | Backlog arquitectónico |
+| Technical Story | TS01 | Control transaccional de reservas concurrentes | Backlog arquitectónico |
+| Technical Story | TS02 | Proyección de disponibilidad para búsqueda rápida | Backlog arquitectónico |
+| Technical Story | TS03 | Autenticación y autorización por roles | Backlog arquitectónico |
 
-El backlog se prioriza con base en riesgo arquitectónico. La doble reserva y la disponibilidad incorrecta tienen prioridad máxima porque rompen la promesa central del producto. La seguridad base también se atiende en esta iteración porque todos los flujos críticos dependen de identidad, autorización y separación de permisos entre conductor y propietario.
+El backlog se prioriza con base en riesgo arquitectónico. La doble reserva y la disponibilidad incorrecta tienen prioridad máxima porque rompen la promesa central del producto. La seguridad base también se atiende en esta iteración porque todos los flujos críticos dependen de identidad, autorización y separación de permisos entre conductor y propietario. Los atributos de calidad y restricciones quedan trazados mediante TS01, TS02 y TS03.
 
 #### 4.3.2.2. Establish Iteration Goal by Selecting Drivers
 
@@ -1855,9 +1839,9 @@ El backlog se prioriza con base en riesgo arquitectónico. La doble reserva y la
 6. El ciclo de reserva quede preparado para el pago mediante un estado `PendingPayment`, sin acoplar todavía el dominio al proveedor externo.
 7. El diseño mantenga bajo acoplamiento entre búsqueda, reserva, publicación, identidad y monetización.
 
-**Drivers primarios seleccionados:** US02, US05, QAS-02, C-03, AC-01, AC-02.
+**Drivers primarios seleccionados:** US02, US05, TS01, TS02, TS03.
 
-**Drivers secundarios:** US01, US06, US08, US10, US11, US14, QAS-01, QAS-03, QAS-04, AC-03, AC-05.
+**Drivers secundarios:** US01, US06, US08, US10, US11, US14.
 
 La iteración no intenta resolver todavía el detalle avanzado de proveedores externos, webhooks de pago, signed URLs de media o resiliencia contra terceros. Esos elementos quedan para Iteration 3. Acá se define el núcleo interno que hace posible confiar en el estado de una reserva.
 
@@ -1867,15 +1851,15 @@ Elementos seleccionados para refinamiento:
 
 | Elemento | Motivo de refinamiento | Drivers relacionados |
 |---|---|---|
-| `Reservation Management Service` | Es el Core Domain y debe controlar creación, cancelación, extensión, estados y bloqueo de espacios. | US05, US06, US08, QAS-02, C-03, AC-02 |
-| `Parking Discovery Service` | Debe responder búsquedas rápidas usando disponibilidad visible y filtros sin modificar el estado real de reservas. | US01, US02, QAS-01, AC-03 |
-| `Parking Supply & Monetization Service` | Define horarios, precios, habilitación y deshabilitación de espacios que afectan la disponibilidad base. | US10, US11, AC-01 |
-| `Payment Authorization Boundary` | Representa el punto de integración interno entre una reserva retenida y el flujo de pago, sin definir todavía provider, webhook o reembolso. | US14, C-06 |
-| `User & Identity Service` | Debe autenticar usuarios, emitir tokens y separar permisos de conductor y propietario. | QAS-04, AC-05, C-06 |
-| `Availability Cache` | Debe acelerar lecturas frecuentes de disponibilidad sin reemplazar a la base de datos relacional. | US02, QAS-01, QAS-03 |
-| `Main Relational Database` | Debe garantizar consistencia fuerte en reservas mediante transacciones, locks e índices. | QAS-02, C-03, AC-02 |
-| `Internal Domain Event Bus` | Debe propagar cambios de disponibilidad y reserva sin acoplar directamente todos los servicios. | US06, US08, US11, QAS-03 |
-| `API Gateway / Backend API` | Debe validar tokens, aplicar autorización básica y enrutar operaciones críticas al servicio correcto. | QAS-04, AC-05 |
+| `Reservation Management Service` | Es el Core Domain y debe controlar creación, cancelación, extensión, estados y bloqueo de espacios. | US05, US06, US08, TS01 |
+| `Parking Discovery Service` | Debe responder búsquedas rápidas usando disponibilidad visible y filtros sin modificar el estado real de reservas. | US01, US02, TS02 |
+| `Parking Supply & Monetization Service` | Define horarios, precios, habilitación y deshabilitación de espacios que afectan la disponibilidad base. | US10, US11, TS02 |
+| `Payment Authorization Boundary` | Representa el punto de integración interno entre una reserva retenida y el flujo de pago, sin definir todavía provider, webhook o reembolso. | US14 |
+| `User & Identity Service` | Debe autenticar usuarios, emitir tokens y separar permisos de conductor y propietario. | TS03 |
+| `Availability Cache` | Debe acelerar lecturas frecuentes de disponibilidad sin reemplazar a la base de datos relacional. | US02, TS02 |
+| `Main Relational Database` | Debe garantizar consistencia fuerte en reservas mediante transacciones, locks e índices. | TS01 |
+| `Internal Domain Event Bus` | Debe propagar cambios de disponibilidad y reserva sin acoplar directamente todos los servicios. | US06, US08, US11, TS02 |
+| `API Gateway / Backend API` | Debe validar tokens, aplicar autorización básica y enrutar operaciones críticas al servicio correcto. | TS03 |
 
 El refinamiento mantiene el enfoque de backend modular. No se separan microservicios independientes todavía porque el riesgo principal no es despliegue distribuido, sino consistencia de reglas de negocio. Separar demasiado pronto aumentaría complejidad transaccional sin aportar valor al MVP.
 
@@ -1883,17 +1867,17 @@ El refinamiento mantiene el enfoque de backend modular. No se separan microservi
 
 | Driver | Design Concept / Pattern | Justificación |
 |---|---|---|
-| QAS-02, C-03 | **Transaction Script + ACID Transaction Boundary** en `ReservationService` | La creación, cancelación y extensión de reservas deben ejecutarse como unidad atómica. |
-| QAS-02, AC-02 | **Pessimistic Locking** con `SELECT ... FOR UPDATE` sobre disponibilidad o slot del espacio | Evita que dos solicitudes concurrentes confirmen el mismo espacio y horario. |
-| US02, QAS-01 | **CQRS ligero** para separar lectura de disponibilidad visible y escritura transaccional de reservas | La búsqueda puede ser optimizada sin comprometer la consistencia del comando de reserva. |
-| US02, QAS-03 | **Cache-Aside + Event-Driven Cache Invalidation** | Redis acelera consultas, pero se invalida mediante eventos de dominio después de cambios relevantes. |
-| US06, US08, US11 | **Domain Events** (`ReservationConfirmed`, `ReservationCancelled`, `ReservationExtended`, `SpaceAvailabilityChanged`) | Propagan cambios de estado sin acoplar directamente Discovery, Reservation y Supply. |
-| US14, C-06 | **Payment Authorization Boundary** + estado `PendingPayment` | La reserva puede retener disponibilidad mientras espera pago, sin implementar todavía webhooks ni adapters externos. |
-| QAS-04, AC-05 | **JWT Authentication + Role-Based Access Control** | Separa acciones de conductor, propietario y administrador. |
-| QAS-04 | **Ownership Authorization Checks** | Un propietario sólo modifica sus espacios y un conductor sólo gestiona sus reservas. |
-| QAS-01 | **Database Indexing Strategy** sobre ubicación, estado, precio, horario y fechas de reserva | Reduce tiempos de respuesta en búsquedas y validaciones de solapamiento. |
-| US05, US08 | **Command Pattern** para operaciones de reserva | Cada operación crítica se encapsula como comando validable y auditable. |
-| QAS-03 | **Graceful Degradation** de búsqueda | Si la cache falla, Discovery consulta la base de datos con menor rendimiento pero sin romper el flujo. |
+| TS01, US05 | **Transaction Script + ACID Transaction Boundary** en `ReservationService` | La creación, cancelación y extensión de reservas deben ejecutarse como unidad atómica. |
+| TS01 | **Pessimistic Locking** con `SELECT ... FOR UPDATE` sobre disponibilidad o slot del espacio | Evita que dos solicitudes concurrentes confirmen el mismo espacio y horario. |
+| TS02, US02 | **CQRS ligero** para separar lectura de disponibilidad visible y escritura transaccional de reservas | La búsqueda puede ser optimizada sin comprometer la consistencia del comando de reserva. |
+| TS02, US02 | **Cache-Aside + Event-Driven Cache Invalidation** | Redis acelera consultas, pero se invalida mediante eventos de dominio después de cambios relevantes. |
+| TS02, US06, US08, US11 | **Domain Events** (`ReservationConfirmed`, `ReservationCancelled`, `ReservationExtended`, `SpaceAvailabilityChanged`) | Propagan cambios de estado sin acoplar directamente Discovery, Reservation y Supply. |
+| US14 | **Payment Authorization Boundary** + estado `PendingPayment` | La reserva puede retener disponibilidad mientras espera pago, sin implementar todavía webhooks ni adapters externos. |
+| TS03 | **JWT Authentication + Role-Based Access Control** | Separa acciones de conductor, propietario y administrador. |
+| TS03 | **Ownership Authorization Checks** | Un propietario sólo modifica sus espacios y un conductor sólo gestiona sus reservas. |
+| TS02, US01, US02 | **Database Indexing Strategy** sobre ubicación, estado, precio, horario y fechas de reserva | Reduce tiempos de respuesta en búsquedas y validaciones de solapamiento. |
+| TS01, US05, US08 | **Command Pattern** para operaciones de reserva | Cada operación crítica se encapsula como comando validable y auditable. |
+| TS02 | **Graceful Degradation** de búsqueda | Si la cache falla, Discovery consulta la base de datos con menor rendimiento pero sin romper el flujo. |
 
 La decisión clave es separar disponibilidad visible de disponibilidad confirmable. La primera sirve para orientar al conductor en la búsqueda; la segunda sólo se decide dentro del `Reservation Management Service` usando la base de datos relacional como fuente de verdad. Esta separación evita el error típico de arquitecturas flojas: creer que lo mostrado en cache ya es una reserva garantizada.
 
@@ -1902,68 +1886,68 @@ La decisión clave es separar disponibilidad visible de disponibilidad confirmab
 | Elemento instanciado | Responsabilidad asignada | Interfaz / contrato |
 |---|---|---|
 | `ReservationController` | Exponer comandos de reserva, cancelación, extensión e historial. | `POST /reservations`, `PATCH /reservations/{id}/cancel`, `PATCH /reservations/{id}/extend`, `GET /reservations/{id}` |
-| `ReservationService` | Orquestar validaciones, abrir transacción, bloquear disponibilidad, persistir estado y emitir eventos. | `create(command)`, `cancel(reservationId, actor)`, `extend(command)` |
-| `AvailabilityPolicy` | Validar solapamientos de horarios, duración permitida y reglas de cancelación/extensión. | `canReserve(spaceId, start, end)`, `canExtend(reservationId, newEnd)` |
-| `ReservationRepository` | Acceder a reservas activas y aplicar locks transaccionales. | `findOverlappingForUpdate(spaceId, start, end)`, `save(reservation)` |
-| `AvailabilityRepository` | Bloquear filas de disponibilidad base y actualizar estado transaccional. | `lockSlot(spaceId, start, end)`, `markReserved(...)`, `markReleased(...)` |
-| `ParkingDiscoveryService` | Resolver búsquedas, filtros y detalle usando proyección de disponibilidad visible. | `GET /parking-spaces/search`, `GET /parking-spaces/{id}` |
-| `AvailabilityProjectionUpdater` | Consumir eventos de dominio y actualizar Redis. | Subscriber de `ReservationConfirmed`, `ReservationCancelled`, `ReservationExtended`, `SpaceAvailabilityChanged` |
+| `ReservationService` | Orquestar validaciones, abrir transacción, bloquear disponibilidad, persistir estado y emitir eventos para TS01. | `create(command)`, `cancel(reservationId, actor)`, `extend(command)` |
+| `AvailabilityPolicy` | Validar solapamientos de horarios, duración permitida y reglas de cancelación/extensión para TS01. | `canReserve(spaceId, start, end)`, `canExtend(reservationId, newEnd)` |
+| `ReservationRepository` | Acceder a reservas activas y aplicar locks transaccionales para TS01. | `findOverlappingForUpdate(spaceId, start, end)`, `save(reservation)` |
+| `AvailabilityRepository` | Bloquear filas de disponibilidad base y actualizar estado transaccional para TS01. | `lockSlot(spaceId, start, end)`, `markReserved(...)`, `markReleased(...)` |
+| `ParkingDiscoveryService` | Resolver búsquedas, filtros y detalle usando proyección de disponibilidad visible para TS02. | `GET /parking-spaces/search`, `GET /parking-spaces/{id}` |
+| `AvailabilityProjectionUpdater` | Consumir eventos de dominio y actualizar Redis para TS02. | Subscriber de `ReservationConfirmed`, `ReservationCancelled`, `ReservationExtended`, `SpaceAvailabilityChanged` |
 | `PaymentAuthorizationPort` | Exponer un contrato interno para solicitar autorización de pago antes de confirmar definitivamente una reserva. | `authorize(reservationId, amount, driverId)`, `markPaymentApproved(reservationId)`, `markPaymentRejected(reservationId)` |
-| `AvailabilityCache` | Mantener claves de disponibilidad visible por espacio, zona y rango horario. | `availability:{spaceId}:{date}`, `search:{geoHash}:{date}:{hour}` |
-| `IdentityService` | Emitir JWT y proveer datos de rol/perfil. | `POST /auth/login`, `POST /auth/register`, `GET /me` |
-| `AuthorizationMiddleware` | Validar token, rol y ownership antes de ejecutar operaciones críticas. | Middleware en API Gateway / Backend API |
+| `AvailabilityCache` | Mantener claves de disponibilidad visible por espacio, zona y rango horario para TS02. | `availability:{spaceId}:{date}`, `search:{geoHash}:{date}:{hour}` |
+| `IdentityService` | Emitir JWT y proveer datos de rol/perfil para TS03. | `POST /auth/login`, `POST /auth/register`, `GET /me` |
+| `AuthorizationMiddleware` | Validar token, rol y ownership antes de ejecutar operaciones críticas para TS03. | Middleware en API Gateway / Backend API |
 
 Modelo de datos refinado:
 
 | Tabla / estructura | Campos relevantes | Decisión de diseño |
 |---|---|---|
-| `RESERVATIONS` | `reservation_id`, `driver_id`, `space_id`, `start_datetime`, `end_datetime`, `status`, `version`, `created_at` | Estados controlados por `ReservationService`; índice por `space_id`, `start_datetime`, `end_datetime`, `status`. |
-| `AVAILABILITY` | `availability_id`, `space_id`, `day_of_week`, `start_time`, `end_time`, `status`, `version` | Fuente de disponibilidad base configurada por propietario. |
-| `AVAILABILITY_LOCKS` | `lock_id`, `space_id`, `start_datetime`, `end_datetime`, `reservation_id`, `expires_at` | Soporte para bloqueo temporal o confirmación transaccional del espacio. |
+| `RESERVATIONS` | `reservation_id`, `driver_id`, `space_id`, `start_datetime`, `end_datetime`, `status`, `version`, `created_at` | Estados controlados por `ReservationService`; índice por `space_id`, `start_datetime`, `end_datetime`, `status` para TS01. |
+| `AVAILABILITY` | `availability_id`, `space_id`, `day_of_week`, `start_time`, `end_time`, `status`, `version` | Fuente de disponibilidad base configurada por propietario y entrada para TS02. |
+| `AVAILABILITY_LOCKS` | `lock_id`, `space_id`, `start_datetime`, `end_datetime`, `reservation_id`, `expires_at` | Soporte para bloqueo temporal o confirmación transaccional del espacio en TS01. |
 | `PAYMENT_AUTHORIZATIONS` | `authorization_id`, `reservation_id`, `amount`, `status`, `requested_at`, `expires_at` | Registro mínimo para enlazar reserva y pago; provider, webhook e idempotencia se refinan en Iteration 3. |
-| `USERS` | `user_id`, `email`, `password_hash`, `role`, `status` | Separación explícita de roles `DRIVER`, `OWNER` y `ADMIN`. |
+| `USERS` | `user_id`, `email`, `password_hash`, `role`, `status` | Separación explícita de roles `DRIVER`, `OWNER` y `ADMIN` para TS03. |
 
 Interfaces de eventos:
 
-| Evento | Productor | Consumidores | Payload mínimo |
+| Evento | Productor | Consumidores | Payload mínimo / trazabilidad |
 |---|---|---|---|
-| `ReservationConfirmed` | `ReservationService` | `AvailabilityProjectionUpdater`, `NotificationService` | `reservationId`, `spaceId`, `driverId`, `start`, `end`, `occurredAt` |
+| `ReservationConfirmed` | `ReservationService` | `AvailabilityProjectionUpdater`, `NotificationService` | `reservationId`, `spaceId`, `driverId`, `start`, `end`, `occurredAt`; traza TS01/TS02 |
 | `ReservationPaymentRequested` | `ReservationService` | `PaymentAuthorizationPort`, `ParkingSupplyService` | `reservationId`, `driverId`, `amount`, `expiresAt`, `occurredAt` |
-| `ReservationCancelled` | `ReservationService` | `AvailabilityProjectionUpdater`, `ParkingSupplyService` | `reservationId`, `spaceId`, `reason`, `occurredAt` |
-| `ReservationExtended` | `ReservationService` | `AvailabilityProjectionUpdater`, `ParkingSupplyService` | `reservationId`, `previousEnd`, `newEnd`, `occurredAt` |
-| `SpaceAvailabilityChanged` | `ParkingSupplyService` | `AvailabilityProjectionUpdater`, `ParkingDiscoveryService` | `spaceId`, `status`, `effectiveFrom`, `occurredAt` |
+| `ReservationCancelled` | `ReservationService` | `AvailabilityProjectionUpdater`, `ParkingSupplyService` | `reservationId`, `spaceId`, `reason`, `occurredAt`; traza TS02 |
+| `ReservationExtended` | `ReservationService` | `AvailabilityProjectionUpdater`, `ParkingSupplyService` | `reservationId`, `previousEnd`, `newEnd`, `occurredAt`; traza TS01/TS02 |
+| `SpaceAvailabilityChanged` | `ParkingSupplyService` | `AvailabilityProjectionUpdater`, `ParkingDiscoveryService` | `spaceId`, `status`, `effectiveFrom`, `occurredAt`; traza TS02 |
 
 #### 4.3.2.6. Sketch Views (C4 & UML) and Record Design Decisions
 
 Las vistas de esta iteración mantienen el mismo nivel de detalle usado en Iteration 3: una vista C4 de containers, dos vistas dinámicas para flujos críticos, una vista de componentes y una vista UML de clases/estado. Las imágenes fueron generadas a partir de modelos C4/Structurizr y PlantUML para evitar que el informe muestre código de diagramas como artefacto final.
 
-##### 4.3.2.6.1. Container View — Critical Quality Attributes Refinement
+##### 4.3.2.6.1. Container View — Technical Stories Refinement
 
-Esta vista muestra cómo `Reservation Management Service`, `Parking Discovery Service`, `Availability Cache`, `Main Relational Database` y `Internal Domain Event Bus` colaboran para cumplir los drivers de disponibilidad, consistencia y seguridad.
+Esta vista muestra cómo `Reservation Management Service`, `Parking Discovery Service`, `Availability Cache`, `Main Relational Database` y `Internal Domain Event Bus` colaboran para cumplir TS01, TS02 y TS03.
 
 ![Iteration 2 Container View](assets/iter2/ContainersIter2.png)
 
 ##### 4.3.2.6.2. Dynamic View — Reserva con control de concurrencia y retención de pago
 
-Modela el flujo principal de una reserva: validación de JWT, bloqueo transaccional de disponibilidad, creación del estado `PendingPayment`, registro de autorización de pago y publicación del evento interno. La cache se actualiza después del commit; por lo tanto, nunca decide por sí sola si una reserva queda confirmada.
+Modela el flujo principal de una reserva: validación de JWT, bloqueo transaccional de disponibilidad, creación del estado `PendingPayment`, registro de autorización de pago y publicación del evento interno. Este flujo atiende TS01 y usa TS03 para proteger la operación; la cache se actualiza después del commit, por lo tanto nunca decide por sí sola si una reserva queda confirmada.
 
 ![Reservation Concurrency Flow](assets/iter2/ReservationConcurrencyFlow.png)
 
 ##### 4.3.2.6.3. Dynamic View — Actualización de disponibilidad visible
 
-Modela cómo los cambios de reserva o disponibilidad se propagan mediante eventos internos hacia la proyección de lectura usada por `Parking Discovery Service`. Esta vista justifica la separación entre disponibilidad visible y disponibilidad confirmable.
+Modela cómo los cambios de reserva o disponibilidad se propagan mediante eventos internos hacia la proyección de lectura usada por `Parking Discovery Service`. Esta vista atiende TS02 y justifica la separación entre disponibilidad visible y disponibilidad confirmable.
 
 ![Availability Projection Flow](assets/iter2/AvailabilityProjectionFlow.png)
 
 ##### 4.3.2.6.4. Component View — Reservation Management Context
 
-Vista los componentes internos de `Reservation Management Service`, mostrando cómo se separan el controlador, la política de disponibilidad, los repositorios transaccionales, el puerto de autorización de pago y el publicador de eventos de dominio.
+Vista de los componentes internos de `Reservation Management Service`, mostrando cómo se separan el controlador, la política de disponibilidad, los repositorios transaccionales, el puerto de autorización de pago y el publicador de eventos de dominio para soportar TS01 y TS02.
 
 ![Reservation Management Components](assets/iter2/ReservationComponents.png)
 
 ##### 4.3.2.6.5. Class Diagram — Reservation and Availability Rules
 
-Vista de clases del modelo de reserva y disponibilidad. Explicita los estados `PendingPayment`, `Confirmed`, `Cancelled`, `Extended` y los objetos que participan en la validación de solapamientos y autorización de pago.
+Vista de clases del modelo de reserva y disponibilidad. Explicita los estados `PendingPayment`, `Confirmed`, `Cancelled`, `Extended` y los objetos que participan en TS01 mediante validación de solapamientos y autorización de pago.
 
 ![Reservation Domain Model](assets/iter2/ReservationDomainModel.png)
 
@@ -1975,14 +1959,14 @@ La máquina de estados complementa el diagrama de clases y evita transiciones am
 
 | ADR | Decisión | Status | Driver | Razonamiento |
 |---|---|---|---|---|
-| ADR-201 | La base de datos relacional es la fuente de verdad para disponibilidad confirmable y reservas. | Accepted | QAS-02, C-03 | La cache puede estar desactualizada; la confirmación exige consistencia fuerte. |
-| ADR-202 | `ReservationService` ejecuta creación, cancelación y extensión dentro de transacciones ACID. | Accepted | US05, US06, US08 | Evita estados parciales y asegura atomicidad. |
-| ADR-203 | Se usa locking pesimista (`SELECT ... FOR UPDATE`) durante la validación de solapamientos. | Accepted | AC-02, QAS-02 | Reduce riesgo de doble reserva bajo concurrencia. |
-| ADR-204 | `ParkingDiscoveryService` usa Redis como proyección de lectura, no como fuente de verdad. | Accepted | US02, QAS-01 | Mejora velocidad sin sacrificar consistencia de comandos. |
-| ADR-205 | Cambios de reserva y disponibilidad publican eventos de dominio internos. | Accepted | US06, US08, US11 | Desacopla actualización de búsqueda, notificaciones y vistas de propietario. |
-| ADR-206 | El API Gateway valida JWT y cada servicio aplica checks de ownership. | Accepted | QAS-04, AC-05 | Evita que usuarios operen reservas o espacios ajenos. |
-| ADR-207 | Las búsquedas se optimizan con índices por ubicación, estado, precio y rangos horarios. | Accepted | QAS-01, AC-03 | Reduce latencia de búsqueda para usuarios móviles. |
-| ADR-208 | La reserva incorpora estado `PendingPayment` y contrato `PaymentAuthorizationPort`, pero deja webhooks, idempotencia y providers para Iteration 3. | Accepted | US14, C-06 | Permite afirmar que pago queda parcialmente atendido sin sobrediseñar la integración externa. |
+| ADR-201 | La base de datos relacional es la fuente de verdad para disponibilidad confirmable y reservas. | Accepted | TS01, TS02 | La cache puede estar desactualizada; la confirmación exige consistencia fuerte. |
+| ADR-202 | `ReservationService` ejecuta creación, cancelación y extensión dentro de transacciones ACID. | Accepted | TS01, US05, US06, US08 | Evita estados parciales y asegura atomicidad. |
+| ADR-203 | Se usa locking pesimista (`SELECT ... FOR UPDATE`) durante la validación de solapamientos. | Accepted | TS01 | Reduce riesgo de doble reserva bajo concurrencia. |
+| ADR-204 | `ParkingDiscoveryService` usa Redis como proyección de lectura, no como fuente de verdad. | Accepted | TS02, US02 | Mejora velocidad sin sacrificar consistencia de comandos. |
+| ADR-205 | Cambios de reserva y disponibilidad publican eventos de dominio internos. | Accepted | TS02, US06, US08, US11 | Desacopla actualización de búsqueda, notificaciones y vistas de propietario. |
+| ADR-206 | El API Gateway valida JWT y cada servicio aplica checks de ownership. | Accepted | TS03 | Evita que usuarios operen reservas o espacios ajenos. |
+| ADR-207 | Las búsquedas se optimizan con índices por ubicación, estado, precio y rangos horarios. | Accepted | TS02, US01, US02 | Reduce latencia de búsqueda para usuarios móviles. |
+| ADR-208 | La reserva incorpora estado `PendingPayment` y contrato `PaymentAuthorizationPort`, pero deja webhooks, idempotencia y providers para Iteration 3. | Accepted | US14 | Permite afirmar que pago queda parcialmente atendido sin sobrediseñar la integración externa. |
 
 #### 4.3.2.7. Analysis of Current Design and Review Iteration Goal (Kanban Board)
 
@@ -1996,15 +1980,9 @@ La máquina de estados complementa el diagrama de clases y evita transiciones am
 | US10 Configurar horarios/precio | Backlog | **Partially addressed** | `ParkingSupplyService` actualiza disponibilidad base; monetización profunda queda en Iteration 3. |
 | US11 Habilitar/deshabilitar espacio | Backlog | **Addressed** | Evento `SpaceAvailabilityChanged` actualiza proyección de búsqueda. |
 | US14 Pago en línea | Backlog | **Partially addressed** | Estado `PendingPayment` + `PaymentAuthorizationPort`; webhooks e idempotencia quedan en Iteration 3. |
-| QAS-01 Performance búsqueda | Backlog | **Addressed** | CQRS ligero, Redis e índices de consulta. |
-| QAS-02 Consistencia reserva | Backlog | **Addressed** | ADR-201, ADR-202 y ADR-203. |
-| QAS-03 Disponibilidad plataforma | Backlog | **Partially addressed** | Graceful degradation de cache; resiliencia ante terceros queda en Iteration 3. |
-| QAS-04 Seguridad | Backlog | **Addressed** | JWT, RBAC y ownership checks. |
-| C-03 Evitar doble reserva | Vigente | **Addressed** | Lock transaccional + validación de solapamientos. |
-| AC-01 Disponibilidad real | Backlog | **Addressed** | Separación entre disponibilidad visible y confirmable. |
-| AC-02 Conflictos de reserva | Backlog | **Addressed** | Control de concurrencia en `ReservationService`. |
-| AC-03 Rapidez de búsqueda | Backlog | **Addressed** | Cache + modelo de lectura optimizado. |
-| AC-05 Seguridad y confianza | Backlog | **Addressed** | Autenticación, autorización y separación de roles. |
+| TS01 Control transaccional de reservas concurrentes | Backlog arquitectónico | **Addressed** | ADR-201, ADR-202 y ADR-203; lock transaccional + validación de solapamientos. |
+| TS02 Proyección de disponibilidad para búsqueda rápida | Backlog arquitectónico | **Addressed** | `AvailabilityCache`, CQRS ligero, eventos de dominio e índices de consulta. |
+| TS03 Autenticación y autorización por roles | Backlog arquitectónico | **Addressed** | JWT, RBAC y ownership checks (`ADR-206`). |
 
 **Kanban Board de la iteración:**
 
