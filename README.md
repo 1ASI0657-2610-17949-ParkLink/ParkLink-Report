@@ -933,13 +933,77 @@ El Product Backlog se prioriza según el valor que cada User Story aporta al neg
 
 ### 4.1.1. Principles Statements
 
-_Pendiente de completar._
+A continuación se presentan los principios arquitectónicos que guían el diseño de ParkLink. Estos principios reflejan las decisiones estratégicas del equipo para garantizar una solución confiable, escalable y centrada en el usuario.
+
+| # | Principio | Descripción | Justificación |
+|---|-----------|-------------|---------------|
+| P-01 | Separación de responsabilidades por dominio | El sistema se estructura mediante bounded contexts explícitos: User & Identity, Parking Discovery, Reservation Management y Parking Supply & Monetization. Cada contexto encapsula sus propias reglas de negocio y no comparte lógica con los demás. | ParkLink conecta conductores con propietarios mediante flujos distintos: búsqueda, reserva, publicación y pago. Mezclar estas responsabilidades en un único módulo generaría alto acoplamiento, dificultaría el mantenimiento y aumentaría el riesgo de errores transversales. |
+| P-02 | Consistencia fuerte en operaciones críticas | Las operaciones de reserva, pago, cancelación y extensión se ejecutan dentro de transacciones ACID sobre la base de datos relacional. La base de datos es siempre la fuente de verdad para el estado de una reserva o pago. | Una reserva duplicada o un pago procesado dos veces rompen la confianza del usuario y generan pérdidas económicas. La consistencia fuerte en el Core Domain no puede sacrificarse por conveniencia de rendimiento. |
+| P-03 | Disponibilidad visible separada de disponibilidad confirmable | La búsqueda de estacionamientos consulta una proyección de disponibilidad en cache (Redis). La confirmación real de disponibilidad sólo ocurre dentro del Reservation Management Service mediante bloqueo transaccional sobre la base de datos. | Mostrar disponibilidad al conductor no equivale a garantizarla. Si el cache fuera la fuente de verdad, dos conductores podrían reservar el mismo espacio simultáneamente. Esta separación previene el error más crítico del dominio. |
+| P-04 | Seguridad por diseño | La autenticación con JWT, la autorización por roles y los checks de ownership son obligatorios en todas las operaciones críticas. Ningún recurso sensible es accesible sin validación explícita de identidad y permisos. | ParkLink maneja datos personales, pagos y acceso físico a espacios. La seguridad no puede ser una capa añadida a posteriori; debe estar integrada desde el diseño de cada endpoint y operación. |
+| P-05 | Desacoplamiento de proveedores externos | El dominio depende de interfaces (ports), no de SDKs de proveedores concretos. Los adapters encapsulan la comunicación con Stripe, MercadoPago, Google Maps, Firebase Cloud Messaging y SendGrid. | Los proveedores externos cambian, tienen interrupciones o son reemplazados. Si el dominio dependiera directamente de un SDK, cualquier cambio de proveedor implicaría modificar lógica de negocio. El Adapter Pattern aísla ese riesgo. |
+| P-06 | Resiliencia ante fallos de terceros | Toda llamada a un proveedor externo está envuelta en un Circuit Breaker con retry y backoff exponencial. El sistema degrada su servicio de forma controlada sin propagar el fallo hacia el usuario. | ParkLink depende de mapas, pagos y notificaciones para operar. Si cualquiera de estos servicios falla y no existe aislamiento, el fallo se propaga y la plataforma deja de funcionar completamente, afectando usuarios que no están relacionados con la operación fallida. |
+| P-07 | Trazabilidad de operaciones financieras y críticas | Las reservas, cancelaciones, pagos y reembolsos quedan registrados en una tabla de auditoría append-only. Ningún registro de auditoría puede ser modificado ni eliminado. | La trazabilidad es un requisito regulatorio y de confianza. Los usuarios deben poder consultar el historial de sus transacciones y el equipo debe poder investigar incidentes sin depender de logs efímeros. |
+| P-08 | Modularidad orientada al crecimiento | La arquitectura se diseña como backend modular con bounded contexts bien definidos, de modo que cada módulo pueda extraerse como microservicio independiente cuando el volumen de operaciones lo justifique. | ParkLink inicia como MVP con carga moderada. Sobrediseñar microservicios desde el inicio añade complejidad innecesaria. Sin embargo, definir límites claros desde el principio permite escalar sin reescribir la arquitectura. |
 
 ---
 
-### 4.1.2. Approaches Statements Architectural Styles & Patterns
+### 4.1.2. Approaches Statements – Architectural Styles & Patterns
 
-_Pendiente de completar._
+#### Enfoque Metodológico: Domain-Driven Design (DDD)
+
+Se adopta Domain-Driven Design (DDD) como metodología central para estructurar la lógica del negocio. DDD permite modelar el dominio de reserva y gestión de estacionamientos de forma explícita, separando responsabilidades en bounded contexts que reflejan los subdominios identificados en las Épicas del Product Backlog.
+
+**Bounded Contexts identificados:**
+
+| Bounded Context | Descripción | Épicas relacionadas |
+|----------------|-------------|---------------------|
+| User & Identity Context | Registro, autenticación JWT, gestión de roles y perfiles de conductor y propietario. | EP05 |
+| Parking Discovery Context | Búsqueda de espacios, visualización en mapa, filtros, disponibilidad visible y detalle de espacio. | EP01 |
+| Reservation Management Context | Ciclo de vida completo de reservas: creación, bloqueo, cancelación, extensión e historial. Core Domain del sistema. | EP02 |
+| Parking Supply & Monetization Context | Publicación de espacios, configuración de horarios y precios, pagos, reembolsos, comprobantes e ingresos del propietario. | EP03, EP04 |
+
+---
+
+#### Estilos Arquitectónicos
+
+**1. Arquitectura Modular por Bounded Contexts — Backend API**
+
+El backend sigue una arquitectura modular alineada a DDD estratégico. Cada bounded context se implementa como un módulo independiente con sus propias capas internas, expuesto a través de un API Gateway centralizado:
+
+| Capa | Responsabilidad |
+|------|----------------|
+| Capa de Presentación (Controllers) | Endpoints REST, validación de entrada, mapeo de DTOs |
+| Capa de Aplicación (Services / Use Cases) | Orquestación de casos de uso, transacciones, eventos |
+| Capa de Dominio (Domain Layer) | Entidades, aggregates, value objects, domain events |
+| Capa de Infraestructura (Infra Layer) | Repositorios, adapters externos, cache, ORM |
+
+**2. Arquitectura Hexagonal (Ports & Adapters)**
+
+Aplicada en la capa de dominio para desacoplar la lógica de negocio de los detalles de implementación. El dominio define interfaces (puertos) que son implementadas por adaptadores de infraestructura como `StripeAdapter`, `MercadoPagoAdapter`, `S3StorageAdapter`, `FCMAdapter` y `MapsAdapter`. Esto garantiza que un cambio de proveedor no afecte las reglas de negocio.
+
+**3. Arquitectura Event-Driven (EDA) — Comunicación entre Contextos**
+
+Los efectos secundarios de operaciones críticas (notificaciones, actualización de disponibilidad visible, sincronización de vistas del propietario) se propagan mediante eventos de dominio internos. El componente productor publica un evento como `ReservationConfirmed` o `SpaceAvailabilityChanged` que es consumido de forma asíncrona por los suscriptores correspondientes. Esto desacopla las operaciones principales de sus consecuencias secundarias.
+
+**4. CQRS Ligero — Separación de Lectura y Escritura**
+
+Se aplica CQRS de forma liviana en el Parking Discovery Context. Las búsquedas y consultas de disponibilidad consultan una proyección de lectura en Redis, mientras que los comandos de reserva, cancelación y extensión operan exclusivamente sobre la base de datos relacional como fuente de verdad. Esta separación optimiza la lectura sin comprometer la consistencia transaccional de los comandos.
+
+---
+
+#### Patrones Arquitectónicos
+
+| Patrón | Contexto de aplicación |
+|--------|------------------------|
+| Repository Pattern | Abstracción del acceso a MySQL para reservas, espacios, usuarios y pagos. Facilita testing y permite cambiar el motor de base de datos sin afectar el dominio. |
+| Adapter Pattern | Encapsula la comunicación con proveedores externos: Stripe, MercadoPago, Google Maps, Firebase Cloud Messaging, SendGrid y S3-compatible storage. El dominio depende de interfaces, no de SDKs concretos. |
+| Circuit Breaker | Envuelve todas las llamadas a proveedores externos. Abre el circuito ante fallos repetidos y ejecuta un fallback controlado, evitando la propagación del fallo hacia operaciones internas. |
+| CQRS | Separación de comandos (crear, cancelar, extender reserva) y consultas (buscar espacios, ver disponibilidad) para optimizar rendimiento de lectura en búsquedas frecuentes. |
+| Event Bus (Pub/Sub) | Publicación y suscripción de eventos de dominio para actualización de disponibilidad visible, notificaciones y sincronización de vistas de propietario, desacoplando contextos. |
+| Command Pattern | Encapsula operaciones críticas de reserva como comandos explícitos validables y auditables: `CreateReservationCommand`, `CancelReservationCommand`, `ExtendReservationCommand`. |
+| Idempotency Key Pattern | Cada solicitud de cobro incluye una clave de idempotencia (UUID v4) persistida junto a la transacción. Reintentos de red no generan dobles cobros. |
+| State Pattern | Controla las transiciones de estado de una reserva: `Requested → PendingPayment → Confirmed → Completed / Cancelled / Extended`. Evita transiciones inválidas. |
 
 ---
 
