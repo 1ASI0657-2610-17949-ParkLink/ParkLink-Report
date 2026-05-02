@@ -152,7 +152,7 @@ Los conductores no cuentan con información en tiempo real sobre la disponibilid
 #### - Who (¿A quiénes afecta?)
 - **Conductores urbanos**: Todos aquellos que utilizan vehículo para movilizarse daily en zonas de alta demanda
 - **Propietarios de estacionamientos no utilizados**: Personas o empresas con espacios disponibles que no tienen forma de monetizarlos eficientemente
-- **Ciudades en general**: El tráfico causedo por la búsqueda de estacionamiento afecta la movilidad urbana整体
+- **Ciudades en general**: El tráfico causedo por la búsqueda de estacionamiento afecta la movilidad urbana
 - **Comercios locales**: Los clientes potenciales pueden evitar zonas donde es difícil estacionar
 - **Medio ambiente**: El increase de emisiones afecta la calidad del aire urbano
 
