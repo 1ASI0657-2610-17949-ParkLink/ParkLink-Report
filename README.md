@@ -1872,7 +1872,84 @@ ParkLink aplica patrones **arquitectónicos**, **GoF** y **tácticos de DDD** de
 
 ### 4.1.7 Tactics
 
-_Pendiente de completar._
+Las **Tactics** arquitectónicas (Bass, Clements & Kazman — *Software Architecture in Practice*, 4ª ed.) son técnicas de diseño concretas que materializan un atributo de calidad específico. A diferencia de los patrones (que combinan varias tactics y resuelven problemas recurrentes a nivel estructural), una tactic es una decisión puntual que afecta a un único atributo: por ejemplo, "introducir cache" es una tactic de Performance, mientras que "CQRS" es un patrón que la incluye.
+
+ParkLink selecciona deliberadamente tactics para cada Quality Attribute Scenario (QAS) y Requisito No Funcional (RNF) declarado, junto con la decisión técnica concreta que evidencia su aplicación.
+
+#### 4.1.7.1. Performance Tactics
+
+| QAS sustentado | Tactic | Decisión concreta en ParkLink | Evidencia |
+|----------------|--------|--------------------------------|-----------|
+| QAS-01 (95% búsquedas ≤ 3s) | **Increase Computational Efficiency** — usar estructuras de datos óptimas | Índices geoespaciales en MySQL (`SPATIAL INDEX` sobre `latitude, longitude`) y B-Tree sobre `pricePerHour` y `status` | Schema 4.1.5 + ADR-201 |
+| QAS-01 | **Reduce Computational Overhead** — evitar cálculos costosos en cada request | Cache de disponibilidad proyectada en Redis (TTL 1h) consultada por Discovery Service en vez de recalcular intersecciones de horarios sobre MySQL | 4.1.3.5 Availability Projection Flow |
+| QAS-01 | **Introduce Concurrency** — paralelizar trabajo independiente | Connection pool MySQL (10 conexiones por servicio) + `Promise.all` para combinar resultados de Discovery + Maps en un solo response | Container Diagram 4.1.3.3 |
+| QAS-02 (reserva ≤ 5s, 0 dobles) | **Reduce Computational Overhead** | Pre-cálculo de `pricePerHour × duration` en `PriceCalculator` evitando JOIN adicional | 4.1.3.5 Reservation Domain |
+| RNF02 (lectura rápida) | **Maintain Multiple Copies of Data** | Proyección Redis = copia desnormalizada del estado de disponibilidad, asincrónicamente consistente con MySQL | DP-09 CQRS + ADR-202 |
+
+#### 4.1.7.2. Availability Tactics
+
+| QAS sustentado | Tactic | Decisión concreta | Evidencia |
+|----------------|--------|--------------------|-----------|
+| QAS-03 (99.5% mensual) | **Ping / Echo** — detección de fallos mediante health checks | Endpoint `/health` en cada microservicio; Render Health Check cada 30s; API Gateway agrega estado en `GET /health` | 5.3.1.5 Microservices Doc |
+| QAS-03 | **Exception Detection / Exception Handling** | `http-exception.filter.ts` centraliza captura de excepciones, devuelve formato uniforme y registra en logs | DP-04 Chain of Responsibility |
+| QAS-03 | **Heartbeat** — proceso monitorizado emite latido periódico | Render expone uptime; alertas configurables si `/health` cae > 1 min | Sección 5.3.1.6 Deployment |
+| RNF04 (resiliencia terceros) | **Retry** | `axios-retry` con backoff exponencial (3 intentos, 200ms→1.6s) en adapters de Stripe, Maps, FCM, SendGrid | ADR-305 Circuit Breaker + Retry |
+| RNF04 | **Circuit Breaker** | `opossum` envuelve cada adapter externo; abre tras 50% de fallos en 10 requests, half-open tras 30s | DP-15 Circuit Breaker + ADR-305 |
+| RNF04 | **Rollback / Fallback** | Si pago falla tras retries, reserva queda en `CANCELLED` y se libera el lock; cache Redis sirve respuesta last-known-good si Discovery cae | 4.1.3.5 State Machine Reservation |
+
+#### 4.1.7.3. Security Tactics
+
+| QAS sustentado | Tactic | Decisión concreta | Evidencia |
+|----------------|--------|--------------------|-----------|
+| QAS-04 (100% HTTPS, contraseñas cifradas) | **Authenticate Actors** | JWT firmado con HS256 + secret rotable de 256 bits; validación en cada request por `authGuard` middleware | TS03 + ADR-302 |
+| QAS-04 | **Authorize Actors** | RBAC con `requireRole(['DRIVER','OWNER','ADMIN'])`; rechazo 403 sin filtrar información de existencia del recurso | DP-04 + 5.3.1.5 |
+| QAS-04 | **Limit Exposure** — minimizar superficie de ataque | API Gateway como único punto de entrada; servicios internos no expuestos públicamente; CORS restringido a `arqsoft.vercel.app` | Container Diagram 4.1.3.3 |
+| QAS-04 | **Encrypt Data at Rest and in Transit** | TLS 1.3 en todas las conexiones (HTTPS Vercel + JDBC SSL Render); bcrypt factor 12 para `password_hash`; secretos en variables de entorno nunca en repo | ADR-301 bcrypt + 5.3.1.6 env vars |
+| QAS-04 | **Validate Input** — sanitizar y validar todo input externo | `class-validator` sobre DTOs; parámetros de query tipados; SQL via ORM parametrizado para prevenir injection | DTOs en 5.3.1.5 |
+| TS04 (auditoría) | **Maintain Audit Trail** | Tabla `audit_events` inmutable con `actor`, `action`, `entity`, `timestamp`; alimentada por listener de eventos de dominio | ADR-308 + 4.3.3 Iter 3 |
+
+#### 4.1.7.4. Modifiability Tactics
+
+| QAS sustentado | Tactic | Decisión concreta | Evidencia |
+|----------------|--------|--------------------|-----------|
+| QAS-07 (cambio impacta ≤ 2 módulos) | **Encapsulate** — ocultar detalles internos | Dominio expone solo aggregate roots (`Reservation`, `ParkingSpace`); estado interno modificable únicamente vía métodos del agregado | DP-12 Aggregate + 4.1.3.5 |
+| QAS-07 | **Use an Intermediary** — desacoplar componentes con un mediador | API Gateway como mediador entre clientes y servicios; Event Bus como mediador entre productores y consumidores de eventos | Container Diagram + DP-02 |
+| QAS-07 | **Restrict Dependencies** — limitar a qué puede acoplarse cada módulo | Hexagonal Ports & Adapters: dominio depende solo de interfaces, nunca de SDK concreto | 4.1.3.4 Component Diagrams |
+| QAS-07 | **Abstract Common Services** | `libs/common` con filters, interceptors, decorators reutilizables entre microservicios | Sección 4.1.3 ADD Iter 1 |
+| C-INT (multi-proveedor pagos) | **Hide Information** | Interfaz `PaymentProvider` oculta si el adapter usa Stripe o MercadoPago; el dominio solo conoce `authorize()` y `refund()` | DP-11 Adapter + 4.1.3.5 |
+
+#### 4.1.7.5. Scalability Tactics
+
+| QAS sustentado | Tactic | Decisión concreta | Evidencia |
+|----------------|--------|--------------------|-----------|
+| QAS-06 (crecimiento sin degradación) | **Maintain Multiple Copies of Computation** — replicar procesamiento | Servicios stateless: cada microservicio puede correr en N réplicas tras load balancer sin sticky session | Container Diagram 4.1.3.3 |
+| QAS-06 | **Manage Resources** | Connection pool acotado por servicio + Render autoscaling vertical (free → standard cuando el tráfico lo justifique) | Sección 5.3.1.6 |
+| QAS-06 | **Maintain Multiple Copies of Data** | Sharding futuro de `parking_spaces` por región geográfica cuando el volumen lo exija (documentado, no implementado) | ADR-203 Future Sharding |
+
+#### 4.1.7.6. Interoperability Tactics
+
+| QAS sustentado | Tactic | Decisión concreta | Evidencia |
+|----------------|--------|--------------------|-----------|
+| QAS-08 (REST APIs externas) | **Orchestrate** — coordinar interacción de servicios para cumplir un fin común | API Gateway orquesta llamadas a Discovery + Maps + Reservation en flujos compuestos sin que el cliente conozca la topología | Container Diagram 4.1.3.3 |
+| QAS-08 | **Tailor Interface** — adaptar interfaz a cada consumidor | Backend For Frontend ligero: Gateway expone endpoints orientados al caso de uso (`GET /parking-spaces/search`) en vez de exponer servicios crudos | DP-11 Adapter aplicado a Gateway |
+| QAS-08 | **Manage Interfaces** — versionado explícito de APIs | Prefijo `/api/v1` en todas las rutas; cambios breaking suben a `/api/v2` manteniendo v1 hasta deprecación | 5.3.1.5 Endpoints |
+
+#### 4.1.7.7. Trazabilidad Tactic → Driver → Evidencia
+
+La selección de tactics es resultado directo del análisis de drivers del capítulo. Esta matriz cruzada permite a un auditor verificar que cada driver crítico está cubierto por al menos una tactic concreta:
+
+| Driver | Tactics aplicadas | Patrones que las consolidan |
+|--------|--------------------|------------------------------|
+| QAS-01 Performance búsqueda | Increase Comp. Efficiency, Reduce Overhead, Introduce Concurrency, Maintain Multiple Copies | DP-01, DP-09 |
+| QAS-02 Consistency reserva | Reduce Overhead, Locking | DP-07, DP-10, DP-12 |
+| QAS-03 Availability | Ping/Echo, Heartbeat, Exception Handling | DP-15 |
+| QAS-04 Security | Authenticate, Authorize, Limit Exposure, Encrypt, Validate Input, Audit Trail | DP-04, DP-08 |
+| QAS-06 Scalability | Multiple Copies of Computation, Manage Resources | — |
+| QAS-07 Modifiability | Encapsulate, Use Intermediary, Restrict Dependencies, Abstract Common Services, Hide Information | DP-02, DP-11, DP-12 |
+| QAS-08 Interoperability | Orchestrate, Tailor Interface, Manage Interfaces | DP-11 |
+| RNF04 Resiliencia | Retry, Circuit Breaker, Fallback | DP-08, DP-15 |
+| TS04 Auditoría | Maintain Audit Trail | DP-02 |
+| C-INT Multi-proveedor | Hide Information, Use Intermediary | DP-11, DP-03 |
 
 ---
 
