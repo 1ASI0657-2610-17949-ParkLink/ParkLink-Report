@@ -2939,13 +2939,177 @@ CircuitBreakerDecorator o-- NotificationProvider : decorates
 
 ## 5.1. Testing Suites & General Patterns
 
+En esta sección se documentan los criterios de validación técnica, patrones generales y estructura de implementación considerados para ParkLink. La solución se basa en una plataforma digital orientada a conectar conductores urbanos con propietarios de estacionamientos, permitiendo la búsqueda, reserva, publicación y futura monetización de espacios disponibles.
+
+La validación técnica de ParkLink debe mantener coherencia con los bounded contexts definidos en el diseño arquitectónico: User & Identity, Parking Discovery, Reservation Management y Parking Supply & Monetization. Estos contextos permiten organizar la solución de acuerdo con las principales responsabilidades del sistema y facilitan su evolución progresiva.
+
+El objetivo principal de esta sección es describir cómo el backend y sus módulos pueden ser validados desde una perspectiva funcional y arquitectónica, sin depender únicamente de evidencias visuales. Para ello, se consideran los endpoints, módulos, responsabilidades, reglas de negocio y patrones de diseño definidos previamente en el informe.
+
+### Objetivo de validación
+
+Validar que la estructura inicial de ParkLink permita soportar las funcionalidades principales del producto: registro e inicio de sesión de usuarios, búsqueda de estacionamientos, gestión de reservas, publicación de espacios y soporte futuro para pagos y notificaciones.
+
+### Métricas generales de validación
+
+| Métrica | Descripción | Valor esperado |
+|---|---|---:|
+| Bounded contexts definidos | Contextos principales del dominio documentados | 4 |
+| Segmentos objetivo considerados | Usuarios principales del producto | 2 |
+| User Stories documentadas | Historias funcionales del Product Backlog | 20 |
+| Technical Stories documentadas | Historias técnicas de soporte arquitectónico | 6 |
+| Épicas definidas | Agrupaciones funcionales del producto | 6 |
+| Módulos funcionales principales | Áreas que sostienen la solución | 5 o más |
+
+---
 ### 5.1.1 Backend Application Core Testing Suite
+
+La suite de pruebas del backend debe enfocarse en validar los módulos principales del sistema ParkLink, especialmente aquellos relacionados con autenticación, disponibilidad, reservas y publicación de espacios. Estas pruebas permiten verificar que el sistema cumpla con las reglas de negocio definidas en las User Stories y Technical Stories.
+
+El primer módulo crítico corresponde a User & Identity, ya que permite registrar conductores y propietarios, así como iniciar sesión. Este módulo se relaciona directamente con las historias US17, US18 y US19. A partir de este contexto, los demás módulos pueden aplicar autorización por roles y control de acceso.
+
+### Alcance funcional de pruebas
+
+| Módulo | Funcionalidad | User Story relacionada | Validación esperada |
+|---|---|---|---|
+| User & Identity | Registro de conductor | US17 | Crear cuenta de conductor correctamente |
+| User & Identity | Registro de propietario | US18 | Crear cuenta de propietario correctamente |
+| User & Identity | Inicio de sesión | US19 | Autenticar usuario registrado |
+| Parking Discovery | Búsqueda por ubicación | US01 | Mostrar espacios cercanos al destino |
+| Parking Discovery | Disponibilidad en tiempo real | US02 | Mostrar estado actualizado del espacio |
+| Reservation Management | Reserva de espacio | US05 | Crear reserva sin duplicidad |
+| Reservation Management | Cancelación de reserva | US06 | Liberar espacio reservado |
+| Reservation Management | Extensión de reserva | US08 | Validar disponibilidad adicional |
+| Parking Supply & Monetization | Registro de espacio | US09 | Publicar espacio del propietario |
+| Parking Supply & Monetization | Configuración de horario y precio | US10 | Actualizar reglas del espacio |
+
+### Casos de prueba principales
+
+| Test Case ID | Caso de prueba | Entrada | Resultado esperado | User Story |
+|---|---|---|---|---|
+| TC-01 | Registrar conductor | Datos personales, correo, contraseña y placa | Cuenta de conductor creada | US17 |
+| TC-02 | Registrar propietario | Datos personales y rol propietario | Cuenta de propietario creada | US18 |
+| TC-03 | Iniciar sesión | Correo y contraseña válidos | Usuario autenticado | US19 |
+| TC-04 | Buscar estacionamiento | Destino o ubicación del conductor | Lista de espacios disponibles | US01 |
+| TC-05 | Ver disponibilidad | Espacio seleccionado | Estado disponible, reservado u ocupado | US02 |
+| TC-06 | Crear reserva | Espacio, fecha, hora y duración | Reserva confirmada y espacio bloqueado | US05 |
+| TC-07 | Cancelar reserva | Reserva activa | Reserva cancelada y espacio liberado | US06 |
+| TC-08 | Extender reserva | Reserva en curso y nuevo tiempo | Reserva extendida si existe disponibilidad | US08 |
+| TC-09 | Registrar espacio | Dirección, foto, precio y horario | Espacio publicado | US09 |
+| TC-10 | Configurar espacio | Horario y precio actualizados | Información del espacio modificada | US10 |
+
+### Métricas de aceptación
+
+| Métrica | Valor esperado |
+|---|---:|
+| Registro de usuarios por rol | Conductor y propietario soportados |
+| Validación de login | Usuario autenticado correctamente |
+| Control de doble reserva | 0 reservas duplicadas para el mismo espacio y horario |
+| Consistencia de disponibilidad | Estado actualizado tras reserva, cancelación o cambio de horario |
+| Separación de responsabilidades | Cada módulo mantiene su propio alcance funcional |
+
+---
+
 
 ### 5.1.2 Pattern Based Backend Aplication(s)
 
+El backend de ParkLink fue planteado bajo una arquitectura modular alineada con Domain-Driven Design. Esta decisión permite dividir el sistema en bounded contexts, cada uno con responsabilidades específicas y reglas de negocio propias.
+
+La arquitectura busca evitar que funcionalidades distintas, como autenticación, búsqueda, reservas, publicación de espacios y pagos, queden mezcladas dentro de un único módulo. De esta manera, el sistema puede mantenerse, probarse y evolucionar con mayor facilidad.
+
+### Patrones aplicados
+
+| Patrón | Aplicación en ParkLink | Justificación |
+|---|---|---|
+| Domain-Driven Design | Organización por bounded contexts | Permite separar reglas de negocio por dominio |
+| Layered Architecture | Separación entre controladores, servicios, repositorios y dominio | Mejora la mantenibilidad del backend |
+| Repository Pattern | Abstracción del acceso a datos | Evita acoplar la lógica del dominio a la base de datos |
+| Service Layer | Centralización de casos de uso | Reduce lógica en controladores |
+| DTO Pattern | Transferencia controlada de datos | Evita exponer directamente entidades internas |
+| RESTful API | Exposición de recursos mediante endpoints HTTP | Facilita la comunicación con clientes web o móviles |
+| Adapter Pattern | Integración futura con mapas, pagos y notificaciones | Desacopla proveedores externos del dominio |
+| State Pattern | Control del ciclo de vida de reservas | Evita transiciones inválidas en reservas |
+| CQRS ligero | Separación entre lectura de disponibilidad y escritura transaccional | Mejora rendimiento sin perder consistencia |
+
+### Relación entre patrones y bounded contexts
+
+| Bounded Context | Patrones principales | Responsabilidad |
+|---|---|---|
+| User & Identity | Service Layer, DTO Pattern, Repository Pattern | Registro, login, roles y perfiles |
+| Parking Discovery | CQRS ligero, Adapter Pattern, Repository Pattern | Búsqueda, mapa, filtros y disponibilidad visible |
+| Reservation Management | State Pattern, Repository Pattern, Domain Events | Crear, cancelar, extender y consultar reservas |
+| Parking Supply & Monetization | Service Layer, Adapter Pattern, Repository Pattern | Publicar espacios, configurar precios, pagos e ingresos |
+
+---
+
+
 ### 5.1.3 Pattern Based Custom Software Library
 
+ParkLink puede organizar funcionalidades comunes dentro de módulos compartidos o librerías internas. Estos componentes no representan funcionalidades visibles para el usuario final, pero ayudan a mantener consistencia técnica en el backend.
+
+Estas librerías internas permiten reutilizar código relacionado con validaciones, manejo de errores, respuestas HTTP, autenticación, configuración y acceso a datos.
+
+### Módulos internos propuestos
+
+| Módulo interno | Propósito | Uso en ParkLink |
+|---|---|---|
+| Auth Middleware | Validar identidad y rol del usuario | Proteger operaciones de conductor y propietario |
+| Error Handler | Centralizar errores del backend | Responder errores de forma controlada |
+| Response Handler | Estandarizar respuestas | Mantener estructura uniforme para éxito y error |
+| Validation Utils | Validar datos de entrada | Registro, login, reservas y espacios |
+| Config Module | Gestionar variables de entorno | Configuración general del backend |
+| Database Module | Centralizar conexión a persistencia | Usuarios, espacios, reservas y pagos |
+| Logger Utility | Registrar eventos técnicos | Soporte para trazabilidad |
+| DTO Mapper | Transformar entidades en respuestas | Evitar exposición directa del modelo interno |
+
+### Beneficios
+
+| Beneficio | Descripción |
+|---|---|
+| Reutilización | Evita repetir lógica común en varios módulos |
+| Mantenibilidad | Permite modificar comportamientos compartidos desde un solo lugar |
+| Consistencia | Mantiene respuestas, validaciones y errores uniformes |
+| Escalabilidad | Facilita extraer componentes si el sistema evoluciona |
+| Seguridad | Permite aplicar controles transversales como autenticación y roles |
+
+---
+
+
 ### 5.1.4 Framework Pattern Driven Refactoring Report
+
+El proceso de refactorización de ParkLink debe orientarse a mantener una estructura coherente con los patrones definidos en el Capítulo IV. Dado que el producto se organiza alrededor de bounded contexts, el backend debe evitar la concentración de lógica en controladores o archivos genéricos.
+
+El refactoring busca mejorar la organización interna sin modificar el comportamiento esperado del sistema. Su finalidad es preparar el proyecto para crecer desde funcionalidades iniciales de autenticación hacia módulos más complejos como búsqueda, reservas, publicación de espacios, pagos y notificaciones.
+
+### Objetivo del refactoring
+
+Mejorar la estructura interna del backend para facilitar la mantenibilidad, reducir acoplamiento y asegurar que cada módulo represente correctamente una responsabilidad del dominio.
+
+### Refactorizaciones esperadas
+
+| Área | Situación a evitar | Mejora aplicada | Resultado esperado |
+|---|---|---|---|
+| Controladores | Lógica de negocio mezclada con HTTP | Delegar lógica a servicios | Controladores simples |
+| Servicios | Funciones sin separación por caso de uso | Organizar por bounded context | Mayor claridad |
+| Repositorios | Acceso a datos mezclado con lógica de negocio | Abstraer persistencia | Menor acoplamiento |
+| DTOs | Requests sin estructura clara | Crear DTOs por operación | Validación ordenada |
+| Errores | Respuestas inconsistentes | Centralizar manejo de errores | Mejor experiencia API |
+| Configuración | Variables dispersas | Centralizar configuración | Mejor despliegue y mantenimiento |
+
+### Refactoring por bounded context
+
+| Bounded Context | Refactoring recomendado |
+|---|---|
+| User & Identity | Separar registro, login, roles y perfiles |
+| Parking Discovery | Separar consultas de disponibilidad de la lógica de reserva |
+| Reservation Management | Encapsular reglas de creación, cancelación y extensión |
+| Parking Supply & Monetization | Separar publicación de espacios, precios, pagos e ingresos |
+
+### Conclusión del refactoring
+
+El refactoring permite que ParkLink mantenga una base técnica más limpia y coherente con su arquitectura. Esto es importante porque la solución debe evolucionar desde un MVP hacia una plataforma que incluya búsqueda en tiempo real, reservas confiables, pagos seguros y administración de espacios.
+
+---
+
 
 ## 5.2 Software Configuration Management
 
@@ -3224,6 +3388,12 @@ Orden sugerido de despliegue backend:
 10. Utilizar la URL pública del API Gateway como entrada principal para el frontend.
 
 ## 5.3 Microservices Implementation
+
+ParkLink fue diseñado bajo una arquitectura modular orientada a bounded contexts. Esta decisión permite iniciar con una implementación organizada y, posteriormente, evolucionar hacia microservicios independientes cuando el volumen de usuarios, búsquedas, reservas y pagos lo justifique.
+
+El diseño arquitectónico define como Core Domain el contexto de Reservation Management, debido a que la reserva de espacios representa la operación central del negocio. Si este contexto falla, el usuario perdería confianza en la disponibilidad y confirmación de estacionamientos.
+
+---
 
 ### 5.3.1 Sprint 1
 
