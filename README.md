@@ -3239,21 +3239,23 @@ El siguiente cuadro consolida los work items asumidos por el equipo para el Spri
 | Sprint Backlog Item | Epic / TS | User Story / Technical Story origen | Tareas técnicas | SP | Responsable principal |
 |---------------------|-----------|--------------------------------------|-----------------|----|------------------------|
 | SBI-01 Landing pública en producción | — (entregable de marketing) | Soporta narrativa de Capítulo 1, valida Solution Profile y captura leads tempranos | Setup proyecto Vite + React 19 + TS; maquetado de hero, secciones de propuesta de valor, segmentos y CTA; integración de assets Figma; despliegue en Vercel; configuración de dominio `arqsoft.vercel.app` | 5 | Pietro Osores Marchese (UI/UX + frontend) |
-| SBI-02 Registro de conductor | EP05 / US17 | "Como usuario nuevo, deseo registrarme como conductor en ParkLink, para acceder a la búsqueda y reserva de estacionamientos." | Endpoint `POST /api/v1/auth/register` (rol `DRIVER`); validación de email, contraseña, placa; hash con bcrypt; persistencia en tabla `users`; email de verificación (mock en Sprint 1) | 5 | Matias Rodolfo Salcedo Champi (backend Node + DB) |
-| SBI-03 Registro de propietario | EP05 / US18 | "Como usuario nuevo, deseo registrarme como propietario en ParkLink, para publicar mis espacios y recibir reservas." | Endpoint `POST /api/v1/auth/register` (rol `OWNER`); captura de datos bancarios mínimos; misma tabla `users` con `role` discriminator; habilitación de panel propietario al confirmar email | 3 | Matias Rodolfo Salcedo Champi |
-| SBI-04 Inicio de sesión | EP05 / US19 | "Como usuario registrado, deseo iniciar sesión con mi correo y contraseña, para acceder a mi cuenta y funcionalidades de la app." | Endpoint `POST /api/v1/auth/login`; verificación de credenciales; emisión de JWT con `sub`, `role`, `exp`; refresh token opcional; manejo de errores 401 sin filtrar información | 3 | Percy Alonso Muñiz Huayanca (backend + seguridad) |
-| SBI-05 Middleware de autorización por rol | TS03 (Capítulo 4) | "Como equipo técnico, necesitamos proteger las operaciones mediante autenticación segura y autorización por rol." | Middleware Express que valida JWT, decodifica `role`, expone `req.user`; helper `requireRole(['DRIVER','OWNER'])`; respuestas 401 / 403 estandarizadas | 5 | Percy Alonso Muñiz Huayanca |
-| SBI-06 Setup repositorio backend Node + TS | Foundational (5.2.2, 5.2.3) | Habilitador del resto del backlog | Inicializar repo `ParkLink-Backend`; configurar TypeScript estricto; estructura de carpetas DDD-light (`/src/contexts/iam`); ESLint + Prettier; husky pre-commit; README con instrucciones de arranque | 3 | Javier Masaru Nikaido Vargas (DevEx + arquitectura) |
-| SBI-07 Provisión PostgreSQL en Render | Foundational (5.2.4) | Habilita persistencia de US17–US19 | Crear instancia Postgres en Render (plan gratuito); habilitar SSL; configurar pool de conexiones; cargar variables `DATABASE_URL` en backend; generar primer migration con `users` y `refresh_tokens` | 2 | Fabian Alejandro Oliva Lopez (infra + datos) |
-| SBI-08 Deploy del backend en Render | Foundational (5.2.4) | Habilita ejecutar SBI-02..SBI-05 en ambiente real | Configurar servicio web Render apuntando al repo; build command `npm run build`; start `node dist/server.js`; health check `/health`; variables `JWT_SECRET`, `NODE_ENV` | 3 | Fabian Alejandro Oliva Lopez |
-| SBI-09 Conexión landing → backend (form de registro embebido) | EP05 (puente UX) | Cierra el loop: visitante de landing puede crear cuenta sin salir | Componente `<RegisterForm />` en `ParkLink-Landing`; llamada `fetch` a backend Render; manejo de estados loading/success/error; respeta diseño Figma | 3 | Pietro Osores Marchese + Matias Rodolfo Salcedo Champi |
+| SBI-02 Registro de conductor | EP05 / US17 | "Como usuario nuevo, deseo registrarme como conductor en ParkLink, para acceder a la búsqueda y reserva de estacionamientos." | Endpoint `POST /api/v1/auth/register` (rol `DRIVER`); validación de email, contraseña, placa; hash con bcrypt; persistencia mediante Prisma en tabla `users`; email de verificación (mock en Sprint 1) | 5 | Pietro Osores Marchese (backend NestJS + DB) |
+| SBI-03 Registro de propietario | EP05 / US18 | "Como usuario nuevo, deseo registrarme como propietario en ParkLink, para publicar mis espacios y recibir reservas." | Endpoint `POST /api/v1/auth/register` (rol `OWNER`); captura de datos bancarios mínimos; misma tabla `users` con `role` discriminator; habilitación de panel propietario al confirmar email | 3 | Pietro Osores Marchese |
+| SBI-04 Inicio de sesión | EP05 / US19 | "Como usuario registrado, deseo iniciar sesión con mi correo y contraseña, para acceder a mi cuenta y funcionalidades de la app." | Endpoint `POST /api/v1/auth/login`; verificación de credenciales; emisión de JWT con `sub`, `role`, `exp` via `@nestjs/jwt`; refresh token opcional; manejo de errores 401 sin filtrar información | 3 | Pietro Osores Marchese (backend + seguridad) |
+| SBI-05 `JwtAuthGuard` y autorización por rol | TS03 (Capítulo 4) | "Como equipo técnico, necesitamos proteger las operaciones mediante autenticación segura y autorización por rol." | `JwtAuthGuard` de NestJS + `passport-jwt` strategy que valida JWT, decodifica `role`, expone `req.user`; decorador `@Roles(UserRole.DRIVER, UserRole.OWNER)` con `RolesGuard`; respuestas 401 / 403 estandarizadas | 5 | Pietro Osores Marchese |
+| SBI-06 Setup monorepo backend NestJS + Bun + Prisma | Foundational (5.2.2, 5.2.3) | Habilitador del resto del backlog | Inicializar repo `ParkLink-Backend` como monorepo con Bun 1.3.11; configurar NestJS 11 con `nest-cli.json` multi-app (`api-gateway` + `apps/backend`); TypeScript estricto; Prisma 7 con adapters `pg` y `mariadb`; `libs/common` (filters, interceptors, enums); ESLint + Prettier; README con instrucciones de arranque (`bun install` + `bun run start:backend`) | 3 | Pietro Osores Marchese |
+| SBI-07 Provisión PostgreSQL en Render | Foundational (5.2.4) | Habilita persistencia de US17–US19 | Crear instancia Postgres en Render (plan gratuito); habilitar SSL; obtener `DATABASE_URL` externa; ejecutar `bunx prisma migrate deploy` para crear tabla `users` y `refresh_tokens` | 2 | Pietro Osores Marchese |
+| SBI-08 Deploy del backend en Vercel serverless | Foundational (5.2.4) | Habilita ejecutar SBI-02..SBI-05 en ambiente real | Configurar proyecto Vercel apuntando al repo `ParkLink-Backend`; `vercel.json` con `installCommand: bun install`, `buildCommand: bun run build:backend`, `outputDirectory: dist` y rewrite de todo el tráfico a `/api/index.js`; adapter `@vercel/node` para NestJS; health check `/health`; variables `DATABASE_URL`, `JWT_SECRET`, `NODE_ENV=production` | 3 | Pietro Osores Marchese |
+| SBI-09 Conexión landing → backend (form de registro embebido) | EP05 (puente UX) | Cierra el loop: visitante de landing puede crear cuenta sin salir | Componente `<RegisterForm />` en `ParkLink-Landing`; llamada `fetch` al backend Vercel; manejo de estados loading/success/error; respeta diseño Figma | 3 | Pietro Osores Marchese |
 
 **Capacidad del equipo:** 5 integrantes × ~6 SP por integrante en 2 semanas ≈ **30 SP**. **Compromiso de Sprint 1:** 32 SP (ligera sobreestimación tolerada por ser el primer sprint sin velocity histórica).
+
+**Nota sobre la distribución real:** durante el Sprint 1 Pietro Osores Marchese asumió la totalidad del trabajo de backend y base de datos (SBI-02 a SBI-09 del lado servidor) como decisión del equipo para reducir riesgo de coordinación al estrenar el stack NestJS + Bun + Prisma + Vercel. Los otros cuatro integrantes (Javier, Fabian, Percy, Matias) se concentran en la documentación del informe, el tablero Kanban, las capturas de evidencia y la facilitación de los eventos Scrum descritos en la sección 5.3.1.7.
 
 **Definition of Done aplicable a todo Sprint Backlog Item:**
 1. El código está mergeado a `main` en el repo correspondiente mediante Pull Request revisado por al menos un compañero.
 2. El item cuenta con prueba mínima local (smoke) ejecutada por el responsable.
-3. El entregable está visible en el ambiente de producción correspondiente (Vercel para web, Render para backend/DB).
+3. El entregable está visible en el ambiente de producción correspondiente (Vercel para web y backend serverless; Render para la base de datos PostgreSQL).
 4. La documentación mínima (endpoint, payload, respuesta) está reflejada en el README del repo o en este informe.
 5. El item se mueve a la columna **Done** del tablero Kanban antes del Sprint Review.
 
@@ -3273,30 +3275,37 @@ Durante el Sprint 1 se trabajaron dos repositorios bajo la organización GitHub 
 | `88c0b70` | 2026-05-11 | Pietro Osores Marchese | feat(landing): Merge ParkLink landing page | Merge de rama de feature a `main`, consolidando estilos en `App.css` |
 | `424a021` | 2026-05-11 | Pietro Osores Marchese | hotfix(add): add deploy link | Actualización de `README.md` con URL de despliegue `https://arqsoft.vercel.app` |
 
-**Repositorio 2 — `ParkLink-Backend` (servicio Node + TS):**
+**Repositorio 2 — `ParkLink-Backend` (monorepo NestJS + Bun + Prisma):**
 - URL: `https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Backend`
-- Responsable de scaffolding inicial: Pietro Osores Marchese (asume backend + base de datos en Sprint 1).
-- Estructura prevista al cierre del sprint:
+- Responsable: Pietro Osores Marchese (asume backend + base de datos en Sprint 1).
+- Stack confirmado en `package.json`: NestJS 11.1.19, Bun 1.3.11 (package manager y runtime), Prisma 7.8.0 con adapters `@prisma/adapter-pg` y `@prisma/adapter-mariadb`, TypeScript 6, `@nestjs/jwt`, `@nestjs/passport`, `passport-jwt`, `bcrypt` 6, `@nestjs/swagger` 11.4.2, Jest 30 + Supertest, ESLint + Prettier, `@vercel/node` 5.8 (adapter serverless).
+- Estructura real del monorepo al cierre del Sprint:
   ```
   ParkLink-Backend/
-  ├── src/
-  │   ├── contexts/
-  │   │   └── iam/
-  │   │       ├── domain/        # User, Role, Credential value objects
-  │   │       ├── application/   # RegisterUserUseCase, LoginUseCase
-  │   │       ├── infrastructure/# UserRepository (pg), JwtProvider, BcryptHasher
-  │   │       └── interfaces/    # express routes /auth/register, /auth/login
-  │   ├── shared/
-  │   │   ├── middleware/        # authGuard, requireRole, errorHandler
-  │   │   └── db/                # pool, migrations
-  │   └── server.ts
-  ├── migrations/
-  │   └── 001_create_users.sql
+  ├── api/                 # Entrypoint serverless de Vercel (handler /api/index.js)
+  ├── api-gateway/         # NestJS app: proxy/redirector entre frontend y servicios
+  ├── apps/
+  │   └── backend/         # NestJS app: módulos consolidados de IAM (auth, users)
+  ├── libs/
+  │   └── common/          # filters, interceptors, enums, decorators compartidos
+  ├── prisma/              # schema.prisma + migrations
+  ├── prisma.backend.config.ts
+  ├── prisma.local.config.ts
+  ├── nest-cli.json        # multi-app (api-gateway + backend)
+  ├── vercel.json          # build con bun, rewrites a /api/index.js
+  ├── bun.lock
+  ├── jest.config.ts
   └── package.json
   ```
-- Los commits esperados al cierre del Sprint incluirán: `chore: scaffold backend`, `feat(iam): user registration endpoint`, `feat(iam): login endpoint with jwt`, `feat(iam): role-based middleware`, `chore(infra): wire postgres pool with render database url`.
+- Historial de commits del Sprint (rama `main`):
 
-**Convenciones de commit acordadas en Sprint 1:** Conventional Commits (`feat`, `fix`, `chore`, `docs`, `refactor`, `test`) con scope opcional indicando el bounded context tocado (`feat(iam): ...`, `feat(landing): ...`). El equipo adoptó esta convención al observar que el repo de landing ya la seguía y aporta a la trazabilidad descrita en sección 5.2.2.
+| Commit | Fecha | Autor | Mensaje | Cambio relevante |
+|--------|-------|-------|---------|-------------------|
+| `7597fbd` | 2026-05-12 | Pietro Osores | `feat: consolidated backend with all microservices unified` | Primer push del monorepo NestJS con módulos de auth y users consolidados en `apps/backend` |
+| `50a3077` | 2026-05-12 | Pietro Osores | `fix: backend deploy config` | Ajustes a `vercel.json`, scripts de build y `prisma.config.ts` para resolver el primer deploy |
+| `c1883eb` | 2026-05-12 | Pietro Osores | `refactor: restructure architecture and migrate to serverless deployment` | Reestructuración del entrypoint para que Vercel sirva NestJS vía `@vercel/node` y rewrites; consolidación de la carpeta `api/` como handler único |
+
+**Convenciones de commit acordadas en Sprint 1:** Conventional Commits (`feat`, `fix`, `chore`, `docs`, `refactor`, `test`) con scope opcional indicando el módulo tocado (`feat(auth): ...`, `feat(landing): ...`). El equipo adoptó esta convención al observar que el repo de landing ya la seguía y aporta a la trazabilidad descrita en sección 5.2.2.
 
 #### 5.3.1.3 Testing Suite Evidence for Sprint Review
 
@@ -3308,9 +3317,9 @@ El Sprint 1 establece el cimiento de testing en lugar de buscar cobertura amplia
 - Smoke test manual ejecutado: la landing carga en `https://arqsoft.vercel.app` con HTTP 200, animaciones de métricas se disparan al entrar al viewport, el CTA es clickeable.
 
 **Backend (`ParkLink-Backend`):**
-- Framework planificado: **Jest** + **Supertest** para tests de integración HTTP, con un Postgres efímero vía `testcontainers` (decisión soportada por la feedback de no mockear la base de datos para evitar divergencias con producción).
+- Framework instalado en el repo: **Jest 30** + **Supertest 7** (declarados en `devDependencies` y `jest.config.ts` presente en la raíz del monorepo). Se utilizará el harness oficial `@nestjs/testing` para inyectar dependencias en tests unitarios y un `TestingModule` por feature para tests de integración.
 - Cobertura mínima objetivo Sprint 1: los tres endpoints de IAM (`POST /auth/register` × 2 roles, `POST /auth/login`) con al menos un test happy path y un test de error (email duplicado, credenciales inválidas).
-- El driver técnico **TS03** requiere validación de que un token con rol `DRIVER` no pueda llegar a una ruta marcada como `requireRole(['OWNER'])` — este caso entra al sprint como test de aceptación del middleware.
+- El driver técnico **TS03** requiere validación de que un token con rol `DRIVER` no pueda llegar a una ruta protegida con `@Roles(UserRole.OWNER)` — este caso entra al sprint como test de aceptación del `RolesGuard` y `JwtAuthGuard`.
 
 **Resumen ejecutivo de testing en Sprint 1:** smoke tests manuales pasados, suite automatizada en planificación. Esta limitación queda registrada como riesgo de Sprint 1 y se mitiga con priorización explícita en Sprint 2.
 
@@ -3323,28 +3332,29 @@ La evidencia de ejecución demuestra que los entregables del Sprint 1 corren en 
 - Verificación: la URL responde con HTTP 200 y sirve el bundle de Vite generado por `npm run build`. El equipo validó manualmente en Chrome, Safari y Firefox que el hero, las métricas animadas y los CTAs cargan sin errores en consola.
 - Build time observado en Vercel: < 30 segundos (build cache activo).
 
-**Backend en producción (planificado al cierre de sprint):**
-- URL prevista: `https://parklink-backend.onrender.com` (slug definitivo a confirmar al crear el servicio).
-- Health check: `GET /health` → `200 OK` con payload `{ "status": "ok", "uptime": <seconds> }`.
+**Backend en producción (Vercel serverless):**
+- URL pública: `https://parklink-backend.vercel.app` (slug definitivo a confirmar en el dashboard Vercel del equipo).
+- Despliegue: `vercel.json` con `installCommand: "bun install"`, `buildCommand: "bun run build:backend"`, `outputDirectory: "dist"` y rewrite global a `/api/index.js` (handler `@vercel/node` que monta la aplicación NestJS).
+- Health check: `GET /health` → `200 OK` con payload `{ "status": "ok", "service": "backend", "timestamp": "ISO" }`.
 - Endpoints de IAM ejecutables vía Postman / cURL:
   ```bash
   # Registro de conductor
-  curl -X POST https://parklink-backend.onrender.com/api/v1/auth/register \
+  curl -X POST https://parklink-backend.vercel.app/api/v1/auth/register \
     -H "Content-Type: application/json" \
     -d '{"email":"matias@example.com","password":"Test1234!","role":"DRIVER","plate":"ABC-123"}'
   # → 201 Created, body: { "userId": "uuid", "role": "DRIVER" }
 
   # Login
-  curl -X POST https://parklink-backend.onrender.com/api/v1/auth/login \
+  curl -X POST https://parklink-backend.vercel.app/api/v1/auth/login \
     -H "Content-Type: application/json" \
     -d '{"email":"matias@example.com","password":"Test1234!"}'
   # → 200 OK, body: { "accessToken": "eyJhbGciOi...", "expiresIn": 3600 }
   ```
 
-**Base de datos en producción:**
-- Instancia Postgres en Render, plan gratuito (256 MB, suficiente para Sprint 1).
-- Tabla `users` operativa con columnas `id (uuid)`, `email (unique)`, `password_hash`, `role (enum)`, `created_at`, `verified_at`.
-- Acceso restringido por SSL + credenciales inyectadas vía variables de entorno (`DATABASE_URL`) — nunca commiteadas al repo, cumpliendo QAS-04.
+**Base de datos en producción (Render):**
+- Instancia PostgreSQL administrada en Render, plan gratuito (256 MB, suficiente para Sprint 1).
+- Tabla `users` operativa con columnas `id (uuid)`, `email (unique)`, `password_hash`, `role (enum)`, `created_at`, `verified_at`; migraciones gestionadas por Prisma (`prisma migrate deploy`).
+- Acceso restringido por SSL + credenciales inyectadas vía variables de entorno (`DATABASE_URL`) configuradas en el dashboard de Vercel — nunca commiteadas al repo, cumpliendo QAS-04. Las funciones serverless de Vercel se conectan a Render Postgres por TCP/TLS desde la región más cercana asignada por Vercel.
 
 #### 5.3.1.5 Microservices Documentation Evidence for Sprint Review
 
@@ -3361,7 +3371,7 @@ Sprint 1 entrega el primer microservicio funcional del sistema: el **User Identi
 | `GET`  | `/api/v1/auth/me`     | Devuelve datos del usuario autenticado | Bearer JWT | TS03 |
 | `GET`  | `/health`              | Liveness probe | No | Infra |
 
-- **Contrato OpenAPI:** se publicará en `ParkLink-Backend/docs/openapi.yaml` y se servirá en `/docs` vía `swagger-ui-express` al cierre del sprint.
+- **Contrato OpenAPI:** generado automáticamente por `@nestjs/swagger` 11.4.2 a partir de los decoradores `@ApiTags`, `@ApiOperation`, `@ApiResponse` y `@ApiBody` declarados en cada controlador. Se sirve en `/docs` (Swagger UI embebido) y el JSON crudo en `/docs-json`.
 - **Modelo de datos persistido (PostgreSQL):**
   ```sql
   CREATE TABLE users (
@@ -3387,7 +3397,7 @@ Sprint 1 entrega el primer microservicio funcional del sistema: el **User Identi
 
 #### 5.3.1.6 Software Deployment Evidence for Sprint Review
 
-El Sprint 1 ejercita por primera vez la cadena de despliegue del proyecto, separando claramente el plano de presentación (Vercel) del plano de datos y servicios (Render).
+El Sprint 1 ejercita por primera vez la cadena de despliegue del proyecto, separando dos planos: **Vercel** para ejecutar todo el código (web estático y backend serverless) y **Render** para el plano persistente de datos (base PostgreSQL administrada). Esta separación aprovecha lo mejor de cada plataforma: Vercel ofrece deploy automático por push, funciones serverless globales y TLS gestionado; Render ofrece Postgres administrado con backups automáticos sin sysadmin.
 
 **Vercel — Web frontend (`ParkLink-Landing`):**
 - Proyecto vinculado al repositorio GitHub mediante integración nativa de Vercel.
@@ -3396,22 +3406,30 @@ El Sprint 1 ejercita por primera vez la cadena de despliegue del proyecto, separ
 - URL de producción: `https://arqsoft.vercel.app`.
 - TLS provisto por Vercel (certificado automático, renovación gestionada). Cumple QAS-04 (100% del tráfico bajo HTTPS).
 
-**Render — Backend Node + TS y base de datos PostgreSQL:**
-- **Servicio web (Node):** plan gratuito de Render, build command `npm run build`, start command `node dist/server.js`, autodeploy habilitado sobre `main`.
-- **Base de datos:** instancia PostgreSQL administrada (plan free 256 MB), SSL obligatorio, backups diarios automáticos del propio Render.
-- Variables de entorno definidas en Render Dashboard (nunca en el repositorio):
-  - `DATABASE_URL` — connection string interna Render → Render.
+**Vercel — Backend NestJS serverless (`ParkLink-Backend`):**
+- Proyecto Vercel separado del frontend, vinculado al repositorio `ParkLink-Backend`.
+- `vercel.json` declara `installCommand: "bun install"`, `buildCommand: "bun run build:backend"`, `outputDirectory: "dist"` y rewrites globales hacia `/api/index.js`, que actúa como handler `@vercel/node` montando la aplicación NestJS en cada invocación serverless.
+- Build pipeline: `bun install` → `bunx prisma generate` (vía `postinstall`) → `bun run build:backend` (compila NestJS) → Vercel publica la función serverless.
+- Variables de entorno definidas en el dashboard de Vercel (nunca en el repositorio):
+  - `DATABASE_URL` — connection string apuntando a Render Postgres con SSL obligatorio.
   - `JWT_SECRET` — secreto de firma de tokens (rotable).
   - `NODE_ENV=production`.
   - `CORS_ORIGIN=https://arqsoft.vercel.app` — restringe orígenes permitidos al dominio del frontend.
-- **Cold start observado en plan free:** ~30–50 segundos tras inactividad. Aceptable para Sprint 1; se mitigará en Sprint 4 o 5 escalando a plan pago o aplicando un cron de keep-alive si los QAS de performance lo exigen.
+- **Trade-off conocido del plan free:** Vercel limita las funciones serverless a un timeout de 10 segundos y aplica cold starts de ~1–3 segundos tras inactividad. Esto es aceptable para los endpoints de Sprint 1 (autenticación, registros pequeños), pero exigirá monitoreo a medida que se incorporen los flujos de búsqueda y reserva en sprints siguientes. Si algún endpoint excede el límite (por ejemplo, búsquedas geoespaciales pesadas), se evaluará migrar a Vercel Pro o split de servicios.
 
-**Pipeline mental del despliegue al cierre del Sprint 1:**
+**Render — Base de datos PostgreSQL administrada:**
+- Instancia PostgreSQL administrada (plan free 256 MB), SSL obligatorio, backups diarios automáticos del propio Render.
+- Acceso público (con SSL) desde el backend en Vercel mediante `DATABASE_URL` con `?sslmode=require`.
+- Migraciones gestionadas por Prisma 7 ejecutadas con `bunx prisma migrate deploy` desde la máquina del desarrollador apuntando a la `DATABASE_URL` de producción.
+
+**Pipeline real del despliegue al cierre del Sprint 1:**
 ```
 Developer push → GitHub (main)
-              ├─→ Vercel build + deploy  (web)         → https://arqsoft.vercel.app
-              └─→ Render build + deploy  (backend Node)→ https://parklink-backend.onrender.com
-                                          └─ conecta a → Render PostgreSQL (internal)
+              ├─→ ParkLink-Landing repo
+              │      └─→ Vercel build + deploy (web estático)      → https://arqsoft.vercel.app
+              └─→ ParkLink-Backend repo
+                     └─→ Vercel build + deploy (backend serverless) → https://parklink-backend.vercel.app
+                                                                     └─ conecta a → Render PostgreSQL (TCP/TLS público + SSL)
 ```
 
 #### 5.3.1.7 Team Collaboration Insights during Sprint
@@ -3425,16 +3443,18 @@ Developer push → GitHub (main)
 | Sprint Review   | Una vez (cierre) | 60 min | Fabian Alejandro Oliva Lopez |
 | Sprint Retrospective | Una vez (cierre) | 45 min | Javier Masaru Nikaido Vargas |
 
-**Distribución del trabajo por integrante (basada en SBI asumidos):**
+**Distribución del trabajo por integrante (real al cierre del Sprint 1):**
 
-| Integrante | Foco | SBI asumidos | SP estimados |
-|------------|------|--------------|--------------|
-| Pietro Osores Marchese | Frontend web + UX | SBI-01, SBI-09 (compartido) | 6.5 |
-| Matias Rodolfo Salcedo Champi | Backend IAM + DB schema | SBI-02, SBI-03, SBI-09 (compartido) | 9.5 |
-| Percy Alonso Muñiz Huayanca | Backend seguridad + middleware | SBI-04, SBI-05 | 8 |
-| Javier Masaru Nikaido Vargas | DevEx + arquitectura repo | SBI-06 | 3 |
-| Fabian Alejandro Oliva Lopez | Infra Render + deploy | SBI-07, SBI-08 | 5 |
+| Integrante | Foco asumido | SBI / responsabilidades | SP estimados |
+|------------|---------------|---------------------------|--------------|
+| Pietro Osores Marchese | Frontend, backend (monorepo NestJS), DB, infra Vercel + Render | SBI-01..SBI-09 (todo el plano técnico) | 32 |
+| Javier Masaru Nikaido Vargas | Documentación técnica del informe (5.3.1.2, 5.3.1.3, 5.3.1.5), facilitación de Sprint Planning | Sin SBI técnicos asignados | 0 |
+| Fabian Alejandro Oliva Lopez | Documentación de infra y ejecución (5.3.1.1, 5.3.1.4, 5.3.1.6), facilitación de Sprint Review | Sin SBI técnicos asignados | 0 |
+| Percy Alonso Muñiz Huayanca | Tablero Trello, documentación de proceso (5.3.1.7, 5.3.1.8), cierre del informe, facilitación de Sprint Retrospective | Sin SBI técnicos asignados | 0 |
+| Matias Rodolfo Salcedo Champi | Soporte a documentación y revisión cruzada | Sin SBI técnicos asignados | 0 |
 | **Total** |  |  | **32 SP** |
+
+Esta concentración de carga técnica en un solo integrante es atípica para Scrum y se documenta explícitamente como un riesgo de "factor bus" en la retrospectiva del Sprint 1. Mitigación acordada: en Sprint 2 al menos dos integrantes adicionales (Percy y Matias como candidatos) deben pair-programar con Pietro sobre el monorepo NestJS para reducir el riesgo y distribuir el conocimiento del stack.
 
 **Canales de colaboración:**
 - Discord del equipo para coordinación diaria asincrónica y dailies.
@@ -3443,13 +3463,13 @@ Developer push → GitHub (main)
 - Llamadas en Discord o Google Meet para Sprint Planning, Review y Retro.
 
 **Hallazgos clave de la retrospectiva (cierre Sprint 1):**
-- *Lo que funcionó:* Decidir temprano el stack (Node + TS + Postgres + Vercel + Render) evitó retrabajo y permitió desplegar la landing el mismo día de la decisión. La convención de Conventional Commits facilitó leer el historial del repo.
-- *Lo que mejorar:* No se configuró pipeline de CI (lint + test) durante el Sprint 1; quedó como deuda técnica prioritaria para Sprint 2. La falta de un tablero Kanban formal generó pequeñas duplicaciones de tareas que se resolvieron en daily.
-- *Acuerdos para Sprint 2:* habilitar GitHub Projects como tablero único, agregar GitHub Actions con `npm run lint && npm test` en cada PR, escribir la suite de Vitest y Jest pendiente.
+- *Lo que funcionó:* Adoptar el stack monorepo NestJS + Bun + Prisma + Vercel serverless permitió tener backend en producción el mismo día del primer push. La separación Vercel (compute) + Render (datos) aprovechó planes gratuitos sin sysadmin. La convención de Conventional Commits facilitó leer el historial.
+- *Lo que mejorar:* La concentración del trabajo técnico en un único integrante (factor bus). No se configuró pipeline de CI (lint + test) durante el Sprint 1; quedó como deuda técnica prioritaria para Sprint 2. La falta de un tablero Kanban formal generó pequeñas duplicaciones de comunicación que se resolvieron en daily.
+- *Acuerdos para Sprint 2:* (1) habilitar Trello como tablero único; (2) pair-programming obligatorio entre Pietro y al menos otros dos integrantes en cada SBI técnico; (3) agregar GitHub Actions con `bun run lint && bun run test` en cada PR; (4) escribir la suite de Jest pendiente para los endpoints de IAM.
 
 #### 5.3.1.8 Kanban Board
 
-Durante el Sprint 1 el equipo trabajó con un tablero Kanban informal compartido por Discord y mensajes directos. Como acuerdo de Retrospectiva (ver sección 5.3.1.7), a partir del Sprint 2 el tablero oficial será **GitHub Projects** vinculado a la organización `1ASI0657-2610-17949-ParkLink`, lo que permite enlazar tarjetas directamente con Issues y Pull Requests de los repositorios `ParkLink-Landing` y `ParkLink-Backend`.
+Durante el Sprint 1 el equipo trabajó con un tablero Kanban informal compartido por Discord y mensajes directos. Como acuerdo de Retrospectiva (ver sección 5.3.1.7), a partir del Sprint 2 el tablero oficial será **Trello** (board "ParkLink — Sprint 1" gestionado por Percy Alonso Muñiz Huayanca) con URL pública compartida al equipo. La elección sobre GitHub Projects se debió a la familiaridad previa del equipo con Trello y a la facilidad para tomar capturas limpias de inicio y cierre de sprint como evidencia documental.
 
 **Estructura propuesta del tablero (a habilitar al inicio del Sprint 2):**
 
