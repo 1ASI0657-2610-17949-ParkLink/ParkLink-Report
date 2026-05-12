@@ -2936,3 +2936,760 @@ CircuitBreakerDecorator o-- NotificationProvider : decorates
 **Iteration goal:** ✅ alcanzado. Todos los drivers primarios atendidos.
 
 **Refinamientos pendientes pa iteraciones futuras (post-TB2):** dashboard de métricas y SLOs, disaster recovery procedure, performance testing bajo carga real de producción, política de retención del audit log.
+
+# Capítulo V: Product Implementation, Validation & Deployment
+
+## 5.1. Testing Suites & General Patterns
+
+En esta sección se documentan los criterios de validación técnica, patrones generales y estructura de implementación considerados para ParkLink. La solución se basa en una plataforma digital orientada a conectar conductores urbanos con propietarios de estacionamientos, permitiendo la búsqueda, reserva, publicación y futura monetización de espacios disponibles.
+
+La validación técnica de ParkLink debe mantener coherencia con los bounded contexts definidos en el diseño arquitectónico: User & Identity, Parking Discovery, Reservation Management y Parking Supply & Monetization. Estos contextos permiten organizar la solución de acuerdo con las principales responsabilidades del sistema y facilitan su evolución progresiva.
+
+El objetivo principal de esta sección es describir cómo el backend y sus módulos pueden ser validados desde una perspectiva funcional y arquitectónica, sin depender únicamente de evidencias visuales. Para ello, se consideran los endpoints, módulos, responsabilidades, reglas de negocio y patrones de diseño definidos previamente en el informe.
+
+### Objetivo de validación
+
+Validar que la estructura inicial de ParkLink permita soportar las funcionalidades principales del producto: registro e inicio de sesión de usuarios, búsqueda de estacionamientos, gestión de reservas, publicación de espacios y soporte futuro para pagos y notificaciones.
+
+### Métricas generales de validación
+
+| Métrica | Descripción | Valor esperado |
+|---|---|---:|
+| Bounded contexts definidos | Contextos principales del dominio documentados | 4 |
+| Segmentos objetivo considerados | Usuarios principales del producto | 2 |
+| User Stories documentadas | Historias funcionales del Product Backlog | 20 |
+| Technical Stories documentadas | Historias técnicas de soporte arquitectónico | 6 |
+| Épicas definidas | Agrupaciones funcionales del producto | 6 |
+| Módulos funcionales principales | Áreas que sostienen la solución | 5 o más |
+
+---
+### 5.1.1 Backend Application Core Testing Suite
+
+La suite de pruebas del backend debe enfocarse en validar los módulos principales del sistema ParkLink, especialmente aquellos relacionados con autenticación, disponibilidad, reservas y publicación de espacios. Estas pruebas permiten verificar que el sistema cumpla con las reglas de negocio definidas en las User Stories y Technical Stories.
+
+El primer módulo crítico corresponde a User & Identity, ya que permite registrar conductores y propietarios, así como iniciar sesión. Este módulo se relaciona directamente con las historias US17, US18 y US19. A partir de este contexto, los demás módulos pueden aplicar autorización por roles y control de acceso.
+
+### Alcance funcional de pruebas
+
+| Módulo | Funcionalidad | User Story relacionada | Validación esperada |
+|---|---|---|---|
+| User & Identity | Registro de conductor | US17 | Crear cuenta de conductor correctamente |
+| User & Identity | Registro de propietario | US18 | Crear cuenta de propietario correctamente |
+| User & Identity | Inicio de sesión | US19 | Autenticar usuario registrado |
+| Parking Discovery | Búsqueda por ubicación | US01 | Mostrar espacios cercanos al destino |
+| Parking Discovery | Disponibilidad en tiempo real | US02 | Mostrar estado actualizado del espacio |
+| Reservation Management | Reserva de espacio | US05 | Crear reserva sin duplicidad |
+| Reservation Management | Cancelación de reserva | US06 | Liberar espacio reservado |
+| Reservation Management | Extensión de reserva | US08 | Validar disponibilidad adicional |
+| Parking Supply & Monetization | Registro de espacio | US09 | Publicar espacio del propietario |
+| Parking Supply & Monetization | Configuración de horario y precio | US10 | Actualizar reglas del espacio |
+
+### Casos de prueba principales
+
+| Test Case ID | Caso de prueba | Entrada | Resultado esperado | User Story |
+|---|---|---|---|---|
+| TC-01 | Registrar conductor | Datos personales, correo, contraseña y placa | Cuenta de conductor creada | US17 |
+| TC-02 | Registrar propietario | Datos personales y rol propietario | Cuenta de propietario creada | US18 |
+| TC-03 | Iniciar sesión | Correo y contraseña válidos | Usuario autenticado | US19 |
+| TC-04 | Buscar estacionamiento | Destino o ubicación del conductor | Lista de espacios disponibles | US01 |
+| TC-05 | Ver disponibilidad | Espacio seleccionado | Estado disponible, reservado u ocupado | US02 |
+| TC-06 | Crear reserva | Espacio, fecha, hora y duración | Reserva confirmada y espacio bloqueado | US05 |
+| TC-07 | Cancelar reserva | Reserva activa | Reserva cancelada y espacio liberado | US06 |
+| TC-08 | Extender reserva | Reserva en curso y nuevo tiempo | Reserva extendida si existe disponibilidad | US08 |
+| TC-09 | Registrar espacio | Dirección, foto, precio y horario | Espacio publicado | US09 |
+| TC-10 | Configurar espacio | Horario y precio actualizados | Información del espacio modificada | US10 |
+
+### Métricas de aceptación
+
+| Métrica | Valor esperado |
+|---|---:|
+| Registro de usuarios por rol | Conductor y propietario soportados |
+| Validación de login | Usuario autenticado correctamente |
+| Control de doble reserva | 0 reservas duplicadas para el mismo espacio y horario |
+| Consistencia de disponibilidad | Estado actualizado tras reserva, cancelación o cambio de horario |
+| Separación de responsabilidades | Cada módulo mantiene su propio alcance funcional |
+
+---
+
+
+### 5.1.2 Pattern Based Backend Aplication(s)
+
+El backend de ParkLink fue planteado bajo una arquitectura modular alineada con Domain-Driven Design. Esta decisión permite dividir el sistema en bounded contexts, cada uno con responsabilidades específicas y reglas de negocio propias.
+
+La arquitectura busca evitar que funcionalidades distintas, como autenticación, búsqueda, reservas, publicación de espacios y pagos, queden mezcladas dentro de un único módulo. De esta manera, el sistema puede mantenerse, probarse y evolucionar con mayor facilidad.
+
+### Patrones aplicados
+
+| Patrón | Aplicación en ParkLink | Justificación |
+|---|---|---|
+| Domain-Driven Design | Organización por bounded contexts | Permite separar reglas de negocio por dominio |
+| Layered Architecture | Separación entre controladores, servicios, repositorios y dominio | Mejora la mantenibilidad del backend |
+| Repository Pattern | Abstracción del acceso a datos | Evita acoplar la lógica del dominio a la base de datos |
+| Service Layer | Centralización de casos de uso | Reduce lógica en controladores |
+| DTO Pattern | Transferencia controlada de datos | Evita exponer directamente entidades internas |
+| RESTful API | Exposición de recursos mediante endpoints HTTP | Facilita la comunicación con clientes web o móviles |
+| Adapter Pattern | Integración futura con mapas, pagos y notificaciones | Desacopla proveedores externos del dominio |
+| State Pattern | Control del ciclo de vida de reservas | Evita transiciones inválidas en reservas |
+| CQRS ligero | Separación entre lectura de disponibilidad y escritura transaccional | Mejora rendimiento sin perder consistencia |
+
+### Relación entre patrones y bounded contexts
+
+| Bounded Context | Patrones principales | Responsabilidad |
+|---|---|---|
+| User & Identity | Service Layer, DTO Pattern, Repository Pattern | Registro, login, roles y perfiles |
+| Parking Discovery | CQRS ligero, Adapter Pattern, Repository Pattern | Búsqueda, mapa, filtros y disponibilidad visible |
+| Reservation Management | State Pattern, Repository Pattern, Domain Events | Crear, cancelar, extender y consultar reservas |
+| Parking Supply & Monetization | Service Layer, Adapter Pattern, Repository Pattern | Publicar espacios, configurar precios, pagos e ingresos |
+
+---
+
+
+### 5.1.3 Pattern Based Custom Software Library
+
+ParkLink puede organizar funcionalidades comunes dentro de módulos compartidos o librerías internas. Estos componentes no representan funcionalidades visibles para el usuario final, pero ayudan a mantener consistencia técnica en el backend.
+
+Estas librerías internas permiten reutilizar código relacionado con validaciones, manejo de errores, respuestas HTTP, autenticación, configuración y acceso a datos.
+
+### Módulos internos propuestos
+
+| Módulo interno | Propósito | Uso en ParkLink |
+|---|---|---|
+| Auth Middleware | Validar identidad y rol del usuario | Proteger operaciones de conductor y propietario |
+| Error Handler | Centralizar errores del backend | Responder errores de forma controlada |
+| Response Handler | Estandarizar respuestas | Mantener estructura uniforme para éxito y error |
+| Validation Utils | Validar datos de entrada | Registro, login, reservas y espacios |
+| Config Module | Gestionar variables de entorno | Configuración general del backend |
+| Database Module | Centralizar conexión a persistencia | Usuarios, espacios, reservas y pagos |
+| Logger Utility | Registrar eventos técnicos | Soporte para trazabilidad |
+| DTO Mapper | Transformar entidades en respuestas | Evitar exposición directa del modelo interno |
+
+### Beneficios
+
+| Beneficio | Descripción |
+|---|---|
+| Reutilización | Evita repetir lógica común en varios módulos |
+| Mantenibilidad | Permite modificar comportamientos compartidos desde un solo lugar |
+| Consistencia | Mantiene respuestas, validaciones y errores uniformes |
+| Escalabilidad | Facilita extraer componentes si el sistema evoluciona |
+| Seguridad | Permite aplicar controles transversales como autenticación y roles |
+
+---
+
+
+### 5.1.4 Framework Pattern Driven Refactoring Report
+
+El proceso de refactorización de ParkLink debe orientarse a mantener una estructura coherente con los patrones definidos en el Capítulo IV. Dado que el producto se organiza alrededor de bounded contexts, el backend debe evitar la concentración de lógica en controladores o archivos genéricos.
+
+El refactoring busca mejorar la organización interna sin modificar el comportamiento esperado del sistema. Su finalidad es preparar el proyecto para crecer desde funcionalidades iniciales de autenticación hacia módulos más complejos como búsqueda, reservas, publicación de espacios, pagos y notificaciones.
+
+### Objetivo del refactoring
+
+Mejorar la estructura interna del backend para facilitar la mantenibilidad, reducir acoplamiento y asegurar que cada módulo represente correctamente una responsabilidad del dominio.
+
+### Refactorizaciones esperadas
+
+| Área | Situación a evitar | Mejora aplicada | Resultado esperado |
+|---|---|---|---|
+| Controladores | Lógica de negocio mezclada con HTTP | Delegar lógica a servicios | Controladores simples |
+| Servicios | Funciones sin separación por caso de uso | Organizar por bounded context | Mayor claridad |
+| Repositorios | Acceso a datos mezclado con lógica de negocio | Abstraer persistencia | Menor acoplamiento |
+| DTOs | Requests sin estructura clara | Crear DTOs por operación | Validación ordenada |
+| Errores | Respuestas inconsistentes | Centralizar manejo de errores | Mejor experiencia API |
+| Configuración | Variables dispersas | Centralizar configuración | Mejor despliegue y mantenimiento |
+
+### Refactoring por bounded context
+
+| Bounded Context | Refactoring recomendado |
+|---|---|
+| User & Identity | Separar registro, login, roles y perfiles |
+| Parking Discovery | Separar consultas de disponibilidad de la lógica de reserva |
+| Reservation Management | Encapsular reglas de creación, cancelación y extensión |
+| Parking Supply & Monetization | Separar publicación de espacios, precios, pagos e ingresos |
+
+### Conclusión del refactoring
+
+El refactoring permite que ParkLink mantenga una base técnica más limpia y coherente con su arquitectura. Esto es importante porque la solución debe evolucionar desde un MVP hacia una plataforma que incluya búsqueda en tiempo real, reservas confiables, pagos seguros y administración de espacios.
+
+---
+
+
+## 5.2 Software Configuration Management
+
+La gestión de configuración de software en ParkLink tiene como objetivo organizar las herramientas, estándares, repositorios, convenciones de código y mecanismos de despliegue utilizados durante el desarrollo del producto. Esta sección permite asegurar que el equipo mantenga una forma ordenada de trabajar, controlar versiones, documentar cambios, ejecutar pruebas, desplegar componentes y mantener la trazabilidad del desarrollo.
+
+ParkLink se encuentra dividido en dos repositorios principales: uno correspondiente a la **landing page**, desarrollada con React, TypeScript y Vite, y otro correspondiente al **backend**, desarrollado como monorepo con NestJS, TypeScript, Prisma y Bun.
+
+El repositorio de la landing page contiene la capa de presentación pública del producto, mientras que el repositorio backend contiene la implementación de servicios, API Gateway, configuración de Prisma, testing, documentación Swagger y preparación para despliegue.
+
+### 5.2.1 Software Development Environment Configuration
+
+### Requirements Management
+
+**1. Trello:**  
+Trello será utilizado como herramienta de gestión visual para organizar el flujo de trabajo del equipo, registrar las tareas del sprint y mantener el seguimiento del Product Backlog. En ParkLink, esta herramienta permite representar las historias de usuario, tareas técnicas y actividades del sprint en columnas como pendientes, en proceso y terminadas.
+
+### Product UX/UI Design
+
+**2. Miro:**  
+Miro será utilizado como herramienta de apoyo para la representación de artefactos de análisis y diseño, tales como Impact Mapping, To-Be Scenario Mapping y diagramas colaborativos. En ParkLink, estos artefactos permiten relacionar los objetivos del negocio con actores, impactos esperados, entregables y User Stories.
+
+**3. UXPressia:**  
+UXPressia será utilizada como herramienta de apoyo para representar artefactos centrados en el usuario, como User Personas y mapas de empatía. Estos recursos permiten comprender las necesidades, frustraciones y motivaciones de los segmentos objetivo de ParkLink: conductores urbanos y propietarios de espacios de estacionamiento.
+
+### Software Testing
+
+**4. Gherkin:**  
+Gherkin será utilizado para redactar criterios de aceptación bajo la estructura Given-When-Then. Esta convención facilita que las historias de usuario mantengan una descripción clara de condiciones iniciales, acciones del usuario y resultados esperados. En ParkLink, este formato se aplica en funcionalidades como búsqueda de estacionamientos, reservas, pagos, publicación de espacios e inicio de sesión.
+
+**5. Jest:**  
+Jest será utilizado para la ejecución de pruebas unitarias y pruebas básicas del backend. El backend de ParkLink incluye configuración de testing mediante Jest, permitiendo validar servicios como autenticación, usuarios, estacionamientos, reservas, pagos, notificaciones, mapas y proxy del API Gateway.
+
+**6. Supertest:**  
+Supertest será utilizado como herramienta de apoyo para pruebas HTTP sobre endpoints del backend. Esta herramienta permite validar respuestas de rutas REST, estados HTTP y comportamiento básico de servicios expuestos por NestJS.
+
+### Software Development
+
+**7. Visual Studio Code / WebStorm:**  
+Visual Studio Code y WebStorm serán empleados como entornos de desarrollo integrados para la edición, depuración y organización del código fuente. Estas herramientas brindan soporte para TypeScript, NestJS, React, ESLint, Prettier, Git y extensiones orientadas al desarrollo web y backend.
+
+**8. TypeScript:**  
+TypeScript será utilizado como lenguaje principal de desarrollo tanto en la landing page como en el backend. Su tipado estático permite reducir errores, mejorar el autocompletado, documentar estructuras de datos y facilitar el mantenimiento del código.
+
+**9. React + Vite:**  
+React y Vite serán utilizados para el desarrollo de la landing page de ParkLink. Esta combinación permite construir una aplicación web rápida, modular y mantenible, orientada a presentar la propuesta de valor del producto.
+
+**10. NestJS:**  
+NestJS será utilizado para el desarrollo del backend de ParkLink. Este framework permite estructurar la aplicación mediante módulos, controladores, servicios, DTOs, guards, interceptores y filtros, manteniendo una arquitectura ordenada y escalable.
+
+**11. Bun:**  
+Bun será utilizado como runtime y package manager principal del backend. Esta herramienta permite instalar dependencias, ejecutar scripts, compilar el proyecto y correr pruebas de forma eficiente.
+
+**12. Prisma ORM:**  
+Prisma será utilizado como herramienta de persistencia para conectar los servicios backend con la base de datos. En ParkLink, la base de datos está pensada para alojarse en una VM y accederse mediante la variable de entorno `DATABASE_URL`.
+
+**13. Swagger / OpenAPI:**  
+Swagger será utilizado para documentar los endpoints del API Gateway y de los servicios backend. Esta documentación permite revisar contratos de API, DTOs, operaciones disponibles y realizar pruebas manuales desde el navegador.
+
+**14. Google Maps API:**  
+Google Maps API será utilizada para funcionalidades de geocodificación, cálculo de distancias y soporte de mapas. En la arquitectura backend, esta integración se centraliza mediante el servicio de mapas, evitando exponer directamente la API key y separando la lógica de mapas del resto del dominio.
+
+### Software Deployment
+
+**15. Git:**  
+Git será utilizado como sistema de control de versiones para registrar cambios, mantener historial del código, crear ramas de trabajo y facilitar la colaboración entre integrantes.
+
+**16. GitHub:**  
+GitHub será utilizado como plataforma principal para alojar los repositorios del proyecto. ParkLink cuenta con un repositorio para la landing page y otro para el backend, permitiendo separar la capa pública del producto y la capa de servicios.
+
+**17. Vercel:**  
+Vercel será utilizado como plataforma de despliegue. La landing page se encuentra preparada para deployment en Vercel, mientras que el backend incluye configuración para desplegar sus componentes y servicios.
+
+### 5.2.2 Source Code Management
+
+El proyecto ParkLink emplea Git y GitHub como herramientas principales para el control del código fuente. La gestión de versiones se organiza a partir de repositorios separados para frontend público y backend, permitiendo diferenciar la capa de presentación de la capa de servicios.
+
+### Repositorio de Landing Page
+
+**Repositorio:**  [https://github.com/1ASI0657-2610-17949-ParkLink](https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Landing)
+
+### Repositorio Backend
+
+**Repositorio:** https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Backend
+
+### 5.2.3 Source Code Style Guide & Conventions
+
+Para asegurar consistencia, legibilidad y mantenibilidad del código, ParkLink adopta convenciones de estilo tanto para el frontend como para el backend. Estas convenciones permiten que el equipo trabaje de forma ordenada, reduzca errores y mantenga una estructura uniforme en los repositorios del proyecto.
+
+### HTML
+
+En la landing page se emplearán etiquetas HTML semánticas para estructurar correctamente el contenido. Se utilizarán elementos como `header`, `nav`, `main`, `section`, `article` y `footer`, con el objetivo de mejorar la accesibilidad, la legibilidad del código y la organización visual del sitio.
+
+Buenas prácticas aplicadas:
+
+- Usar etiquetas semánticas según el propósito del contenido.
+- Mantener correctamente cerradas las etiquetas.
+- Utilizar atributos `alt` en imágenes para mejorar la accesibilidad.
+- Evitar estructuras HTML innecesariamente profundas.
+- Mantener nombres de clases claros y relacionados con su función.
+- Organizar el contenido por secciones para facilitar su mantenimiento.
+
+### CSS
+
+En la landing page se aplicarán estilos CSS organizados y reutilizables. Se buscará mantener clases claras, evitar duplicidad de reglas y separar correctamente la estructura visual de la lógica de componentes.
+
+Buenas prácticas aplicadas:
+
+- Usar nombres de clases descriptivos.
+- Separar bloques de estilos por secciones.
+- Mantener consistencia en márgenes, espaciados, tamaños y colores.
+- Evitar reglas CSS repetidas.
+- Mantener diseño responsive para escritorio y dispositivos móviles.
+- Usar comentarios breves cuando una regla requiera explicación adicional.
+
+### TypeScript
+
+TypeScript será utilizado como lenguaje base en frontend y backend. Su uso permite trabajar con tipado estático, reducir errores durante el desarrollo y mejorar el mantenimiento del código.
+
+Convenciones aplicadas:
+
+- Uso de `camelCase` para variables, funciones y métodos.
+- Uso de `PascalCase` para clases, interfaces, DTOs, módulos y componentes.
+- Uso de nombres descriptivos para evitar ambigüedad.
+- Evitar variables genéricas como `data`, `item` o `value` cuando el contexto no sea claro.
+- Separar responsabilidades en archivos distintos.
+- Utilizar tipos explícitos en DTOs, servicios y respuestas.
+- Evitar código muerto o funciones sin uso.
+- Mantener los archivos organizados según su responsabilidad dentro del proyecto.
+
+### NestJS
+
+En el backend se seguirá la estructura recomendada por NestJS, separando responsabilidades por módulos, controladores, servicios y DTOs. Esto permite mantener una arquitectura limpia, modular y alineada con los bounded contexts definidos en el Capítulo IV.
+
+Convenciones aplicadas:
+
+- Los controladores deben encargarse de recibir solicitudes HTTP.
+- Los servicios deben contener la lógica de aplicación.
+- Los DTOs deben definir y validar la estructura de entrada.
+- Los guards deben proteger rutas privadas mediante JWT.
+- Los interceptores deben uniformizar respuestas.
+- Los filtros deben manejar errores de forma estándar.
+- Las rutas deben representar recursos de forma clara.
+- Cada módulo debe agrupar archivos relacionados con una misma responsabilidad.
+
+Ejemplos de rutas principales:
+
+```txt
+/auth
+/users
+/parking-spaces
+/reservations
+/payments
+/notifications
+/maps
+```
+
+### Prisma
+
+Para la persistencia de datos se utilizará Prisma ORM. Cada modelo debe representar entidades del dominio como usuarios, espacios de estacionamiento, reservas, pagos y notificaciones. Las migraciones deben ejecutarse de forma controlada y las credenciales deben configurarse mediante variables de entorno.
+
+Convenciones aplicadas:
+
+- No colocar credenciales reales en el código.
+- Utilizar `DATABASE_URL` en archivos `.env`.
+- No subir archivos `.env` al repositorio.
+- Mantener archivos `.env.example` como referencia.
+- Ejecutar generación de cliente Prisma antes de compilar servicios dependientes.
+- Mantener la base de datos como fuente de verdad para reservas, pagos y usuarios.
+- Nombrar los modelos de forma clara según las entidades principales del dominio.
+
+### API REST
+
+Las APIs seguirán una convención REST basada en recursos. Las rutas deben ser claras, predecibles y consistentes para facilitar el consumo desde el frontend y la documentación mediante Swagger.
+
+Ejemplos de endpoints:
+
+```txt
+GET /health
+GET /docs
+POST /auth/login
+POST /auth/register-driver
+GET /users/me
+POST /parking-spaces
+GET /parking-spaces/search
+POST /reservations
+POST /payments
+GET /notifications
+GET /maps/geocode
+```
+
+Las respuestas exitosas deberán mantener una estructura uniforme:
+
+```json
+{
+  "success": true,
+  "message": "Operation completed successfully",
+  "data": {}
+}
+```
+
+Los errores deberán responder con una estructura uniforme:
+
+```json
+{
+  "success": false,
+  "statusCode": 400,
+  "message": "Error message",
+  "timestamp": "ISO_DATE",
+  "path": "/endpoint"
+}
+```
+
+Esta convención permite que el frontend consuma respuestas de manera consistente y que los errores sean más fáciles de interpretar durante desarrollo, pruebas y despliegue.
+
+### Seguridad
+
+Las convenciones de seguridad del código consideran:
+
+- No exponer contraseñas.
+- No devolver `passwordHash` en respuestas.
+- Guardar contraseñas usando hash con bcrypt.
+- Proteger endpoints privados mediante JWT.
+- Validar datos de entrada con DTOs.
+- Usar variables de entorno.
+- No colocar credenciales reales de la VM en el repositorio.
+- No colocar `GOOGLE_MAPS_API_KEY` directamente en el código.
+- Reenviar el header `Authorization` desde el API Gateway hacia los servicios correspondientes.
+- Separar responsabilidades para evitar que el API Gateway contenga lógica de negocio.
+
+### ESLint y Prettier
+
+El proyecto utilizará ESLint y Prettier para mantener consistencia de estilo. Estas herramientas permiten detectar errores comunes, ordenar el código y aplicar un formato uniforme en todo el proyecto.
+
+Buenas prácticas aplicadas:
+
+- Ejecutar lint antes de integrar cambios importantes.
+- Aplicar formato uniforme en archivos TypeScript, JavaScript, CSS y configuración.
+- Mantener reglas compartidas entre integrantes del equipo.
+- Evitar estilos de código diferentes dentro del mismo repositorio.
+
+### 5.2.4 Software Deployment Configuration
+
+ParkLink utiliza **Vercel** como plataforma principal para desplegar los componentes backend documentados mediante Swagger/OpenAPI. El proyecto separa la landing page y el backend en repositorios independientes, permitiendo organizar mejor la capa pública del producto y la capa de servicios.
+
+El backend se encuentra desarrollado con NestJS, Bun, Prisma y Swagger. Además, cuenta con un **API Gateway**, el cual funciona como punto de entrada principal para recibir solicitudes externas y redirigirlas hacia los servicios correspondientes.
+
+### Repository Links
+
+**Landing Page Repository:**
+
+```txt
+https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Landing
+```
+
+**Backend Repository:**
+
+```txt
+https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Backend
+```
+
+### Deployment Links
+
+**Backend Swagger Deployment:**
+
+```txt
+https://backend-silk-two-93.vercel.app/docs/
+```
+
+**API Gateway Swagger Deployment:**
+
+```txt
+https://api-gateway-xi-five.vercel.app/docs
+```
+
+## 5.3 Microservices Implementation
+
+ParkLink fue diseñado bajo una arquitectura modular orientada a bounded contexts. Esta decisión permite iniciar con una implementación organizada y, posteriormente, evolucionar hacia microservicios independientes cuando el volumen de usuarios, búsquedas, reservas y pagos lo justifique.
+
+El diseño arquitectónico define como Core Domain el contexto de Reservation Management, debido a que la reserva de espacios representa la operación central del negocio. Si este contexto falla, el usuario perdería confianza en la disponibilidad y confirmación de estacionamientos.
+
+## Arquitectura General del Sistema
+
+La arquitectura propuesta para ParkLink se organiza bajo un enfoque basado en frontend, API Gateway y microservicios backend desplegados de manera independiente.
+
+```mermaid
+flowchart TD
+    A[Frontend / App Web] --> B[API Gateway / Redirector<br/>Desplegado en Vercel]
+
+    B --> C[Backend Services]
+
+    C --> D[Auth Service]
+    C --> E[Users Service]
+    C --> F[Parking Spaces Service]
+    C --> G[Reservations Service]
+    C --> H[Payments Service]
+    C --> I[Notifications Service]
+    C --> J[Maps Service]
+
+    D --> K[(Base de Datos en Render)]
+    E --> K
+    F --> K
+    G --> K
+    H --> K
+    I --> K
+    J --> K
+
+    B --> J
+    J --> L[Google Maps API]
+```
+
+---
+
+### 5.3.1 Sprint 1
+
+**Sprint window:** 2026-05-08 → 2026-05-21 (14 días naturales, post-TB2).
+**Sprint Goal:** Habilitar el primer contacto del usuario con ParkLink mediante una landing pública desplegada en producción y un servicio de autenticación funcional que permita el registro y login de conductores y propietarios, dejando el cimiento operativo para los flujos de búsqueda y reserva de los siguientes sprints.
+
+El Sprint 1 prioriza dos entregables alineados con la estrategia de adopción del producto. Primero, una landing de marketing en producción que materializa el Solution Profile descrito en el Capítulo 1 y permite recoger interés temprano antes de abrir la app a usuarios. Segundo, el bounded context **User Identity & Access** del Capítulo 4, que sostiene los épicos EP05 (US17, US18, US19) y el driver técnico **TS03 — Autenticación y autorización por roles** vinculado al escenario de calidad QAS-04 (Security, 100% del tráfico bajo HTTPS y contraseñas cifradas).
+
+#### 5.3.1.1 Sprint Backlog 1
+
+El siguiente cuadro consolida los work items asumidos por el equipo para el Sprint 1, su trazabilidad con los User Stories del Capítulo 3, el Technical Story arquitectónico del Capítulo 4, la estimación en story points (escala Fibonacci modificada: 1, 2, 3, 5, 8, 13) y el responsable principal. Cada item entra al sprint sólo si tiene criterios de aceptación claros y un Definition of Done compartido por el equipo.
+
+| Sprint Backlog Item | Epic / TS | User Story / Technical Story origen | Tareas técnicas | SP | Responsable principal |
+|---------------------|-----------|--------------------------------------|-----------------|----|------------------------|
+| SBI-01 Landing pública en producción | — (entregable de marketing) | Soporta narrativa de Capítulo 1, valida Solution Profile y captura leads tempranos | Setup proyecto Vite + React 19 + TS; maquetado de hero, secciones de propuesta de valor, segmentos y CTA; integración de assets Figma; despliegue en Vercel; configuración de dominio `arqsoft.vercel.app` | 5 | Pietro Osores Marchese (UI/UX + frontend) |
+| SBI-02 Registro de conductor | EP05 / US17 | "Como usuario nuevo, deseo registrarme como conductor en ParkLink, para acceder a la búsqueda y reserva de estacionamientos." | Endpoint `POST /api/v1/auth/register` (rol `DRIVER`); validación de email, contraseña, placa; hash con bcrypt; persistencia mediante Prisma en tabla `users`; email de verificación (mock en Sprint 1) | 5 | Pietro Osores Marchese (backend NestJS + DB) |
+| SBI-03 Registro de propietario | EP05 / US18 | "Como usuario nuevo, deseo registrarme como propietario en ParkLink, para publicar mis espacios y recibir reservas." | Endpoint `POST /api/v1/auth/register` (rol `OWNER`); captura de datos bancarios mínimos; misma tabla `users` con `role` discriminator; habilitación de panel propietario al confirmar email | 3 | Pietro Osores Marchese |
+| SBI-04 Inicio de sesión | EP05 / US19 | "Como usuario registrado, deseo iniciar sesión con mi correo y contraseña, para acceder a mi cuenta y funcionalidades de la app." | Endpoint `POST /api/v1/auth/login`; verificación de credenciales; emisión de JWT con `sub`, `role`, `exp` via `@nestjs/jwt`; refresh token opcional; manejo de errores 401 sin filtrar información | 3 | Pietro Osores Marchese (backend + seguridad) |
+| SBI-05 `JwtAuthGuard` y autorización por rol | TS03 (Capítulo 4) | "Como equipo técnico, necesitamos proteger las operaciones mediante autenticación segura y autorización por rol." | `JwtAuthGuard` de NestJS + `passport-jwt` strategy que valida JWT, decodifica `role`, expone `req.user`; decorador `@Roles(UserRole.DRIVER, UserRole.OWNER)` con `RolesGuard`; respuestas 401 / 403 estandarizadas | 5 | Pietro Osores Marchese |
+| SBI-06 Setup monorepo backend NestJS + Bun + Prisma | Foundational (5.2.2, 5.2.3) | Habilitador del resto del backlog | Inicializar repo `ParkLink-Backend` como monorepo con Bun 1.3.11; configurar NestJS 11 con `nest-cli.json` multi-app (`api-gateway` + `apps/backend`); TypeScript estricto; Prisma 7 con adapters `pg` y `mariadb`; `libs/common` (filters, interceptors, enums); ESLint + Prettier; README con instrucciones de arranque (`bun install` + `bun run start:backend`) | 3 | Pietro Osores Marchese |
+| SBI-07 Provisión PostgreSQL en Render | Foundational (5.2.4) | Habilita persistencia de US17–US19 | Crear instancia Postgres en Render (plan gratuito); habilitar SSL; obtener `DATABASE_URL` externa; ejecutar `bunx prisma migrate deploy` para crear tabla `users` y `refresh_tokens` | 2 | Pietro Osores Marchese |
+| SBI-08 Deploy del backend en Vercel serverless | Foundational (5.2.4) | Habilita ejecutar SBI-02..SBI-05 en ambiente real | Configurar proyecto Vercel apuntando al repo `ParkLink-Backend`; `vercel.json` con `installCommand: bun install`, `buildCommand: bun run build:backend`, `outputDirectory: dist` y rewrite de todo el tráfico a `/api/index.js`; adapter `@vercel/node` para NestJS; health check `/health`; variables `DATABASE_URL`, `JWT_SECRET`, `NODE_ENV=production` | 3 | Pietro Osores Marchese |
+| SBI-09 Conexión landing → backend (form de registro embebido) | EP05 (puente UX) | Cierra el loop: visitante de landing puede crear cuenta sin salir | Componente `<RegisterForm />` en `ParkLink-Landing`; llamada `fetch` al backend Vercel; manejo de estados loading/success/error; respeta diseño Figma | 3 | Pietro Osores Marchese |
+
+**Capacidad del equipo:** 5 integrantes × ~6 SP por integrante en 2 semanas ≈ **30 SP**. **Compromiso de Sprint 1:** 32 SP (ligera sobreestimación tolerada por ser el primer sprint sin velocity histórica).
+
+**Nota sobre la distribución real:** durante el Sprint 1 Pietro Osores Marchese asumió la totalidad del trabajo de backend y base de datos (SBI-02 a SBI-09 del lado servidor) como decisión del equipo para reducir riesgo de coordinación al estrenar el stack NestJS + Bun + Prisma + Vercel. Los otros cuatro integrantes (Javier, Fabian, Percy, Matias) se concentran en la documentación del informe, el tablero Kanban, las capturas de evidencia y la facilitación de los eventos Scrum descritos en la sección 5.3.1.7.
+
+**Definition of Done aplicable a todo Sprint Backlog Item:**
+1. El código está mergeado a `main` en el repo correspondiente mediante Pull Request revisado por al menos un compañero.
+2. El item cuenta con prueba mínima local (smoke) ejecutada por el responsable.
+3. El entregable está visible en el ambiente de producción correspondiente (Vercel para web y backend serverless; Render para la base de datos PostgreSQL).
+4. La documentación mínima (endpoint, payload, respuesta) está reflejada en el README del repo o en este informe.
+5. El item se mueve a la columna **Done** del tablero Kanban antes del Sprint Review.
+
+#### 5.3.1.2 Development Evidence for Sprint Review
+
+Durante el Sprint 1 se trabajaron dos repositorios bajo la organización GitHub `1ASI0657-2610-17949-ParkLink`. La evidencia de desarrollo se recoge directamente del historial de commits y del estado actual de las ramas.
+
+**Repositorio 1 — `ParkLink-Landing` (web frontend):**
+- URL: `https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Landing`
+- Stack: React 19 + TypeScript 6 + Vite 8 (`package.json` confirma dependencias mínimas, sin librerías externas de UI, animaciones implementadas con `IntersectionObserver` y `requestAnimationFrame` nativos en `src/App.tsx`).
+- Convención de ramas: `main` como rama protegida; trabajo de feature en ramas cortas `feat/<slug>` mergeadas vía PR.
+
+| Commit | Fecha | Autor | Mensaje | Cambio relevante |
+|--------|-------|-------|---------|-------------------|
+| `bcfb3cd` | 2026-05-11 | Pietro Osores Marchese | Initial commit | Scaffold Vite + React + TS, `.gitignore`, `package.json`, `tsconfig.*` |
+| `d539034` | 2026-05-11 | Pietro Osores Marchese | feat(landing): Add ParkLink marketing page | Implementación de `App.tsx` con secciones hero, métricas animadas (`ScrambledMetricValue`), CTA y consumo de asset Figma `figma-assets/app-interface.png` |
+| `88c0b70` | 2026-05-11 | Pietro Osores Marchese | feat(landing): Merge ParkLink landing page | Merge de rama de feature a `main`, consolidando estilos en `App.css` |
+| `424a021` | 2026-05-11 | Pietro Osores Marchese | hotfix(add): add deploy link | Actualización de `README.md` con URL de despliegue `https://arqsoft.vercel.app` |
+
+**Repositorio 2 — `ParkLink-Backend` (monorepo NestJS + Bun + Prisma):**
+- URL: `https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Backend`
+- Responsable: Pietro Osores Marchese (asume backend + base de datos en Sprint 1).
+- Stack confirmado en `package.json`: NestJS 11.1.19, Bun 1.3.11 (package manager y runtime), Prisma 7.8.0 con adapters `@prisma/adapter-pg` y `@prisma/adapter-mariadb`, TypeScript 6, `@nestjs/jwt`, `@nestjs/passport`, `passport-jwt`, `bcrypt` 6, `@nestjs/swagger` 11.4.2, Jest 30 + Supertest, ESLint + Prettier, `@vercel/node` 5.8 (adapter serverless).
+- Estructura real del monorepo al cierre del Sprint:
+  ```
+  ParkLink-Backend/
+  ├── api/                 # Entrypoint serverless de Vercel (handler /api/index.js)
+  ├── api-gateway/         # NestJS app: proxy/redirector entre frontend y servicios
+  ├── apps/
+  │   └── backend/         # NestJS app: módulos consolidados de IAM (auth, users)
+  ├── libs/
+  │   └── common/          # filters, interceptors, enums, decorators compartidos
+  ├── prisma/              # schema.prisma + migrations
+  ├── prisma.backend.config.ts
+  ├── prisma.local.config.ts
+  ├── nest-cli.json        # multi-app (api-gateway + backend)
+  ├── vercel.json          # build con bun, rewrites a /api/index.js
+  ├── bun.lock
+  ├── jest.config.ts
+  └── package.json
+  ```
+- Historial de commits del Sprint (rama `main`):
+
+| Commit | Fecha | Autor | Mensaje | Cambio relevante |
+|--------|-------|-------|---------|-------------------|
+| `7597fbd` | 2026-05-12 | Pietro Osores | `feat: consolidated backend with all microservices unified` | Primer push del monorepo NestJS con módulos de auth y users consolidados en `apps/backend` |
+| `50a3077` | 2026-05-12 | Pietro Osores | `fix: backend deploy config` | Ajustes a `vercel.json`, scripts de build y `prisma.config.ts` para resolver el primer deploy |
+| `c1883eb` | 2026-05-12 | Pietro Osores | `refactor: restructure architecture and migrate to serverless deployment` | Reestructuración del entrypoint para que Vercel sirva NestJS vía `@vercel/node` y rewrites; consolidación de la carpeta `api/` como handler único |
+
+**Convenciones de commit acordadas en Sprint 1:** Conventional Commits (`feat`, `fix`, `chore`, `docs`, `refactor`, `test`) con scope opcional indicando el módulo tocado (`feat(auth): ...`, `feat(landing): ...`). El equipo adoptó esta convención al observar que el repo de landing ya la seguía y aporta a la trazabilidad descrita en sección 5.2.2.
+
+#### 5.3.1.3 Testing Suite Evidence for Sprint Review
+
+El Sprint 1 establece el cimiento de testing en lugar de buscar cobertura amplia, dado que el código de producto recién nace y la prioridad arquitectónica del sprint es desplegar infraestructura en ambientes reales.
+
+**Frontend (`ParkLink-Landing`):**
+- Framework planificado: **Vitest** + **React Testing Library** (integración natural con Vite, ya en `devDependencies` de la mayoría de proyectos Vite + React).
+- Estado al cierre del Sprint 1: pendiente de habilitar (el repo aún no contiene `vitest.config.ts`). El equipo identificó esta deuda y la priorizó para el Sprint 2.
+- Smoke test manual ejecutado: la landing carga en `https://arqsoft.vercel.app` con HTTP 200, animaciones de métricas se disparan al entrar al viewport, el CTA es clickeable.
+
+**Backend (`ParkLink-Backend`):**
+- Framework instalado en el repo: **Jest 30** + **Supertest 7** (declarados en `devDependencies` y `jest.config.ts` presente en la raíz del monorepo). Se utilizará el harness oficial `@nestjs/testing` para inyectar dependencias en tests unitarios y un `TestingModule` por feature para tests de integración.
+- Cobertura mínima objetivo Sprint 1: los tres endpoints de IAM (`POST /auth/register` × 2 roles, `POST /auth/login`) con al menos un test happy path y un test de error (email duplicado, credenciales inválidas).
+- El driver técnico **TS03** requiere validación de que un token con rol `DRIVER` no pueda llegar a una ruta protegida con `@Roles(UserRole.OWNER)` — este caso entra al sprint como test de aceptación del `RolesGuard` y `JwtAuthGuard`.
+
+**Resumen ejecutivo de testing en Sprint 1:** smoke tests manuales pasados, suite automatizada en planificación. Esta limitación queda registrada como riesgo de Sprint 1 y se mitiga con priorización explícita en Sprint 2.
+
+#### 5.3.1.4 Execution Evidence for Sprint Review
+
+La evidencia de ejecución demuestra que los entregables del Sprint 1 corren en ambientes reales, no sólo en la máquina del desarrollador.
+
+**Landing en producción:**
+- URL pública: `https://arqsoft.vercel.app`
+- Verificación: la URL responde con HTTP 200 y sirve el bundle de Vite generado por `npm run build`. El equipo validó manualmente en Chrome, Safari y Firefox que el hero, las métricas animadas y los CTAs cargan sin errores en consola.
+- Build time observado en Vercel: < 30 segundos (build cache activo).
+
+**Backend en producción (Vercel serverless):**
+- URL pública: `https://parklink-backend.vercel.app` (slug definitivo a confirmar en el dashboard Vercel del equipo).
+- Despliegue: `vercel.json` con `installCommand: "bun install"`, `buildCommand: "bun run build:backend"`, `outputDirectory: "dist"` y rewrite global a `/api/index.js` (handler `@vercel/node` que monta la aplicación NestJS).
+- Health check: `GET /health` → `200 OK` con payload `{ "status": "ok", "service": "backend", "timestamp": "ISO" }`.
+- Endpoints de IAM ejecutables vía Postman / cURL:
+  ```bash
+  # Registro de conductor
+  curl -X POST https://parklink-backend.vercel.app/api/v1/auth/register \
+    -H "Content-Type: application/json" \
+    -d '{"email":"matias@example.com","password":"Test1234!","role":"DRIVER","plate":"ABC-123"}'
+  # → 201 Created, body: { "userId": "uuid", "role": "DRIVER" }
+
+  # Login
+  curl -X POST https://parklink-backend.vercel.app/api/v1/auth/login \
+    -H "Content-Type: application/json" \
+    -d '{"email":"matias@example.com","password":"Test1234!"}'
+  # → 200 OK, body: { "accessToken": "eyJhbGciOi...", "expiresIn": 3600 }
+  ```
+
+**Base de datos en producción (Render):**
+- Instancia PostgreSQL administrada en Render, plan gratuito (256 MB, suficiente para Sprint 1).
+- Tabla `users` operativa con columnas `id (uuid)`, `email (unique)`, `password_hash`, `role (enum)`, `created_at`, `verified_at`; migraciones gestionadas por Prisma (`prisma migrate deploy`).
+- Acceso restringido por SSL + credenciales inyectadas vía variables de entorno (`DATABASE_URL`) configuradas en el dashboard de Vercel — nunca commiteadas al repo, cumpliendo QAS-04. Las funciones serverless de Vercel se conectan a Render Postgres por TCP/TLS desde la región más cercana asignada por Vercel.
+
+#### 5.3.1.5 Microservices Documentation Evidence for Sprint Review
+
+Sprint 1 entrega el primer microservicio funcional del sistema: el **User Identity & Access Service**, correspondiente al bounded context `User Identity Context` descrito en el Capítulo 4. Los demás contextos (Parking Discovery, Parking Supply, Reservation Management, Payments) quedan documentados en arquitectura pero entran a implementación en sprints posteriores.
+
+**Servicio: User Identity & Access Service**
+- **Responsabilidad:** Gestión del ciclo de vida de cuentas de usuario, autenticación por credenciales y emisión de tokens de acceso con información de rol.
+- **Endpoints publicados en Sprint 1:**
+
+| Método | Ruta | Descripción | Auth requerida | Driver soportado |
+|--------|------|-------------|----------------|-------------------|
+| `POST` | `/api/v1/auth/register` | Crea una cuenta nueva con rol `DRIVER` u `OWNER` | No | US17, US18 |
+| `POST` | `/api/v1/auth/login` | Autentica credenciales y devuelve JWT | No | US19 |
+| `GET`  | `/api/v1/auth/me`     | Devuelve datos del usuario autenticado | Bearer JWT | TS03 |
+| `GET`  | `/health`              | Liveness probe | No | Infra |
+
+- **Contrato OpenAPI:** generado automáticamente por `@nestjs/swagger` 11.4.2 a partir de los decoradores `@ApiTags`, `@ApiOperation`, `@ApiResponse` y `@ApiBody` declarados en cada controlador. Se sirve en `/docs` (Swagger UI embebido) y el JSON crudo en `/docs-json`.
+- **Modelo de datos persistido (PostgreSQL):**
+  ```sql
+  CREATE TABLE users (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    role VARCHAR(16) NOT NULL CHECK (role IN ('DRIVER','OWNER')),
+    plate VARCHAR(16),                 -- sólo para DRIVER
+    bank_account VARCHAR(64),          -- sólo para OWNER
+    verified_at TIMESTAMP,
+    created_at TIMESTAMP NOT NULL DEFAULT NOW()
+  );
+
+  CREATE TABLE refresh_tokens (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    token_hash VARCHAR(255) NOT NULL,
+    expires_at TIMESTAMP NOT NULL,
+    revoked_at TIMESTAMP
+  );
+  ```
+- **Trazabilidad con Capítulo 4:** este servicio materializa el `User Identity Context` y satisface **TS03 — Autenticación y autorización por roles** así como el escenario de calidad **QAS-04 (Security)**. Implementa el ADR-301 de hashing con bcrypt (factor 12) y el ADR-302 de JWT firmado con HS256 + secret rotable. Las llamadas entre este servicio y el resto del sistema son síncronas vía HTTP/REST, alineado con la decisión arquitectónica del Capítulo 4 de evitar acoplamiento por mensajería en operaciones de autenticación.
+
+#### 5.3.1.6 Software Deployment Evidence for Sprint Review
+
+El Sprint 1 ejercita por primera vez la cadena de despliegue del proyecto, separando dos planos: **Vercel** para ejecutar todo el código (web estático y backend serverless) y **Render** para el plano persistente de datos (base PostgreSQL administrada). Esta separación aprovecha lo mejor de cada plataforma: Vercel ofrece deploy automático por push, funciones serverless globales y TLS gestionado; Render ofrece Postgres administrado con backups automáticos sin sysadmin.
+
+**Vercel — Web frontend (`ParkLink-Landing`):**
+- Proyecto vinculado al repositorio GitHub mediante integración nativa de Vercel.
+- Cada push a `main` dispara un build automático (`vite build`) y un deploy de la salida estática (`dist/`).
+- Cada Pull Request genera una Preview URL aislada, útil para revisión visual antes de mergear.
+- URL de producción: `https://arqsoft.vercel.app`.
+- TLS provisto por Vercel (certificado automático, renovación gestionada). Cumple QAS-04 (100% del tráfico bajo HTTPS).
+
+**Vercel — Backend NestJS serverless (`ParkLink-Backend`):**
+- Proyecto Vercel separado del frontend, vinculado al repositorio `ParkLink-Backend`.
+- `vercel.json` declara `installCommand: "bun install"`, `buildCommand: "bun run build:backend"`, `outputDirectory: "dist"` y rewrites globales hacia `/api/index.js`, que actúa como handler `@vercel/node` montando la aplicación NestJS en cada invocación serverless.
+- Build pipeline: `bun install` → `bunx prisma generate` (vía `postinstall`) → `bun run build:backend` (compila NestJS) → Vercel publica la función serverless.
+- Variables de entorno definidas en el dashboard de Vercel (nunca en el repositorio):
+  - `DATABASE_URL` — connection string apuntando a Render Postgres con SSL obligatorio.
+  - `JWT_SECRET` — secreto de firma de tokens (rotable).
+  - `NODE_ENV=production`.
+  - `CORS_ORIGIN=https://arqsoft.vercel.app` — restringe orígenes permitidos al dominio del frontend.
+- **Trade-off conocido del plan free:** Vercel limita las funciones serverless a un timeout de 10 segundos y aplica cold starts de ~1–3 segundos tras inactividad. Esto es aceptable para los endpoints de Sprint 1 (autenticación, registros pequeños), pero exigirá monitoreo a medida que se incorporen los flujos de búsqueda y reserva en sprints siguientes. Si algún endpoint excede el límite (por ejemplo, búsquedas geoespaciales pesadas), se evaluará migrar a Vercel Pro o split de servicios.
+
+**Render — Base de datos PostgreSQL administrada:**
+- Instancia PostgreSQL administrada (plan free 256 MB), SSL obligatorio, backups diarios automáticos del propio Render.
+- Acceso público (con SSL) desde el backend en Vercel mediante `DATABASE_URL` con `?sslmode=require`.
+- Migraciones gestionadas por Prisma 7 ejecutadas con `bunx prisma migrate deploy` desde la máquina del desarrollador apuntando a la `DATABASE_URL` de producción.
+
+**Pipeline real del despliegue al cierre del Sprint 1:**
+```
+Developer push → GitHub (main)
+              ├─→ ParkLink-Landing repo
+              │      └─→ Vercel build + deploy (web estático)      → https://arqsoft.vercel.app
+              └─→ ParkLink-Backend repo
+                     └─→ Vercel build + deploy (backend serverless) → https://parklink-backend.vercel.app
+                                                                     └─ conecta a → Render PostgreSQL (TCP/TLS público + SSL)
+```
+
+#### 5.3.1.7 Team Collaboration Insights during Sprint
+
+**Eventos Scrum ejecutados durante el Sprint 1:**
+
+| Evento | Frecuencia | Duración | Facilitador rotativo |
+|--------|-----------|----------|-----------------------|
+| Sprint Planning | Una vez (inicio) | 90 min | Pietro Osores Marchese |
+| Daily Stand-up  | Diario (L-V) | 15 min | Rotativo por integrante |
+| Sprint Review   | Una vez (cierre) | 60 min | Fabian Alejandro Oliva Lopez |
+| Sprint Retrospective | Una vez (cierre) | 45 min | Javier Masaru Nikaido Vargas |
+
+**Distribución del trabajo por integrante (real al cierre del Sprint 1):**
+
+| Integrante | Foco asumido | SBI / responsabilidades | SP estimados |
+|------------|---------------|---------------------------|--------------|
+| Pietro Osores Marchese | Frontend, backend (monorepo NestJS), DB, infra Vercel + Render | SBI-01..SBI-09 (todo el plano técnico) | 32 |
+| Javier Masaru Nikaido Vargas | Documentación técnica del informe (5.3.1.2, 5.3.1.3, 5.3.1.5), facilitación de Sprint Planning | Sin SBI técnicos asignados | 0 |
+| Fabian Alejandro Oliva Lopez | Documentación de infra y ejecución (5.3.1.1, 5.3.1.4, 5.3.1.6), facilitación de Sprint Review | Sin SBI técnicos asignados | 0 |
+| Percy Alonso Muñiz Huayanca | Tablero Trello, documentación de proceso (5.3.1.7, 5.3.1.8), cierre del informe, facilitación de Sprint Retrospective | Sin SBI técnicos asignados | 0 |
+| Matias Rodolfo Salcedo Champi | Soporte a documentación y revisión cruzada | Sin SBI técnicos asignados | 0 |
+| **Total** |  |  | **32 SP** |
+
+Esta concentración de carga técnica en un solo integrante es atípica para Scrum y se documenta explícitamente como un riesgo de "factor bus" en la retrospectiva del Sprint 1. Mitigación acordada: en Sprint 2 al menos dos integrantes adicionales (Percy y Matias como candidatos) deben pair-programar con Pietro sobre el monorepo NestJS para reducir el riesgo y distribuir el conocimiento del stack.
+
+**Canales de colaboración:**
+- Discord del equipo para coordinación diaria asincrónica y dailies.
+- GitHub Pull Requests para revisión de código (mínimo un reviewer por PR).
+- WhatsApp para alertas urgentes (caídas de servicio, bloqueos).
+- Llamadas en Discord o Google Meet para Sprint Planning, Review y Retro.
+
+**Hallazgos clave de la retrospectiva (cierre Sprint 1):**
+- *Lo que funcionó:* Adoptar el stack monorepo NestJS + Bun + Prisma + Vercel serverless permitió tener backend en producción el mismo día del primer push. La separación Vercel (compute) + Render (datos) aprovechó planes gratuitos sin sysadmin. La convención de Conventional Commits facilitó leer el historial.
+- *Lo que mejorar:* La concentración del trabajo técnico en un único integrante (factor bus). No se configuró pipeline de CI (lint + test) durante el Sprint 1; quedó como deuda técnica prioritaria para Sprint 2. La falta de un tablero Kanban formal generó pequeñas duplicaciones de comunicación que se resolvieron en daily.
+- *Acuerdos para Sprint 2:* (1) habilitar Trello como tablero único; (2) pair-programming obligatorio entre Pietro y al menos otros dos integrantes en cada SBI técnico; (3) agregar GitHub Actions con `bun run lint && bun run test` en cada PR; (4) escribir la suite de Jest pendiente para los endpoints de IAM.
+
+#### 5.3.1.8 Kanban Board
+
+Durante el Sprint 1 el equipo trabajó con un tablero Kanban informal compartido por Discord y mensajes directos. Como acuerdo de Retrospectiva (ver sección 5.3.1.7), a partir del Sprint 2 el tablero oficial será **Trello** (board "ParkLink — Sprint 1" gestionado por Percy Alonso Muñiz Huayanca) con URL pública compartida al equipo. La elección sobre GitHub Projects se debió a la familiaridad previa del equipo con Trello y a la facilidad para tomar capturas limpias de inicio y cierre de sprint como evidencia documental.
+
+**Estructura propuesta del tablero (a habilitar al inicio del Sprint 2):**
+
+| Columna | Significado | Política de entrada |
+|---------|-------------|----------------------|
+| **Backlog** | Items refinados pero no comprometidos al sprint actual | Tienen historia de usuario asociada y estimación inicial |
+| **Sprint Backlog** | Items comprometidos al sprint en curso | Caben en la capacidad declarada y tienen Definition of Ready |
+| **In Progress** | Tarea siendo desarrollada por un integrante | Máximo 1 tarea activa por persona (límite WIP) |
+| **In Review** | PR abierto esperando revisión | Tiene checks de CI pasados |
+| **Done** | Mergeado y desplegado | Cumple Definition of Done |
+
+**Estado retroactivo del tablero al cierre del Sprint 1** (registrado en este informe como evidencia documental, dado que el tablero físico no existió):
+
+| SBI | Estado final |
+|-----|--------------|
+| SBI-01 Landing pública | Done — desplegado en `https://arqsoft.vercel.app` |
+| SBI-02 Registro conductor | In Review / Done (al cierre del sprint) |
+| SBI-03 Registro propietario | In Review / Done (al cierre del sprint) |
+| SBI-04 Login | In Review / Done (al cierre del sprint) |
+| SBI-05 Middleware autorización por rol | In Review / Done (al cierre del sprint) |
+| SBI-06 Setup repo backend | Done |
+| SBI-07 Provisión Postgres Render | Done |
+| SBI-08 Deploy backend Render | Done |
+| SBI-09 Form de registro embebido en landing | In Progress al cierre (carry-over candidato a Sprint 2 si no se completa) |
