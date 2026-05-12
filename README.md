@@ -3352,40 +3352,37 @@ Buenas prácticas aplicadas:
 
 ### 5.2.4 Software Deployment Configuration
 
-Para el despliegue de ParkLink se empleará Vercel como plataforma principal. La landing page se encuentra configurada para deployment en Vercel, mientras que el backend incluye configuración de despliegue mediante `vercel.json` y variables de entorno para conectar servicios, API Gateway, Google Maps y base de datos en VM.
+ParkLink utiliza **Vercel** como plataforma principal para desplegar los componentes backend documentados mediante Swagger/OpenAPI. El proyecto separa la landing page y el backend en repositorios independientes, permitiendo organizar mejor la capa pública del producto y la capa de servicios.
 
-La estrategia de despliegue separa la capa pública del producto y la capa backend. De esta manera, la landing page puede publicarse como aplicación web independiente, mientras que el backend puede desplegarse manteniendo una estructura modular con API Gateway y servicios especializados.
+El backend se encuentra desarrollado con NestJS, Bun, Prisma y Swagger. Además, cuenta con un **API Gateway**, el cual funciona como punto de entrada principal para recibir solicitudes externas y redirigirlas hacia los servicios correspondientes.
 
-### Despliegue de la Landing Page
+### Repository Links
 
-La landing page se despliega como una aplicación React + TypeScript + Vite. El flujo general de despliegue consiste en conectar el repositorio de GitHub con Vercel, ejecutar el build de producción y publicar la versión generada.
+**Landing Page Repository:**
 
-Pasos principales:
+```txt
+https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Landing
+```
 
-1. Conectar el repositorio de la landing page con Vercel.
-2. Configurar el comando de instalación y build del proyecto.
-3. Ejecutar el despliegue automático desde la rama `main`.
-4. Validar que la landing page se encuentre disponible públicamente.
-5. Verificar que las secciones principales, estilos y navegación funcionen correctamente.
+**Backend Repository:**
 
-### Despliegue del Backend
+```txt
+https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Backend
+```
 
-El backend de ParkLink se despliega como un monorepo basado en NestJS, Bun, Prisma y Vercel. La arquitectura considera un API Gateway como punto de entrada principal y servicios backend para autenticación, usuarios, estacionamientos, reservas, pagos, notificaciones y mapas.
+### Deployment Links
 
-El API Gateway se encarga de recibir las solicitudes del frontend y redirigirlas hacia los servicios correspondientes. De esta forma, el frontend no necesita conocer directamente las URLs internas de cada servicio, sino únicamente la URL pública del API Gateway.
+**Backend Swagger Deployment:**
 
-Orden sugerido de despliegue backend:
+```txt
+https://backend-silk-two-93.vercel.app/docs/
+```
 
-1. Desplegar el servicio de autenticación.
-2. Desplegar el servicio de usuarios.
-3. Desplegar el servicio de mapas.
-4. Desplegar el servicio de estacionamientos.
-5. Desplegar el servicio de reservas.
-6. Desplegar el servicio de pagos.
-7. Desplegar el servicio de notificaciones.
-8. Configurar las URLs públicas de los servicios en el API Gateway.
-9. Desplegar el API Gateway.
-10. Utilizar la URL pública del API Gateway como entrada principal para el frontend.
+**API Gateway Swagger Deployment:**
+
+```txt
+https://api-gateway-xi-five.vercel.app/docs
+```
 
 ## 5.3 Microservices Implementation
 
