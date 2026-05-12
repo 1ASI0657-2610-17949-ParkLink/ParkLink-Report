@@ -2459,13 +2459,279 @@ CircuitBreakerDecorator o-- NotificationProvider : decorates
 
 ## 5.2 Software Configuration Management
 
+La gestión de configuración de software en ParkLink tiene como objetivo organizar las herramientas, estándares, repositorios, convenciones de código y mecanismos de despliegue utilizados durante el desarrollo del producto. Esta sección permite asegurar que el equipo mantenga una forma ordenada de trabajar, controlar versiones, documentar cambios, ejecutar pruebas, desplegar componentes y mantener la trazabilidad del desarrollo.
+
+ParkLink se encuentra dividido en dos repositorios principales: uno correspondiente a la **landing page**, desarrollada con React, TypeScript y Vite, y otro correspondiente al **backend**, desarrollado como monorepo con NestJS, TypeScript, Prisma y Bun.
+
+El repositorio de la landing page contiene la capa de presentación pública del producto, mientras que el repositorio backend contiene la implementación de servicios, API Gateway, configuración de Prisma, testing, documentación Swagger y preparación para despliegue.
+
 ### 5.2.1 Software Development Environment Configuration
+
+### Requirements Management
+
+**1. Trello:**  
+Trello será utilizado como herramienta de gestión visual para organizar el flujo de trabajo del equipo, registrar las tareas del sprint y mantener el seguimiento del Product Backlog. En ParkLink, esta herramienta permite representar las historias de usuario, tareas técnicas y actividades del sprint en columnas como pendientes, en proceso y terminadas.
+
+### Product UX/UI Design
+
+**2. Miro:**  
+Miro será utilizado como herramienta de apoyo para la representación de artefactos de análisis y diseño, tales como Impact Mapping, To-Be Scenario Mapping y diagramas colaborativos. En ParkLink, estos artefactos permiten relacionar los objetivos del negocio con actores, impactos esperados, entregables y User Stories.
+
+**3. UXPressia:**  
+UXPressia será utilizada como herramienta de apoyo para representar artefactos centrados en el usuario, como User Personas y mapas de empatía. Estos recursos permiten comprender las necesidades, frustraciones y motivaciones de los segmentos objetivo de ParkLink: conductores urbanos y propietarios de espacios de estacionamiento.
+
+### Software Testing
+
+**4. Gherkin:**  
+Gherkin será utilizado para redactar criterios de aceptación bajo la estructura Given-When-Then. Esta convención facilita que las historias de usuario mantengan una descripción clara de condiciones iniciales, acciones del usuario y resultados esperados. En ParkLink, este formato se aplica en funcionalidades como búsqueda de estacionamientos, reservas, pagos, publicación de espacios e inicio de sesión.
+
+**5. Jest:**  
+Jest será utilizado para la ejecución de pruebas unitarias y pruebas básicas del backend. El backend de ParkLink incluye configuración de testing mediante Jest, permitiendo validar servicios como autenticación, usuarios, estacionamientos, reservas, pagos, notificaciones, mapas y proxy del API Gateway.
+
+**6. Supertest:**  
+Supertest será utilizado como herramienta de apoyo para pruebas HTTP sobre endpoints del backend. Esta herramienta permite validar respuestas de rutas REST, estados HTTP y comportamiento básico de servicios expuestos por NestJS.
+
+### Software Development
+
+**7. Visual Studio Code / WebStorm:**  
+Visual Studio Code y WebStorm serán empleados como entornos de desarrollo integrados para la edición, depuración y organización del código fuente. Estas herramientas brindan soporte para TypeScript, NestJS, React, ESLint, Prettier, Git y extensiones orientadas al desarrollo web y backend.
+
+**8. TypeScript:**  
+TypeScript será utilizado como lenguaje principal de desarrollo tanto en la landing page como en el backend. Su tipado estático permite reducir errores, mejorar el autocompletado, documentar estructuras de datos y facilitar el mantenimiento del código.
+
+**9. React + Vite:**  
+React y Vite serán utilizados para el desarrollo de la landing page de ParkLink. Esta combinación permite construir una aplicación web rápida, modular y mantenible, orientada a presentar la propuesta de valor del producto.
+
+**10. NestJS:**  
+NestJS será utilizado para el desarrollo del backend de ParkLink. Este framework permite estructurar la aplicación mediante módulos, controladores, servicios, DTOs, guards, interceptores y filtros, manteniendo una arquitectura ordenada y escalable.
+
+**11. Bun:**  
+Bun será utilizado como runtime y package manager principal del backend. Esta herramienta permite instalar dependencias, ejecutar scripts, compilar el proyecto y correr pruebas de forma eficiente.
+
+**12. Prisma ORM:**  
+Prisma será utilizado como herramienta de persistencia para conectar los servicios backend con la base de datos. En ParkLink, la base de datos está pensada para alojarse en una VM y accederse mediante la variable de entorno `DATABASE_URL`.
+
+**13. Swagger / OpenAPI:**  
+Swagger será utilizado para documentar los endpoints del API Gateway y de los servicios backend. Esta documentación permite revisar contratos de API, DTOs, operaciones disponibles y realizar pruebas manuales desde el navegador.
+
+**14. Google Maps API:**  
+Google Maps API será utilizada para funcionalidades de geocodificación, cálculo de distancias y soporte de mapas. En la arquitectura backend, esta integración se centraliza mediante el servicio de mapas, evitando exponer directamente la API key y separando la lógica de mapas del resto del dominio.
+
+### Software Deployment
+
+**15. Git:**  
+Git será utilizado como sistema de control de versiones para registrar cambios, mantener historial del código, crear ramas de trabajo y facilitar la colaboración entre integrantes.
+
+**16. GitHub:**  
+GitHub será utilizado como plataforma principal para alojar los repositorios del proyecto. ParkLink cuenta con un repositorio para la landing page y otro para el backend, permitiendo separar la capa pública del producto y la capa de servicios.
+
+**17. Vercel:**  
+Vercel será utilizado como plataforma de despliegue. La landing page se encuentra preparada para deployment en Vercel, mientras que el backend incluye configuración para desplegar sus componentes y servicios.
 
 ### 5.2.2 Source Code Management
 
+El proyecto ParkLink emplea Git y GitHub como herramientas principales para el control del código fuente. La gestión de versiones se organiza a partir de repositorios separados para frontend público y backend, permitiendo diferenciar la capa de presentación de la capa de servicios.
+
+### Repositorio de Landing Page
+
+**Repositorio:**  [https://github.com/1ASI0657-2610-17949-ParkLink](https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Landing)
+
+### Repositorio Backend
+
+**Repositorio:** https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Backend
+
 ### 5.2.3 Source Code Style Guide & Conventions
 
+Para asegurar consistencia, legibilidad y mantenibilidad del código, ParkLink adopta convenciones de estilo tanto para el frontend como para el backend. Estas convenciones permiten que el equipo trabaje de forma ordenada, reduzca errores y mantenga una estructura uniforme en los repositorios del proyecto.
+
+### HTML
+
+En la landing page se emplearán etiquetas HTML semánticas para estructurar correctamente el contenido. Se utilizarán elementos como `header`, `nav`, `main`, `section`, `article` y `footer`, con el objetivo de mejorar la accesibilidad, la legibilidad del código y la organización visual del sitio.
+
+Buenas prácticas aplicadas:
+
+- Usar etiquetas semánticas según el propósito del contenido.
+- Mantener correctamente cerradas las etiquetas.
+- Utilizar atributos `alt` en imágenes para mejorar la accesibilidad.
+- Evitar estructuras HTML innecesariamente profundas.
+- Mantener nombres de clases claros y relacionados con su función.
+- Organizar el contenido por secciones para facilitar su mantenimiento.
+
+### CSS
+
+En la landing page se aplicarán estilos CSS organizados y reutilizables. Se buscará mantener clases claras, evitar duplicidad de reglas y separar correctamente la estructura visual de la lógica de componentes.
+
+Buenas prácticas aplicadas:
+
+- Usar nombres de clases descriptivos.
+- Separar bloques de estilos por secciones.
+- Mantener consistencia en márgenes, espaciados, tamaños y colores.
+- Evitar reglas CSS repetidas.
+- Mantener diseño responsive para escritorio y dispositivos móviles.
+- Usar comentarios breves cuando una regla requiera explicación adicional.
+
+### TypeScript
+
+TypeScript será utilizado como lenguaje base en frontend y backend. Su uso permite trabajar con tipado estático, reducir errores durante el desarrollo y mejorar el mantenimiento del código.
+
+Convenciones aplicadas:
+
+- Uso de `camelCase` para variables, funciones y métodos.
+- Uso de `PascalCase` para clases, interfaces, DTOs, módulos y componentes.
+- Uso de nombres descriptivos para evitar ambigüedad.
+- Evitar variables genéricas como `data`, `item` o `value` cuando el contexto no sea claro.
+- Separar responsabilidades en archivos distintos.
+- Utilizar tipos explícitos en DTOs, servicios y respuestas.
+- Evitar código muerto o funciones sin uso.
+- Mantener los archivos organizados según su responsabilidad dentro del proyecto.
+
+### NestJS
+
+En el backend se seguirá la estructura recomendada por NestJS, separando responsabilidades por módulos, controladores, servicios y DTOs. Esto permite mantener una arquitectura limpia, modular y alineada con los bounded contexts definidos en el Capítulo IV.
+
+Convenciones aplicadas:
+
+- Los controladores deben encargarse de recibir solicitudes HTTP.
+- Los servicios deben contener la lógica de aplicación.
+- Los DTOs deben definir y validar la estructura de entrada.
+- Los guards deben proteger rutas privadas mediante JWT.
+- Los interceptores deben uniformizar respuestas.
+- Los filtros deben manejar errores de forma estándar.
+- Las rutas deben representar recursos de forma clara.
+- Cada módulo debe agrupar archivos relacionados con una misma responsabilidad.
+
+Ejemplos de rutas principales:
+
+```txt
+/auth
+/users
+/parking-spaces
+/reservations
+/payments
+/notifications
+/maps
+```
+
+### Prisma
+
+Para la persistencia de datos se utilizará Prisma ORM. Cada modelo debe representar entidades del dominio como usuarios, espacios de estacionamiento, reservas, pagos y notificaciones. Las migraciones deben ejecutarse de forma controlada y las credenciales deben configurarse mediante variables de entorno.
+
+Convenciones aplicadas:
+
+- No colocar credenciales reales en el código.
+- Utilizar `DATABASE_URL` en archivos `.env`.
+- No subir archivos `.env` al repositorio.
+- Mantener archivos `.env.example` como referencia.
+- Ejecutar generación de cliente Prisma antes de compilar servicios dependientes.
+- Mantener la base de datos como fuente de verdad para reservas, pagos y usuarios.
+- Nombrar los modelos de forma clara según las entidades principales del dominio.
+
+### API REST
+
+Las APIs seguirán una convención REST basada en recursos. Las rutas deben ser claras, predecibles y consistentes para facilitar el consumo desde el frontend y la documentación mediante Swagger.
+
+Ejemplos de endpoints:
+
+```txt
+GET /health
+GET /docs
+POST /auth/login
+POST /auth/register-driver
+GET /users/me
+POST /parking-spaces
+GET /parking-spaces/search
+POST /reservations
+POST /payments
+GET /notifications
+GET /maps/geocode
+```
+
+Las respuestas exitosas deberán mantener una estructura uniforme:
+
+```json
+{
+  "success": true,
+  "message": "Operation completed successfully",
+  "data": {}
+}
+```
+
+Los errores deberán responder con una estructura uniforme:
+
+```json
+{
+  "success": false,
+  "statusCode": 400,
+  "message": "Error message",
+  "timestamp": "ISO_DATE",
+  "path": "/endpoint"
+}
+```
+
+Esta convención permite que el frontend consuma respuestas de manera consistente y que los errores sean más fáciles de interpretar durante desarrollo, pruebas y despliegue.
+
+### Seguridad
+
+Las convenciones de seguridad del código consideran:
+
+- No exponer contraseñas.
+- No devolver `passwordHash` en respuestas.
+- Guardar contraseñas usando hash con bcrypt.
+- Proteger endpoints privados mediante JWT.
+- Validar datos de entrada con DTOs.
+- Usar variables de entorno.
+- No colocar credenciales reales de la VM en el repositorio.
+- No colocar `GOOGLE_MAPS_API_KEY` directamente en el código.
+- Reenviar el header `Authorization` desde el API Gateway hacia los servicios correspondientes.
+- Separar responsabilidades para evitar que el API Gateway contenga lógica de negocio.
+
+### ESLint y Prettier
+
+El proyecto utilizará ESLint y Prettier para mantener consistencia de estilo. Estas herramientas permiten detectar errores comunes, ordenar el código y aplicar un formato uniforme en todo el proyecto.
+
+Buenas prácticas aplicadas:
+
+- Ejecutar lint antes de integrar cambios importantes.
+- Aplicar formato uniforme en archivos TypeScript, JavaScript, CSS y configuración.
+- Mantener reglas compartidas entre integrantes del equipo.
+- Evitar estilos de código diferentes dentro del mismo repositorio.
+
 ### 5.2.4 Software Deployment Configuration
+
+Para el despliegue de ParkLink se empleará Vercel como plataforma principal. La landing page se encuentra configurada para deployment en Vercel, mientras que el backend incluye configuración de despliegue mediante `vercel.json` y variables de entorno para conectar servicios, API Gateway, Google Maps y base de datos en VM.
+
+La estrategia de despliegue separa la capa pública del producto y la capa backend. De esta manera, la landing page puede publicarse como aplicación web independiente, mientras que el backend puede desplegarse manteniendo una estructura modular con API Gateway y servicios especializados.
+
+### Despliegue de la Landing Page
+
+La landing page se despliega como una aplicación React + TypeScript + Vite. El flujo general de despliegue consiste en conectar el repositorio de GitHub con Vercel, ejecutar el build de producción y publicar la versión generada.
+
+Pasos principales:
+
+1. Conectar el repositorio de la landing page con Vercel.
+2. Configurar el comando de instalación y build del proyecto.
+3. Ejecutar el despliegue automático desde la rama `main`.
+4. Validar que la landing page se encuentre disponible públicamente.
+5. Verificar que las secciones principales, estilos y navegación funcionen correctamente.
+
+### Despliegue del Backend
+
+El backend de ParkLink se despliega como un monorepo basado en NestJS, Bun, Prisma y Vercel. La arquitectura considera un API Gateway como punto de entrada principal y servicios backend para autenticación, usuarios, estacionamientos, reservas, pagos, notificaciones y mapas.
+
+El API Gateway se encarga de recibir las solicitudes del frontend y redirigirlas hacia los servicios correspondientes. De esta forma, el frontend no necesita conocer directamente las URLs internas de cada servicio, sino únicamente la URL pública del API Gateway.
+
+Orden sugerido de despliegue backend:
+
+1. Desplegar el servicio de autenticación.
+2. Desplegar el servicio de usuarios.
+3. Desplegar el servicio de mapas.
+4. Desplegar el servicio de estacionamientos.
+5. Desplegar el servicio de reservas.
+6. Desplegar el servicio de pagos.
+7. Desplegar el servicio de notificaciones.
+8. Configurar las URLs públicas de los servicios en el API Gateway.
+9. Desplegar el API Gateway.
+10. Utilizar la URL pública del API Gateway como entrada principal para el frontend.
 
 ## 5.3 Microservices Implementation
 
