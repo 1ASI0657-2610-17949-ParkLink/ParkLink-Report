@@ -80,6 +80,8 @@
     - [4.1.3.1. Software Architecture System Landscape Diagram](#4131-software-architecture-system-landscape-diagram)
     - [4.1.3.2. Software Architecture Context Level Diagrams](#4132-software-architecture-context-level-diagrams)
     - [4.1.3.3. Software Architecture Container Level Diagrams](#4133-software-architecture-container-level-diagrams)
+    - [4.1.3.4. Software Architecture Component Level Diagrams](#4134-software-architecture-component-level-diagrams)
+    - [4.1.3.5. Software Architecture Code Level Diagrams](#4135-software-architecture-code-level-diagrams)
     - [4.1.4. Approach driven ViewPoints Diagrams](#414-approach-driven-viewpoints-diagrams)
     - [4.1.5. Relational / Non-Relational Database Diagram](#415-relational--non-relational-database-diagram)
     - [4.1.6. Design Patterns](#416-design-patterns)
@@ -1028,7 +1030,22 @@ La arquitectura de software de ParkLink se define a partir de los principales pr
 
 La separación por bounded contexts permite reducir acoplamiento entre capacidades que evolucionan por motivos distintos. La búsqueda de estacionamientos cambia por criterios de experiencia de usuario, mapas, filtros y disponibilidad visible; la reserva cambia por reglas transaccionales de bloqueo, cancelación y extensión; la publicación y monetización cambian por reglas de oferta, precios, pagos, reembolsos y comprobantes; y la identidad cambia por seguridad, autenticación y control de roles. Esta división evita concentrar todo el comportamiento en un único módulo ambiguo y permite que cada parte del sistema sea diseñada, probada y escalada según sus propios drivers arquitectónicos.
 
-ParkLink utiliza el C4 Model para representar la arquitectura en niveles progresivos. Los diagramas se documentan mediante Structurizr DSL, ya que esta notación permite declarar explícitamente el modelo arquitectónico, sus relaciones y sus vistas. El System Landscape Diagram muestra el ecosistema completo, actores externos, sistemas externos y bounded contexts principales. Los Context Level Diagrams explican las responsabilidades y dependencias de cada bounded context. El Container Level Diagram muestra los contenedores ejecutables y de datos que soportan la solución, incluyendo aplicaciones cliente, API Gateway o Backend API, módulos backend, base de datos, cache de disponibilidad, object storage, pasarela de pagos, servicio de mapas y servicio de notificaciones.
+ParkLink utiliza el **C4 Model de Simon Brown** como herramienta oficial de representación arquitectónica, aplicando sus cuatro niveles de abstracción de forma estricta: (1) **System Context / Landscape Diagram**, (2) **Container Diagram**, (3) **Component Diagram** y (4) **Code / Class Diagram**. Cada nivel responde una pregunta distinta y se dirige a una audiencia distinta: el System Context responde "¿quién interactúa con ParkLink?", el Container responde "¿qué tecnologías y procesos componen el sistema?", el Component responde "¿qué piezas internas tiene cada contenedor de software?" y el Code responde "¿cómo está modelado el dominio a nivel de clases, estados y reglas?".
+
+Los diagramas se modelan mediante **Structurizr DSL** como Architecture-as-Code, lo que permite versionar el modelo arquitectónico junto al código fuente, generar todas las vistas a partir de una sola fuente de verdad y exportar SVG para incrustar en este informe. Los archivos SVG generados se encuentran en la carpeta `assets/architecture/` del repositorio. Adicionalmente, los diagramas de Component y Code que requieren detalle de flujos internos se complementan con **PlantUML** y **Mermaid** (renderizado nativo en GitHub) para representar diagramas de clases, máquinas de estado, secuencia y actividad, todo coherente con la notación UML 2.5 cuando aplica.
+
+**Leyenda de notación C4 utilizada en todos los diagramas:**
+
+| Símbolo | Significado | Ejemplo en ParkLink |
+|---------|-------------|----------------------|
+| Persona (caja con cabeza) | Actor humano externo al sistema | Conductor, Propietario |
+| Software System (caja azul oscura) | Sistema bajo análisis | ParkLink Platform |
+| External System (caja gris) | Sistema externo del que dependemos | Google Maps Platform, Stripe, SendGrid |
+| Container (caja azul clara) | Unidad ejecutable o de datos desplegable | Mobile App, Backend API, MySQL, Redis |
+| Component (caja blanca dentro de container) | Pieza interna de código | ReservationController, AvailabilityService |
+| Code Element | Clase, interfaz, value object | `Reservation`, `ReservationStatus` enum |
+| Flecha sólida | Llamada síncrona (HTTPS, JDBC) | Mobile → API Gateway |
+| Flecha discontinua | Comunicación asíncrona vía eventos | Reservation → Event Bus |
 
 La comunicación entre contextos combina interacciones síncronas y eventos de dominio. Las consultas de búsqueda, autenticación y obtención de detalles se atienden mediante APIs REST/JSON sobre HTTPS. Las operaciones críticas, como crear una reserva, bloquear un espacio, confirmar un pago, cancelar una reserva o generar un reembolso, se tratan como comandos transaccionales donde el contexto propietario de la regla de negocio mantiene la consistencia. Para efectos secundarios como notificaciones, actualización de disponibilidad visible, emisión de comprobantes o sincronización de vistas de propietario, se utilizan eventos de dominio internos, de modo que la operación principal no dependa directamente de procesos secundarios.
 
@@ -1047,9 +1064,36 @@ La seguridad se aborda de forma transversal, pero la responsabilidad primaria re
 
 #### 4.1.3.1. Software Architecture System Landscape Diagram
 
-El System Landscape Diagram muestra a ParkLink como sistema principal dentro del ecosistema de movilidad urbana. Los conductores interactúan con la plataforma para buscar, comparar, reservar, pagar y consultar sus reservas. Los propietarios o empresarios de estacionamientos interactúan con la plataforma para publicar espacios, configurar horarios y precios, gestionar reservas recibidas y consultar ingresos.
+El System Landscape Diagram corresponde al **C4 Nivel 1** y muestra a ParkLink como sistema principal dentro del ecosistema de movilidad urbana. Los conductores interactúan con la plataforma para buscar, comparar, reservar, pagar y consultar sus reservas. Los propietarios o empresarios de estacionamientos interactúan con la plataforma para publicar espacios, configurar horarios y precios, gestionar reservas recibidas y consultar ingresos.
 
 ![ParkLink - System Landscape Diagram](assets/architecture/system-landscape.svg)
+
+Como complemento al SVG generado desde Structurizr, el siguiente diagrama Mermaid `C4Context` declara el mismo modelo en notación textual versionable, evidenciando que se sigue estrictamente la sintaxis del C4 Model:
+
+```mermaid
+C4Context
+    title System Context Diagram — ParkLink Platform
+    Enterprise_Boundary(b0, "Ecosistema de Movilidad Urbana") {
+        Person(driver, "Conductor", "Busca y reserva estacionamiento mediante app móvil")
+        Person(owner, "Propietario / Empresario", "Publica y monetiza espacios desde web o móvil")
+        Person(admin, "Administrador ParkTeam", "Modera, audita y soporta a usuarios")
+        System(parklink, "ParkLink Platform", "Plataforma de smart parking: búsqueda, reserva, pago, gestión de oferta y notificaciones")
+        System_Ext(maps, "Google Maps Platform", "Geocoding, distancias y mapas")
+        System_Ext(stripe, "Stripe / MercadoPago", "Pasarela de pagos y reembolsos")
+        System_Ext(fcm, "Firebase Cloud Messaging", "Push notifications móviles")
+        System_Ext(sendgrid, "SendGrid", "Correo transaccional")
+        System_Ext(s3, "S3-compatible Object Storage", "Almacén privado de fotos de espacios")
+    }
+    Rel(driver, parklink, "Busca, reserva, paga, consulta historial", "HTTPS / REST")
+    Rel(owner, parklink, "Publica espacios, gestiona reservas e ingresos", "HTTPS / REST")
+    Rel(admin, parklink, "Modera, audita, soporte", "HTTPS / Admin UI")
+    Rel(parklink, maps, "Geocoding, distancias", "HTTPS / REST")
+    Rel(parklink, stripe, "Cobros, reembolsos, webhooks", "HTTPS + Webhooks")
+    Rel(parklink, fcm, "Envía push", "HTTPS / REST")
+    Rel(parklink, sendgrid, "Envía email", "HTTPS / SMTP")
+    Rel(parklink, s3, "Sube y descarga fotos firmadas", "HTTPS + S3 API")
+    UpdateLayoutConfig($c4ShapeInRow="3", $c4BoundaryInRow="1")
+```
 
 En el paisaje del sistema, ParkLink se ubica como el sistema que coordina la relación entre demanda y oferta de estacionamientos. La integración con el servicio de mapas y geolocalización sustenta las historias US01, US02, US03 y US04, donde el conductor necesita visualizar espacios cercanos, disponibilidad, precio, horario, distancia y valoración. La pasarela de pagos sustenta US14, US15 y US16, relacionadas con pago en línea, reembolsos y comprobantes. El servicio de notificaciones y correo sustenta EP06 y US20, además de flujos de verificación de cuenta. El object storage compatible con S3 se justifica por US04 y US09, donde los espacios requieren fotografías para ser publicados y evaluados por el conductor antes de reservar.
 
@@ -1147,6 +1191,352 @@ El Container Level Diagram muestra cómo los productos digitales y servicios té
 Esta estructura soporta las user stories principales del backlog. US01 a US04 se resuelven mediante Mobile Application, API Gateway, Parking Discovery Service, Maps API, cache de disponibilidad y object storage. US05 a US08 se resuelven mediante Reservation Management Service, base de datos relacional, cache y eventos de notificación. US09 a US13 se resuelven mediante Parking Supply & Monetization Service, Web/Mobile Application, object storage y base de datos. US14 a US16 se resuelven mediante la integración entre Parking Supply & Monetization Service y Payment Gateway. US17 a US19 se resuelven mediante User & Identity Service con JWT y roles. US20 se resuelve mediante eventos de reserva confirmada y el servicio de notificaciones/correo.
 
 La base de datos relacional se mantiene como fuente de verdad para reservas y pagos porque estas operaciones requieren consistencia fuerte. La cache no reemplaza esa fuente de verdad; solo acelera la lectura de disponibilidad para el conductor. Esta decisión es clave: una disponibilidad mostrada en el mapa no equivale a una reserva confirmada hasta que el Reservation Management Context haya bloqueado el espacio y registrado el estado correspondiente.
+
+**Conectividad explícita a la base de datos relacional (lectura clave del Container Diagram).** Conforme a la notación C4, la base de datos `Main Relational Database (MySQL)` no es un bounded context ni un servicio: es un **contenedor de datos** consultado y modificado **únicamente** por los servicios backend mediante JDBC/TCP cifrado. Cada microservicio mantiene la propiedad lógica de sus tablas pero comparte el motor por simplicidad operativa en la primera versión. El siguiente diagrama Mermaid complementa el SVG anterior para hacer explícita la conectividad servicio→base de datos exigida por el C4 Container Level:
+
+```mermaid
+flowchart LR
+    UserSvc["User & Identity Service<br/>(Node.js / NestJS)"]
+    DiscoverySvc["Parking Discovery Service<br/>(Node.js / NestJS)"]
+    ReservationSvc["Reservation Management Service<br/>(Node.js / NestJS)"]
+    SupplySvc["Parking Supply &amp; Monetization Service<br/>(Node.js / NestJS)"]
+    Cache[("Availability Cache<br/>Redis 7")]
+    DB[("Main Relational Database<br/>MySQL 8.0")]
+    EventBus(["Internal Domain Event Bus"])
+
+    UserSvc -- "Lee/escribe<br/>tablas USERS, REFRESH_TOKENS<br/>(JDBC/TLS)" --> DB
+    DiscoverySvc -- "Lee tablas<br/>PARKING_SPACES, AVAILABILITY<br/>(JDBC/TLS)" --> DB
+    DiscoverySvc -- "GET disponibilidad<br/>(Redis protocol/TLS)" --> Cache
+    ReservationSvc -- "Lee/escribe<br/>tablas RESERVATIONS, PAYMENTS<br/>(JDBC/TLS, SELECT FOR UPDATE)" --> DB
+    ReservationSvc -- "INVALIDATE keys<br/>(Redis protocol/TLS)" --> Cache
+    SupplySvc -- "Lee/escribe<br/>tablas PARKING_SPACES, AVAILABILITY, PAYMENTS, REVIEWS<br/>(JDBC/TLS)" --> DB
+
+    ReservationSvc -. "ReservationConfirmed,<br/>ReservationCancelled" .-> EventBus
+    SupplySvc -. "SpaceListed, PriceChanged" .-> EventBus
+    EventBus -. "AvailabilityChanged" .-> DiscoverySvc
+```
+
+El diagrama anterior es C4 Nivel 2 (Container) en su variante "data flow". Cumple con la regla del C4 Container Diagram según la cual la base de datos se representa como un contenedor de tipo `Database` (notación cilíndrica) y todas las conexiones de servicios→base de datos quedan explícitas con su protocolo y propósito.
+
+#### 4.1.3.4. Software Architecture Component Level Diagrams
+
+Los Component Diagrams corresponden al **C4 Nivel 3** y descomponen cada container de software en los componentes internos (controladores, servicios de aplicación, repositorios, ports, adapters) que implementan las reglas de cada bounded context. ParkLink documenta los componentes de los dos contenedores más críticos para los drivers arquitectónicos: **Parking Discovery Service** (atiende QAS-01 Performance y RNF02) y **Reservation Management Service** (atiende QAS-02 Performance/Consistency, TS01 control transaccional y TS02 proyección de disponibilidad). Adicionalmente se documenta el **Notification Service** porque participa en TS04 (auditoría) y QAS-04 (seguridad transversal vía notificación de eventos).
+
+##### Componentes del Parking Discovery Service
+
+El Parking Discovery Service expone búsqueda geoespacial, filtros por precio y horario, y detalle de espacios con disponibilidad proyectada. Internamente sigue un estilo **Hexagonal (Ports & Adapters)** que aísla el dominio (`SearchAvailability`) de los detalles de infraestructura (MySQL, Redis, Google Maps).
+
+```mermaid
+flowchart TB
+    subgraph Discovery["Parking Discovery Service (Container)"]
+        direction TB
+        SearchCtrl["SearchController<br/>«REST controller»<br/>GET /parking-spaces/search"]
+        DetailCtrl["SpaceDetailController<br/>«REST controller»<br/>GET /parking-spaces/:id"]
+        SearchApp["SearchSpacesUseCase<br/>«application service»"]
+        DetailApp["GetSpaceDetailUseCase<br/>«application service»"]
+        AvailQuery["AvailabilityQueryService<br/>«domain service»"]
+        FilterPolicy["FilterPolicy<br/>«domain policy»<br/>(precio, distancia, horario)"]
+        SpaceRepo["SpaceReadRepository<br/>«port»"]
+        AvailRepo["AvailabilityProjection<br/>«port»"]
+        MapsPort["MapsPort<br/>«port»"]
+        SpaceAdapter["MysqlSpaceAdapter<br/>«adapter»"]
+        AvailAdapter["RedisAvailabilityAdapter<br/>«adapter»"]
+        MapsAdapter["GoogleMapsAdapter<br/>«adapter»"]
+    end
+    DB[("MySQL<br/>parking_spaces, availability")]
+    Cache[("Redis<br/>avail:{space}:{slot}")]
+    Maps(["Google Maps API"])
+
+    SearchCtrl --> SearchApp
+    DetailCtrl --> DetailApp
+    SearchApp --> AvailQuery
+    SearchApp --> FilterPolicy
+    DetailApp --> AvailQuery
+    AvailQuery --> SpaceRepo
+    AvailQuery --> AvailRepo
+    SearchApp --> MapsPort
+    SpaceRepo -.-> SpaceAdapter
+    AvailRepo -.-> AvailAdapter
+    MapsPort -.-> MapsAdapter
+    SpaceAdapter --> DB
+    AvailAdapter --> Cache
+    MapsAdapter --> Maps
+```
+
+**Responsabilidad por componente — Parking Discovery:**
+
+| Componente | Tipo | Responsabilidad |
+|------------|------|------------------|
+| `SearchController` / `SpaceDetailController` | REST Controller | Validar DTO, traducir HTTP a comando de aplicación, mapear excepciones a códigos HTTP |
+| `SearchSpacesUseCase` / `GetSpaceDetailUseCase` | Application Service | Orquestar políticas de filtrado, llamada a mapas y consulta de disponibilidad |
+| `AvailabilityQueryService` | Domain Service | Resolver disponibilidad visible combinando proyección Redis con metadatos del espacio |
+| `FilterPolicy` | Domain Policy | Encapsular reglas de filtros (precio mínimo/máximo, radio, horario) |
+| `SpaceReadRepository` / `AvailabilityProjection` / `MapsPort` | Port (interfaz) | Definir el contrato técnico que el dominio necesita sin acoplarse a tecnología |
+| `MysqlSpaceAdapter` / `RedisAvailabilityAdapter` / `GoogleMapsAdapter` | Adapter | Implementar cada port contra la tecnología concreta |
+
+##### Componentes del Reservation Management Service
+
+El Reservation Management Service es el **Core Domain**. Implementa la transacción crítica `CreateReservation` con bloqueo pesimista (`SELECT FOR UPDATE`) sobre `RESERVATIONS` y proyecta los cambios de disponibilidad hacia Redis vía eventos de dominio.
+
+![Reservation Management Components (Iteration 2 ADD)](assets/iter2/ReservationComponents.png)
+
+```mermaid
+flowchart TB
+    subgraph Reservation["Reservation Management Service (Container)"]
+        direction TB
+        CreateCtrl["CreateReservationController<br/>«REST controller»<br/>POST /reservations"]
+        CancelCtrl["CancelReservationController<br/>«REST controller»<br/>PATCH /reservations/:id/cancel"]
+        ExtendCtrl["ExtendReservationController<br/>«REST controller»<br/>PATCH /reservations/:id/extend"]
+        CreateApp["CreateReservationUseCase<br/>«application service»"]
+        CancelApp["CancelReservationUseCase<br/>«application service»"]
+        ExtendApp["ExtendReservationUseCase<br/>«application service»"]
+        AvailPolicy["AvailabilityPolicy<br/>«domain policy»"]
+        PriceCalc["PriceCalculator<br/>«domain service»"]
+        ReservationAgg["Reservation<br/>«aggregate root»"]
+        ResRepo["ReservationRepository<br/>«port»"]
+        PayPort["PaymentAuthorizationPort<br/>«port»"]
+        EventPub["DomainEventPublisher<br/>«port»"]
+        ResAdapter["MysqlReservationAdapter<br/>«adapter»<br/>(transacción + SELECT FOR UPDATE)"]
+        PayAdapter["HttpPaymentAdapter<br/>«adapter»"]
+        EventAdapter["EventBusAdapter<br/>«adapter»"]
+    end
+    DB[("MySQL<br/>reservations, payments")]
+    PaySvc(["Payment Service"])
+    Bus(["Internal Domain Event Bus"])
+
+    CreateCtrl --> CreateApp
+    CancelCtrl --> CancelApp
+    ExtendCtrl --> ExtendApp
+    CreateApp --> AvailPolicy
+    CreateApp --> PriceCalc
+    CreateApp --> ReservationAgg
+    CancelApp --> ReservationAgg
+    ExtendApp --> AvailPolicy
+    ExtendApp --> ReservationAgg
+    ReservationAgg --> ResRepo
+    CreateApp --> PayPort
+    ReservationAgg --> EventPub
+    ResRepo -.-> ResAdapter
+    PayPort -.-> PayAdapter
+    EventPub -.-> EventAdapter
+    ResAdapter --> DB
+    PayAdapter --> PaySvc
+    EventAdapter --> Bus
+```
+
+**Responsabilidad por componente — Reservation Management:**
+
+| Componente | Tipo | Responsabilidad |
+|------------|------|------------------|
+| `Create/Cancel/ExtendReservationController` | REST Controller | Recibir comando HTTP, validar JWT + rol DRIVER, delegar al use case correspondiente |
+| `Create/Cancel/ExtendReservationUseCase` | Application Service | Coordinar políticas de disponibilidad, cálculo de precio, persistencia y publicación de eventos en una sola transacción |
+| `AvailabilityPolicy` | Domain Policy | Reglas que determinan si un espacio puede reservarse en un intervalo concreto (incluye solapamientos y ventanas de cancelación) |
+| `PriceCalculator` | Domain Service | Calcular precio total = duración × precio_hora del espacio |
+| `Reservation` | Aggregate Root | Mantener invariantes del ciclo de vida (PendingPayment → Confirmed → Active → Completed/Cancelled) |
+| `ReservationRepository` / `PaymentAuthorizationPort` / `DomainEventPublisher` | Port | Contratos de infraestructura |
+| `MysqlReservationAdapter` | Adapter | Implementa repositorio con transacción ACID + `SELECT FOR UPDATE` sobre el espacio para impedir doble reserva |
+| `HttpPaymentAdapter` / `EventBusAdapter` | Adapter | Implementan integración con Payment Service y publicación de eventos de dominio |
+
+##### Componentes del Notification Service
+
+![Notification Service Components (Iteration 3 ADD)](assets/iter3/NotificationComponents.png)
+
+El Notification Service consume eventos de dominio (`ReservationConfirmed`, `PaymentApproved`, `RefundProcessed`) y los traduce a canales externos (push FCM, email SendGrid) mediante el **Adapter Pattern**, permitiendo sustituir o agregar proveedores sin tocar el dominio.
+
+#### 4.1.3.5. Software Architecture Code Level Diagrams
+
+Los Code Level Diagrams corresponden al **C4 Nivel 4** y muestran el detalle de implementación de los componentes más relevantes mediante diagramas UML 2.5 estándar: **diagramas de clases** del modelo de dominio, **diagramas de estado** del agregado `Reservation`, **diagramas de actividad** de la transacción crítica y **diagramas de secuencia** del flujo concurrente. El diagrama Entidad-Relación de la base de datos se encuentra en la sección 4.1.5 y representa la persistencia subyacente del modelo de dominio aquí descrito.
+
+##### Diagrama de clases — Modelo de dominio Reservation
+
+![Reservation Domain Model (Iteration 2 ADD)](assets/iter2/ReservationDomainModel.png)
+
+```mermaid
+classDiagram
+    class Reservation {
+        +ReservationId id
+        +UserId driverId
+        +ParkingSpaceId spaceId
+        +ReservationCode code
+        +TimeRange interval
+        +Money totalPrice
+        +ReservationStatus status
+        +DateTime createdAt
+        +confirmPayment(PaymentReceipt) void
+        +cancel(CancellationReason) void
+        +extend(DateTime newEnd) void
+        +complete() void
+        -ensureAvailability(TimeRange)
+        -ensureNotAlreadyTerminal()
+    }
+    class ReservationStatus {
+        <<enumeration>>
+        PENDING_PAYMENT
+        CONFIRMED
+        ACTIVE
+        COMPLETED
+        CANCELLED
+    }
+    class TimeRange {
+        <<value object>>
+        +DateTime start
+        +DateTime end
+        +Duration durationHours()
+        +overlaps(TimeRange) boolean
+    }
+    class Money {
+        <<value object>>
+        +BigDecimal amount
+        +Currency currency
+        +plus(Money) Money
+    }
+    class ReservationCode {
+        <<value object>>
+        +String value
+        +static generate() ReservationCode
+    }
+    class ParkingSpace {
+        +ParkingSpaceId id
+        +Money pricePerHour
+        +ParkingSpaceStatus status
+        +isReservable(TimeRange) boolean
+    }
+    class Payment {
+        +PaymentId id
+        +ReservationId reservationId
+        +Money amount
+        +PaymentStatus status
+    }
+    Reservation --> ReservationStatus
+    Reservation --> TimeRange
+    Reservation --> Money
+    Reservation --> ReservationCode
+    Reservation --> ParkingSpace : refers
+    Reservation --> Payment : confirms via
+```
+
+##### Diagrama de estados — Ciclo de vida de Reservation
+
+![Reservation State Machine (Iteration 2 ADD)](assets/iter2/ReservationStateMachine.png)
+
+```mermaid
+stateDiagram-v2
+    [*] --> PENDING_PAYMENT : createReservation()
+    PENDING_PAYMENT --> CONFIRMED : paymentApproved()
+    PENDING_PAYMENT --> CANCELLED : paymentRejected() / timeoutWithoutPayment()
+    CONFIRMED --> ACTIVE : startTime reached
+    CONFIRMED --> CANCELLED : cancel() with 1h+ anticipation
+    ACTIVE --> COMPLETED : endTime reached
+    ACTIVE --> CANCELLED : forceCancel() by admin
+    CANCELLED --> [*]
+    COMPLETED --> [*]
+    note right of PENDING_PAYMENT
+        Invariante: el espacio queda
+        bloqueado vía SELECT FOR UPDATE
+        durante la transacción de creación.
+    end note
+    note right of CONFIRMED
+        Dispara evento ReservationConfirmed
+        que actualiza la proyección Redis
+        y notifica al conductor.
+    end note
+```
+
+##### Diagrama de actividad — Reserva concurrente con bloqueo pesimista
+
+![Reservation Concurrency Flow (Iteration 2 ADD)](assets/iter2/ReservationConcurrencyFlow.png)
+
+```mermaid
+flowchart TD
+    Start([Conductor envía<br/>POST /reservations]) --> Auth{¿JWT válido<br/>y rol = DRIVER?}
+    Auth -- No --> R401([HTTP 401/403])
+    Auth -- Sí --> BeginTx[BEGIN TRANSACTION<br/>ISOLATION SERIALIZABLE]
+    BeginTx --> Lock[SELECT * FROM parking_spaces<br/>WHERE id = ? FOR UPDATE]
+    Lock --> CheckStatus{¿Space status =<br/>AVAILABLE?}
+    CheckStatus -- No --> Rollback1[ROLLBACK]
+    Rollback1 --> R409a([HTTP 409<br/>Space not available])
+    CheckStatus -- Sí --> CheckOverlap{¿Existe reserva<br/>en intervalo?}
+    CheckOverlap -- Sí --> Rollback2[ROLLBACK]
+    Rollback2 --> R409b([HTTP 409<br/>Slot already taken])
+    CheckOverlap -- No --> CalcPrice[Calcular precio total<br/>= horas × pricePerHour]
+    CalcPrice --> Insert[INSERT INTO reservations<br/>status = PENDING_PAYMENT]
+    Insert --> Commit[COMMIT]
+    Commit --> Emit[Publicar evento<br/>ReservationCreated]
+    Emit --> R201([HTTP 201<br/>+ reservationCode + total])
+```
+
+##### Diagrama de secuencia — Proyección de disponibilidad
+
+![Availability Projection Flow (Iteration 2 ADD)](assets/iter2/AvailabilityProjectionFlow.png)
+
+```mermaid
+sequenceDiagram
+    participant R as Reservation Service
+    participant DB as MySQL
+    participant Bus as Event Bus
+    participant D as Discovery Service
+    participant C as Redis Cache
+
+    R->>DB: COMMIT (reserva confirmada)
+    R-->>Bus: ReservationConfirmed{ spaceId, interval }
+    Bus-->>D: ReservationConfirmed
+    D->>C: SET avail:{spaceId}:{slot} = "reserved" EX 3600
+    Note over D,C: La proyección se vuelve eventually consistent.<br/>Si el conductor busca antes del SET,<br/>verá el espacio brevemente disponible<br/>pero la reserva real lo rechazará en MySQL.
+```
+
+##### Diagrama de clases — Adapter Pattern para Payment y Notification
+
+![Adapter Pattern for Payment and Notification Providers (Iteration 3 ADD)](assets/iter3/AdapterPattern-PaymentandNotificationProviders.png)
+
+```mermaid
+classDiagram
+    class PaymentProvider {
+        <<interface>>
+        +authorize(Money, IdempotencyKey) PaymentResult
+        +refund(PaymentId, Money) RefundResult
+    }
+    class StripeAdapter {
+        -StripeClient client
+        +authorize(Money, IdempotencyKey) PaymentResult
+        +refund(PaymentId, Money) RefundResult
+    }
+    class MercadoPagoAdapter {
+        -MercadoPagoClient client
+        +authorize(Money, IdempotencyKey) PaymentResult
+        +refund(PaymentId, Money) RefundResult
+    }
+    class NotificationProvider {
+        <<interface>>
+        +sendPush(UserId, PushPayload) DeliveryReceipt
+        +sendEmail(EmailAddress, EmailPayload) DeliveryReceipt
+    }
+    class FcmAdapter {
+        -FcmClient client
+        +sendPush(UserId, PushPayload) DeliveryReceipt
+        +sendEmail(EmailAddress, EmailPayload) DeliveryReceipt
+    }
+    class SendGridAdapter {
+        -SendGridClient client
+        +sendPush(UserId, PushPayload) DeliveryReceipt
+        +sendEmail(EmailAddress, EmailPayload) DeliveryReceipt
+    }
+    PaymentProvider <|.. StripeAdapter
+    PaymentProvider <|.. MercadoPagoAdapter
+    NotificationProvider <|.. FcmAdapter
+    NotificationProvider <|.. SendGridAdapter
+```
+
+**Trazabilidad de los Code Diagrams con drivers arquitectónicos:**
+
+| Diagrama | Drivers que sustenta | Decisión arquitectónica que evidencia |
+|----------|------------------------|----------------------------------------|
+| Clases — Reservation Domain | EP02, US05, US06, US07, US08, TS01 | Modelo rico DDD: `Reservation` como aggregate root con invariantes encapsuladas |
+| Estados — Reservation Lifecycle | US05, US06, US08, QAS-02 | State Pattern: el aggregate controla las transiciones legales, rechaza saltos inválidos |
+| Actividad — Reserva concurrente | TS01, QAS-02, US05 | Locking pesimista `SELECT FOR UPDATE` + serializable previene doble reserva |
+| Secuencia — Proyección disponibilidad | TS02, RNF02, QAS-01 | CQRS ligero: comandos en MySQL, lecturas rápidas en Redis con eventual consistency |
+| Clases — Adapter Pattern | C-INT, RNF04, ADR-307 | Inversión de dependencias: el dominio depende de la interfaz, no del SDK del proveedor |
+
+Estos diagramas permiten que un desarrollador nuevo entienda no solo qué hace cada componente, sino también cómo está modelado el dominio a nivel de código y qué reglas protegen las transiciones críticas del sistema.
 
 ### 4.1.4. Approach Driven ViewPoints Diagrams
 
@@ -1444,18 +1834,41 @@ Los datos de ParkLink tienen una estructura bien definida y relaciones claras:
 
 ### 4.1.6 Design Patterns
 
-| ID | Patrón | Categoría | Uso |
-|----|--------|----------|-----|
-| DP-01 | Repository | Acceso a datos | Abstrae MySQL y facilita testing |
-| DP-02 | Observer / Event Bus | Comportamental | Manejo de eventos desacoplados |
-| DP-03 | Strategy | Comportamental | Métodos de pago intercambiables |
-| DP-04 | Chain of Responsibility | Comportamental | Validación paso a paso |
-| DP-05 | Singleton | Creacional | Instancia única de servicios |
-| DP-06 | Factory Method | Creacional | Creación de notificaciones |
-| DP-07 | Command | Comportamental | Encapsulación de reservas |
-| DP-08 | Decorator | Estructural | Añade funcionalidades dinámicas |
-| DP-09 | CQRS | Arquitectural | Separación lectura/escritura |
-| DP-10 | State | Comportamental | Estados de reservas |
+ParkLink aplica patrones **arquitectónicos**, **GoF** y **tácticos de DDD** de forma deliberada en cada bounded context para sustentar los drivers de calidad declarados (consistencia transaccional, performance de búsqueda, mantenibilidad de integraciones, resiliencia frente a terceros). La siguiente tabla declara qué patrón se aplica, en qué contexto y qué driver sustenta, con el diagrama del informe que evidencia su uso.
+
+| ID | Patrón | Categoría | Bounded context | Driver / Decisión sustentada | Evidencia en el informe |
+|----|--------|-----------|------------------|-------------------------------|--------------------------|
+| **DP-01** | Repository | DDD táctico / Acceso a datos | Todos | Aísla el dominio del motor MySQL, facilita tests con doubles y permite migrar a otro motor sin tocar dominio. Soporta C-06 (consistencia ACID) | 4.1.3.4 — `ReservationRepository`, `SpaceReadRepository` como ports |
+| **DP-02** | Observer / Domain Event Bus | Arquitectónico | Reservation, Supply, Discovery, Notification | Desacopla efectos secundarios; notificaciones y proyección de disponibilidad no bloquean la transacción principal. Soporta US20, RNF04, ADR-306 | 4.1.3.5 — diagrama de secuencia `Availability Projection Flow` |
+| **DP-03** | Strategy | GoF Comportamental | Payment, Notification | Permite intercambiar métodos de pago (tarjeta, billetera, transferencia) y canales de notificación (push, email) sin alterar el flujo de reserva | 4.1.3.5 — `PaymentProvider`, `NotificationProvider` |
+| **DP-04** | Chain of Responsibility | GoF Comportamental | API Gateway / Backend | Pipeline de validación de requests: autenticación → autorización por rol → validación de DTO → rate limit, cada eslabón puede cortar la cadena. Soporta TS03, QAS-04 | Middleware en sección 5.2 y guards en componentes |
+| **DP-05** | Singleton | GoF Creacional | Todos | Una sola instancia del pool de conexiones a MySQL y del cliente Redis por proceso; evita agotar conexiones del motor en VM | `prisma.service.ts` documentado en cap 5 |
+| **DP-06** | Factory Method | GoF Creacional | Notification | Crea el objeto de notificación correcto según el tipo de evento (`ReservationConfirmed` → push + email; `RefundProcessed` → solo email) | 4.1.3.4 — Notification Service Components |
+| **DP-07** | Command | GoF Comportamental | Reservation | Encapsula intenciones del conductor (`CreateReservationCommand`, `CancelReservationCommand`, `ExtendReservationCommand`) permitiendo logging, validación, retry y futura cola de comandos | 4.1.3.4 — diagrama de componentes Reservation |
+| **DP-08** | Decorator | GoF Estructural | Cross-cutting | Añade logging, métricas y circuit breaker alrededor de los adapters de Stripe, MercadoPago, FCM, SendGrid y Google Maps sin modificarlos. Soporta RNF04 y ADR-305 | ADR-305 (Circuit Breaker) en sección 4.3.3 |
+| **DP-09** | CQRS (ligero) | Arquitectónico | Parking Discovery + Reservation | Separa el modelo de lectura (proyección Redis para búsqueda rápida) del modelo de escritura (MySQL como fuente de verdad). Soporta QAS-01, RNF02, TS02 | 4.1.3.5 — secuencia `Availability Projection Flow` |
+| **DP-10** | State | GoF Comportamental | Reservation | Las transiciones legales del agregado `Reservation` se encapsulan dentro del propio agregado; estados ilegales rechazan la operación con excepción de dominio | 4.1.3.5 — `stateDiagram-v2` Reservation Lifecycle |
+| **DP-11** | Adapter | GoF Estructural | Payment, Notification, Maps | Convierte el SDK heterogéneo de cada proveedor a la interfaz uniforme que el dominio espera. Permite cambiar de Stripe a MercadoPago sin tocar reglas. Soporta C-INT, ADR-307 | 4.1.3.5 — `classDiagram` Adapter Pattern |
+| **DP-12** | Aggregate | DDD táctico | Reservation, Supply | `Reservation` y `ParkingSpace` son aggregate roots que mantienen invariantes y son la única puerta de modificación de su árbol de objetos. Soporta consistencia transaccional | 4.1.3.5 — `Reservation` con métodos `confirmPayment`, `cancel`, `extend` |
+| **DP-13** | Value Object | DDD táctico | Todos | `TimeRange`, `Money`, `ReservationCode`, `Email` son inmutables, comparables por valor y encapsulan validaciones. Reducen primitivos y bugs de tipo | 4.1.3.5 — `<<value object>>` en class diagram |
+| **DP-14** | Idempotency Key | Integración | Payment | Cada llamada a Stripe lleva una clave única; reintentos por red no generan doble cobro. Soporta TS06, ADR-304 | 4.1.4 ViewPoint 1, paso 6 (Idempotency-Key Pattern) |
+| **DP-15** | Circuit Breaker | Resiliencia | Adapters externos | Aísla fallos de Stripe, MercadoPago, FCM, SendGrid y Google Maps; fail-fast con fallback para evitar propagar latencia. Soporta RNF04, ADR-305 | 4.3.3 ADR-305 |
+
+**Mapeo patrón → driver — matriz de cobertura:**
+
+| Driver | Patrones que lo cubren |
+|--------|--------------------------|
+| TS01 (control transaccional reservas) | DP-01, DP-07, DP-10, DP-12 |
+| TS02 (proyección disponibilidad) | DP-02, DP-09 |
+| TS03 (auth y roles) | DP-04 |
+| TS04 (auditoría) | DP-02 (eventos auditables) |
+| TS06 (idempotencia pagos) | DP-14 |
+| QAS-01 (performance búsqueda) | DP-09, DP-01 |
+| QAS-02 (consistencia reserva) | DP-10, DP-12, DP-07 |
+| QAS-04 (seguridad) | DP-04, DP-08 |
+| RNF02 (lectura rápida) | DP-09 |
+| RNF04 (resiliencia terceros) | DP-08, DP-11, DP-15 |
+| C-INT (multi-proveedor) | DP-11, DP-03 |
 
 ### 4.1.7 Tactics
 
