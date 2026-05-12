@@ -2518,7 +2518,8 @@ Durante el Sprint 1 se trabajaron dos repositorios bajo la organización GitHub 
 | `424a021` | 2026-05-11 | Pietro Osores Marchese | hotfix(add): add deploy link | Actualización de `README.md` con URL de despliegue `https://arqsoft.vercel.app` |
 
 **Repositorio 2 — `ParkLink-Backend` (servicio Node + TS):**
-- URL pendiente de creación durante la primera semana del Sprint (responsable: Javier Nikaido — SBI-06).
+- URL: `https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Backend`
+- Responsable de scaffolding inicial: Pietro Osores Marchese (asume backend + base de datos en Sprint 1).
 - Estructura prevista al cierre del sprint:
   ```
   ParkLink-Backend/
