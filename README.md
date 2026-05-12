@@ -2968,6 +2968,20 @@ La validación técnica de ParkLink debe mantener coherencia con los bounded con
 
 El objetivo principal de esta sección es describir cómo el backend y sus módulos pueden ser validados desde una perspectiva funcional y arquitectónica, sin depender únicamente de evidencias visuales. Para ello, se consideran los endpoints, módulos, responsabilidades, reglas de negocio y patrones de diseño definidos previamente en el informe.
 
+### Evidencia de contratos API con Swagger/OpenAPI
+
+Como evidencia complementaria para la sección **5.1. Testing Suites & General Patterns**, se validaron con Playwright las documentaciones Swagger desplegadas para las dos aplicaciones backend del Sprint 1: el backend principal y el API Gateway. Estas capturas demuestran que los contratos HTTP se encuentran publicados en ambientes reales, permitiendo inspeccionar endpoints, DTOs, respuestas esperadas y autenticación desde Swagger UI.
+
+**Backend Swagger Deployment:**  
+URL: [https://backend-silk-two-93.vercel.app/docs/](https://backend-silk-two-93.vercel.app/docs/)
+
+![Backend Swagger Deployment](assets/swagger-backend-docs.png)
+
+**API Gateway Swagger Deployment:**  
+URL: [https://api-gateway-xi-five.vercel.app/docs](https://api-gateway-xi-five.vercel.app/docs)
+
+![API Gateway Swagger Deployment](assets/swagger-api-gateway-docs.png)
+
 ### Objetivo de validación
 
 Validar que la estructura inicial de ParkLink permita soportar las funcionalidades principales del producto: registro e inicio de sesión de usuarios, búsqueda de estacionamientos, gestión de reservas, publicación de espacios y soporte futuro para pagos y notificaciones.
