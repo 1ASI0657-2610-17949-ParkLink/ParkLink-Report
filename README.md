@@ -1843,6 +1843,85 @@ Los datos de ParkLink tienen una estructura bien definida y relaciones claras:
 
 #### Diagrama Entidad-Relación
 
+El siguiente DER representa las entidades principales del modelo relacional de ParkLink y sus relaciones clave. Se usa Mermaid `erDiagram` para que GitHub renderice el diagrama visual directamente en el README, manteniendo además el modelo versionado como texto.
+
+```mermaid
+erDiagram
+    USERS {
+        UUID user_id PK
+        VARCHAR name
+        VARCHAR email UK
+        VARCHAR password_hash
+        ENUM role
+        VARCHAR phone
+        DATETIME created_at
+    }
+
+    PARKING_SPACES {
+        UUID space_id PK
+        UUID owner_id FK
+        VARCHAR address
+        DECIMAL latitude
+        DECIMAL longitude
+        DECIMAL price_per_hour
+        ENUM status
+    }
+
+    AVAILABILITY {
+        UUID availability_id PK
+        UUID space_id FK
+        INT day_of_week
+        TIME start_time
+        TIME end_time
+        ENUM status
+    }
+
+    RESERVATIONS {
+        UUID reservation_id PK
+        UUID driver_id FK
+        UUID space_id FK
+        DATETIME start_datetime
+        DATETIME end_datetime
+        ENUM status
+        DECIMAL total_amount
+    }
+
+    PAYMENTS {
+        UUID payment_id PK
+        UUID reservation_id FK
+        DECIMAL amount
+        VARCHAR method
+        ENUM status
+        DATETIME transaction_date
+    }
+
+    REVIEWS {
+        UUID review_id PK
+        UUID reservation_id FK
+        UUID driver_id FK
+        INT rating
+        VARCHAR comment
+    }
+
+    NOTIFICATIONS {
+        UUID notification_id PK
+        UUID user_id FK
+        VARCHAR type
+        VARCHAR message
+        BOOLEAN is_read
+        DATETIME sent_at
+    }
+
+    USERS ||--o{ PARKING_SPACES : owns
+    USERS ||--o{ RESERVATIONS : makes
+    USERS ||--o{ REVIEWS : writes
+    USERS ||--o{ NOTIFICATIONS : receives
+    PARKING_SPACES ||--o{ AVAILABILITY : defines
+    PARKING_SPACES ||--o{ RESERVATIONS : is_reserved_in
+    RESERVATIONS ||--o{ PAYMENTS : generates
+    RESERVATIONS ||--o| REVIEWS : receives
+```
+
 ##### Descripción de Tablas
 
 | Tabla | Propósito | Columnas clave |
