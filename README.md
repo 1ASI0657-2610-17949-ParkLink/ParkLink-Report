@@ -3390,6 +3390,36 @@ ParkLink fue diseñado bajo una arquitectura modular orientada a bounded context
 
 El diseño arquitectónico define como Core Domain el contexto de Reservation Management, debido a que la reserva de espacios representa la operación central del negocio. Si este contexto falla, el usuario perdería confianza en la disponibilidad y confirmación de estacionamientos.
 
+## Arquitectura General del Sistema
+
+La arquitectura propuesta para ParkLink se organiza bajo un enfoque basado en frontend, API Gateway y microservicios backend desplegados de manera independiente.
+
+```mermaid
+flowchart TD
+    A[Frontend / App Web] --> B[API Gateway / Redirector<br/>Desplegado en Vercel]
+
+    B --> C[Backend Services]
+
+    C --> D[Auth Service]
+    C --> E[Users Service]
+    C --> F[Parking Spaces Service]
+    C --> G[Reservations Service]
+    C --> H[Payments Service]
+    C --> I[Notifications Service]
+    C --> J[Maps Service]
+
+    D --> K[(Base de Datos en Render)]
+    E --> K
+    F --> K
+    G --> K
+    H --> K
+    I --> K
+    J --> K
+
+    B --> J
+    J --> L[Google Maps API]
+```
+
 ---
 
 ### 5.3.1 Sprint 1
