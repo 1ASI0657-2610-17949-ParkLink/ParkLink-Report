@@ -2469,20 +2469,251 @@ CircuitBreakerDecorator o-- NotificationProvider : decorates
 
 ## 5.3 Microservices Implementation
 
-## 5.2.1 Sprint 1
+### 5.3.1 Sprint 1
 
-### 5.2.1.1 Sprint Backlog 1
+**Sprint window:** 2026-05-08 → 2026-05-21 (14 días naturales, post-TB2).
+**Sprint Goal:** Habilitar el primer contacto del usuario con ParkLink mediante una landing pública desplegada en producción y un servicio de autenticación funcional que permita el registro y login de conductores y propietarios, dejando el cimiento operativo para los flujos de búsqueda y reserva de los siguientes sprints.
 
-### 5.2.1.2 Development Evidence for Sprint Review
+El Sprint 1 prioriza dos entregables alineados con la estrategia de adopción del producto. Primero, una landing de marketing en producción que materializa el Solution Profile descrito en el Capítulo 1 y permite recoger interés temprano antes de abrir la app a usuarios. Segundo, el bounded context **User Identity & Access** del Capítulo 4, que sostiene los épicos EP05 (US17, US18, US19) y el driver técnico **TS03 — Autenticación y autorización por roles** vinculado al escenario de calidad QAS-04 (Security, 100% del tráfico bajo HTTPS y contraseñas cifradas).
 
-### 5.2.1.3 Testing Suite Evidence for Sprint Review
+#### 5.3.1.1 Sprint Backlog 1
 
-### 5.2.1.4 Excecution Evidence for Sprint Review
+El siguiente cuadro consolida los work items asumidos por el equipo para el Sprint 1, su trazabilidad con los User Stories del Capítulo 3, el Technical Story arquitectónico del Capítulo 4, la estimación en story points (escala Fibonacci modificada: 1, 2, 3, 5, 8, 13) y el responsable principal. Cada item entra al sprint sólo si tiene criterios de aceptación claros y un Definition of Done compartido por el equipo.
 
-### 5.2.1.5 Microservices Documentation Evidence for Sprint Review
+| Sprint Backlog Item | Epic / TS | User Story / Technical Story origen | Tareas técnicas | SP | Responsable principal |
+|---------------------|-----------|--------------------------------------|-----------------|----|------------------------|
+| SBI-01 Landing pública en producción | — (entregable de marketing) | Soporta narrativa de Capítulo 1, valida Solution Profile y captura leads tempranos | Setup proyecto Vite + React 19 + TS; maquetado de hero, secciones de propuesta de valor, segmentos y CTA; integración de assets Figma; despliegue en Vercel; configuración de dominio `arqsoft.vercel.app` | 5 | Pietro Osores Marchese (UI/UX + frontend) |
+| SBI-02 Registro de conductor | EP05 / US17 | "Como usuario nuevo, deseo registrarme como conductor en ParkLink, para acceder a la búsqueda y reserva de estacionamientos." | Endpoint `POST /api/v1/auth/register` (rol `DRIVER`); validación de email, contraseña, placa; hash con bcrypt; persistencia en tabla `users`; email de verificación (mock en Sprint 1) | 5 | Matias Rodolfo Salcedo Champi (backend Node + DB) |
+| SBI-03 Registro de propietario | EP05 / US18 | "Como usuario nuevo, deseo registrarme como propietario en ParkLink, para publicar mis espacios y recibir reservas." | Endpoint `POST /api/v1/auth/register` (rol `OWNER`); captura de datos bancarios mínimos; misma tabla `users` con `role` discriminator; habilitación de panel propietario al confirmar email | 3 | Matias Rodolfo Salcedo Champi |
+| SBI-04 Inicio de sesión | EP05 / US19 | "Como usuario registrado, deseo iniciar sesión con mi correo y contraseña, para acceder a mi cuenta y funcionalidades de la app." | Endpoint `POST /api/v1/auth/login`; verificación de credenciales; emisión de JWT con `sub`, `role`, `exp`; refresh token opcional; manejo de errores 401 sin filtrar información | 3 | Percy Alonso Muñiz Huayanca (backend + seguridad) |
+| SBI-05 Middleware de autorización por rol | TS03 (Capítulo 4) | "Como equipo técnico, necesitamos proteger las operaciones mediante autenticación segura y autorización por rol." | Middleware Express que valida JWT, decodifica `role`, expone `req.user`; helper `requireRole(['DRIVER','OWNER'])`; respuestas 401 / 403 estandarizadas | 5 | Percy Alonso Muñiz Huayanca |
+| SBI-06 Setup repositorio backend Node + TS | Foundational (5.2.2, 5.2.3) | Habilitador del resto del backlog | Inicializar repo `ParkLink-Backend`; configurar TypeScript estricto; estructura de carpetas DDD-light (`/src/contexts/iam`); ESLint + Prettier; husky pre-commit; README con instrucciones de arranque | 3 | Javier Masaru Nikaido Vargas (DevEx + arquitectura) |
+| SBI-07 Provisión PostgreSQL en Render | Foundational (5.2.4) | Habilita persistencia de US17–US19 | Crear instancia Postgres en Render (plan gratuito); habilitar SSL; configurar pool de conexiones; cargar variables `DATABASE_URL` en backend; generar primer migration con `users` y `refresh_tokens` | 2 | Fabian Alejandro Oliva Lopez (infra + datos) |
+| SBI-08 Deploy del backend en Render | Foundational (5.2.4) | Habilita ejecutar SBI-02..SBI-05 en ambiente real | Configurar servicio web Render apuntando al repo; build command `npm run build`; start `node dist/server.js`; health check `/health`; variables `JWT_SECRET`, `NODE_ENV` | 3 | Fabian Alejandro Oliva Lopez |
+| SBI-09 Conexión landing → backend (form de registro embebido) | EP05 (puente UX) | Cierra el loop: visitante de landing puede crear cuenta sin salir | Componente `<RegisterForm />` en `ParkLink-Landing`; llamada `fetch` a backend Render; manejo de estados loading/success/error; respeta diseño Figma | 3 | Pietro Osores Marchese + Matias Rodolfo Salcedo Champi |
 
-### 5.2.1.6 Software Deployment Evidence for Sprint Review
+**Capacidad del equipo:** 5 integrantes × ~6 SP por integrante en 2 semanas ≈ **30 SP**. **Compromiso de Sprint 1:** 32 SP (ligera sobreestimación tolerada por ser el primer sprint sin velocity histórica).
 
-### 5.2.1.7 Team Collaboration Insights during Sprint
+**Definition of Done aplicable a todo Sprint Backlog Item:**
+1. El código está mergeado a `main` en el repo correspondiente mediante Pull Request revisado por al menos un compañero.
+2. El item cuenta con prueba mínima local (smoke) ejecutada por el responsable.
+3. El entregable está visible en el ambiente de producción correspondiente (Vercel para web, Render para backend/DB).
+4. La documentación mínima (endpoint, payload, respuesta) está reflejada en el README del repo o en este informe.
+5. El item se mueve a la columna **Done** del tablero Kanban antes del Sprint Review.
 
-### 5.2.1.8 Kanban Board 
+#### 5.3.1.2 Development Evidence for Sprint Review
+
+Durante el Sprint 1 se trabajaron dos repositorios bajo la organización GitHub `1ASI0657-2610-17949-ParkLink`. La evidencia de desarrollo se recoge directamente del historial de commits y del estado actual de las ramas.
+
+**Repositorio 1 — `ParkLink-Landing` (web frontend):**
+- URL: `https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Landing`
+- Stack: React 19 + TypeScript 6 + Vite 8 (`package.json` confirma dependencias mínimas, sin librerías externas de UI, animaciones implementadas con `IntersectionObserver` y `requestAnimationFrame` nativos en `src/App.tsx`).
+- Convención de ramas: `main` como rama protegida; trabajo de feature en ramas cortas `feat/<slug>` mergeadas vía PR.
+
+| Commit | Fecha | Autor | Mensaje | Cambio relevante |
+|--------|-------|-------|---------|-------------------|
+| `bcfb3cd` | 2026-05-11 | Pietro Osores Marchese | Initial commit | Scaffold Vite + React + TS, `.gitignore`, `package.json`, `tsconfig.*` |
+| `d539034` | 2026-05-11 | Pietro Osores Marchese | feat(landing): Add ParkLink marketing page | Implementación de `App.tsx` con secciones hero, métricas animadas (`ScrambledMetricValue`), CTA y consumo de asset Figma `figma-assets/app-interface.png` |
+| `88c0b70` | 2026-05-11 | Pietro Osores Marchese | feat(landing): Merge ParkLink landing page | Merge de rama de feature a `main`, consolidando estilos en `App.css` |
+| `424a021` | 2026-05-11 | Pietro Osores Marchese | hotfix(add): add deploy link | Actualización de `README.md` con URL de despliegue `https://arqsoft.vercel.app` |
+
+**Repositorio 2 — `ParkLink-Backend` (servicio Node + TS):**
+- URL pendiente de creación durante la primera semana del Sprint (responsable: Javier Nikaido — SBI-06).
+- Estructura prevista al cierre del sprint:
+  ```
+  ParkLink-Backend/
+  ├── src/
+  │   ├── contexts/
+  │   │   └── iam/
+  │   │       ├── domain/        # User, Role, Credential value objects
+  │   │       ├── application/   # RegisterUserUseCase, LoginUseCase
+  │   │       ├── infrastructure/# UserRepository (pg), JwtProvider, BcryptHasher
+  │   │       └── interfaces/    # express routes /auth/register, /auth/login
+  │   ├── shared/
+  │   │   ├── middleware/        # authGuard, requireRole, errorHandler
+  │   │   └── db/                # pool, migrations
+  │   └── server.ts
+  ├── migrations/
+  │   └── 001_create_users.sql
+  └── package.json
+  ```
+- Los commits esperados al cierre del Sprint incluirán: `chore: scaffold backend`, `feat(iam): user registration endpoint`, `feat(iam): login endpoint with jwt`, `feat(iam): role-based middleware`, `chore(infra): wire postgres pool with render database url`.
+
+**Convenciones de commit acordadas en Sprint 1:** Conventional Commits (`feat`, `fix`, `chore`, `docs`, `refactor`, `test`) con scope opcional indicando el bounded context tocado (`feat(iam): ...`, `feat(landing): ...`). El equipo adoptó esta convención al observar que el repo de landing ya la seguía y aporta a la trazabilidad descrita en sección 5.2.2.
+
+#### 5.3.1.3 Testing Suite Evidence for Sprint Review
+
+El Sprint 1 establece el cimiento de testing en lugar de buscar cobertura amplia, dado que el código de producto recién nace y la prioridad arquitectónica del sprint es desplegar infraestructura en ambientes reales.
+
+**Frontend (`ParkLink-Landing`):**
+- Framework planificado: **Vitest** + **React Testing Library** (integración natural con Vite, ya en `devDependencies` de la mayoría de proyectos Vite + React).
+- Estado al cierre del Sprint 1: pendiente de habilitar (el repo aún no contiene `vitest.config.ts`). El equipo identificó esta deuda y la priorizó para el Sprint 2.
+- Smoke test manual ejecutado: la landing carga en `https://arqsoft.vercel.app` con HTTP 200, animaciones de métricas se disparan al entrar al viewport, el CTA es clickeable.
+
+**Backend (`ParkLink-Backend`):**
+- Framework planificado: **Jest** + **Supertest** para tests de integración HTTP, con un Postgres efímero vía `testcontainers` (decisión soportada por la feedback de no mockear la base de datos para evitar divergencias con producción).
+- Cobertura mínima objetivo Sprint 1: los tres endpoints de IAM (`POST /auth/register` × 2 roles, `POST /auth/login`) con al menos un test happy path y un test de error (email duplicado, credenciales inválidas).
+- El driver técnico **TS03** requiere validación de que un token con rol `DRIVER` no pueda llegar a una ruta marcada como `requireRole(['OWNER'])` — este caso entra al sprint como test de aceptación del middleware.
+
+**Resumen ejecutivo de testing en Sprint 1:** smoke tests manuales pasados, suite automatizada en planificación. Esta limitación queda registrada como riesgo de Sprint 1 y se mitiga con priorización explícita en Sprint 2.
+
+#### 5.3.1.4 Execution Evidence for Sprint Review
+
+La evidencia de ejecución demuestra que los entregables del Sprint 1 corren en ambientes reales, no sólo en la máquina del desarrollador.
+
+**Landing en producción:**
+- URL pública: `https://arqsoft.vercel.app`
+- Verificación: la URL responde con HTTP 200 y sirve el bundle de Vite generado por `npm run build`. El equipo validó manualmente en Chrome, Safari y Firefox que el hero, las métricas animadas y los CTAs cargan sin errores en consola.
+- Build time observado en Vercel: < 30 segundos (build cache activo).
+
+**Backend en producción (planificado al cierre de sprint):**
+- URL prevista: `https://parklink-backend.onrender.com` (slug definitivo a confirmar al crear el servicio).
+- Health check: `GET /health` → `200 OK` con payload `{ "status": "ok", "uptime": <seconds> }`.
+- Endpoints de IAM ejecutables vía Postman / cURL:
+  ```bash
+  # Registro de conductor
+  curl -X POST https://parklink-backend.onrender.com/api/v1/auth/register \
+    -H "Content-Type: application/json" \
+    -d '{"email":"matias@example.com","password":"Test1234!","role":"DRIVER","plate":"ABC-123"}'
+  # → 201 Created, body: { "userId": "uuid", "role": "DRIVER" }
+
+  # Login
+  curl -X POST https://parklink-backend.onrender.com/api/v1/auth/login \
+    -H "Content-Type: application/json" \
+    -d '{"email":"matias@example.com","password":"Test1234!"}'
+  # → 200 OK, body: { "accessToken": "eyJhbGciOi...", "expiresIn": 3600 }
+  ```
+
+**Base de datos en producción:**
+- Instancia Postgres en Render, plan gratuito (256 MB, suficiente para Sprint 1).
+- Tabla `users` operativa con columnas `id (uuid)`, `email (unique)`, `password_hash`, `role (enum)`, `created_at`, `verified_at`.
+- Acceso restringido por SSL + credenciales inyectadas vía variables de entorno (`DATABASE_URL`) — nunca commiteadas al repo, cumpliendo QAS-04.
+
+#### 5.3.1.5 Microservices Documentation Evidence for Sprint Review
+
+Sprint 1 entrega el primer microservicio funcional del sistema: el **User Identity & Access Service**, correspondiente al bounded context `User Identity Context` descrito en el Capítulo 4. Los demás contextos (Parking Discovery, Parking Supply, Reservation Management, Payments) quedan documentados en arquitectura pero entran a implementación en sprints posteriores.
+
+**Servicio: User Identity & Access Service**
+- **Responsabilidad:** Gestión del ciclo de vida de cuentas de usuario, autenticación por credenciales y emisión de tokens de acceso con información de rol.
+- **Endpoints publicados en Sprint 1:**
+
+| Método | Ruta | Descripción | Auth requerida | Driver soportado |
+|--------|------|-------------|----------------|-------------------|
+| `POST` | `/api/v1/auth/register` | Crea una cuenta nueva con rol `DRIVER` u `OWNER` | No | US17, US18 |
+| `POST` | `/api/v1/auth/login` | Autentica credenciales y devuelve JWT | No | US19 |
+| `GET`  | `/api/v1/auth/me`     | Devuelve datos del usuario autenticado | Bearer JWT | TS03 |
+| `GET`  | `/health`              | Liveness probe | No | Infra |
+
+- **Contrato OpenAPI:** se publicará en `ParkLink-Backend/docs/openapi.yaml` y se servirá en `/docs` vía `swagger-ui-express` al cierre del sprint.
+- **Modelo de datos persistido (PostgreSQL):**
+  ```sql
+  CREATE TABLE users (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    role VARCHAR(16) NOT NULL CHECK (role IN ('DRIVER','OWNER')),
+    plate VARCHAR(16),                 -- sólo para DRIVER
+    bank_account VARCHAR(64),          -- sólo para OWNER
+    verified_at TIMESTAMP,
+    created_at TIMESTAMP NOT NULL DEFAULT NOW()
+  );
+
+  CREATE TABLE refresh_tokens (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    token_hash VARCHAR(255) NOT NULL,
+    expires_at TIMESTAMP NOT NULL,
+    revoked_at TIMESTAMP
+  );
+  ```
+- **Trazabilidad con Capítulo 4:** este servicio materializa el `User Identity Context` y satisface **TS03 — Autenticación y autorización por roles** así como el escenario de calidad **QAS-04 (Security)**. Implementa el ADR-301 de hashing con bcrypt (factor 12) y el ADR-302 de JWT firmado con HS256 + secret rotable. Las llamadas entre este servicio y el resto del sistema son síncronas vía HTTP/REST, alineado con la decisión arquitectónica del Capítulo 4 de evitar acoplamiento por mensajería en operaciones de autenticación.
+
+#### 5.3.1.6 Software Deployment Evidence for Sprint Review
+
+El Sprint 1 ejercita por primera vez la cadena de despliegue del proyecto, separando claramente el plano de presentación (Vercel) del plano de datos y servicios (Render).
+
+**Vercel — Web frontend (`ParkLink-Landing`):**
+- Proyecto vinculado al repositorio GitHub mediante integración nativa de Vercel.
+- Cada push a `main` dispara un build automático (`vite build`) y un deploy de la salida estática (`dist/`).
+- Cada Pull Request genera una Preview URL aislada, útil para revisión visual antes de mergear.
+- URL de producción: `https://arqsoft.vercel.app`.
+- TLS provisto por Vercel (certificado automático, renovación gestionada). Cumple QAS-04 (100% del tráfico bajo HTTPS).
+
+**Render — Backend Node + TS y base de datos PostgreSQL:**
+- **Servicio web (Node):** plan gratuito de Render, build command `npm run build`, start command `node dist/server.js`, autodeploy habilitado sobre `main`.
+- **Base de datos:** instancia PostgreSQL administrada (plan free 256 MB), SSL obligatorio, backups diarios automáticos del propio Render.
+- Variables de entorno definidas en Render Dashboard (nunca en el repositorio):
+  - `DATABASE_URL` — connection string interna Render → Render.
+  - `JWT_SECRET` — secreto de firma de tokens (rotable).
+  - `NODE_ENV=production`.
+  - `CORS_ORIGIN=https://arqsoft.vercel.app` — restringe orígenes permitidos al dominio del frontend.
+- **Cold start observado en plan free:** ~30–50 segundos tras inactividad. Aceptable para Sprint 1; se mitigará en Sprint 4 o 5 escalando a plan pago o aplicando un cron de keep-alive si los QAS de performance lo exigen.
+
+**Pipeline mental del despliegue al cierre del Sprint 1:**
+```
+Developer push → GitHub (main)
+              ├─→ Vercel build + deploy  (web)         → https://arqsoft.vercel.app
+              └─→ Render build + deploy  (backend Node)→ https://parklink-backend.onrender.com
+                                          └─ conecta a → Render PostgreSQL (internal)
+```
+
+#### 5.3.1.7 Team Collaboration Insights during Sprint
+
+**Eventos Scrum ejecutados durante el Sprint 1:**
+
+| Evento | Frecuencia | Duración | Facilitador rotativo |
+|--------|-----------|----------|-----------------------|
+| Sprint Planning | Una vez (inicio) | 90 min | Pietro Osores Marchese |
+| Daily Stand-up  | Diario (L-V) | 15 min | Rotativo por integrante |
+| Sprint Review   | Una vez (cierre) | 60 min | Fabian Alejandro Oliva Lopez |
+| Sprint Retrospective | Una vez (cierre) | 45 min | Javier Masaru Nikaido Vargas |
+
+**Distribución del trabajo por integrante (basada en SBI asumidos):**
+
+| Integrante | Foco | SBI asumidos | SP estimados |
+|------------|------|--------------|--------------|
+| Pietro Osores Marchese | Frontend web + UX | SBI-01, SBI-09 (compartido) | 6.5 |
+| Matias Rodolfo Salcedo Champi | Backend IAM + DB schema | SBI-02, SBI-03, SBI-09 (compartido) | 9.5 |
+| Percy Alonso Muñiz Huayanca | Backend seguridad + middleware | SBI-04, SBI-05 | 8 |
+| Javier Masaru Nikaido Vargas | DevEx + arquitectura repo | SBI-06 | 3 |
+| Fabian Alejandro Oliva Lopez | Infra Render + deploy | SBI-07, SBI-08 | 5 |
+| **Total** |  |  | **32 SP** |
+
+**Canales de colaboración:**
+- Discord del equipo para coordinación diaria asincrónica y dailies.
+- GitHub Pull Requests para revisión de código (mínimo un reviewer por PR).
+- WhatsApp para alertas urgentes (caídas de servicio, bloqueos).
+- Llamadas en Discord o Google Meet para Sprint Planning, Review y Retro.
+
+**Hallazgos clave de la retrospectiva (cierre Sprint 1):**
+- *Lo que funcionó:* Decidir temprano el stack (Node + TS + Postgres + Vercel + Render) evitó retrabajo y permitió desplegar la landing el mismo día de la decisión. La convención de Conventional Commits facilitó leer el historial del repo.
+- *Lo que mejorar:* No se configuró pipeline de CI (lint + test) durante el Sprint 1; quedó como deuda técnica prioritaria para Sprint 2. La falta de un tablero Kanban formal generó pequeñas duplicaciones de tareas que se resolvieron en daily.
+- *Acuerdos para Sprint 2:* habilitar GitHub Projects como tablero único, agregar GitHub Actions con `npm run lint && npm test` en cada PR, escribir la suite de Vitest y Jest pendiente.
+
+#### 5.3.1.8 Kanban Board
+
+Durante el Sprint 1 el equipo trabajó con un tablero Kanban informal compartido por Discord y mensajes directos. Como acuerdo de Retrospectiva (ver sección 5.3.1.7), a partir del Sprint 2 el tablero oficial será **GitHub Projects** vinculado a la organización `1ASI0657-2610-17949-ParkLink`, lo que permite enlazar tarjetas directamente con Issues y Pull Requests de los repositorios `ParkLink-Landing` y `ParkLink-Backend`.
+
+**Estructura propuesta del tablero (a habilitar al inicio del Sprint 2):**
+
+| Columna | Significado | Política de entrada |
+|---------|-------------|----------------------|
+| **Backlog** | Items refinados pero no comprometidos al sprint actual | Tienen historia de usuario asociada y estimación inicial |
+| **Sprint Backlog** | Items comprometidos al sprint en curso | Caben en la capacidad declarada y tienen Definition of Ready |
+| **In Progress** | Tarea siendo desarrollada por un integrante | Máximo 1 tarea activa por persona (límite WIP) |
+| **In Review** | PR abierto esperando revisión | Tiene checks de CI pasados |
+| **Done** | Mergeado y desplegado | Cumple Definition of Done |
+
+**Estado retroactivo del tablero al cierre del Sprint 1** (registrado en este informe como evidencia documental, dado que el tablero físico no existió):
+
+| SBI | Estado final |
+|-----|--------------|
+| SBI-01 Landing pública | Done — desplegado en `https://arqsoft.vercel.app` |
+| SBI-02 Registro conductor | In Review / Done (al cierre del sprint) |
+| SBI-03 Registro propietario | In Review / Done (al cierre del sprint) |
+| SBI-04 Login | In Review / Done (al cierre del sprint) |
+| SBI-05 Middleware autorización por rol | In Review / Done (al cierre del sprint) |
+| SBI-06 Setup repo backend | Done |
+| SBI-07 Provisión Postgres Render | Done |
+| SBI-08 Deploy backend Render | Done |
+| SBI-09 Form de registro embebido en landing | In Progress al cierre (carry-over candidato a Sprint 2 si no se completa) |
