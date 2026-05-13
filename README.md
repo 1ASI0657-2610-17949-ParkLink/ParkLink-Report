@@ -1036,7 +1036,7 @@ Se aplica CQRS de forma liviana en el Parking Discovery Context. Las búsquedas 
 
 | Patrón | Contexto de aplicación |
 |--------|------------------------|
-| Repository Pattern | Abstracción del acceso a MySQL para reservas, espacios, usuarios y pagos. Facilita testing y permite cambiar el motor de base de datos sin afectar el dominio. |
+| Repository Pattern | Abstracción del acceso a PostgreSQL para reservas, espacios, usuarios y pagos. Facilita testing y permite cambiar el motor de base de datos sin afectar el dominio. |
 | Adapter Pattern | Encapsula la comunicación con proveedores externos: Stripe, MercadoPago, Google Maps, Firebase Cloud Messaging, SendGrid y S3-compatible storage. El dominio depende de interfaces, no de SDKs concretos. |
 | Circuit Breaker | Envuelve todas las llamadas a proveedores externos. Abre el circuito ante fallos repetidos y ejecuta un fallback controlado, evitando la propagación del fallo hacia operaciones internas. |
 | CQRS | Separación de comandos (crear, cancelar, extender reserva) y consultas (buscar espacios, ver disponibilidad) para optimizar rendimiento de lectura en búsquedas frecuentes. |
@@ -1064,7 +1064,7 @@ Los diagramas se modelan mediante **Structurizr DSL** como Architecture-as-Code,
 | Persona (caja con cabeza) | Actor humano externo al sistema | Conductor, Propietario |
 | Software System (caja azul oscura) | Sistema bajo análisis | ParkLink Platform |
 | External System (caja gris) | Sistema externo del que dependemos | Google Maps Platform, Stripe, SendGrid |
-| Container (caja azul clara) | Unidad ejecutable o de datos desplegable | Mobile App, Backend API, MySQL, Redis |
+| Container (caja azul clara) | Unidad ejecutable o de datos desplegable | Mobile App, Backend API, PostgreSQL, Redis |
 | Component (caja blanca dentro de container) | Pieza interna de código | ReservationController, AvailabilityService |
 | Code Element | Clase, interfaz, value object | `Reservation`, `ReservationStatus` enum |
 | Flecha sólida | Llamada síncrona (HTTPS, JDBC) | Mobile → API Gateway |
@@ -1203,7 +1203,7 @@ El Container Level Diagram muestra cómo los productos digitales y servicios té
 | Parking Discovery Service | Resolver búsquedas, filtros, detalle, disponibilidad visible, mapa y recomendación de estacionamientos. | Módulo backend REST optimizado para consultas e integración con mapas. | Consulta base de datos, cache de disponibilidad, Maps API y object storage. | Parking Discovery Context. |
 | Reservation Management Service | Crear reservas, bloquear espacios, cancelar, extender, consultar historial y controlar estados de reserva. | Módulo backend REST con reglas transaccionales y validaciones de concurrencia. | Lee/escribe en base de datos; actualiza cache; emite eventos; solicita notificaciones. | Reservation Management Context. |
 | Parking Supply & Monetization Service | Publicar espacios, configurar horarios y precios, habilitar/deshabilitar disponibilidad, gestionar reservas recibidas, ingresos, pagos, reembolsos y comprobantes. | Módulo backend REST con integración a pasarela de pagos y object storage. | Lee/escribe en base de datos; se integra con Payment Gateway, object storage y notificaciones. | Parking Supply & Monetization Context. |
-| Main Relational Database | Persistir usuarios, perfiles, espacios, disponibilidad base, reservas, pagos, comprobantes, reseñas y notificaciones. | MySQL, coherente con la justificación relacional del informe. | Accedida únicamente por servicios backend; cada contexto mantiene propiedad lógica de sus datos. | Soporte persistente para los cuatro bounded contexts. |
+| Main Relational Database | Persistir usuarios, perfiles, espacios, disponibilidad base, reservas, pagos, comprobantes, reseñas y notificaciones. | PostgreSQL, coherente con la justificación relacional del informe. | Accedida únicamente por servicios backend; cada contexto mantiene propiedad lógica de sus datos. | Soporte persistente para los cuatro bounded contexts. |
 | Availability Cache | Acelerar consultas de disponibilidad visible y reducir carga sobre la base de datos en búsquedas frecuentes. | Redis. | Actualizada por Reservation Management y Supply; consultada por Parking Discovery. | Parking Discovery y Reservation Management. |
 | Internal Domain Event Bus | Desacoplar efectos secundarios como notificaciones, actualización de disponibilidad visible y sincronización de vistas. | Bus de eventos interno o message broker según evolución del despliegue. | Recibe eventos desde servicios de dominio y los entrega a consumidores internos. | Principalmente Reservation Management, Parking Discovery y Parking Supply & Monetization. |
 | Object Storage S3-compatible | Almacenar imágenes de espacios de estacionamiento publicadas por propietarios. | Servicio compatible con S3. | Supply sube imágenes; Discovery recupera imágenes para detalle de espacios. | Parking Supply & Monetization y Parking Discovery. |
@@ -1215,7 +1215,7 @@ Esta estructura soporta las user stories principales del backlog. US01 a US04 se
 
 La base de datos relacional se mantiene como fuente de verdad para reservas y pagos porque estas operaciones requieren consistencia fuerte. La cache no reemplaza esa fuente de verdad; solo acelera la lectura de disponibilidad para el conductor. Esta decisión es clave: una disponibilidad mostrada en el mapa no equivale a una reserva confirmada hasta que el Reservation Management Context haya bloqueado el espacio y registrado el estado correspondiente.
 
-**Conectividad explícita a la base de datos relacional (lectura clave del Container Diagram).** Conforme a la notación C4, la base de datos `Main Relational Database (MySQL)` no es un bounded context ni un servicio: es un **contenedor de datos** consultado y modificado **únicamente** por los servicios backend mediante JDBC/TCP cifrado. Cada microservicio mantiene la propiedad lógica de sus tablas pero comparte el motor por simplicidad operativa en la primera versión. El siguiente diagrama Mermaid complementa el SVG anterior para hacer explícita la conectividad servicio→base de datos exigida por el C4 Container Level:
+**Conectividad explícita a la base de datos relacional (lectura clave del Container Diagram).** Conforme a la notación C4, la base de datos `Main Relational Database (PostgreSQL)` no es un bounded context ni un servicio: es un **contenedor de datos** consultado y modificado **únicamente** por los servicios backend mediante JDBC/TCP cifrado. Cada microservicio mantiene la propiedad lógica de sus tablas pero comparte el motor por simplicidad operativa en la primera versión. El siguiente diagrama Mermaid complementa el SVG anterior para hacer explícita la conectividad servicio→base de datos exigida por el C4 Container Level:
 
 ```mermaid
 flowchart LR
@@ -1224,7 +1224,7 @@ flowchart LR
     ReservationSvc["Reservation Management Service<br/>(Node.js / NestJS)"]
     SupplySvc["Parking Supply &amp; Monetization Service<br/>(Node.js / NestJS)"]
     Cache[("Availability Cache<br/>Redis 7")]
-    DB[("Main Relational Database<br/>MySQL 8.0")]
+    DB[("Main Relational Database<br/>PostgreSQL 16")]
     EventBus(["Internal Domain Event Bus"])
 
     UserSvc -- "Lee/escribe<br/>tablas USERS, REFRESH_TOKENS<br/>(JDBC/TLS)" --> DB
@@ -1247,7 +1247,7 @@ Los Component Diagrams corresponden al **C4 Nivel 3** y descomponen cada contain
 
 ##### Componentes del Parking Discovery Service
 
-El Parking Discovery Service expone búsqueda geoespacial, filtros por precio y horario, y detalle de espacios con disponibilidad proyectada. Internamente sigue un estilo **Hexagonal (Ports & Adapters)** que aísla el dominio (`SearchAvailability`) de los detalles de infraestructura (MySQL, Redis, Google Maps).
+El Parking Discovery Service expone búsqueda geoespacial, filtros por precio y horario, y detalle de espacios con disponibilidad proyectada. Internamente sigue un estilo **Hexagonal (Ports & Adapters)** que aísla el dominio (`SearchAvailability`) de los detalles de infraestructura (PostgreSQL, Redis, Google Maps).
 
 ```mermaid
 flowchart TB
@@ -1266,7 +1266,7 @@ flowchart TB
         AvailAdapter["RedisAvailabilityAdapter<br/>«adapter»"]
         MapsAdapter["GoogleMapsAdapter<br/>«adapter»"]
     end
-    DB[("MySQL<br/>parking_spaces, availability")]
+    DB[("PostgreSQL<br/>parking_spaces, availability")]
     Cache[("Redis<br/>avail:{space}:{slot}")]
     Maps(["Google Maps API"])
 
@@ -1323,7 +1323,7 @@ flowchart TB
         PayAdapter["HttpPaymentAdapter<br/>«adapter»"]
         EventAdapter["EventBusAdapter<br/>«adapter»"]
     end
-    DB[("MySQL<br/>reservations, payments")]
+    DB[("PostgreSQL<br/>reservations, payments")]
     PaySvc(["Payment Service"])
     Bus(["Internal Domain Event Bus"])
 
@@ -1495,7 +1495,7 @@ flowchart TD
 ```mermaid
 sequenceDiagram
     participant R as Reservation Service
-    participant DB as MySQL
+    participant DB as PostgreSQL
     participant Bus as Event Bus
     participant D as Discovery Service
     participant C as Redis Cache
@@ -1504,7 +1504,7 @@ sequenceDiagram
     R-->>Bus: ReservationConfirmed{ spaceId, interval }
     Bus-->>D: ReservationConfirmed
     D->>C: SET avail:{spaceId}:{slot} = "reserved" EX 3600
-    Note over D,C: La proyección se vuelve eventually consistent.<br/>Si el conductor busca antes del SET,<br/>verá el espacio brevemente disponible<br/>pero la reserva real lo rechazará en MySQL.
+    Note over D,C: La proyección se vuelve eventually consistent.<br/>Si el conductor busca antes del SET,<br/>verá el espacio brevemente disponible<br/>pero la reserva real lo rechazará en PostgreSQL.
 ```
 
 ##### Diagrama de clases — Adapter Pattern para Payment y Notification
@@ -1556,7 +1556,7 @@ classDiagram
 | Clases — Reservation Domain | EP02, US05, US06, US07, US08, TS01 | Modelo rico DDD: `Reservation` como aggregate root con invariantes encapsuladas |
 | Estados — Reservation Lifecycle | US05, US06, US08, QAS-02 | State Pattern: el aggregate controla las transiciones legales, rechaza saltos inválidos |
 | Actividad — Reserva concurrente | TS01, QAS-02, US05 | Locking pesimista `SELECT FOR UPDATE` + serializable previene doble reserva |
-| Secuencia — Proyección disponibilidad | TS02, RNF02, QAS-01 | CQRS ligero: comandos en MySQL, lecturas rápidas en Redis con eventual consistency |
+| Secuencia — Proyección disponibilidad | TS02, RNF02, QAS-01 | CQRS ligero: comandos en PostgreSQL, lecturas rápidas en Redis con eventual consistency |
 | Clases — Adapter Pattern | C-INT, RNF04, ADR-307 | Inversión de dependencias: el dominio depende de la interfaz, no del SDK del proveedor |
 
 Estos diagramas permiten que un desarrollador nuevo entienda no solo qué hace cada componente, sino también cómo está modelado el dominio a nivel de código y qué reglas protegen las transiciones críticas del sistema.
@@ -1573,7 +1573,7 @@ Los ViewPoints Diagrams complementan los diagramas C4 mostrando la arquitectura 
 **Driver:** US05, US14, QAS-02, AC-02
 **Preocupación:** ¿Cómo garantiza el sistema que mi reserva es confirmada sin duplicados y con pago procesado correctamente?
 
-Este viewpoint muestra el flujo funcional completo desde que el conductor selecciona un espacio hasta que recibe confirmación de reserva y pago. La decisión arquitectónica central es la separación entre disponibilidad visible (Redis) y disponibilidad confirmable (MySQL con bloqueo transaccional), que previene la doble reserva bajo concurrencia.
+Este viewpoint muestra el flujo funcional completo desde que el conductor selecciona un espacio hasta que recibe confirmación de reserva y pago. La decisión arquitectónica central es la separación entre disponibilidad visible (Redis) y disponibilidad confirmable (PostgreSQL con bloqueo transaccional), que previene la doble reserva bajo concurrencia.
 
 <table>
   <thead>
@@ -1589,7 +1589,7 @@ Este viewpoint muestra el flujo funcional completo desde que el conductor selecc
       <td>1</td>
       <td>Conductor → Parking Discovery Service</td>
       <td>Busca espacios cercanos con precio, horario y distancia</td>
-      <td>CQRS ligero: lectura desde Redis Cache sin tocar MySQL</td>
+      <td>CQRS ligero: lectura desde Redis Cache sin tocar PostgreSQL</td>
     </tr>
     <tr>
       <td>2</td>
@@ -1605,7 +1605,7 @@ Este viewpoint muestra el flujo funcional completo desde que el conductor selecc
     </tr>
     <tr>
       <td>4</td>
-      <td>Reservation Service → MySQL</td>
+      <td>Reservation Service → PostgreSQL</td>
       <td>Abre transacción ACID y bloquea disponibilidad con SELECT FOR UPDATE</td>
       <td>Locking pesimista; previene doble reserva bajo concurrencia</td>
     </tr>
@@ -1723,7 +1723,7 @@ Este viewpoint muestra las decisiones que optimizan el rendimiento actual y habi
   <tbody>
     <tr>
       <td>Redis como proyección de disponibilidad visible</td>
-      <td>Búsquedas responden sin consultar MySQL; latencia sub-milisegundo en lecturas de cache</td>
+      <td>Búsquedas responden sin consultar PostgreSQL; latencia sub-milisegundo en lecturas de cache</td>
       <td>Cache puede replicarse horizontalmente sin afectar la fuente de verdad</td>
       <td>ADR-104, ADR-204</td>
     </tr>
@@ -1734,7 +1734,7 @@ Este viewpoint muestra las decisiones que optimizan el rendimiento actual y habi
       <td>ADR-207</td>
     </tr>
     <tr>
-      <td>CQRS ligero: lecturas desde cache, escrituras en MySQL</td>
+      <td>CQRS ligero: lecturas desde cache, escrituras en PostgreSQL</td>
       <td>Desacopla la carga de lectura frecuente de la carga transaccional de comandos</td>
       <td>Read replicas pueden añadirse al modelo de lectura sin cambiar el dominio transaccional</td>
       <td>ADR-104</td>
@@ -1835,7 +1835,7 @@ Los datos de ParkLink tienen una estructura bien definida y relaciones claras:
 
 > reservas → espacios → usuarios → pagos
 
-- ✅ MySQL es compatible con Node.js/Express.js y soporta claves foráneas.
+- ✅ PostgreSQL es compatible con Node.js/Express.js y soporta claves foráneas.
 - ✅ El negocio requiere consistencia **ACID** (reservas, pagos, cancelaciones).
 - ✅ Las consultas (filtros por ubicación, precio, horario) se optimizan con **índices y JOINs**.
 
@@ -1940,15 +1940,15 @@ ParkLink aplica patrones **arquitectónicos**, **GoF** y **tácticos de DDD** de
 
 | ID | Patrón | Categoría | Bounded context | Driver / Decisión sustentada | Evidencia en el informe |
 |----|--------|-----------|------------------|-------------------------------|--------------------------|
-| **DP-01** | Repository | DDD táctico / Acceso a datos | Todos | Aísla el dominio del motor MySQL, facilita tests con doubles y permite migrar a otro motor sin tocar dominio. Soporta C-06 (consistencia ACID) | 4.1.3.4 — `ReservationRepository`, `SpaceReadRepository` como ports |
+| **DP-01** | Repository | DDD táctico / Acceso a datos | Todos | Aísla el dominio del motor PostgreSQL, facilita tests con doubles y permite migrar a otro motor sin tocar dominio. Soporta C-06 (consistencia ACID) | 4.1.3.4 — `ReservationRepository`, `SpaceReadRepository` como ports |
 | **DP-02** | Observer / Domain Event Bus | Arquitectónico | Reservation, Supply, Discovery, Notification | Desacopla efectos secundarios; notificaciones y proyección de disponibilidad no bloquean la transacción principal. Soporta US20, RNF04, ADR-306 | 4.1.3.5 — diagrama de secuencia `Availability Projection Flow` |
 | **DP-03** | Strategy | GoF Comportamental | Payment, Notification | Permite intercambiar métodos de pago (tarjeta, billetera, transferencia) y canales de notificación (push, email) sin alterar el flujo de reserva | 4.1.3.5 — `PaymentProvider`, `NotificationProvider` |
 | **DP-04** | Chain of Responsibility | GoF Comportamental | API Gateway / Backend | Pipeline de validación de requests: autenticación → autorización por rol → validación de DTO → rate limit, cada eslabón puede cortar la cadena. Soporta TS03, QAS-04 | Middleware en sección 5.2 y guards en componentes |
-| **DP-05** | Singleton | GoF Creacional | Todos | Una sola instancia del pool de conexiones a MySQL y del cliente Redis por proceso; evita agotar conexiones del motor en VM | `prisma.service.ts` documentado en cap 5 |
+| **DP-05** | Singleton | GoF Creacional | Todos | Una sola instancia del pool de conexiones a PostgreSQL y del cliente Redis por proceso; evita agotar conexiones del motor en VM | `prisma.service.ts` documentado en cap 5 |
 | **DP-06** | Factory Method | GoF Creacional | Notification | Crea el objeto de notificación correcto según el tipo de evento (`ReservationConfirmed` → push + email; `RefundProcessed` → solo email) | 4.1.3.4 — Notification Service Components |
 | **DP-07** | Command | GoF Comportamental | Reservation | Encapsula intenciones del conductor (`CreateReservationCommand`, `CancelReservationCommand`, `ExtendReservationCommand`) permitiendo logging, validación, retry y futura cola de comandos | 4.1.3.4 — diagrama de componentes Reservation |
 | **DP-08** | Decorator | GoF Estructural | Cross-cutting | Añade logging, métricas y circuit breaker alrededor de los adapters de Stripe, MercadoPago, FCM, SendGrid y Google Maps sin modificarlos. Soporta RNF04 y ADR-305 | ADR-305 (Circuit Breaker) en sección 4.3.3 |
-| **DP-09** | CQRS (ligero) | Arquitectónico | Parking Discovery + Reservation | Separa el modelo de lectura (proyección Redis para búsqueda rápida) del modelo de escritura (MySQL como fuente de verdad). Soporta QAS-01, RNF02, TS02 | 4.1.3.5 — secuencia `Availability Projection Flow` |
+| **DP-09** | CQRS (ligero) | Arquitectónico | Parking Discovery + Reservation | Separa el modelo de lectura (proyección Redis para búsqueda rápida) del modelo de escritura (PostgreSQL como fuente de verdad). Soporta QAS-01, RNF02, TS02 | 4.1.3.5 — secuencia `Availability Projection Flow` |
 | **DP-10** | State | GoF Comportamental | Reservation | Las transiciones legales del agregado `Reservation` se encapsulan dentro del propio agregado; estados ilegales rechazan la operación con excepción de dominio | 4.1.3.5 — `stateDiagram-v2` Reservation Lifecycle |
 | **DP-11** | Adapter | GoF Estructural | Payment, Notification, Maps | Convierte el SDK heterogéneo de cada proveedor a la interfaz uniforme que el dominio espera. Permite cambiar de Stripe a MercadoPago sin tocar reglas. Soporta C-INT, ADR-307 | 4.1.3.5 — `classDiagram` Adapter Pattern |
 | **DP-12** | Aggregate | DDD táctico | Reservation, Supply | `Reservation` y `ParkingSpace` son aggregate roots que mantienen invariantes y son la única puerta de modificación de su árbol de objetos. Soporta consistencia transaccional | 4.1.3.5 — `Reservation` con métodos `confirmPayment`, `cancel`, `extend` |
@@ -1982,7 +1982,7 @@ ParkLink selecciona deliberadamente tactics para cada Quality Attribute Scenario
 
 | QAS sustentado | Tactic | Decisión concreta en ParkLink | Evidencia |
 |----------------|--------|--------------------------------|-----------|
-| QAS-01 (95% búsquedas ≤ 3s) | **Increase Computational Efficiency** — usar estructuras de datos óptimas | Índices geoespaciales en MySQL (`SPATIAL INDEX` sobre `latitude, longitude`) y B-Tree sobre `pricePerHour` y `status` | Schema 4.1.5 + ADR-201 |
+| QAS-01 (95% búsquedas ≤ 3s) | **Increase Computational Efficiency** — usar estructuras de datos óptimas | Índices geoespaciales en PostgreSQL (`SPATIAL INDEX` sobre `latitude, longitude`) y B-Tree sobre `pricePerHour` y `status` | Schema 4.1.5 + ADR-201 |
 | QAS-01 | **Reduce Computational Overhead** — evitar cálculos costosos en cada request | Cache de disponibilidad proyectada en Redis (TTL 1h) consultada por Discovery Service en vez de recalcular intersecciones de horarios sobre MySQL | 4.1.3.5 Availability Projection Flow |
 | QAS-01 | **Introduce Concurrency** — paralelizar trabajo independiente | Connection pool MySQL (10 conexiones por servicio) + `Promise.all` para combinar resultados de Discovery + Maps en un solo response | Container Diagram 4.1.3.3 |
 | QAS-02 (reserva ≤ 5s, 0 dobles) | **Reduce Computational Overhead** | Pre-cálculo de `pricePerHour × duration` en `PriceCalculator` evitando JOIN adicional | 4.1.3.5 Reservation Domain |
