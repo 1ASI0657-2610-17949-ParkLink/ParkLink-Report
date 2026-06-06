@@ -96,6 +96,36 @@
     - [4.3.1. Iteration 1: Establish Overall System Structure](#431-iteration-1-establish-overall-system-structure)
     - [4.3.2. Iteration 2: Address Critical Quality Attributes](#432-iteration-2-address-critical-quality-attributes)
     - [4.3.3. Iteration 3: External Integrations & Cross-Cutting Concerns](#433-iteration-3-external-integrations--cross-cutting-concerns)
+- [Capítulo V: Product Implementation, Validation & Deployment](#capítulo-v-product-implementation-validation--deployment)
+    - [5.1. Testing Suites & General Patterns](#51-testing-suites--general-patterns)
+    - [5.1.1 Backend Application Core Testing Suite](#511-backend-application-core-testing-suite)
+    - [5.1.2 Pattern Based Backend Aplication(s)](#512-pattern-based-backend-aplications)
+    - [5.1.3 Pattern Based Custom Software Library](#513-pattern-based-custom-software-library)
+    - [5.1.4 Framework Pattern Driven Refactoring Report](#514-framework-pattern-driven-refactoring-report)
+    - [5.2 Software Configuration Management](#52-software-configuration-management)
+    - [5.2.1 Software Development Environment Configuration](#521-software-development-environment-configuration)
+    - [5.2.2 Source Code Management](#522-source-code-management)
+    - [5.2.3 Source Code Style Guide & Conventions](#523-source-code-style-guide--conventions)
+    - [5.2.4 Software Deployment Configuration](#524-software-deployment-configuration)
+    - [5.3 Microservices Implementation](#53-microservices-implementation)
+    - [5.3.1 Sprint 1](#531-sprint-1)
+    - [5.3.1.1 Sprint Backlog 1](#5311-sprint-backlog-1)
+    - [5.3.1.2 Development Evidence for Sprint Review](#5312-development-evidence-for-sprint-review)
+    - [5.3.1.3 Testing Suite Evidence for Sprint Review](#5313-testing-suite-evidence-for-sprint-review)
+    - [5.3.1.4 Execution Evidence for Sprint Review](#5314-execution-evidence-for-sprint-review)
+    - [5.3.1.5 Microservices Documentation Evidence for Sprint Review](#5315-microservices-documentation-evidence-for-sprint-review)
+    - [5.3.1.6 Software Deployment Evidence for Sprint Review](#5316-software-deployment-evidence-for-sprint-review)
+    - [5.3.1.7 Team Collaboration Insights during Sprint](#5317-team-collaboration-insights-during-sprint)
+    - [5.3.1.8 Kanban Board](#5318-kanban-board)
+    - [5.3.2 Sprint 2](#532-sprint-2)
+    - [5.3.2.1 Sprint Backlog 2](#5321-sprint-backlog-2)
+    - [5.3.2.2 Development Evidence for Sprint Review](#5322-development-evidence-for-sprint-review)
+    - [5.3.2.3 Testing Suite Evidence for Sprint Review](#5323-testing-suite-evidence-for-sprint-review)
+    - [5.3.2.4 Execution Evidence for Sprint Review](#5324-execution-evidence-for-sprint-review)
+    - [5.3.2.5 Microservices Documentation Evidence for Sprint Review](#5325-microservices-documentation-evidence-for-sprint-review)
+    - [5.3.2.6 Software Deployment Evidence for Sprint Review](#5326-software-deployment-evidence-for-sprint-review)
+    - [5.3.2.7 Team Collaboration Insights during Sprint](#5327-team-collaboration-insights-during-sprint)
+    - [5.3.2.8 Kanban Board](#5328-kanban-board)
   
 # Capítulo I: Introducción
 
@@ -3693,6 +3723,34 @@ Durante el Sprint 1 el equipo trabajó con un tablero Kanban informal compartido
 | SBI-09 Form de registro embebido en landing | In Progress al cierre (carry-over candidato a Sprint 2 si no se completa) |
 
 ### 5.3.2 Sprint 2
+
+#### 5.3.2.1 Sprint Backlog 2
+
+_Espacio reservado para completar esta sección._
+
+#### 5.3.2.2 Development Evidence for Sprint Review
+
+_Espacio reservado para completar esta sección._
+
+#### 5.3.2.3 Testing Suite Evidence for Sprint Review
+
+_Espacio reservado para completar esta sección._
+
+#### 5.3.2.4 Execution Evidence for Sprint Review
+
+_Espacio reservado para completar esta sección._
+
+#### 5.3.2.5 Microservices Documentation Evidence for Sprint Review
+
+_Espacio reservado para completar esta sección._
+
+#### 5.3.2.6 Software Deployment Evidence for Sprint Review
+
+_Espacio reservado para completar esta sección._
+
+#### 5.3.2.7 Team Collaboration Insights during Sprint
+
+_Espacio reservado para completar esta sección._
 
 #### 5.3.2.8 Kanban Board
 
