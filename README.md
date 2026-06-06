@@ -3746,11 +3746,139 @@ _Espacio reservado para completar esta sección._
 
 #### 5.3.2.6 Software Deployment Evidence for Sprint Review
 
-_Espacio reservado para completar esta sección._
+El Sprint 2 consolida la cadena de despliegue iniciada en el Sprint 1, manteniendo la separación entre el plano de presentación, el plano de servicios y el plano de datos. En esta iteración, el despliegue ya no se limita únicamente a validar autenticación inicial, sino que permite evidenciar una estructura backend más completa, la exposición del **API Gateway**, la documentación Swagger/OpenAPI y la conexión con la base de datos PostgreSQL administrada.
+
+La estrategia de despliegue del Sprint 2 se mantuvo sobre tres componentes principales: **Vercel** para la landing, el backend y el API Gateway; **Render** para la base de datos PostgreSQL; y **GitHub** como repositorio central de versionamiento y punto de activación del despliegue automático.
+
+**Vercel — Web frontend (`ParkLink-Landing`):**
+
+- Repositorio vinculado: `https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Landing`.
+- La landing se mantiene como punto público de entrada al producto ParkLink.
+- Cada cambio enviado a la rama `main` dispara el proceso de build y deploy automático en Vercel.
+- El despliegue genera una salida estática optimizada del proyecto frontend.
+- URL de producción: `https://arqsoft.vercel.app`.
+- Se validó que la landing continúe disponible bajo HTTPS y que pueda ser utilizada como evidencia visual durante el Sprint Review.
+- En el Sprint 2, la landing cumple el rol de canal de presentación del producto, mientras que la lógica principal del sistema se concentra en el backend y el API Gateway.
+
+**Vercel — Backend NestJS serverless (`ParkLink-Backend`):**
+
+- Repositorio vinculado: `https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Backend`.
+- El backend se mantiene desplegado como aplicación NestJS serverless sobre Vercel.
+- El despliegue toma el código actualizado desde GitHub, instala dependencias, genera el build del backend y publica los endpoints correspondientes.
+- En el Sprint 2 se evidencian nuevos módulos funcionales relacionados con:
+  - Registro e inicio de sesión de usuarios.
+  - Autorización por roles y rutas protegidas mediante JWT.
+  - Gestión de espacios de estacionamiento.
+  - Consulta de espacios disponibles.
+  - Creación y consulta de reservas.
+  - Estructura base de pagos.
+  - Estructura base de notificaciones.
+- La documentación Swagger/OpenAPI del backend quedó disponible para validar los endpoints implementados.
+
+**Vercel — API Gateway NestJS serverless:**
+
+- El API Gateway se despliega como una aplicación independiente dentro del mismo enfoque serverless.
+- Su función principal es centralizar el acceso hacia los servicios del backend, permitiendo ordenar la comunicación entre el frontend y los módulos internos.
+- En el Sprint 2 se mejoró la estructura del gateway para exponer rutas más claras y facilitar la validación de los servicios durante el Sprint Review.
+- La documentación Swagger/OpenAPI del API Gateway quedó disponible como evidencia de integración.
+
+**Render — Base de datos PostgreSQL administrada:**
+
+- La base de datos PostgreSQL se mantiene administrada en Render.
+- El backend accede a la base de datos mediante la variable de entorno `DATABASE_URL`.
+- Las migraciones y modelos de datos se gestionan mediante Prisma.
+- En el Sprint 2, la base de datos soporta la persistencia de usuarios, espacios de estacionamiento, reservas y estructuras iniciales asociadas a pagos y notificaciones.
+- La conexión se mantiene separada del repositorio, evitando exponer credenciales sensibles en GitHub.
+
+**Variables de entorno usadas en el despliegue:**
+
+- `DATABASE_URL` — cadena de conexión hacia PostgreSQL en Render.
+- `JWT_SECRET` — secreto utilizado para la firma y validación de tokens JWT.
+- `NODE_ENV=production` — configuración del entorno productivo.
+- `CORS_ORIGIN=https://arqsoft.vercel.app` — restricción de origen permitido para el frontend.
+- Variables adicionales de configuración interna para habilitar Swagger, rutas del API Gateway y conexión con servicios del backend.
+
+**Validaciones realizadas para el Sprint Review:**
+
+- La landing carga correctamente desde su URL pública.
+- El backend responde desde ambiente desplegado.
+- Swagger del backend permite visualizar y probar los endpoints principales.
+- Swagger del API Gateway permite evidenciar la estructura de rutas expuestas.
+- Las rutas protegidas validan token JWT antes de permitir el acceso.
+- Los endpoints relacionados con espacios y reservas pueden ser probados desde Swagger o herramientas como Postman.
+- La conexión con PostgreSQL se valida mediante operaciones de creación y consulta.
+- El despliegue se encuentra disponible bajo HTTPS.
+
+**Trade-off conocido del despliegue serverless:**
+
+El uso de Vercel serverless permite desplegar rápidamente el backend y el API Gateway sin administrar servidores propios. Sin embargo, se mantiene como limitación el posible cold start tras periodos de inactividad y los límites propios del plan gratuito. Para el Sprint 2, esta decisión sigue siendo aceptable porque el objetivo principal es validar funcionalidad, arquitectura y documentación de endpoints. Si el sistema escala en usuarios o requiere operaciones más pesadas, se evaluará migrar parte del backend a un servicio dedicado o separar módulos críticos.
+
+**Pipeline real del despliegue al cierre del Sprint 2:**
+
+```text
+Developer push → GitHub (main)
+    ├── ParkLink-Landing repo
+    │       └── Vercel build + deploy (web estático)
+    │               └── https://arqsoft.vercel.app
+    │
+    └── ParkLink-Backend repo
+            ├── Vercel build + deploy (backend serverless)
+            │       └── https://backend-silk-two-93.vercel.app/docs/
+            │
+            ├── Vercel build + deploy (API Gateway serverless)
+            │       └── https://api-gateway-xi-five.vercel.app/docs
+            │
+            └── Conexión segura hacia Render PostgreSQL
+                    └── Persistencia de usuarios, espacios, reservas, pagos base y notificaciones base
 
 #### 5.3.2.7 Team Collaboration Insights during Sprint
 
-_Espacio reservado para completar esta sección._
+**Eventos Scrum ejecutados durante el Sprint 2:**
+
+| Evento | Frecuencia | Duración | Facilitador rotativo |
+|--------|-----------|----------|-----------------------|
+| Sprint Planning | Una vez al inicio del sprint | 90 min | Javier Masaru Nikaido Vargas |
+| Daily Stand-up | Diario durante días de trabajo | 15 min | Rotativo por integrante |
+| Sprint Review | Una vez al cierre del sprint | 60 min | Fabian Alejandro Oliva Lopez |
+| Sprint Retrospective | Una vez al cierre del sprint | 45 min | Percy Alonso Muñiz Huayanca |
+
+**Distribución del trabajo por integrante al cierre del Sprint 2:**
+
+| Integrante | Foco asumido | SBI / responsabilidades | SP estimados |
+|------------|--------------|--------------------------|--------------|
+| Pietro Osores Marchese | Culminación de estructura backend, autenticación, reservas y soporte técnico general del monorepo | SBI-01 Culminación de estructura backend, SBI-03 Registro e inicio de sesión de usuarios, SBI-07 Creación y consulta de reservas | 13 |
+| Javier Masaru Nikaido Vargas | Mejora del API Gateway, rutas protegidas y documentación del gateway | SBI-02 Mejora del API Gateway, SBI-04 Autorización por roles y rutas protegidas, SBI-11 Documentación Swagger del API Gateway | 9 |
+| Fabian Alejandro Oliva Lopez | Estructura base de pagos, documentación Swagger del backend y apoyo en evidencia de despliegue | SBI-08 Estructura base de pagos, SBI-10 Documentación Swagger del backend, apoyo en SBI-13 Validación de despliegue backend y gateway | 5 |
+| Percy Alonso Muñiz Huayanca | Gestión de espacios de estacionamiento, seguimiento del tablero Kanban y cierre de documentación de proceso | SBI-05 Gestión de espacios de estacionamiento, apoyo en SBI-12 Validación básica de endpoints | 6 |
+| Matias Rodolfo Salcedo Champi | Consulta de espacios disponibles, estructura base de notificaciones y revisión cruzada de endpoints | SBI-06 Consulta de espacios disponibles, SBI-09 Estructura base de notificaciones, apoyo en SBI-12 Validación básica de endpoints | 6 |
+| **Total** |  |  | **39 SP** |
+
+Durante el Sprint 2 se redujo el riesgo identificado en el Sprint 1 relacionado con la concentración técnica en un solo integrante. Aunque Pietro continuó liderando la estructura principal del backend, los demás integrantes participaron en módulos específicos, documentación técnica, validación de endpoints, API Gateway, Swagger y revisión funcional. Esto permitió distribuir mejor el conocimiento del stack y mejorar la colaboración técnica del equipo.
+
+**Canales de colaboración utilizados:**
+
+- Discord para coordinación diaria, resolución de dudas técnicas y reuniones rápidas.
+- GitHub para seguimiento de cambios, revisión de commits y control de versiones.
+- Trello como tablero Kanban oficial del Sprint 2.
+- WhatsApp para alertas rápidas sobre bloqueos, despliegues o coordinación urgente.
+- Google Meet o Discord para Sprint Planning, Sprint Review y Sprint Retrospective.
+- Swagger/OpenAPI como medio común para validar endpoints entre integrantes técnicos y no técnicos.
+
+**Dinámica de colaboración técnica:**
+
+- Pietro apoyó a los demás integrantes en la comprensión del monorepo NestJS, Prisma y despliegue serverless.
+- Javier se enfocó en mejorar el API Gateway y coordinar la validación de rutas protegidas.
+- Fabian documentó la evidencia técnica del backend y apoyó en la exposición del despliegue.
+- Percy gestionó el seguimiento del tablero Kanban y trabajó el módulo de espacios de estacionamiento.
+- Matias apoyó en la consulta de disponibilidad y en la estructura base de notificaciones.
+- El equipo realizó validaciones cruzadas usando Swagger para comprobar que los endpoints estuvieran disponibles antes del Sprint Review.
+
+**Hallazgos clave de la retrospectiva del Sprint 2:**
+
+- *Lo que funcionó:* El uso de Trello permitió visualizar mejor el avance del sprint y evitar duplicidad de tareas. La documentación Swagger facilitó probar endpoints sin depender únicamente del desarrollador principal. La separación entre backend y API Gateway ayudó a ordenar la arquitectura del sistema.
+- *Lo que mejoró respecto al Sprint 1:* La carga técnica ya no estuvo completamente concentrada en un solo integrante. Cada miembro asumió al menos una responsabilidad concreta dentro del sprint, ya sea técnica, documental, de validación o de coordinación.
+- *Lo que debe mejorar:* Aún se requiere fortalecer la automatización de pruebas, mejorar la cobertura de testing y definir con mayor detalle los criterios de aceptación técnicos antes de iniciar cada módulo. También se identificó la necesidad de conectar de forma más completa la landing con los flujos reales del backend.
+- *Acuerdos para el siguiente sprint:* Integrar el flujo completo desde frontend hacia backend, mejorar pruebas automatizadas, agregar datos semilla para demostraciones, fortalecer validaciones de negocio en reservas y avanzar en la integración real de pagos y notificaciones.
 
 #### 5.3.2.8 Kanban Board
 
