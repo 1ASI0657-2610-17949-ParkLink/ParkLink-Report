@@ -3691,3 +3691,65 @@ Durante el Sprint 1 el equipo trabajó con un tablero Kanban informal compartido
 | SBI-07 Provisión Postgres Render | Done |
 | SBI-08 Deploy backend Render | Done |
 | SBI-09 Form de registro embebido en landing | In Progress al cierre (carry-over candidato a Sprint 2 si no se completa) |
+
+### 5.3.2 Sprint 2
+
+#### 5.3.2.8 Kanban Board
+
+Para el Sprint 2 se utilizó un tablero Kanban como herramienta de seguimiento del avance de los ítems comprometidos en el Sprint Backlog. El tablero permitió visualizar el estado de cada tarea, coordinar responsabilidades entre los integrantes y confirmar que los módulos principales del backend y del API Gateway llegaran a estado **Done** antes del cierre del sprint.
+
+El tablero se representó con cuatro columnas principales:
+
+| Columna | Descripción | Criterio de movimiento |
+|---------|-------------|------------------------|
+| **To Do** | Ítems comprometidos para el Sprint 2 que aún no habían sido iniciados. | El ítem fue seleccionado desde el Sprint Backlog y cuenta con responsable asignado. |
+| **In Progress** | Tareas en desarrollo, configuración o implementación activa. | El responsable inició la construcción, validación o documentación del ítem. |
+| **In Review** | Ítems implementados que requerían revisión funcional, validación técnica o documentación final. | El ítem ya podía ser probado mediante Swagger, Postman, cURL o revisión del repositorio. |
+| **Done** | Ítems completados y validados según la Definition of Done del Sprint 2. | El ítem fue implementado, documentado, probado de forma básica y quedó disponible para el Sprint Review. |
+
+**Kanban Board del Sprint 2 al cierre del sprint:**
+
+| To Do | In Progress | In Review | Done |
+|-------|-------------|-----------|------|
+| - | - | - | SBI-01 Culminación de estructura backend |
+| - | - | - | SBI-02 Mejora del API Gateway |
+| - | - | - | SBI-03 Registro e inicio de sesión de usuarios |
+| - | - | - | SBI-04 Autorización por roles y rutas protegidas |
+| - | - | - | SBI-05 Gestión de espacios de estacionamiento |
+| - | - | - | SBI-06 Consulta de espacios disponibles |
+| - | - | - | SBI-07 Creación y consulta de reservas |
+| - | - | - | SBI-08 Estructura base de pagos |
+| - | - | - | SBI-09 Estructura base de notificaciones |
+| - | - | - | SBI-10 Documentación Swagger del backend |
+| - | - | - | SBI-11 Documentación Swagger del API Gateway |
+| - | - | - | SBI-12 Validación básica de endpoints |
+| - | - | - | SBI-13 Validación de despliegue backend y gateway |
+
+**Detalle de tarjetas finalizadas:**
+
+| SBI | Sprint Backlog Item | Responsable principal | Estado final |
+|-----|---------------------|-----------------------|--------------|
+| SBI-01 | Culminación de estructura backend | Pietro Osores Marchese | Done |
+| SBI-02 | Mejora del API Gateway | Javier Masaru Nikaido Vargas | Done |
+| SBI-03 | Registro e inicio de sesión de usuarios | Pietro Osores Marchese | Done |
+| SBI-04 | Autorización por roles y rutas protegidas | Javier Masaru Nikaido Vargas | Done |
+| SBI-05 | Gestión de espacios de estacionamiento | Percy Alonso Muñiz Huayanca | Done |
+| SBI-06 | Consulta de espacios disponibles | Matias Rodolfo Salcedo Champi | Done |
+| SBI-07 | Creación y consulta de reservas | Pietro Osores Marchese | Done |
+| SBI-08 | Estructura base de pagos | Fabian Alejandro Oliva Lopez | Done |
+| SBI-09 | Estructura base de notificaciones | Matias Rodolfo Salcedo Champi | Done |
+| SBI-10 | Documentación Swagger del backend | Fabian Alejandro Oliva Lopez | Done |
+| SBI-11 | Documentación Swagger del API Gateway | Javier Masaru Nikaido Vargas | Done |
+| SBI-12 | Validación básica de endpoints | Equipo | Done |
+| SBI-13 | Validación de despliegue backend y gateway | Equipo | Done |
+
+**Resumen del Kanban Board al cierre del Sprint 2:**
+
+| Estado | Cantidad de ítems |
+|--------|------------------:|
+| To Do | 0 |
+| In Progress | 0 |
+| In Review | 0 |
+| Done | 13 |
+
+El Kanban Board evidencia que todos los ítems comprometidos para el Sprint 2 fueron completados. Esto permitió cerrar la implementación principal del backend, mejorar el API Gateway, validar rutas protegidas mediante JWT, documentar endpoints con Swagger/OpenAPI y confirmar el funcionamiento básico de los servicios en ambiente desplegado.
