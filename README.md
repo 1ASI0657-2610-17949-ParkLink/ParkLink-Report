@@ -3830,6 +3830,7 @@ Developer push → GitHub (main)
             │
             └── Conexión segura hacia Render PostgreSQL
                     └── Persistencia de usuarios, espacios, reservas, pagos base y notificaciones base
+```
 
 #### 5.3.2.7 Team Collaboration Insights during Sprint
 
