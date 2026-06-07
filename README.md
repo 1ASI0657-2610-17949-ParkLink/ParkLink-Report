@@ -3825,26 +3825,36 @@ _Espacio reservado para completar esta sección._
 
 #### 5.3.2.6 Software Deployment Evidence for Sprint Review
 
-El Sprint 2 consolida la cadena de despliegue iniciada en el Sprint 1, manteniendo la separación entre el plano de presentación, el plano de servicios y el plano de datos. En esta iteración, el despliegue ya no se limita únicamente a validar autenticación inicial, sino que permite evidenciar una estructura backend más completa, la exposición del **API Gateway**, la documentación Swagger/OpenAPI y la conexión con la base de datos PostgreSQL administrada.
+El Sprint 2 consolida la cadena de despliegue iniciada en el Sprint 1, incorporando ahora un nuevo componente dentro del ecosistema del proyecto: el repositorio **ParkLink-Frontend**. Con este cambio, la arquitectura desplegada queda organizada en cuatro frentes principales: la **Landing Page** como página pública de presentación, el **Front-End** como aplicación web funcional, el **Backend NestJS** como capa de servicios, el **API Gateway** como punto de entrada para las rutas expuestas y **Render PostgreSQL** como base de datos administrada.
 
-La estrategia de despliegue del Sprint 2 se mantuvo sobre tres componentes principales: **Vercel** para la landing, el backend y el API Gateway; **Render** para la base de datos PostgreSQL; y **GitHub** como repositorio central de versionamiento y punto de activación del despliegue automático.
+Esta separación permite evidenciar una evolución importante respecto al Sprint 1, ya que el proyecto deja de depender únicamente de la landing y del backend, y empieza a contar con una aplicación frontend orientada al uso real del sistema ParkLink.
 
-**Vercel — Web frontend (`ParkLink-Landing`):**
+**Vercel — Landing Page (`ParkLink-Landing`):**
 
 - Repositorio vinculado: `https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Landing`.
-- La landing se mantiene como punto público de entrada al producto ParkLink.
+- La landing se mantiene como punto público de presentación del producto ParkLink.
 - Cada cambio enviado a la rama `main` dispara el proceso de build y deploy automático en Vercel.
-- El despliegue genera una salida estática optimizada del proyecto frontend.
+- El despliegue genera una salida estática optimizada para producción.
 - URL de producción: `https://arqsoft.vercel.app`.
-- Se validó que la landing continúe disponible bajo HTTPS y que pueda ser utilizada como evidencia visual durante el Sprint Review.
-- En el Sprint 2, la landing cumple el rol de canal de presentación del producto, mientras que la lógica principal del sistema se concentra en el backend y el API Gateway.
+- Se validó que la landing continúe disponible bajo HTTPS y que pueda ser usada como evidencia visual durante el Sprint Review.
+- En el Sprint 2, la landing cumple el rol de presentar la propuesta de valor, mientras que la interacción funcional se traslada progresivamente al nuevo Front-End.
+
+**Vercel / GitHub — Web Front-End (`ParkLink-Frontend`):**
+
+- Repositorio vinculado: `https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Frontend`.
+- En el Sprint 2 se incorpora el repositorio del Front-End como aplicación web principal del sistema ParkLink.
+- Este componente representa la interfaz funcional que permitirá a los usuarios interactuar con los módulos del sistema.
+- El Front-End se diferencia de la landing porque no solo presenta información del producto, sino que está orientado a consumir servicios del backend y del API Gateway.
+- El repositorio queda preparado para integrarse con Vercel mediante despliegue automático por push a la rama principal.
+- El Front-End será el punto desde el cual se consumirán funcionalidades como autenticación, consulta de espacios, creación de reservas y futuras operaciones asociadas a pagos y notificaciones.
+- Para el Sprint Review, este componente sirve como evidencia de avance en la capa de presentación funcional del sistema.
 
 **Vercel — Backend NestJS serverless (`ParkLink-Backend`):**
 
 - Repositorio vinculado: `https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Backend`.
 - El backend se mantiene desplegado como aplicación NestJS serverless sobre Vercel.
 - El despliegue toma el código actualizado desde GitHub, instala dependencias, genera el build del backend y publica los endpoints correspondientes.
-- En el Sprint 2 se evidencian nuevos módulos funcionales relacionados con:
+- En el Sprint 2 se evidencian módulos funcionales relacionados con:
   - Registro e inicio de sesión de usuarios.
   - Autorización por roles y rutas protegidas mediante JWT.
   - Gestión de espacios de estacionamiento.
@@ -3853,13 +3863,16 @@ La estrategia de despliegue del Sprint 2 se mantuvo sobre tres componentes princ
   - Estructura base de pagos.
   - Estructura base de notificaciones.
 - La documentación Swagger/OpenAPI del backend quedó disponible para validar los endpoints implementados.
+- URL de documentación del backend: `https://backend-silk-two-93.vercel.app/docs/`.
 
 **Vercel — API Gateway NestJS serverless:**
 
-- El API Gateway se despliega como una aplicación independiente dentro del mismo enfoque serverless.
-- Su función principal es centralizar el acceso hacia los servicios del backend, permitiendo ordenar la comunicación entre el frontend y los módulos internos.
-- En el Sprint 2 se mejoró la estructura del gateway para exponer rutas más claras y facilitar la validación de los servicios durante el Sprint Review.
+- El API Gateway se despliega como una aplicación independiente dentro del enfoque serverless.
+- Su función principal es centralizar el acceso hacia los servicios del backend.
+- En el Sprint 2, el API Gateway permite ordenar la comunicación entre el Front-End y los módulos internos del sistema.
+- Esta capa facilita que el Front-End no dependa directamente de múltiples rutas internas del backend, sino de un punto de entrada más controlado.
 - La documentación Swagger/OpenAPI del API Gateway quedó disponible como evidencia de integración.
+- URL de documentación del API Gateway: `https://api-gateway-xi-five.vercel.app/docs`.
 
 **Render — Base de datos PostgreSQL administrada:**
 
@@ -3867,30 +3880,32 @@ La estrategia de despliegue del Sprint 2 se mantuvo sobre tres componentes princ
 - El backend accede a la base de datos mediante la variable de entorno `DATABASE_URL`.
 - Las migraciones y modelos de datos se gestionan mediante Prisma.
 - En el Sprint 2, la base de datos soporta la persistencia de usuarios, espacios de estacionamiento, reservas y estructuras iniciales asociadas a pagos y notificaciones.
-- La conexión se mantiene separada del repositorio, evitando exponer credenciales sensibles en GitHub.
+- La conexión se mantiene separada del repositorio para evitar exponer credenciales sensibles en GitHub.
 
 **Variables de entorno usadas en el despliegue:**
 
 - `DATABASE_URL` — cadena de conexión hacia PostgreSQL en Render.
 - `JWT_SECRET` — secreto utilizado para la firma y validación de tokens JWT.
 - `NODE_ENV=production` — configuración del entorno productivo.
-- `CORS_ORIGIN=https://arqsoft.vercel.app` — restricción de origen permitido para el frontend.
-- Variables adicionales de configuración interna para habilitar Swagger, rutas del API Gateway y conexión con servicios del backend.
+- `CORS_ORIGIN` — restricción de origen permitido para la landing y el Front-End.
+- Variables adicionales para habilitar Swagger, rutas del API Gateway y conexión con servicios del backend.
 
 **Validaciones realizadas para el Sprint Review:**
 
 - La landing carga correctamente desde su URL pública.
+- El repositorio del Front-End fue incorporado como nueva capa funcional del sistema.
+- El Front-End queda preparado para consumir rutas del API Gateway y del backend.
 - El backend responde desde ambiente desplegado.
 - Swagger del backend permite visualizar y probar los endpoints principales.
 - Swagger del API Gateway permite evidenciar la estructura de rutas expuestas.
 - Las rutas protegidas validan token JWT antes de permitir el acceso.
 - Los endpoints relacionados con espacios y reservas pueden ser probados desde Swagger o herramientas como Postman.
 - La conexión con PostgreSQL se valida mediante operaciones de creación y consulta.
-- El despliegue se encuentra disponible bajo HTTPS.
+- El despliegue se encuentra disponible bajo HTTPS en los servicios publicados.
 
 **Trade-off conocido del despliegue serverless:**
 
-El uso de Vercel serverless permite desplegar rápidamente el backend y el API Gateway sin administrar servidores propios. Sin embargo, se mantiene como limitación el posible cold start tras periodos de inactividad y los límites propios del plan gratuito. Para el Sprint 2, esta decisión sigue siendo aceptable porque el objetivo principal es validar funcionalidad, arquitectura y documentación de endpoints. Si el sistema escala en usuarios o requiere operaciones más pesadas, se evaluará migrar parte del backend a un servicio dedicado o separar módulos críticos.
+El uso de Vercel serverless permite desplegar rápidamente la landing, el backend y el API Gateway sin administrar servidores propios. Sin embargo, se mantiene como limitación el posible cold start tras periodos de inactividad y los límites propios del plan gratuito. Para el Sprint 2, esta decisión sigue siendo aceptable porque el objetivo principal es validar funcionalidad, arquitectura, documentación de endpoints e integración progresiva con el nuevo Front-End. Si el sistema escala en usuarios o requiere operaciones más pesadas, se evaluará migrar parte del backend a un servicio dedicado o separar módulos críticos.
 
 **Pipeline real del despliegue al cierre del Sprint 2:**
 
@@ -3899,6 +3914,10 @@ Developer push → GitHub (main)
     ├── ParkLink-Landing repo
     │       └── Vercel build + deploy (web estático)
     │               └── https://arqsoft.vercel.app
+    │
+    ├── ParkLink-Frontend repo
+    │       └── Front-End funcional del sistema ParkLink
+    │               └── Preparado para consumir API Gateway y Backend
     │
     └── ParkLink-Backend repo
             ├── Vercel build + deploy (backend serverless)
@@ -3928,12 +3947,12 @@ Developer push → GitHub (main)
 |------------|--------------|--------------------------|--------------|
 | Pietro Osores Marchese | Culminación de estructura backend, autenticación, reservas y soporte técnico general del monorepo | SBI-01 Culminación de estructura backend, SBI-03 Registro e inicio de sesión de usuarios, SBI-07 Creación y consulta de reservas | 13 |
 | Javier Masaru Nikaido Vargas | Mejora del API Gateway, rutas protegidas y documentación del gateway | SBI-02 Mejora del API Gateway, SBI-04 Autorización por roles y rutas protegidas, SBI-11 Documentación Swagger del API Gateway | 9 |
-| Fabian Alejandro Oliva Lopez | Estructura base de pagos, documentación Swagger del backend y apoyo en evidencia de despliegue | SBI-08 Estructura base de pagos, SBI-10 Documentación Swagger del backend, apoyo en SBI-13 Validación de despliegue backend y gateway | 5 |
-| Percy Alonso Muñiz Huayanca | Gestión de espacios de estacionamiento, seguimiento del tablero Kanban y cierre de documentación de proceso | SBI-05 Gestión de espacios de estacionamiento, apoyo en SBI-12 Validación básica de endpoints | 6 |
-| Matias Rodolfo Salcedo Champi | Consulta de espacios disponibles, estructura base de notificaciones y revisión cruzada de endpoints | SBI-06 Consulta de espacios disponibles, SBI-09 Estructura base de notificaciones, apoyo en SBI-12 Validación básica de endpoints | 6 |
-| **Total** |  |  | **39 SP** |
+| Fabian Alejandro Oliva Lopez | Incorporación del Front-End, documentación de infraestructura y apoyo en evidencia de despliegue | SBI-08 Integración inicial del Front-End, SBI-10 Documentación Swagger del backend, apoyo en SBI-13 Validación de despliegue backend, gateway y frontend | 8 |
+| Percy Alonso Muñiz Huayanca | Gestión de espacios de estacionamiento, seguimiento del tablero Kanban y documentación de proceso | SBI-05 Gestión de espacios de estacionamiento, apoyo en SBI-12 Validación básica de endpoints, seguimiento de tareas del Front-End | 6 |
+| Matias Rodolfo Salcedo Champi | Consulta de espacios disponibles, estructura base de notificaciones y revisión cruzada de Front-End con servicios | SBI-06 Consulta de espacios disponibles, SBI-09 Estructura base de notificaciones, apoyo en validación del flujo Front-End/API Gateway | 6 |
+| **Total** |  |  | **42 SP** |
 
-Durante el Sprint 2 se redujo el riesgo identificado en el Sprint 1 relacionado con la concentración técnica en un solo integrante. Aunque Pietro continuó liderando la estructura principal del backend, los demás integrantes participaron en módulos específicos, documentación técnica, validación de endpoints, API Gateway, Swagger y revisión funcional. Esto permitió distribuir mejor el conocimiento del stack y mejorar la colaboración técnica del equipo.
+Durante el Sprint 2 se redujo el riesgo identificado en el Sprint 1 relacionado con la concentración técnica en un solo integrante. Aunque Pietro continuó liderando la estructura principal del backend, los demás integrantes participaron en módulos específicos, documentación técnica, validación de endpoints, API Gateway, Swagger y revisión funcional. Además, con la incorporación del repositorio `ParkLink-Frontend`, el equipo empezó a distribuir responsabilidades también sobre la capa de presentación funcional del sistema.
 
 **Canales de colaboración utilizados:**
 
@@ -3943,22 +3962,28 @@ Durante el Sprint 2 se redujo el riesgo identificado en el Sprint 1 relacionado 
 - WhatsApp para alertas rápidas sobre bloqueos, despliegues o coordinación urgente.
 - Google Meet o Discord para Sprint Planning, Sprint Review y Sprint Retrospective.
 - Swagger/OpenAPI como medio común para validar endpoints entre integrantes técnicos y no técnicos.
+- Repositorios separados de GitHub para organizar mejor la landing, el Front-End y el backend.
 
 **Dinámica de colaboración técnica:**
 
-- Pietro apoyó a los demás integrantes en la comprensión del monorepo NestJS, Prisma y despliegue serverless.
+- Pietro apoyó a los demás integrantes en la comprensión del monorepo NestJS, Prisma, autenticación JWT y despliegue serverless.
 - Javier se enfocó en mejorar el API Gateway y coordinar la validación de rutas protegidas.
-- Fabian documentó la evidencia técnica del backend y apoyó en la exposición del despliegue.
-- Percy gestionó el seguimiento del tablero Kanban y trabajó el módulo de espacios de estacionamiento.
-- Matias apoyó en la consulta de disponibilidad y en la estructura base de notificaciones.
-- El equipo realizó validaciones cruzadas usando Swagger para comprobar que los endpoints estuvieran disponibles antes del Sprint Review.
+- Fabian apoyó en la incorporación del repositorio `ParkLink-Frontend`, documentación técnica y evidencia de despliegue.
+- Percy gestionó el seguimiento del tablero Kanban y trabajó en el módulo de espacios de estacionamiento.
+- Matias apoyó en la consulta de disponibilidad, estructura base de notificaciones y validación cruzada entre Front-End y servicios expuestos.
+- El equipo realizó validaciones usando Swagger para comprobar que los endpoints estuvieran disponibles antes del Sprint Review.
+- Se empezó a diferenciar con mayor claridad la landing como página informativa y el Front-End como aplicación funcional del sistema.
 
 **Hallazgos clave de la retrospectiva del Sprint 2:**
 
-- *Lo que funcionó:* El uso de Trello permitió visualizar mejor el avance del sprint y evitar duplicidad de tareas. La documentación Swagger facilitó probar endpoints sin depender únicamente del desarrollador principal. La separación entre backend y API Gateway ayudó a ordenar la arquitectura del sistema.
-- *Lo que mejoró respecto al Sprint 1:* La carga técnica ya no estuvo completamente concentrada en un solo integrante. Cada miembro asumió al menos una responsabilidad concreta dentro del sprint, ya sea técnica, documental, de validación o de coordinación.
-- *Lo que debe mejorar:* Aún se requiere fortalecer la automatización de pruebas, mejorar la cobertura de testing y definir con mayor detalle los criterios de aceptación técnicos antes de iniciar cada módulo. También se identificó la necesidad de conectar de forma más completa la landing con los flujos reales del backend.
-- *Acuerdos para el siguiente sprint:* Integrar el flujo completo desde frontend hacia backend, mejorar pruebas automatizadas, agregar datos semilla para demostraciones, fortalecer validaciones de negocio en reservas y avanzar en la integración real de pagos y notificaciones.
+- *Lo que funcionó:* La incorporación del repositorio `ParkLink-Frontend` permitió separar la landing informativa de la aplicación funcional. El uso de Trello ayudó a visualizar mejor el avance del sprint y evitar duplicidad de tareas. La documentación Swagger facilitó probar endpoints sin depender únicamente del desarrollador principal. La separación entre backend y API Gateway ayudó a ordenar la arquitectura del sistema.
+- *Lo que mejoró respecto al Sprint 1:* La carga técnica ya no estuvo completamente concentrada en un solo integrante. Cada miembro asumió al menos una responsabilidad concreta dentro del sprint, ya sea técnica, documental, de validación, frontend o coordinación.
+- *Lo que debe mejorar:* Aún se requiere fortalecer la automatización de pruebas, mejorar la cobertura de testing y definir con mayor detalle los criterios de aceptación técnicos antes de iniciar cada módulo. También se identificó la necesidad de conectar de forma más completa el Front-End con los flujos reales del backend y del API Gateway.
+- *Acuerdos para el siguiente sprint:* Integrar el flujo completo desde Front-End hacia API Gateway y backend, mejorar pruebas automatizadas, agregar datos semilla para demostraciones, fortalecer validaciones de negocio en reservas y avanzar en la integración real de pagos y notificaciones.
+
+**Conclusión de colaboración del Sprint 2:**
+
+El Sprint 2 evidenció una mejora importante en la colaboración del equipo frente al Sprint 1. Se pasó de una concentración técnica inicial a una distribución más equilibrada de responsabilidades, manteniendo a Pietro como soporte principal del backend, pero incorporando a Javier, Fabian, Percy y Matias en tareas concretas de implementación, documentación, validación, seguimiento y avance del Front-End. La creación del repositorio `ParkLink-Frontend` representa un paso importante para separar la landing del producto de la aplicación funcional, permitiendo que el sistema ParkLink avance hacia una solución más completa e integrada.
 
 #### 5.3.2.8 Kanban Board
 
