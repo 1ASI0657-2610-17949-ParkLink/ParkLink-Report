@@ -3724,9 +3724,88 @@ Durante el Sprint 1 el equipo trabajó con un tablero Kanban informal compartido
 
 ### 5.3.2 Sprint 2
 
+El Sprint 2 de ParkLink se enfocó en la culminación del backend y en la mejora del API Gateway como componente central de comunicación entre el cliente y los servicios internos del sistema. Luego del avance inicial realizado en el Sprint 1, donde se establecieron las primeras bases de autenticación, configuración del proyecto y despliegue inicial, este segundo sprint tuvo como objetivo consolidar la lógica principal del producto y preparar una estructura backend más estable para el Avance 3.
+
+Durante este sprint, el equipo trabajó en completar los módulos principales relacionados con usuarios, espacios de estacionamiento, reservas, pagos y notificaciones. Asimismo, se reforzó la separación de responsabilidades entre los servicios internos y el API Gateway, procurando que este último funcione como punto de entrada único para enrutar solicitudes, reenviar tokens de autorización y organizar el acceso a los endpoints del backend sin incluir lógica de negocio.
+
+El trabajo realizado mantiene relación con la arquitectura propuesta en capítulos anteriores, ya que ParkLink se apoya en una estructura modular orientada a bounded contexts, comunicación mediante API RESTful, uso de DTOs para transferencia de datos, Repository Pattern para acceso a datos y validación de rutas protegidas mediante JWT. De esta manera, el sprint no solo avanzó en funcionalidades visibles, sino también en la calidad técnica necesaria para que el sistema sea mantenible, escalable y coherente con el diseño arquitectónico planteado.
+
+*Sprint Goal:*
+Culminar la base funcional del backend de ParkLink y mejorar el API Gateway, permitiendo que las funcionalidades principales del MVP puedan ser consultadas desde una entrada centralizada, segura y documentada.
+
+*Periodo del Sprint:*
+Sprint 2 — Avance 3
+
+*Objetivos específicos del Sprint 2:*
+
+* Completar la estructura principal del backend de ParkLink.
+* Implementar y validar endpoints para usuarios, espacios, reservas, pagos y notificaciones.
+* Mejorar el API Gateway como punto de entrada centralizado.
+* Asegurar el reenvío correcto del token JWT desde el gateway hacia los servicios internos.
+* Mantener separación entre lógica de negocio y capa de routing.
+* Documentar los endpoints principales mediante Swagger/OpenAPI.
+* Validar el funcionamiento de los servicios en ambiente desplegado.
+* Reducir deuda técnica relacionada con organización de rutas y pruebas básicas.
+
+*Alcance del Sprint 2:*
+
+El alcance de este sprint incluye la culminación del backend principal y la mejora del API Gateway. No se considera dentro del alcance la implementación completa de pagos reales con proveedor externo, monitoreo avanzado, pruebas de carga o automatización completa de CI/CD. Estas actividades quedan como trabajo pendiente para futuras iteraciones.
+
+*Resultado esperado del Sprint 2:*
+
+Al finalizar el sprint, ParkLink debe contar con un backend funcional, organizado por módulos, con endpoints principales implementados y documentados. Además, el API Gateway debe permitir centralizar el acceso hacia los servicios del sistema, facilitando la futura integración con el frontend y mejorando la mantenibilidad general de la solución.
+
 #### 5.3.2.1 Sprint Backlog 2
 
-_Espacio reservado para completar esta sección._
+El Sprint Backlog 2 consolida los elementos seleccionados para este sprint, tomando como base las User Stories priorizadas del Product Backlog y las necesidades técnicas identificadas para cerrar la implementación backend. La estimación se realiza usando escala Fibonacci modificada: 1, 2, 3, 5 y 8 story points.
+
+| Orden | Sprint Backlog Item                        | Epic / TS         | User Story / Technical Story origen                                  | Tareas técnicas                                                                                                                                                 | SP | Responsable principal         | Estado |
+| ----- | ------------------------------------------ | ----------------- | -------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | -: | ----------------------------- | ------ |
+| 1     | Culminación de estructura backend          | Foundational      | Soporta la implementación general del MVP backend                    | Completar organización de módulos, controladores, servicios, DTOs, repositorios y configuración general del proyecto backend.                                   |  8 | Pietro Osores Marchese        | Done   |
+| 2     | Mejora del API Gateway                     | TS-GW01           | Mejora técnica para centralizar comunicación entre cliente y backend | Reorganizar rutas del gateway, configurar redirección hacia servicios internos, reenviar headers de autorización y evitar lógica de negocio dentro del gateway. |  8 | Javier Masaru Nikaido Vargas  | Done   |
+| 3     | Registro e inicio de sesión de usuarios    | EP05 / US17, US19 | Registro de usuario e inicio de sesión                               | Validar registro de usuarios, login, generación de JWT, protección de rutas privadas y manejo de errores de autenticación.                                      |  5 | Pietro Osores Marchese        | Done   |
+| 4     | Autorización por roles y rutas protegidas  | TS03              | Autenticación y autorización por roles                               | Implementar validación de token JWT, roles de usuario y acceso restringido a endpoints protegidos.                                                              |  5 | Javier Masaru Nikaido Vargas  | Done   |
+| 5     | Gestión de espacios de estacionamiento     | EP03 / US09, US10 | Registrar espacio y configurar horario/precio                        | Implementar endpoints para crear, listar, actualizar y cambiar estado de espacios de estacionamiento registrados por propietarios.                              |  5 | Percy Alonso Muñiz Huayanca   | Done   |
+| 6     | Consulta de espacios disponibles           | EP01 / US01, US02 | Buscar estacionamientos y ver disponibilidad                         | Implementar endpoint para listar espacios disponibles y consultar información relevante para la búsqueda del conductor.                                         |  5 | Matias Rodolfo Salcedo Champi | Done   |
+| 7     | Creación y consulta de reservas            | EP02 / US05       | Reservar un espacio de estacionamiento                               | Implementar lógica base para crear reservas, asociarlas a usuarios y espacios, y consultar reservas registradas.                                                |  8 | Pietro Osores Marchese        | Done   |
+| 8     | Estructura base de pagos                   | EP04 / US14       | Pagar una reserva en línea                                           | Implementar estructura inicial para registrar pagos o simular transacciones asociadas a una reserva.                                                            |  3 | Fabian Alejandro Oliva Lopez  | Done   |
+| 9     | Estructura base de notificaciones          | EP06 / US20       | Recibir notificación de reserva confirmada                           | Crear módulo base para registrar y consultar notificaciones relacionadas con reservas y cambios de estado.                                                      |  3 | Matias Rodolfo Salcedo Champi | Done   |
+| 10    | Documentación Swagger del backend          | TS-DOC01          | Documentación técnica de endpoints                                   | Verificar que los endpoints principales del backend estén documentados en Swagger/OpenAPI.                                                                      |  3 | Fabian Alejandro Oliva Lopez  | Done   |
+| 11    | Documentación Swagger del API Gateway      | TS-DOC02          | Documentación técnica del gateway                                    | Documentar rutas expuestas desde el gateway y validar que la documentación sea accesible para revisión.                                                         |  3 | Javier Masaru Nikaido Vargas  | Done   |
+| 12    | Validación básica de endpoints             | TS-TEST01         | Testing básico del backend                                           | Realizar pruebas manuales y básicas sobre login, espacios, reservas y rutas protegidas usando Swagger, Postman o cURL.                                          |  3 | Equipo                        | Done   |
+| 13    | Validación de despliegue backend y gateway | TS-DEP01          | Despliegue de servicios                                              | Confirmar que backend y API Gateway estén disponibles en ambiente desplegado y que sus rutas principales respondan correctamente.                               |  5 | Equipo                        | Done   |
+
+*Capacidad estimada del equipo:*
+5 integrantes × aproximadamente 6 story points por integrante = 30 story points.
+
+*Compromiso del Sprint 2:*
+64 story points.
+
+*Nota sobre el compromiso del sprint:*
+El compromiso del Sprint 2 es mayor a la capacidad ideal del equipo debido a que varias tareas corresponden a mejoras, validaciones o extensión de trabajo iniciado previamente en el Sprint 1. Por ello, parte de la carga no representa desarrollo desde cero, sino culminación, corrección, documentación y validación de componentes existentes.
+
+*Definition of Done aplicado al Sprint Backlog 2:*
+
+1. El código del ítem se encuentra integrado en la rama principal o en la rama correspondiente del avance.
+2. El endpoint o módulo implementado puede ejecutarse correctamente.
+3. La funcionalidad cuenta con validación básica mediante Swagger, Postman, cURL o pruebas automatizadas simples.
+4. Las rutas privadas validan token JWT cuando corresponde.
+5. El API Gateway redirige correctamente la solicitud hacia el backend.
+6. La funcionalidad no incorpora lógica de negocio dentro del gateway.
+7. La documentación mínima del endpoint se encuentra registrada en Swagger o en el README.
+8. El ítem cuenta con evidencia visual para el Sprint Review.
+9. La tarea se mueve a estado Done dentro del tablero Kanban del Sprint 2.
+
+*Resumen del Sprint Backlog 2:*
+
+| Estado      | Cantidad de ítems |
+| ----------- | ----------------: |
+| Done        |                13 |
+| In Progress |                 0 |
+| To Do       |                 0 |
+
+*Conclusión del Sprint Backlog 2:*
+El Sprint Backlog 2 permitió ordenar el trabajo necesario para culminar el backend y mejorar el API Gateway de ParkLink. Las tareas seleccionadas se alinean con las funcionalidades principales del MVP y con las decisiones arquitectónicas definidas previamente. Al cierre del sprint, el equipo logró completar los módulos principales, validar rutas, documentar endpoints y dejar una base más estable para la integración posterior con el frontend.
 
 #### 5.3.2.2 Development Evidence for Sprint Review
 
