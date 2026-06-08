@@ -3818,225 +3818,149 @@ El Sprint Backlog 2 permitió ordenar el trabajo del equipo hacia un objetivo co
 
 ---
 
-#### 5.3.2.2 Development Evidence for Sprint Review
 
-El desarrollo del Sprint 2 se evidencia en la implementación de vistas frontend y en la mejora técnica del API Gateway. Las evidencias de desarrollo corresponden a componentes visuales, pantallas navegables, formularios, rutas de frontend y configuración de gateway. No corresponden a nuevos microservicios backend ni a culminación de lógica de negocio interna.
+  #### 5.3.2.2 Development Evidence for Sprint Review
 
-**Frontend desarrollado durante el Sprint 2:**
+  Durante el Sprint 2 el trabajo de desarrollo se concentró en el repositorio **`ParkLink-Frontend`**, correspondiente a la capa de presentación funcional del sistema. A diferencia del Sprint 1, donde el foco estuvo en el backend y la infraestructura, este sprint priorizó la construcción de la interfaz web que permite a los usuarios interactuar directamente con ParkLink desde un navegador.
 
-| Vista / componente | User Story relacionada | Evidencia esperada |
-|-------------------|------------------------|-------------------|
-| Pantalla de búsqueda de estacionamientos | US01 | Vista con input de destino, mapa o contenedor de ubicación y listado de espacios. |
-| Componentes de disponibilidad | US02 | Estados visuales: disponible, reservado, ocupado y no disponible. |
-| Filtros de búsqueda | US03 | Filtros por precio y horario visibles en la interfaz. |
-| Detalle de espacio | US04 | Pantalla con dirección, precio, horario, disponibilidad y acción para reservar. |
-| Flujo visual de reserva | US05 | Formulario con fecha, hora, duración y confirmación. |
-| Historial de reservas | US07 | Cards o tabla con reservas pasadas y estado. |
-| Publicación de espacio | US09 | Formulario de propietario para registrar un estacionamiento. |
-| Configuración de espacio | US10 | Formulario para editar precio, horario y disponibilidad. |
-| Activar/desactivar espacio | US11 | Control visual para cambiar estado de publicación. |
-| Reservas activas del propietario | US12 | Listado de reservas asociadas a espacios del propietario. |
-| Registro por rol | US17 / US18 | Formularios separados o selector de rol para conductor y propietario. |
-| Inicio de sesión | US19 | Vista de login con correo, contraseña y manejo visual de error. |
+  **Repositorio — `ParkLink-Frontend` (web frontend funcional):**
+  - URL: `https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Frontend`
+  - Rama principal: `master`
+  - Stack: React + TypeScript + Vite, desplegado en Vercel bajo la URL `https://parklink-eta.vercel.app`
 
-**Mejoras del API Gateway desarrolladas durante el Sprint 2:**
+  | Commit | Fecha | Autor | Mensaje | Cambio relevante |
+  |--------|-------|-------|---------|------------------|
+  | `f1435f4` | 2026-06-06 | Maximoff19 | `feat: initial frontend commit with premium map markers` | Implementación inicial del frontend funcional de ParkLink: pantalla de autenticación (`/auth/login`), flujo de registro, vista de mapa con marcadores de estacionamientos y estructura base de rutas de la aplicación |
 
-| Mejora | Descripción precisa |
-|--------|---------------------|
-| Organización de rutas | Se agruparon rutas por dominio funcional: autenticación, espacios, reservas y propietario. |
-| Reenvío de autorización | Se configuró el gateway para mantener el header `Authorization` cuando el frontend envía un token JWT. |
-| Capa sin lógica de negocio | Se verificó que el gateway no calcule disponibilidad, no cree reservas y no procese pagos. |
-| Comunicación cliente-gateway | Se validó que el frontend pueda enviar solicitudes al gateway y recibir respuestas de forma consistente. |
+  #### 5.3.2.3 Testing Suite Evidence for Sprint Review
 
-**Evidencias sugeridas para insertar en el informe:**
+  El Sprint 2 priorizó la validación funcional del frontend desplegado en producción. Las pruebas realizadas fueron de tipo exploratorio y smoke testing manual, verificando que cada vista principal de la aplicación cargara correctamente, respondiera a interacciones del usuario y se comunicara con los servicios del backend.
 
-```md
-![Frontend Search View](assets/sprint2/frontend-search-view.png)
-![Frontend Space Detail](assets/sprint2/frontend-space-detail.png)
-![Frontend Reservation Flow](assets/sprint2/frontend-reservation-flow.png)
-![Frontend Owner Panel](assets/sprint2/frontend-owner-panel.png)
-![Frontend Login Register](assets/sprint2/frontend-login-register.png)
-![API Gateway Routes](assets/sprint2/api-gateway-routes.png)
-```
+  **Enfoque de validación aplicado:**
 
-**Conclusión de desarrollo:**
+  Dado que el Sprint 2 introduce por primera vez la capa de presentación funcional de ParkLink, el equipo validó cada flujo principal desde el navegador utilizando el ambiente de producción desplegado en Vercel (`https://parklink-eta.vercel.app`). No se implementaron pruebas automatizadas en este sprint; esta deuda queda registrada para iteraciones futuras.
 
-El Sprint 2 produjo una versión frontend navegable del MVP de ParkLink. Las pantallas implementadas permiten demostrar los flujos principales para conductor y propietario. La mejora del API Gateway permitió ordenar la comunicación desde el frontend hacia los servicios disponibles sin mover lógica de negocio al gateway.
+  **Flujos validados:**
 
----
+  | ID | Flujo validado | Ruta | Resultado |
+  |----|---------------|------|-----------|
+  | FE-TC-01 | Visualización de pantalla de login | `/auth/login` | La pantalla carga correctamente con campos de email, contraseña y botón de ingreso |
+  | FE-TC-02 | Registro de conductor | `/auth/register` | El formulario muestra campos de nombre, email, contraseña, teléfono y placa del vehículo con selector de rol activo en "Conductor" |
+  | FE-TC-03 | Registro de propietario | `/auth/register` | Al seleccionar el rol "Propietario", el formulario adapta sus campos mostrando tipo de propietario (Particular / Empresa) y cuenta bancaria |
+  | FE-TC-04 | Dashboard principal con mapa | `/dashboard` | El mapa carga con marcadores de estacionamientos disponibles, barra de búsqueda, filtros de precio, hora y distancia, y contador de espacios disponibles |
+  | FE-TC-05 | Filtros de búsqueda | `/dashboard` | El panel de filtros despliega correctamente controles de distancia máxima (slider), rango de precio y hora de entrada/salida |
+  | FE-TC-06 | Detalle de espacio al seleccionar marcador | `/dashboard` | Al hacer clic en un marcador del mapa, se muestra un popup con la dirección del espacio y enlace a Google Maps |
+  | FE-TC-07 | Vista de reservas activas | `/dashboard/reservations` | La pantalla lista las reservas confirmadas del conductor con código, nombre del espacio, dirección, fechas de inicio y fin, total y acciones disponibles (Ver espacio, Extender, Cancelar) |
+  | FE-TC-08 | Vista de notificaciones | `/dashboard/notifications` | La pantalla muestra notificaciones del sistema con estado "Nuevo", descripción del evento (pago aprobado, reserva pendiente de pago) y tiempo transcurrido |
 
-#### 5.3.2.3 Testing Suite Evidence for Sprint Review
+  **Observaciones del proceso de validación:**
 
-Las pruebas del Sprint 2 se enfocaron en validar frontend y comunicación con el API Gateway. No se ejecutaron pruebas de carga ni pruebas avanzadas de microservicios internos porque ese no fue el objetivo del sprint.
+  - Todas las rutas probadas respondieron correctamente bajo HTTPS en el ambiente de producción.
+  - La navegación lateral entre Mapa, Mis reservas y Notificaciones funciona sin recargas completas de página.
+  - El formulario de registro diferencia correctamente los campos según el rol seleccionado (Conductor / Propietario).
+  - Los marcadores del mapa se renderizan sobre Google Maps con datos reales provenientes del backend.
+  - Las notificaciones reflejan eventos reales de reservas y pagos registrados en el sistema.
 
-**Tipos de pruebas aplicadas:**
+  **Deuda técnica de testing registrada para próximos sprints:**
 
-| Tipo de prueba | Objetivo | Resultado esperado |
-|----------------|----------|-------------------|
-| Prueba de navegación frontend | Verificar que las pantallas principales sean accesibles desde la aplicación. | El usuario navega entre búsqueda, detalle, reserva, login, registro y panel de propietario. |
-| Prueba de formularios | Verificar que los campos se muestren correctamente y acepten datos. | Los formularios permiten ingresar información sin romper la interfaz. |
-| Prueba visual de estados | Verificar que los espacios muestren estados claros. | El usuario distingue disponible, reservado, ocupado y no disponible. |
-| Prueba de rutas frontend | Verificar que las rutas internas carguen la vista correcta. | Cada ruta muestra la pantalla esperada. |
-| Smoke test del API Gateway | Verificar que el gateway responda en rutas principales. | El gateway recibe solicitudes y devuelve respuesta. |
-| Prueba de header Authorization | Verificar que el token JWT sea reenviado cuando corresponde. | El header `Authorization` se conserva al pasar por el gateway. |
-| Prueba de integración cliente-gateway | Verificar que el frontend pueda consumir rutas del gateway. | La solicitud sale del frontend, llega al gateway y la respuesta vuelve al cliente. |
+  - Implementar pruebas automatizadas con Vitest + React Testing Library para componentes críticos.
+  - Agregar pruebas de integración que validen el flujo completo desde login hasta creación de reserva.
+  - Configurar pipeline de CI en GitHub Actions que ejecute lint y tests en cada Pull Request.
 
-**Casos de prueba del Sprint 2:**
+  ---
 
-| ID | Caso de prueba | Componente | Resultado esperado | Estado |
-|----|----------------|------------|-------------------|--------|
-| TC-FE01 | Abrir pantalla de búsqueda | Frontend | La vista carga sin errores visibles. | Passed |
-| TC-FE02 | Aplicar filtros de precio y horario | Frontend | Los controles se muestran y actualizan la vista. | Passed |
-| TC-FE03 | Abrir detalle de estacionamiento | Frontend | La pantalla muestra información del espacio. | Passed |
-| TC-FE04 | Completar formulario de reserva | Frontend | El formulario permite ingresar fecha, hora y duración. | Passed |
-| TC-FE05 | Abrir pantalla de registro | Frontend | El usuario visualiza campos de registro por rol. | Passed |
-| TC-FE06 | Abrir pantalla de login | Frontend | El usuario visualiza campos de correo y contraseña. | Passed |
-| TC-FE07 | Abrir panel de propietario | Frontend | El propietario visualiza opciones de publicación y configuración. | Passed |
-| TC-GW01 | Consultar ruta del API Gateway | API Gateway | El gateway responde correctamente. | Passed |
-| TC-GW02 | Enviar solicitud con Authorization | API Gateway | El gateway conserva el header `Authorization`. | Passed |
-| TC-GW03 | Consumir ruta desde frontend | Frontend + Gateway | El frontend recibe respuesta sin romper navegación. | Passed |
+  #### 5.3.2.4 Execution Evidence for Sprint Review
 
-**Evidencias sugeridas para insertar:**
+  El Sprint 2 entrega el frontend funcional de ParkLink desplegado en producción bajo la URL `https://parklink-eta.vercel.app`. A continuación se presenta la evidencia de ejecución de cada vista principal implementada durante el sprint.
 
-```md
-![Frontend Navigation Test](assets/sprint2/test-frontend-navigation.png)
-![Frontend Form Test](assets/sprint2/test-frontend-form.png)
-![Gateway Authorization Test](assets/sprint2/test-gateway-authorization.png)
-![Frontend Gateway Test](assets/sprint2/test-frontend-gateway.png)
-```
+  **Pantalla de inicio de sesión — `/auth/login`**
 
-**Conclusión de testing:**
+  La pantalla de login permite al usuario autenticarse con su correo y contraseña. Incluye acceso directo al flujo de registro para usuarios nuevos.
 
-La suite de pruebas del Sprint 2 validó que el frontend sea navegable y que el API Gateway pueda recibir solicitudes desde el cliente. Las pruebas confirmaron que los flujos visuales principales funcionan para demostración y que el gateway conserva su responsabilidad de entrada y enrutamiento.
+  ![login](assets/login.png)
 
----
+  ---
 
-#### 5.3.2.4 Execution Evidence for Sprint Review
+  **Pantalla de registro — `/auth/register` (rol Conductor)**
 
-La ejecución del Sprint 2 se validó mediante la navegación de las pantallas implementadas y la revisión del comportamiento del API Gateway. La evidencia de ejecución se centró en demostrar que el frontend permite recorrer los flujos principales del MVP y que el gateway responde como punto de entrada.
+  El formulario de registro con rol Conductor solicita nombre completo, email, contraseña, teléfono y placa del vehículo. El selector de rol permite cambiar entre Conductor y Propietario de forma dinámica.
 
-**Flujos ejecutados en el frontend:**
+  ![register-conductor](assets/register-conductor.png)
 
-| Flujo | Pasos ejecutados | Resultado |
-|-------|------------------|----------|
-| Búsqueda de estacionamiento | Abrir búsqueda, ingresar destino, visualizar lista o mapa. | Flujo visible y navegable. |
-| Filtro de resultados | Abrir filtros, modificar precio u horario, observar actualización visual. | Filtros disponibles en interfaz. |
-| Detalle de estacionamiento | Seleccionar un espacio desde resultados y abrir detalle. | Información del espacio visible. |
-| Reserva visual | Seleccionar fecha, hora y duración desde el detalle. | Formulario de reserva visible. |
-| Registro de usuario | Abrir registro y seleccionar rol conductor o propietario. | Formulario disponible. |
-| Inicio de sesión | Abrir login e ingresar credenciales de prueba. | Vista disponible y preparada para token. |
-| Publicación de espacio | Entrar al panel de propietario y abrir formulario de publicación. | Formulario disponible. |
-| Configuración de espacio | Abrir edición de precio, horario y disponibilidad. | Controles disponibles. |
+  ---
 
-**Ejecución del API Gateway:**
+  **Pantalla de registro — `/auth/register` (rol Propietario)**
 
-| Validación | Resultado |
-|-----------|----------|
-| El API Gateway recibe solicitudes HTTP. | Passed |
-| Las rutas se encuentran agrupadas por dominio funcional. | Passed |
-| El header `Authorization` se conserva cuando el frontend lo envía. | Passed |
-| El gateway no ejecuta reglas de negocio. | Passed |
-| La comunicación frontend-gateway no rompe la navegación. | Passed |
+  Al seleccionar el rol Propietario, el formulario adapta sus campos mostrando el tipo de propietario (Particular o Empresa) y el campo de cuenta bancaria necesario para recibir pagos de reservas.
 
-**Ejemplos referenciales de ejecución:**
+  ![register-propietario](assets/register-propietario.png)
 
-```bash
-curl -X GET https://api-gateway-xi-five.vercel.app/docs
-```
+  ---
 
-```bash
-curl -X GET https://api-gateway-xi-five.vercel.app/api/v1/parking-spaces   -H "Authorization: Bearer <JWT_TOKEN>"
-```
+  **Dashboard principal con mapa — `/dashboard`**
 
-```bash
-curl -X GET https://api-gateway-xi-five.vercel.app/api/v1/reservations   -H "Authorization: Bearer <JWT_TOKEN>"
-```
+  Vista principal del conductor. Muestra un mapa interactivo con Google Maps, marcadores de estacionamientos disponibles, barra de búsqueda por zona o dirección, filtros activos (Cerca mío, Filtros 5km, Precio, Hora) y contador de espacios disponibles en la zona actual (31 Espacios Disponibles).
 
-**Evidencias sugeridas para insertar:**
+  ![dashboard](assets/dashboard.png)
 
-```md
-![Execution Search Flow](assets/sprint2/execution-search-flow.png)
-![Execution Detail Flow](assets/sprint2/execution-detail-flow.png)
-![Execution Reservation Flow](assets/sprint2/execution-reservation-flow.png)
-![Execution Owner Flow](assets/sprint2/execution-owner-flow.png)
-![Execution API Gateway](assets/sprint2/execution-api-gateway.png)
-```
+  ---
 
-**Conclusión de ejecución:**
+  **Panel de filtros activo — `/dashboard`**
 
-El Sprint 2 permitió ejecutar y demostrar los flujos visuales principales de ParkLink. La aplicación frontend mostró navegación entre pantallas clave y el API Gateway respondió como capa de entrada. La ejecución no demuestra culminación del backend; demuestra avance frontend y mejora de comunicación cliente-gateway.
+  Al activar los filtros, se despliega un panel con control de distancia máxima mediante slider (5 km), rango de precio configurable (S/ 0.00 – S/ 30.00) y campos de hora de entrada y salida para acotar la búsqueda al horario requerido por el conductor.
 
----
+  ![dashboard-filtros](assets/dashboard-filtros.png)
 
-#### 5.3.2.5 Microservices Documentation Evidence for Sprint Review
+  ---
 
-La documentación de microservicios del Sprint 2 se actualizó para reflejar el enfoque real del sprint. Durante este sprint no se crearon nuevos microservicios ni se declaró finalizada la implementación backend. La documentación se centró en describir cómo el frontend se comunica con el API Gateway y cómo el gateway enruta solicitudes hacia los servicios disponibles.
+  **Detalle de espacio al seleccionar marcador — `/dashboard`**
 
-**Arquitectura de comunicación trabajada en Sprint 2:**
+  Al hacer clic sobre un marcador del mapa, se despliega un popup con la dirección exacta del espacio (John Fitzgerald Kennedy 500, Parcona 11003, Peru) y un enlace directo a Google Maps para facilitar la navegación al conductor.
 
-```mermaid
-flowchart TD
-    A[Frontend ParkLink] --> B[API Gateway]
+  ![pop-up](assets/pop-up.png)
 
-    B --> C[Auth Routes]
-    B --> D[Parking Spaces Routes]
-    B --> E[Reservations Routes]
-    B --> F[Owner Space Management Routes]
+  ---
 
-    C --> G[Backend Services Disponibles]
-    D --> G
-    E --> G
-    F --> G
+  **Vista de mis reservas — `/dashboard/reservations`**
 
-    B -. reenvía Authorization .-> G
-```
+  La pantalla muestra todas las reservas activas del conductor autenticado. Cada tarjeta incluye el código único de reserva, nombre y dirección del espacio, fechas y horas de inicio y fin, total en soles y acciones disponibles: Ver espacio, Extender y Cancelar.
 
-**Responsabilidades documentadas:**
+  ![reservations](assets/reservations.png)
 
-| Componente | Responsabilidad en Sprint 2 |
-|------------|-----------------------------|
-| Frontend ParkLink | Presentar pantallas, formularios, navegación y flujos visuales del MVP. |
-| API Gateway | Recibir solicitudes del frontend, organizar rutas y reenviar headers necesarios. |
-| Auth Routes | Agrupar rutas relacionadas con login, registro y validación de sesión. |
-| Parking Spaces Routes | Agrupar rutas relacionadas con búsqueda, detalle y publicación de espacios. |
-| Reservations Routes | Agrupar rutas relacionadas con flujo de reserva e historial. |
-| Owner Space Management Routes | Agrupar rutas relacionadas con panel de propietario, configuración y disponibilidad. |
-| Backend Services Disponibles | Mantener lógica de negocio, datos y reglas del dominio. |
+  ---
 
-**Rutas organizadas para consumo del frontend:**
+  **Vista de notificaciones — `/dashboard/notifications`**
 
-| Grupo de rutas | Uso desde frontend |
-|----------------|-------------------|
-| `/api/v1/auth/*` | Registro, login y manejo de sesión. |
-| `/api/v1/parking-spaces/*` | Búsqueda, detalle y publicación de espacios. |
-| `/api/v1/reservations/*` | Reserva visual, historial y consulta de reservas. |
-| `/api/v1/owners/*` | Panel de propietario y gestión de espacios. |
-| `/api/v1/payments/*` | Preparación para flujos de pago visibles en futuras iteraciones. |
+  La pantalla centraliza todas las notificaciones del sistema relacionadas con la cuenta del conductor. Se muestran 4 notificaciones sin leer, incluyendo confirmaciones de pago aprobado y alertas de reservas pendientes de pago.
 
-**Reglas documentadas para el API Gateway:**
+  ![notifications](assets/notifications.png)
 
-1. El API Gateway funciona como punto de entrada del frontend.
-2. El API Gateway no ejecuta reglas de negocio.
-3. El API Gateway no calcula disponibilidad.
-4. El API Gateway no confirma reservas.
-5. El API Gateway no procesa pagos.
-6. El API Gateway conserva el header `Authorization` en rutas protegidas.
-7. El API Gateway agrupa rutas para evitar que el frontend consuma servicios de forma desordenada.
-8. El API Gateway facilita una futura separación más estricta de microservicios.
+  ---
 
-**Evidencias sugeridas para insertar:**
+  **URL de producción del frontend:** `https://parklink-eta.vercel.app`
 
-```md
-![Gateway Architecture Sprint 2](assets/sprint2/gateway-architecture-sprint2.png)
-![Gateway Route Groups](assets/sprint2/gateway-route-groups.png)
-![Frontend Gateway Communication](assets/sprint2/frontend-gateway-communication.png)
-```
+  **Despliegue:** Vercel, rama `master` del repositorio `ParkLink-Frontend`, build automático por push, TLS gestionado por Vercel (100% HTTPS).
 
-**Conclusión de documentación de microservicios:**
+  #### 5.3.2.5 Microservices Documentation Evidence for Sprint Review
 
-La documentación del Sprint 2 deja claro que el avance principal fue frontend y gateway. La arquitectura mantiene la separación entre cliente, API Gateway y servicios backend. El gateway fue documentado como capa de entrada, no como servicio de dominio.
+  El Sprint 2 se centró en la implementación del frontend funcional de ParkLink. A continuación se documenta la aplicación web desplegada en producción, sus vistas principales y las rutas implementadas durante el sprint.
 
----
+  **Frontend desplegado:**
+
+  | Componente | URL | Tecnología | Estado |
+  |------------|-----|------------|--------|
+  | ParkLink Frontend | `https://parklink-eta.vercel.app` | React + TypeScript + Vite | Activo |
+
+  **Vistas implementadas:**
+
+  | Vista | Ruta | Descripción |
+  |-------|------|-------------|
+  | Login | `/auth/login` | Pantalla de autenticación para conductores y propietarios |
+  | Registro de conductor | `/auth/register` | Formulario de creación de cuenta con rol Conductor |
+  | Registro de propietario | `/auth/register` | Formulario de creación de cuenta con rol Propietario |
+  | Dashboard con mapa | `/dashboard` | Mapa interactivo con marcadores de estacionamientos, búsqueda y filtros |
+  | Mis reservas | `/dashboard/reservations` | Listado de reservas activas con acciones de gestión |
+  | Notificaciones | `/dashboard/notifications` | Centro de notificaciones del sistema |
 
 #### 5.3.2.6 Software Deployment Evidence for Sprint Review
 
