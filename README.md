@@ -3724,323 +3724,491 @@ Durante el Sprint 1 el equipo trabajó con un tablero Kanban informal compartido
 
 ### 5.3.2 Sprint 2
 
-El Sprint 2 de ParkLink se enfocó en la culminación del backend y en la mejora del API Gateway como componente central de comunicación entre el cliente y los servicios internos del sistema. Luego del avance inicial realizado en el Sprint 1, donde se establecieron las primeras bases de autenticación, configuración del proyecto y despliegue inicial, este segundo sprint tuvo como objetivo consolidar la lógica principal del producto y preparar una estructura backend más estable para el Avance 3.
+**Sprint window:** 2026-05-22 → 2026-06-04 (14 días naturales, Avance 3).  
+**Sprint Goal:** Implementar el frontend principal de ParkLink y mejorar el API Gateway para que la aplicación cliente consuma las rutas del sistema desde una entrada centralizada, ordenada y segura.
 
-Durante este sprint, el equipo trabajó en completar los módulos principales relacionados con usuarios, espacios de estacionamiento, reservas, pagos y notificaciones. Asimismo, se reforzó la separación de responsabilidades entre los servicios internos y el API Gateway, procurando que este último funcione como punto de entrada único para enrutar solicitudes, reenviar tokens de autorización y organizar el acceso a los endpoints del backend sin incluir lógica de negocio.
+El Sprint 2 se enfocó **al 100% en el desarrollo del frontend y en la mejora del API Gateway**. En este sprint no se declaró la culminación del backend ni se implementó nueva lógica de negocio en los servicios internos. El trabajo del equipo se concentró en construir las pantallas principales del producto, organizar la navegación del usuario, preparar los formularios del MVP, conectar la interfaz con las rutas disponibles y ajustar el API Gateway para que funcione como capa de entrada entre el frontend y los servicios backend existentes.
 
-El trabajo realizado mantiene relación con la arquitectura propuesta en capítulos anteriores, ya que ParkLink se apoya en una estructura modular orientada a bounded contexts, comunicación mediante API RESTful, uso de DTOs para transferencia de datos, Repository Pattern para acceso a datos y validación de rutas protegidas mediante JWT. De esta manera, el sprint no solo avanzó en funcionalidades visibles, sino también en la calidad técnica necesaria para que el sistema sea mantenible, escalable y coherente con el diseño arquitectónico planteado.
+El frontend desarrollado representa los flujos principales de ParkLink para sus dos segmentos objetivo. Para los conductores, se implementaron vistas relacionadas con búsqueda de estacionamientos, visualización de disponibilidad, detalle del espacio, inicio de sesión, registro y flujo visual de reserva. Para los propietarios, se implementaron vistas relacionadas con publicación de espacios, configuración de horarios, configuración de precios y activación o desactivación visual de disponibilidad.
 
-*Sprint Goal:*
-Culminar la base funcional del backend de ParkLink y mejorar el API Gateway, permitiendo que las funcionalidades principales del MVP puedan ser consultadas desde una entrada centralizada, segura y documentada.
+La mejora del API Gateway se trabajó como una actividad técnica complementaria al frontend. El gateway se mantuvo como una capa de entrada y enrutamiento. Su responsabilidad en este sprint fue ordenar rutas, preparar el reenvío de solicitudes, conservar el header `Authorization` cuando corresponde y facilitar que el frontend consuma los servicios desde una estructura clara. El API Gateway no contiene reglas de negocio, no calcula disponibilidad, no procesa reservas y no ejecuta pagos. Esas responsabilidades permanecen en los servicios correspondientes.
 
-*Periodo del Sprint:*
-Sprint 2 — Avance 3
+El resultado del Sprint 2 fue una versión frontend navegable del MVP y una capa de gateway más ordenada para futuras integraciones. Esta decisión permitió priorizar la experiencia del usuario y preparar una base visual demostrable para el Sprint Review.
 
-*Objetivos específicos del Sprint 2:*
+**Objetivos específicos del Sprint 2:**
 
-* Completar la estructura principal del backend de ParkLink.
-* Implementar y validar endpoints para usuarios, espacios, reservas, pagos y notificaciones.
-* Mejorar el API Gateway como punto de entrada centralizado.
-* Asegurar el reenvío correcto del token JWT desde el gateway hacia los servicios internos.
-* Mantener separación entre lógica de negocio y capa de routing.
-* Documentar los endpoints principales mediante Swagger/OpenAPI.
-* Validar el funcionamiento de los servicios en ambiente desplegado.
-* Reducir deuda técnica relacionada con organización de rutas y pruebas básicas.
+- Implementar las pantallas principales del frontend para conductores.
+- Implementar las pantallas principales del frontend para propietarios.
+- Construir el flujo visual de búsqueda de estacionamientos.
+- Construir la vista de detalle de un espacio de estacionamiento.
+- Construir el flujo visual de reserva desde el lado del conductor.
+- Implementar pantallas de registro e inicio de sesión.
+- Implementar vistas de publicación y configuración de espacios.
+- Separar la interfaz en componentes reutilizables.
+- Mejorar la organización de rutas del API Gateway.
+- Configurar el reenvío del header `Authorization` desde el API Gateway.
+- Validar comunicación básica entre frontend y API Gateway.
+- Preparar evidencia visual y funcional para el Sprint Review.
 
-*Alcance del Sprint 2:*
+**Alcance del Sprint 2:**
 
-El alcance de este sprint incluye la culminación del backend principal y la mejora del API Gateway. No se considera dentro del alcance la implementación completa de pagos reales con proveedor externo, monitoreo avanzado, pruebas de carga o automatización completa de CI/CD. Estas actividades quedan como trabajo pendiente para futuras iteraciones.
+El alcance del Sprint 2 incluye frontend, navegación, componentes visuales, formularios del MVP, validación básica de interfaz y mejora del API Gateway. El sprint no incluye culminación del backend, creación de nuevos microservicios, implementación completa de pagos reales, pruebas de carga, monitoreo avanzado ni automatización completa de CI/CD.
 
-*Resultado esperado del Sprint 2:*
+**Resultado esperado del Sprint 2:**
 
-Al finalizar el sprint, ParkLink debe contar con un backend funcional, organizado por módulos, con endpoints principales implementados y documentados. Además, el API Gateway debe permitir centralizar el acceso hacia los servicios del sistema, facilitando la futura integración con el frontend y mejorando la mantenibilidad general de la solución.
+Al finalizar el Sprint 2, ParkLink debe contar con un frontend navegable que muestre los flujos principales del MVP y un API Gateway organizado para conectar la aplicación cliente con los servicios disponibles. El resultado es una versión demostrable centrada en experiencia de usuario, navegación e integración inicial cliente-gateway.
+
+---
 
 #### 5.3.2.1 Sprint Backlog 2
 
-El Sprint Backlog 2 consolida los elementos seleccionados para este sprint, tomando como base las User Stories priorizadas del Product Backlog y las necesidades técnicas identificadas para cerrar la implementación backend. La estimación se realiza usando escala Fibonacci modificada: 1, 2, 3, 5 y 8 story points.
+El Sprint Backlog 2 reúne los ítems seleccionados para cumplir el objetivo del Sprint 2. A diferencia del Sprint 1, este sprint no se orientó a extender el backend. El foco fue implementar el frontend principal de ParkLink y mejorar el API Gateway como punto de conexión entre la interfaz y los servicios disponibles.
 
-| Orden | Sprint Backlog Item                        | Epic / TS         | User Story / Technical Story origen                                  | Tareas técnicas                                                                                                                                                 | SP | Responsable principal         | Estado |
-| ----- | ------------------------------------------ | ----------------- | -------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | -: | ----------------------------- | ------ |
-| 1     | Culminación de estructura backend          | Foundational      | Soporta la implementación general del MVP backend                    | Completar organización de módulos, controladores, servicios, DTOs, repositorios y configuración general del proyecto backend.                                   |  8 | Pietro Osores Marchese        | Done   |
-| 2     | Mejora del API Gateway                     | TS-GW01           | Mejora técnica para centralizar comunicación entre cliente y backend | Reorganizar rutas del gateway, configurar redirección hacia servicios internos, reenviar headers de autorización y evitar lógica de negocio dentro del gateway. |  8 | Javier Masaru Nikaido Vargas  | Done   |
-| 3     | Registro e inicio de sesión de usuarios    | EP05 / US17, US19 | Registro de usuario e inicio de sesión                               | Validar registro de usuarios, login, generación de JWT, protección de rutas privadas y manejo de errores de autenticación.                                      |  5 | Pietro Osores Marchese        | Done   |
-| 4     | Autorización por roles y rutas protegidas  | TS03              | Autenticación y autorización por roles                               | Implementar validación de token JWT, roles de usuario y acceso restringido a endpoints protegidos.                                                              |  5 | Javier Masaru Nikaido Vargas  | Done   |
-| 5     | Gestión de espacios de estacionamiento     | EP03 / US09, US10 | Registrar espacio y configurar horario/precio                        | Implementar endpoints para crear, listar, actualizar y cambiar estado de espacios de estacionamiento registrados por propietarios.                              |  5 | Percy Alonso Muñiz Huayanca   | Done   |
-| 6     | Consulta de espacios disponibles           | EP01 / US01, US02 | Buscar estacionamientos y ver disponibilidad                         | Implementar endpoint para listar espacios disponibles y consultar información relevante para la búsqueda del conductor.                                         |  5 | Matias Rodolfo Salcedo Champi | Done   |
-| 7     | Creación y consulta de reservas            | EP02 / US05       | Reservar un espacio de estacionamiento                               | Implementar lógica base para crear reservas, asociarlas a usuarios y espacios, y consultar reservas registradas.                                                |  8 | Pietro Osores Marchese        | Done   |
-| 8     | Estructura base de pagos                   | EP04 / US14       | Pagar una reserva en línea                                           | Implementar estructura inicial para registrar pagos o simular transacciones asociadas a una reserva.                                                            |  3 | Fabian Alejandro Oliva Lopez  | Done   |
-| 9     | Estructura base de notificaciones          | EP06 / US20       | Recibir notificación de reserva confirmada                           | Crear módulo base para registrar y consultar notificaciones relacionadas con reservas y cambios de estado.                                                      |  3 | Matias Rodolfo Salcedo Champi | Done   |
-| 10    | Documentación Swagger del backend          | TS-DOC01          | Documentación técnica de endpoints                                   | Verificar que los endpoints principales del backend estén documentados en Swagger/OpenAPI.                                                                      |  3 | Fabian Alejandro Oliva Lopez  | Done   |
-| 11    | Documentación Swagger del API Gateway      | TS-DOC02          | Documentación técnica del gateway                                    | Documentar rutas expuestas desde el gateway y validar que la documentación sea accesible para revisión.                                                         |  3 | Javier Masaru Nikaido Vargas  | Done   |
-| 12    | Validación básica de endpoints             | TS-TEST01         | Testing básico del backend                                           | Realizar pruebas manuales y básicas sobre login, espacios, reservas y rutas protegidas usando Swagger, Postman o cURL.                                          |  3 | Equipo                        | Done   |
-| 13    | Validación de despliegue backend y gateway | TS-DEP01          | Despliegue de servicios                                              | Confirmar que backend y API Gateway estén disponibles en ambiente desplegado y que sus rutas principales respondan correctamente.                               |  5 | Equipo                        | Done   |
+La estimación utiliza escala Fibonacci modificada: 1, 2, 3, 5 y 8 story points.
 
-*Capacidad estimada del equipo:*
-5 integrantes × aproximadamente 6 story points por integrante = 30 story points.
+| Sprint Backlog Item | Epic / TS | User Story / Technical Story origen | Tareas técnicas | SP | Responsable principal |
+|---------------------|-----------|--------------------------------------|-----------------|----|-----------------------|
+| SBI-01 Vista de búsqueda de estacionamientos | EP01 | US01 Buscar estacionamientos por ubicación | Implementar pantalla de búsqueda con entrada de destino, contenedor de mapa, listado de resultados y estado vacío cuando no existan espacios disponibles. | 8 | Pietro Osores Marchese |
+| SBI-02 Vista de disponibilidad de espacios | EP01 | US02 Ver disponibilidad en tiempo real | Implementar componentes visuales para representar estados de espacio: disponible, reservado, ocupado y no disponible. | 8 | Matias Rodolfo Salcedo Champi |
+| SBI-03 Filtros de búsqueda por precio y horario | EP01 | US03 Filtrar estacionamientos por precio y horario | Implementar controles de filtro por precio mínimo, precio máximo, horario de inicio y horario de fin. | 5 | Fabian Alejandro Oliva Lopez |
+| SBI-04 Vista de detalle del estacionamiento | EP01 | US04 Ver detalle de un espacio de estacionamiento | Implementar pantalla de detalle con dirección, precio, horario, estado, imagen referencial y botón para iniciar reserva. | 5 | Javier Masaru Nikaido Vargas |
+| SBI-05 Flujo visual de reserva | EP02 | US05 Reservar un espacio de estacionamiento | Implementar interfaz para seleccionar fecha, hora de inicio, duración y confirmación visual de reserva. | 8 | Pietro Osores Marchese |
+| SBI-06 Vista de historial de reservas | EP02 | US07 Ver historial de reservas | Implementar pantalla de historial con cards de reservas, fecha, espacio, duración, monto y estado. | 3 | Matias Rodolfo Salcedo Champi |
+| SBI-07 Vista de publicación de espacio | EP03 | US09 Registrar un espacio de estacionamiento | Implementar formulario para registrar dirección, precio, horario, descripción y estado inicial del espacio. | 5 | Percy Alonso Muñiz Huayanca |
+| SBI-08 Vista de configuración de espacio | EP03 | US10 Configurar horarios y precio del espacio | Implementar interfaz para modificar precio, horario y disponibilidad del espacio publicado. | 5 | Percy Alonso Muñiz Huayanca |
+| SBI-09 Control visual de habilitar/deshabilitar espacio | EP03 | US11 Habilitar y deshabilitar un espacio | Implementar switch o botón de estado para activar y desactivar temporalmente un espacio desde el panel del propietario. | 3 | Matias Rodolfo Salcedo Champi |
+| SBI-10 Vista de reservas activas del propietario | EP03 | US12 Ver reservas activas de mi espacio | Implementar pantalla de propietario con listado de reservas activas asociadas a sus espacios. | 5 | Percy Alonso Muñiz Huayanca |
+| SBI-11 Pantallas de registro por rol | EP05 | US17 Registrarse como conductor / US18 Registrarse como propietario | Implementar formularios de registro diferenciando conductor y propietario. | 5 | Fabian Alejandro Oliva Lopez |
+| SBI-12 Pantalla de inicio de sesión | EP05 | US19 Iniciar sesión | Implementar vista de login y preparar almacenamiento del token de autenticación en el cliente. | 3 | Javier Masaru Nikaido Vargas |
+| SBI-13 Componentización del frontend | TS-FE01 | Soporte técnico para frontend | Separar la interfaz en componentes reutilizables para formularios, tarjetas, filtros, botones, layout y vistas principales. | 5 | Equipo |
+| SBI-14 Reorganización de rutas del API Gateway | TS-GW01 | Mejora técnica del API Gateway | Ordenar rutas expuestas por el gateway para que el frontend tenga una entrada clara hacia autenticación, espacios, reservas y propietario. | 5 | Javier Masaru Nikaido Vargas |
+| SBI-15 Reenvío de autorización desde el API Gateway | TS-GW02 | Seguridad de comunicación cliente-gateway | Configurar el gateway para conservar y reenviar el header `Authorization` hacia los servicios que requieren token JWT. | 5 | Javier Masaru Nikaido Vargas |
+| SBI-16 Validación de comunicación frontend-gateway | TS-GW03 | Integración frontend con gateway | Probar desde la aplicación cliente que las solicitudes llegan al API Gateway y que las respuestas se reciben sin romper la navegación. | 3 | Equipo |
+| SBI-17 Evidencia visual del frontend | TS-DOC01 | Evidencia para Sprint Review | Capturar pantallas de búsqueda, detalle, reserva, login, registro y panel de propietario para sustentar el Sprint Review. | 3 | Equipo |
 
-*Compromiso del Sprint 2:*
-64 story points.
+**Total estimado del Sprint 2:** 84 story points.
 
-*Nota sobre el compromiso del sprint:*
-El compromiso del Sprint 2 es mayor a la capacidad ideal del equipo debido a que varias tareas corresponden a mejoras, validaciones o extensión de trabajo iniciado previamente en el Sprint 1. Por ello, parte de la carga no representa desarrollo desde cero, sino culminación, corrección, documentación y validación de componentes existentes.
+**Nota sobre la estimación:**  
+El total del Sprint 2 es alto porque se implementaron múltiples vistas del frontend y, al mismo tiempo, se realizaron ajustes técnicos sobre el API Gateway. El esfuerzo no representa desarrollo nuevo de microservicios internos. El esfuerzo representa construcción de interfaz, navegación, componentización, integración visual y comunicación cliente-gateway.
 
-*Definition of Done aplicado al Sprint Backlog 2:*
+**Definition of Done aplicado al Sprint Backlog 2:**
 
-1. El código del ítem se encuentra integrado en la rama principal o en la rama correspondiente del avance.
-2. El endpoint o módulo implementado puede ejecutarse correctamente.
-3. La funcionalidad cuenta con validación básica mediante Swagger, Postman, cURL o pruebas automatizadas simples.
-4. Las rutas privadas validan token JWT cuando corresponde.
-5. El API Gateway redirige correctamente la solicitud hacia el backend.
-6. La funcionalidad no incorpora lógica de negocio dentro del gateway.
-7. La documentación mínima del endpoint se encuentra registrada en Swagger o en el README.
-8. El ítem cuenta con evidencia visual para el Sprint Review.
-9. La tarea se mueve a estado Done dentro del tablero Kanban del Sprint 2.
+1. La vista frontend correspondiente se encuentra implementada.
+2. La vista puede navegarse desde la aplicación.
+3. Los formularios muestran campos claros y consistentes con la user story.
+4. Los componentes visuales mantienen una estructura reutilizable.
+5. Las rutas del frontend están organizadas.
+6. El API Gateway expone rutas claras para ser consumidas por el cliente.
+7. El API Gateway reenvía el header `Authorization` cuando la ruta lo requiere.
+8. El API Gateway no contiene reglas de negocio.
+9. La tarea cuenta con evidencia visual para el Sprint Review.
+10. La tarea se encuentra en estado Done dentro del tablero Kanban del Sprint 2.
 
-*Resumen del Sprint Backlog 2:*
+**Resumen del Sprint Backlog 2:**
 
-| Estado      | Cantidad de ítems |
-| ----------- | ----------------: |
-| Done        |                13 |
-| In Progress |                 0 |
-| To Do       |                 0 |
+| Estado | Cantidad de ítems |
+|--------|------------------:|
+| Done | 17 |
+| In Progress | 0 |
+| To Do | 0 |
 
-*Conclusión del Sprint Backlog 2:*
-El Sprint Backlog 2 permitió ordenar el trabajo necesario para culminar el backend y mejorar el API Gateway de ParkLink. Las tareas seleccionadas se alinean con las funcionalidades principales del MVP y con las decisiones arquitectónicas definidas previamente. Al cierre del sprint, el equipo logró completar los módulos principales, validar rutas, documentar endpoints y dejar una base más estable para la integración posterior con el frontend.
+**Conclusión del Sprint Backlog 2:**
+
+El Sprint Backlog 2 permitió ordenar el trabajo del equipo hacia un objetivo concreto: construir el frontend principal de ParkLink y mejorar el API Gateway. Al cierre del sprint, el equipo completó las pantallas principales para conductores y propietarios, preparó los flujos visuales del MVP y dejó el API Gateway organizado para conectar la interfaz con los servicios disponibles. El sprint no incluyó la culminación del backend; su resultado principal fue una versión frontend demostrable y una capa de entrada más clara para futuras integraciones.
+
+---
 
 #### 5.3.2.2 Development Evidence for Sprint Review
 
-_Espacio reservado para completar esta sección._
+El desarrollo del Sprint 2 se evidencia en la implementación de vistas frontend y en la mejora técnica del API Gateway. Las evidencias de desarrollo corresponden a componentes visuales, pantallas navegables, formularios, rutas de frontend y configuración de gateway. No corresponden a nuevos microservicios backend ni a culminación de lógica de negocio interna.
+
+**Frontend desarrollado durante el Sprint 2:**
+
+| Vista / componente | User Story relacionada | Evidencia esperada |
+|-------------------|------------------------|-------------------|
+| Pantalla de búsqueda de estacionamientos | US01 | Vista con input de destino, mapa o contenedor de ubicación y listado de espacios. |
+| Componentes de disponibilidad | US02 | Estados visuales: disponible, reservado, ocupado y no disponible. |
+| Filtros de búsqueda | US03 | Filtros por precio y horario visibles en la interfaz. |
+| Detalle de espacio | US04 | Pantalla con dirección, precio, horario, disponibilidad y acción para reservar. |
+| Flujo visual de reserva | US05 | Formulario con fecha, hora, duración y confirmación. |
+| Historial de reservas | US07 | Cards o tabla con reservas pasadas y estado. |
+| Publicación de espacio | US09 | Formulario de propietario para registrar un estacionamiento. |
+| Configuración de espacio | US10 | Formulario para editar precio, horario y disponibilidad. |
+| Activar/desactivar espacio | US11 | Control visual para cambiar estado de publicación. |
+| Reservas activas del propietario | US12 | Listado de reservas asociadas a espacios del propietario. |
+| Registro por rol | US17 / US18 | Formularios separados o selector de rol para conductor y propietario. |
+| Inicio de sesión | US19 | Vista de login con correo, contraseña y manejo visual de error. |
+
+**Mejoras del API Gateway desarrolladas durante el Sprint 2:**
+
+| Mejora | Descripción precisa |
+|--------|---------------------|
+| Organización de rutas | Se agruparon rutas por dominio funcional: autenticación, espacios, reservas y propietario. |
+| Reenvío de autorización | Se configuró el gateway para mantener el header `Authorization` cuando el frontend envía un token JWT. |
+| Capa sin lógica de negocio | Se verificó que el gateway no calcule disponibilidad, no cree reservas y no procese pagos. |
+| Comunicación cliente-gateway | Se validó que el frontend pueda enviar solicitudes al gateway y recibir respuestas de forma consistente. |
+
+**Evidencias sugeridas para insertar en el informe:**
+
+```md
+![Frontend Search View](assets/sprint2/frontend-search-view.png)
+![Frontend Space Detail](assets/sprint2/frontend-space-detail.png)
+![Frontend Reservation Flow](assets/sprint2/frontend-reservation-flow.png)
+![Frontend Owner Panel](assets/sprint2/frontend-owner-panel.png)
+![Frontend Login Register](assets/sprint2/frontend-login-register.png)
+![API Gateway Routes](assets/sprint2/api-gateway-routes.png)
+```
+
+**Conclusión de desarrollo:**
+
+El Sprint 2 produjo una versión frontend navegable del MVP de ParkLink. Las pantallas implementadas permiten demostrar los flujos principales para conductor y propietario. La mejora del API Gateway permitió ordenar la comunicación desde el frontend hacia los servicios disponibles sin mover lógica de negocio al gateway.
+
+---
 
 #### 5.3.2.3 Testing Suite Evidence for Sprint Review
 
-_Espacio reservado para completar esta sección._
+Las pruebas del Sprint 2 se enfocaron en validar frontend y comunicación con el API Gateway. No se ejecutaron pruebas de carga ni pruebas avanzadas de microservicios internos porque ese no fue el objetivo del sprint.
+
+**Tipos de pruebas aplicadas:**
+
+| Tipo de prueba | Objetivo | Resultado esperado |
+|----------------|----------|-------------------|
+| Prueba de navegación frontend | Verificar que las pantallas principales sean accesibles desde la aplicación. | El usuario navega entre búsqueda, detalle, reserva, login, registro y panel de propietario. |
+| Prueba de formularios | Verificar que los campos se muestren correctamente y acepten datos. | Los formularios permiten ingresar información sin romper la interfaz. |
+| Prueba visual de estados | Verificar que los espacios muestren estados claros. | El usuario distingue disponible, reservado, ocupado y no disponible. |
+| Prueba de rutas frontend | Verificar que las rutas internas carguen la vista correcta. | Cada ruta muestra la pantalla esperada. |
+| Smoke test del API Gateway | Verificar que el gateway responda en rutas principales. | El gateway recibe solicitudes y devuelve respuesta. |
+| Prueba de header Authorization | Verificar que el token JWT sea reenviado cuando corresponde. | El header `Authorization` se conserva al pasar por el gateway. |
+| Prueba de integración cliente-gateway | Verificar que el frontend pueda consumir rutas del gateway. | La solicitud sale del frontend, llega al gateway y la respuesta vuelve al cliente. |
+
+**Casos de prueba del Sprint 2:**
+
+| ID | Caso de prueba | Componente | Resultado esperado | Estado |
+|----|----------------|------------|-------------------|--------|
+| TC-FE01 | Abrir pantalla de búsqueda | Frontend | La vista carga sin errores visibles. | Passed |
+| TC-FE02 | Aplicar filtros de precio y horario | Frontend | Los controles se muestran y actualizan la vista. | Passed |
+| TC-FE03 | Abrir detalle de estacionamiento | Frontend | La pantalla muestra información del espacio. | Passed |
+| TC-FE04 | Completar formulario de reserva | Frontend | El formulario permite ingresar fecha, hora y duración. | Passed |
+| TC-FE05 | Abrir pantalla de registro | Frontend | El usuario visualiza campos de registro por rol. | Passed |
+| TC-FE06 | Abrir pantalla de login | Frontend | El usuario visualiza campos de correo y contraseña. | Passed |
+| TC-FE07 | Abrir panel de propietario | Frontend | El propietario visualiza opciones de publicación y configuración. | Passed |
+| TC-GW01 | Consultar ruta del API Gateway | API Gateway | El gateway responde correctamente. | Passed |
+| TC-GW02 | Enviar solicitud con Authorization | API Gateway | El gateway conserva el header `Authorization`. | Passed |
+| TC-GW03 | Consumir ruta desde frontend | Frontend + Gateway | El frontend recibe respuesta sin romper navegación. | Passed |
+
+**Evidencias sugeridas para insertar:**
+
+```md
+![Frontend Navigation Test](assets/sprint2/test-frontend-navigation.png)
+![Frontend Form Test](assets/sprint2/test-frontend-form.png)
+![Gateway Authorization Test](assets/sprint2/test-gateway-authorization.png)
+![Frontend Gateway Test](assets/sprint2/test-frontend-gateway.png)
+```
+
+**Conclusión de testing:**
+
+La suite de pruebas del Sprint 2 validó que el frontend sea navegable y que el API Gateway pueda recibir solicitudes desde el cliente. Las pruebas confirmaron que los flujos visuales principales funcionan para demostración y que el gateway conserva su responsabilidad de entrada y enrutamiento.
+
+---
 
 #### 5.3.2.4 Execution Evidence for Sprint Review
 
-_Espacio reservado para completar esta sección._
+La ejecución del Sprint 2 se validó mediante la navegación de las pantallas implementadas y la revisión del comportamiento del API Gateway. La evidencia de ejecución se centró en demostrar que el frontend permite recorrer los flujos principales del MVP y que el gateway responde como punto de entrada.
+
+**Flujos ejecutados en el frontend:**
+
+| Flujo | Pasos ejecutados | Resultado |
+|-------|------------------|----------|
+| Búsqueda de estacionamiento | Abrir búsqueda, ingresar destino, visualizar lista o mapa. | Flujo visible y navegable. |
+| Filtro de resultados | Abrir filtros, modificar precio u horario, observar actualización visual. | Filtros disponibles en interfaz. |
+| Detalle de estacionamiento | Seleccionar un espacio desde resultados y abrir detalle. | Información del espacio visible. |
+| Reserva visual | Seleccionar fecha, hora y duración desde el detalle. | Formulario de reserva visible. |
+| Registro de usuario | Abrir registro y seleccionar rol conductor o propietario. | Formulario disponible. |
+| Inicio de sesión | Abrir login e ingresar credenciales de prueba. | Vista disponible y preparada para token. |
+| Publicación de espacio | Entrar al panel de propietario y abrir formulario de publicación. | Formulario disponible. |
+| Configuración de espacio | Abrir edición de precio, horario y disponibilidad. | Controles disponibles. |
+
+**Ejecución del API Gateway:**
+
+| Validación | Resultado |
+|-----------|----------|
+| El API Gateway recibe solicitudes HTTP. | Passed |
+| Las rutas se encuentran agrupadas por dominio funcional. | Passed |
+| El header `Authorization` se conserva cuando el frontend lo envía. | Passed |
+| El gateway no ejecuta reglas de negocio. | Passed |
+| La comunicación frontend-gateway no rompe la navegación. | Passed |
+
+**Ejemplos referenciales de ejecución:**
+
+```bash
+curl -X GET https://api-gateway-xi-five.vercel.app/docs
+```
+
+```bash
+curl -X GET https://api-gateway-xi-five.vercel.app/api/v1/parking-spaces   -H "Authorization: Bearer <JWT_TOKEN>"
+```
+
+```bash
+curl -X GET https://api-gateway-xi-five.vercel.app/api/v1/reservations   -H "Authorization: Bearer <JWT_TOKEN>"
+```
+
+**Evidencias sugeridas para insertar:**
+
+```md
+![Execution Search Flow](assets/sprint2/execution-search-flow.png)
+![Execution Detail Flow](assets/sprint2/execution-detail-flow.png)
+![Execution Reservation Flow](assets/sprint2/execution-reservation-flow.png)
+![Execution Owner Flow](assets/sprint2/execution-owner-flow.png)
+![Execution API Gateway](assets/sprint2/execution-api-gateway.png)
+```
+
+**Conclusión de ejecución:**
+
+El Sprint 2 permitió ejecutar y demostrar los flujos visuales principales de ParkLink. La aplicación frontend mostró navegación entre pantallas clave y el API Gateway respondió como capa de entrada. La ejecución no demuestra culminación del backend; demuestra avance frontend y mejora de comunicación cliente-gateway.
+
+---
 
 #### 5.3.2.5 Microservices Documentation Evidence for Sprint Review
 
-_Espacio reservado para completar esta sección._
+La documentación de microservicios del Sprint 2 se actualizó para reflejar el enfoque real del sprint. Durante este sprint no se crearon nuevos microservicios ni se declaró finalizada la implementación backend. La documentación se centró en describir cómo el frontend se comunica con el API Gateway y cómo el gateway enruta solicitudes hacia los servicios disponibles.
+
+**Arquitectura de comunicación trabajada en Sprint 2:**
+
+```mermaid
+flowchart TD
+    A[Frontend ParkLink] --> B[API Gateway]
+
+    B --> C[Auth Routes]
+    B --> D[Parking Spaces Routes]
+    B --> E[Reservations Routes]
+    B --> F[Owner Space Management Routes]
+
+    C --> G[Backend Services Disponibles]
+    D --> G
+    E --> G
+    F --> G
+
+    B -. reenvía Authorization .-> G
+```
+
+**Responsabilidades documentadas:**
+
+| Componente | Responsabilidad en Sprint 2 |
+|------------|-----------------------------|
+| Frontend ParkLink | Presentar pantallas, formularios, navegación y flujos visuales del MVP. |
+| API Gateway | Recibir solicitudes del frontend, organizar rutas y reenviar headers necesarios. |
+| Auth Routes | Agrupar rutas relacionadas con login, registro y validación de sesión. |
+| Parking Spaces Routes | Agrupar rutas relacionadas con búsqueda, detalle y publicación de espacios. |
+| Reservations Routes | Agrupar rutas relacionadas con flujo de reserva e historial. |
+| Owner Space Management Routes | Agrupar rutas relacionadas con panel de propietario, configuración y disponibilidad. |
+| Backend Services Disponibles | Mantener lógica de negocio, datos y reglas del dominio. |
+
+**Rutas organizadas para consumo del frontend:**
+
+| Grupo de rutas | Uso desde frontend |
+|----------------|-------------------|
+| `/api/v1/auth/*` | Registro, login y manejo de sesión. |
+| `/api/v1/parking-spaces/*` | Búsqueda, detalle y publicación de espacios. |
+| `/api/v1/reservations/*` | Reserva visual, historial y consulta de reservas. |
+| `/api/v1/owners/*` | Panel de propietario y gestión de espacios. |
+| `/api/v1/payments/*` | Preparación para flujos de pago visibles en futuras iteraciones. |
+
+**Reglas documentadas para el API Gateway:**
+
+1. El API Gateway funciona como punto de entrada del frontend.
+2. El API Gateway no ejecuta reglas de negocio.
+3. El API Gateway no calcula disponibilidad.
+4. El API Gateway no confirma reservas.
+5. El API Gateway no procesa pagos.
+6. El API Gateway conserva el header `Authorization` en rutas protegidas.
+7. El API Gateway agrupa rutas para evitar que el frontend consuma servicios de forma desordenada.
+8. El API Gateway facilita una futura separación más estricta de microservicios.
+
+**Evidencias sugeridas para insertar:**
+
+```md
+![Gateway Architecture Sprint 2](assets/sprint2/gateway-architecture-sprint2.png)
+![Gateway Route Groups](assets/sprint2/gateway-route-groups.png)
+![Frontend Gateway Communication](assets/sprint2/frontend-gateway-communication.png)
+```
+
+**Conclusión de documentación de microservicios:**
+
+La documentación del Sprint 2 deja claro que el avance principal fue frontend y gateway. La arquitectura mantiene la separación entre cliente, API Gateway y servicios backend. El gateway fue documentado como capa de entrada, no como servicio de dominio.
+
+---
 
 #### 5.3.2.6 Software Deployment Evidence for Sprint Review
 
-El Sprint 2 consolida la cadena de despliegue iniciada en el Sprint 1, incorporando ahora un nuevo componente dentro del ecosistema del proyecto: el repositorio **ParkLink-Frontend**. Con este cambio, la arquitectura desplegada queda organizada en cuatro frentes principales: la **Landing Page** como página pública de presentación, el **Front-End** como aplicación web funcional, el **Backend NestJS** como capa de servicios, el **API Gateway** como punto de entrada para las rutas expuestas y **Render PostgreSQL** como base de datos administrada.
+La evidencia de despliegue del Sprint 2 se enfocó en verificar que los componentes relacionados con frontend y API Gateway estén disponibles para revisión. El despliegue backend existente se mantiene como soporte, pero no representa el objetivo principal de este sprint.
 
-Esta separación permite evidenciar una evolución importante respecto al Sprint 1, ya que el proyecto deja de depender únicamente de la landing y del backend, y empieza a contar con una aplicación frontend orientada al uso real del sistema ParkLink.
+**Componentes revisados para Sprint 2:**
 
-**Vercel — Landing Page (`ParkLink-Landing`):**
+| Componente | Propósito en Sprint 2 | Estado |
+|------------|----------------------|--------|
+| Frontend ParkLink | Mostrar la interfaz navegable del MVP. | Validado para Sprint Review |
+| API Gateway | Centralizar las solicitudes del frontend. | Validado |
+| Swagger del API Gateway | Revisar rutas disponibles y documentación de entrada. | Disponible |
+| Backend Swagger existente | Servir como referencia de servicios disponibles. | Disponible |
 
-- Repositorio vinculado: `https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Landing`.
-- La landing se mantiene como punto público de presentación del producto ParkLink.
-- Cada cambio enviado a la rama `main` dispara el proceso de build y deploy automático en Vercel.
-- El despliegue genera una salida estática optimizada para producción.
-- URL de producción: `https://arqsoft.vercel.app`.
-- Se validó que la landing continúe disponible bajo HTTPS y que pueda ser usada como evidencia visual durante el Sprint Review.
-- En el Sprint 2, la landing cumple el rol de presentar la propuesta de valor, mientras que la interacción funcional se traslada progresivamente al nuevo Front-End.
+**Deployment links documentados:**
 
-**Vercel / GitHub — Web Front-End (`ParkLink-Frontend`):**
+**API Gateway Swagger Deployment:**
 
-- Repositorio vinculado: `https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Frontend`.
-- En el Sprint 2 se incorpora el repositorio del Front-End como aplicación web principal del sistema ParkLink.
-- Este componente representa la interfaz funcional que permitirá a los usuarios interactuar con los módulos del sistema.
-- El Front-End se diferencia de la landing porque no solo presenta información del producto, sino que está orientado a consumir servicios del backend y del API Gateway.
-- El repositorio queda preparado para integrarse con Vercel mediante despliegue automático por push a la rama principal.
-- El Front-End será el punto desde el cual se consumirán funcionalidades como autenticación, consulta de espacios, creación de reservas y futuras operaciones asociadas a pagos y notificaciones.
-- Para el Sprint Review, este componente sirve como evidencia de avance en la capa de presentación funcional del sistema.
-
-**Vercel — Backend NestJS serverless (`ParkLink-Backend`):**
-
-- Repositorio vinculado: `https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Backend`.
-- El backend se mantiene desplegado como aplicación NestJS serverless sobre Vercel.
-- El despliegue toma el código actualizado desde GitHub, instala dependencias, genera el build del backend y publica los endpoints correspondientes.
-- En el Sprint 2 se evidencian módulos funcionales relacionados con:
-  - Registro e inicio de sesión de usuarios.
-  - Autorización por roles y rutas protegidas mediante JWT.
-  - Gestión de espacios de estacionamiento.
-  - Consulta de espacios disponibles.
-  - Creación y consulta de reservas.
-  - Estructura base de pagos.
-  - Estructura base de notificaciones.
-- La documentación Swagger/OpenAPI del backend quedó disponible para validar los endpoints implementados.
-- URL de documentación del backend: `https://backend-silk-two-93.vercel.app/docs/`.
-
-**Vercel — API Gateway NestJS serverless:**
-
-- El API Gateway se despliega como una aplicación independiente dentro del enfoque serverless.
-- Su función principal es centralizar el acceso hacia los servicios del backend.
-- En el Sprint 2, el API Gateway permite ordenar la comunicación entre el Front-End y los módulos internos del sistema.
-- Esta capa facilita que el Front-End no dependa directamente de múltiples rutas internas del backend, sino de un punto de entrada más controlado.
-- La documentación Swagger/OpenAPI del API Gateway quedó disponible como evidencia de integración.
-- URL de documentación del API Gateway: `https://api-gateway-xi-five.vercel.app/docs`.
-
-**Render — Base de datos PostgreSQL administrada:**
-
-- La base de datos PostgreSQL se mantiene administrada en Render.
-- El backend accede a la base de datos mediante la variable de entorno `DATABASE_URL`.
-- Las migraciones y modelos de datos se gestionan mediante Prisma.
-- En el Sprint 2, la base de datos soporta la persistencia de usuarios, espacios de estacionamiento, reservas y estructuras iniciales asociadas a pagos y notificaciones.
-- La conexión se mantiene separada del repositorio para evitar exponer credenciales sensibles en GitHub.
-
-**Variables de entorno usadas en el despliegue:**
-
-- `DATABASE_URL` — cadena de conexión hacia PostgreSQL en Render.
-- `JWT_SECRET` — secreto utilizado para la firma y validación de tokens JWT.
-- `NODE_ENV=production` — configuración del entorno productivo.
-- `CORS_ORIGIN` — restricción de origen permitido para la landing y el Front-End.
-- Variables adicionales para habilitar Swagger, rutas del API Gateway y conexión con servicios del backend.
-
-**Validaciones realizadas para el Sprint Review:**
-
-- La landing carga correctamente desde su URL pública.
-- El repositorio del Front-End fue incorporado como nueva capa funcional del sistema.
-- El Front-End queda preparado para consumir rutas del API Gateway y del backend.
-- El backend responde desde ambiente desplegado.
-- Swagger del backend permite visualizar y probar los endpoints principales.
-- Swagger del API Gateway permite evidenciar la estructura de rutas expuestas.
-- Las rutas protegidas validan token JWT antes de permitir el acceso.
-- Los endpoints relacionados con espacios y reservas pueden ser probados desde Swagger o herramientas como Postman.
-- La conexión con PostgreSQL se valida mediante operaciones de creación y consulta.
-- El despliegue se encuentra disponible bajo HTTPS en los servicios publicados.
-
-**Trade-off conocido del despliegue serverless:**
-
-El uso de Vercel serverless permite desplegar rápidamente la landing, el backend y el API Gateway sin administrar servidores propios. Sin embargo, se mantiene como limitación el posible cold start tras periodos de inactividad y los límites propios del plan gratuito. Para el Sprint 2, esta decisión sigue siendo aceptable porque el objetivo principal es validar funcionalidad, arquitectura, documentación de endpoints e integración progresiva con el nuevo Front-End. Si el sistema escala en usuarios o requiere operaciones más pesadas, se evaluará migrar parte del backend a un servicio dedicado o separar módulos críticos.
-
-**Pipeline real del despliegue al cierre del Sprint 2:**
-
-```text
-Developer push → GitHub (main)
-    ├── ParkLink-Landing repo
-    │       └── Vercel build + deploy (web estático)
-    │               └── https://arqsoft.vercel.app
-    │
-    ├── ParkLink-Frontend repo
-    │       └── Front-End funcional del sistema ParkLink
-    │               └── Preparado para consumir API Gateway y Backend
-    │
-    └── ParkLink-Backend repo
-            ├── Vercel build + deploy (backend serverless)
-            │       └── https://backend-silk-two-93.vercel.app/docs/
-            │
-            ├── Vercel build + deploy (API Gateway serverless)
-            │       └── https://api-gateway-xi-five.vercel.app/docs
-            │
-            └── Conexión segura hacia Render PostgreSQL
-                    └── Persistencia de usuarios, espacios, reservas, pagos base y notificaciones base
+```txt
+https://api-gateway-xi-five.vercel.app/docs
 ```
+
+**Backend Swagger Deployment usado como referencia:**
+
+```txt
+https://backend-silk-two-93.vercel.app/docs/
+```
+
+**Repositorio de la capa pública / frontend documentado:**
+
+```txt
+https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Landing
+```
+
+**Repositorio backend documentado:**
+
+```txt
+https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Backend
+```
+
+**Validaciones realizadas:**
+
+| Validación | Resultado |
+|-----------|----------|
+| El frontend puede mostrar las vistas principales del Sprint 2. | Passed |
+| Las rutas del frontend permiten navegar entre pantallas. | Passed |
+| El API Gateway responde desde su URL desplegada. | Passed |
+| Swagger del API Gateway carga correctamente. | Passed |
+| El gateway conserva el header `Authorization` en rutas protegidas. | Passed |
+| El gateway no contiene lógica de negocio. | Passed |
+| El backend Swagger se mantiene disponible como referencia. | Passed |
+
+**Evidencias sugeridas para insertar:**
+
+```md
+![Frontend Deployment Evidence](assets/sprint2/frontend-deployment-evidence.png)
+![API Gateway Deployment Evidence](assets/sprint2/api-gateway-deployment-evidence.png)
+![API Gateway Swagger Sprint 2](assets/sprint2/api-gateway-swagger-sprint2.png)
+![Frontend Routes Evidence](assets/sprint2/frontend-routes-evidence.png)
+```
+
+**Conclusión del despliegue:**
+
+El Sprint 2 permitió demostrar una interfaz frontend navegable y un API Gateway accesible. La evidencia de despliegue confirma que el equipo puede presentar el avance visual del MVP y la capa de comunicación cliente-gateway. El despliegue no se presenta como culminación backend, sino como soporte para la demostración del frontend y la integración inicial.
+
+---
 
 #### 5.3.2.7 Team Collaboration Insights during Sprint
 
-**Eventos Scrum ejecutados durante el Sprint 2:**
+Durante el Sprint 2, el equipo organizó su trabajo alrededor de dos objetivos concretos: implementar frontend y mejorar API Gateway. La colaboración se dividió por vistas, componentes y validaciones de comunicación cliente-gateway.
 
-| Evento | Frecuencia | Duración | Facilitador rotativo |
-|--------|-----------|----------|-----------------------|
-| Sprint Planning | Una vez al inicio del sprint | 90 min | Javier Masaru Nikaido Vargas |
-| Daily Stand-up | Diario durante días de trabajo | 15 min | Rotativo por integrante |
-| Sprint Review | Una vez al cierre del sprint | 60 min | Fabian Alejandro Oliva Lopez |
-| Sprint Retrospective | Una vez al cierre del sprint | 45 min | Percy Alonso Muñiz Huayanca |
+**Aportes del equipo durante el Sprint 2:**
 
-**Distribución del trabajo por integrante al cierre del Sprint 2:**
+| Integrante | Aporte durante el Sprint 2 |
+|------------|----------------------------|
+| Javier Masaru Nikaido Vargas | Implementó y revisó vistas relacionadas con detalle, login y conexión con el API Gateway. Apoyó la reorganización de rutas y el reenvío del header `Authorization`. |
+| Fabian Alejandro Oliva Lopez | Implementó pantallas de registro por rol y filtros visuales de búsqueda. Apoyó la revisión de consistencia visual en formularios. |
+| Pietro Osores Marchese | Implementó la vista de búsqueda de estacionamientos y el flujo visual de reserva. Apoyó la navegación principal del conductor. |
+| Percy Alonso Muñiz Huayanca | Implementó vistas del propietario para publicación, configuración de espacios y reservas activas. |
+| Matias Rodolfo Salcedo Champi | Implementó componentes de disponibilidad, historial de reservas y controles visuales de activación/desactivación de espacios. |
 
-| Integrante | Foco asumido | SBI / responsabilidades | SP estimados |
-|------------|--------------|--------------------------|--------------|
-| Pietro Osores Marchese | Culminación de estructura backend, autenticación, reservas y soporte técnico general del monorepo | SBI-01 Culminación de estructura backend, SBI-03 Registro e inicio de sesión de usuarios, SBI-07 Creación y consulta de reservas | 13 |
-| Javier Masaru Nikaido Vargas | Mejora del API Gateway, rutas protegidas y documentación del gateway | SBI-02 Mejora del API Gateway, SBI-04 Autorización por roles y rutas protegidas, SBI-11 Documentación Swagger del API Gateway | 9 |
-| Fabian Alejandro Oliva Lopez | Incorporación del Front-End, documentación de infraestructura y apoyo en evidencia de despliegue | SBI-08 Integración inicial del Front-End, SBI-10 Documentación Swagger del backend, apoyo en SBI-13 Validación de despliegue backend, gateway y frontend | 8 |
-| Percy Alonso Muñiz Huayanca | Gestión de espacios de estacionamiento, seguimiento del tablero Kanban y documentación de proceso | SBI-05 Gestión de espacios de estacionamiento, apoyo en SBI-12 Validación básica de endpoints, seguimiento de tareas del Front-End | 6 |
-| Matias Rodolfo Salcedo Champi | Consulta de espacios disponibles, estructura base de notificaciones y revisión cruzada de Front-End con servicios | SBI-06 Consulta de espacios disponibles, SBI-09 Estructura base de notificaciones, apoyo en validación del flujo Front-End/API Gateway | 6 |
-| **Total** |  |  | **42 SP** |
+**Decisiones de colaboración tomadas en el sprint:**
 
-Durante el Sprint 2 se redujo el riesgo identificado en el Sprint 1 relacionado con la concentración técnica en un solo integrante. Aunque Pietro continuó liderando la estructura principal del backend, los demás integrantes participaron en módulos específicos, documentación técnica, validación de endpoints, API Gateway, Swagger y revisión funcional. Además, con la incorporación del repositorio `ParkLink-Frontend`, el equipo empezó a distribuir responsabilidades también sobre la capa de presentación funcional del sistema.
+| Decisión | Resultado |
+|----------|----------|
+| Priorizar frontend sobre backend. | El equipo concentró el sprint en pantallas y experiencia de usuario. |
+| Mantener el API Gateway sin lógica de negocio. | El gateway quedó limitado a entrada, rutas y reenvío de headers. |
+| Dividir el trabajo por flujo de usuario. | Cada integrante trabajó vistas conectadas a user stories específicas. |
+| Usar evidencia visual para Sprint Review. | Se prepararon capturas de las pantallas implementadas. |
+| Validar comunicación cliente-gateway. | Se redujo el riesgo de desconexión entre interfaz y rutas disponibles. |
 
-**Canales de colaboración utilizados:**
+**Dificultades encontradas:**
 
-- Discord para coordinación diaria, resolución de dudas técnicas y reuniones rápidas.
-- GitHub para seguimiento de cambios, revisión de commits y control de versiones.
-- Trello como tablero Kanban oficial del Sprint 2.
-- WhatsApp para alertas rápidas sobre bloqueos, despliegues o coordinación urgente.
-- Google Meet o Discord para Sprint Planning, Sprint Review y Sprint Retrospective.
-- Swagger/OpenAPI como medio común para validar endpoints entre integrantes técnicos y no técnicos.
-- Repositorios separados de GitHub para organizar mejor la landing, el Front-End y el backend.
+| Dificultad | Acción tomada |
+|-----------|---------------|
+| Algunas vistas dependían de datos backend todavía incompletos. | Se usaron estructuras visuales preparadas para consumir datos reales en futuras iteraciones. |
+| El frontend necesitaba rutas claras para integrarse con servicios. | Se reorganizaron rutas desde el API Gateway. |
+| Existía riesgo de colocar lógica de negocio en el gateway. | Se definió que el gateway sólo enruta y reenvía información. |
+| Las pantallas del conductor y propietario tenían flujos distintos. | Se dividieron las vistas por rol para evitar navegación confusa. |
 
-**Dinámica de colaboración técnica:**
+**Aprendizajes del Sprint 2:**
 
-- Pietro apoyó a los demás integrantes en la comprensión del monorepo NestJS, Prisma, autenticación JWT y despliegue serverless.
-- Javier se enfocó en mejorar el API Gateway y coordinar la validación de rutas protegidas.
-- Fabian apoyó en la incorporación del repositorio `ParkLink-Frontend`, documentación técnica y evidencia de despliegue.
-- Percy gestionó el seguimiento del tablero Kanban y trabajó en el módulo de espacios de estacionamiento.
-- Matias apoyó en la consulta de disponibilidad, estructura base de notificaciones y validación cruzada entre Front-End y servicios expuestos.
-- El equipo realizó validaciones usando Swagger para comprobar que los endpoints estuvieran disponibles antes del Sprint Review.
-- Se empezó a diferenciar con mayor claridad la landing como página informativa y el Front-End como aplicación funcional del sistema.
+- El equipo comprendió que un frontend navegable permite validar mejor la experiencia del usuario.
+- El equipo reconoció que el API Gateway debe mantenerse como capa de entrada, no como servicio de dominio.
+- La separación por roles mejora la claridad de las pantallas.
+- Los formularios deben alinearse con las user stories para evitar campos innecesarios.
+- La evidencia visual ayuda a sustentar el avance real del sprint.
+- La integración cliente-gateway debe validarse temprano para evitar problemas al conectar con backend completo.
 
-**Hallazgos clave de la retrospectiva del Sprint 2:**
+**Conclusión de colaboración:**
 
-- *Lo que funcionó:* La incorporación del repositorio `ParkLink-Frontend` permitió separar la landing informativa de la aplicación funcional. El uso de Trello ayudó a visualizar mejor el avance del sprint y evitar duplicidad de tareas. La documentación Swagger facilitó probar endpoints sin depender únicamente del desarrollador principal. La separación entre backend y API Gateway ayudó a ordenar la arquitectura del sistema.
-- *Lo que mejoró respecto al Sprint 1:* La carga técnica ya no estuvo completamente concentrada en un solo integrante. Cada miembro asumió al menos una responsabilidad concreta dentro del sprint, ya sea técnica, documental, de validación, frontend o coordinación.
-- *Lo que debe mejorar:* Aún se requiere fortalecer la automatización de pruebas, mejorar la cobertura de testing y definir con mayor detalle los criterios de aceptación técnicos antes de iniciar cada módulo. También se identificó la necesidad de conectar de forma más completa el Front-End con los flujos reales del backend y del API Gateway.
-- *Acuerdos para el siguiente sprint:* Integrar el flujo completo desde Front-End hacia API Gateway y backend, mejorar pruebas automatizadas, agregar datos semilla para demostraciones, fortalecer validaciones de negocio en reservas y avanzar en la integración real de pagos y notificaciones.
+El Sprint 2 fortaleció la coordinación del equipo en desarrollo frontend y organización de rutas. El equipo logró transformar historias de usuario en pantallas navegables y dejó el API Gateway en mejores condiciones para futuras integraciones. El avance fue concreto: interfaz principal del MVP y comunicación cliente-gateway más clara.
 
-**Conclusión de colaboración del Sprint 2:**
-
-El Sprint 2 evidenció una mejora importante en la colaboración del equipo frente al Sprint 1. Se pasó de una concentración técnica inicial a una distribución más equilibrada de responsabilidades, manteniendo a Pietro como soporte principal del backend, pero incorporando a Javier, Fabian, Percy y Matias en tareas concretas de implementación, documentación, validación, seguimiento y avance del Front-End. La creación del repositorio `ParkLink-Frontend` representa un paso importante para separar la landing del producto de la aplicación funcional, permitiendo que el sistema ParkLink avance hacia una solución más completa e integrada.
+---
 
 #### 5.3.2.8 Kanban Board
 
-Para el Sprint 2 se utilizó un tablero Kanban como herramienta de seguimiento del avance de los ítems comprometidos en el Sprint Backlog. El tablero permitió visualizar el estado de cada tarea, coordinar responsabilidades entre los integrantes y confirmar que los módulos principales del backend y del API Gateway llegaran a estado **Done** antes del cierre del sprint.
+El Kanban Board del Sprint 2 refleja que el trabajo se concentró en frontend y API Gateway. Las tarjetas completadas corresponden a vistas, componentes, rutas, validación visual y comunicación cliente-gateway.
 
-El tablero se representó con cuatro columnas principales:
-
-| Columna | Descripción | Criterio de movimiento |
-|---------|-------------|------------------------|
-| **To Do** | Ítems comprometidos para el Sprint 2 que aún no habían sido iniciados. | El ítem fue seleccionado desde el Sprint Backlog y cuenta con responsable asignado. |
-| **In Progress** | Tareas en desarrollo, configuración o implementación activa. | El responsable inició la construcción, validación o documentación del ítem. |
-| **In Review** | Ítems implementados que requerían revisión funcional, validación técnica o documentación final. | El ítem ya podía ser probado mediante Swagger, Postman, cURL o revisión del repositorio. |
-| **Done** | Ítems completados y validados según la Definition of Done del Sprint 2. | El ítem fue implementado, documentado, probado de forma básica y quedó disponible para el Sprint Review. |
-
-**Kanban Board del Sprint 2 al cierre del sprint:**
+**Estado del Kanban Board al cierre del Sprint 2:**
 
 | To Do | In Progress | In Review | Done |
-|-------|-------------|-----------|------|
-| - | - | - | SBI-01 Culminación de estructura backend |
-| - | - | - | SBI-02 Mejora del API Gateway |
-| - | - | - | SBI-03 Registro e inicio de sesión de usuarios |
-| - | - | - | SBI-04 Autorización por roles y rutas protegidas |
-| - | - | - | SBI-05 Gestión de espacios de estacionamiento |
-| - | - | - | SBI-06 Consulta de espacios disponibles |
-| - | - | - | SBI-07 Creación y consulta de reservas |
-| - | - | - | SBI-08 Estructura base de pagos |
-| - | - | - | SBI-09 Estructura base de notificaciones |
-| - | - | - | SBI-10 Documentación Swagger del backend |
-| - | - | - | SBI-11 Documentación Swagger del API Gateway |
-| - | - | - | SBI-12 Validación básica de endpoints |
-| - | - | - | SBI-13 Validación de despliegue backend y gateway |
+|------|-------------|-----------|------|
+| Pruebas de carga backend | - | - | SBI-01 Vista de búsqueda de estacionamientos |
+| Implementación completa de pagos reales | - | - | SBI-02 Vista de disponibilidad de espacios |
+| Monitoreo avanzado de servicios | - | - | SBI-03 Filtros de búsqueda por precio y horario |
+| Automatización completa de CI/CD | - | - | SBI-04 Vista de detalle del estacionamiento |
+| Nuevos microservicios internos | - | - | SBI-05 Flujo visual de reserva |
+| - | - | - | SBI-06 Vista de historial de reservas |
+| - | - | - | SBI-07 Vista de publicación de espacio |
+| - | - | - | SBI-08 Vista de configuración de espacio |
+| - | - | - | SBI-09 Control visual de habilitar/deshabilitar espacio |
+| - | - | - | SBI-10 Vista de reservas activas del propietario |
+| - | - | - | SBI-11 Pantallas de registro por rol |
+| - | - | - | SBI-12 Pantalla de inicio de sesión |
+| - | - | - | SBI-13 Componentización del frontend |
+| - | - | - | SBI-14 Reorganización de rutas del API Gateway |
+| - | - | - | SBI-15 Reenvío de autorización desde el API Gateway |
+| - | - | - | SBI-16 Validación de comunicación frontend-gateway |
+| - | - | - | SBI-17 Evidencia visual del frontend |
 
 **Detalle de tarjetas finalizadas:**
 
 | SBI | Sprint Backlog Item | Responsable principal | Estado final |
 |-----|---------------------|-----------------------|--------------|
-| SBI-01 | Culminación de estructura backend | Pietro Osores Marchese | Done |
-| SBI-02 | Mejora del API Gateway | Javier Masaru Nikaido Vargas | Done |
-| SBI-03 | Registro e inicio de sesión de usuarios | Pietro Osores Marchese | Done |
-| SBI-04 | Autorización por roles y rutas protegidas | Javier Masaru Nikaido Vargas | Done |
-| SBI-05 | Gestión de espacios de estacionamiento | Percy Alonso Muñiz Huayanca | Done |
-| SBI-06 | Consulta de espacios disponibles | Matias Rodolfo Salcedo Champi | Done |
-| SBI-07 | Creación y consulta de reservas | Pietro Osores Marchese | Done |
-| SBI-08 | Estructura base de pagos | Fabian Alejandro Oliva Lopez | Done |
-| SBI-09 | Estructura base de notificaciones | Matias Rodolfo Salcedo Champi | Done |
-| SBI-10 | Documentación Swagger del backend | Fabian Alejandro Oliva Lopez | Done |
-| SBI-11 | Documentación Swagger del API Gateway | Javier Masaru Nikaido Vargas | Done |
-| SBI-12 | Validación básica de endpoints | Equipo | Done |
-| SBI-13 | Validación de despliegue backend y gateway | Equipo | Done |
+| SBI-01 | Vista de búsqueda de estacionamientos | Pietro Osores Marchese | Done |
+| SBI-02 | Vista de disponibilidad de espacios | Matias Rodolfo Salcedo Champi | Done |
+| SBI-03 | Filtros de búsqueda por precio y horario | Fabian Alejandro Oliva Lopez | Done |
+| SBI-04 | Vista de detalle del estacionamiento | Javier Masaru Nikaido Vargas | Done |
+| SBI-05 | Flujo visual de reserva | Pietro Osores Marchese | Done |
+| SBI-06 | Vista de historial de reservas | Matias Rodolfo Salcedo Champi | Done |
+| SBI-07 | Vista de publicación de espacio | Percy Alonso Muñiz Huayanca | Done |
+| SBI-08 | Vista de configuración de espacio | Percy Alonso Muñiz Huayanca | Done |
+| SBI-09 | Control visual de habilitar/deshabilitar espacio | Matias Rodolfo Salcedo Champi | Done |
+| SBI-10 | Vista de reservas activas del propietario | Percy Alonso Muñiz Huayanca | Done |
+| SBI-11 | Pantallas de registro por rol | Fabian Alejandro Oliva Lopez | Done |
+| SBI-12 | Pantalla de inicio de sesión | Javier Masaru Nikaido Vargas | Done |
+| SBI-13 | Componentización del frontend | Equipo | Done |
+| SBI-14 | Reorganización de rutas del API Gateway | Javier Masaru Nikaido Vargas | Done |
+| SBI-15 | Reenvío de autorización desde el API Gateway | Javier Masaru Nikaido Vargas | Done |
+| SBI-16 | Validación de comunicación frontend-gateway | Equipo | Done |
+| SBI-17 | Evidencia visual del frontend | Equipo | Done |
 
 **Resumen del Kanban Board al cierre del Sprint 2:**
 
 | Estado | Cantidad de ítems |
 |--------|------------------:|
-| To Do | 0 |
+| To Do | 5 |
 | In Progress | 0 |
 | In Review | 0 |
-| Done | 13 |
+| Done | 17 |
 
-El Kanban Board evidencia que todos los ítems comprometidos para el Sprint 2 fueron completados. Esto permitió cerrar la implementación principal del backend, mejorar el API Gateway, validar rutas protegidas mediante JWT, documentar endpoints con Swagger/OpenAPI y confirmar el funcionamiento básico de los servicios en ambiente desplegado.
+**Conclusión del Kanban Board:**
+
+El Kanban Board evidencia que todos los ítems comprometidos para el Sprint 2 fueron completados. El avance entregado corresponde a frontend y mejora del API Gateway. Las tareas pendientes no forman parte del compromiso del Sprint 2; corresponden a futuras iteraciones relacionadas con backend avanzado, pagos reales, monitoreo, pruebas de carga y automatización CI/CD.
