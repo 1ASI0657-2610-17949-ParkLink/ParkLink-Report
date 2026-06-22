@@ -4315,6 +4315,7 @@ La validación de Google Maps incluyó revisión de `logcat`, confirmando ausenc
 | API Gateway Swagger | `https://api-gateway-xi-five.vercel.app/docs` | Swagger UI disponible |
 | Frontend Web | `https://parklink-eta.vercel.app` | Redeploy final realizado y alias productivo actualizado |
 | Flutter APK | `ParkLink-Flutter/build/app/outputs/flutter-apk/app-debug.apk` | Generado localmente y probado en emulador Android |
+| Flutter repo alterno | `https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-App` | Ramas `main`, `develop`, `feature/flutter/app-shell` y tag `v1.0.0` publicados como respaldo mientras se crea `ParkLink-Flutter` |
 
 #### 5.3.3.7 Team Collaboration Insights during Sprint
 
@@ -4341,9 +4342,9 @@ El Kanban Board de Sprint 3 se enfocó en cerrar deuda técnica y convertir Park
 
 | To Do | In Progress | In Review | Done |
 |------|-------------|-----------|------|
-| Release final `develop → main` + tag `v1.0.0` | Crear repo remoto Flutter | Verificación de deploy final | SBI-18 Control transaccional de reservas |
-| PDF final del informe | PRs formales con GitHub CLI | Evidencia de endpoints productivos | SBI-19 Cache de disponibilidad |
-| Capturas web complementarias | - | - | SBI-20 Auditoría de operaciones |
+| Crear repo remoto oficial `ParkLink-Flutter` | PRs formales con GitHub CLI | PDF final del informe | SBI-18 Control transaccional de reservas |
+| Capturas web complementarias | - | - | SBI-19 Cache de disponibilidad |
+| - | - | - | SBI-20 Auditoría de operaciones |
 | - | - | - | SBI-21 Fotos de espacios |
 | - | - | - | SBI-22 Idempotencia en pagos |
 | - | - | - | SBI-23 Tests automatizados |
@@ -4351,16 +4352,18 @@ El Kanban Board de Sprint 3 se enfocó en cerrar deuda técnica y convertir Park
 | - | - | - | SBI-25 App Flutter nativa |
 | - | - | - | SBI-26 Google Maps en Android |
 | - | - | - | SBI-27 Reporte y evidencias |
+| - | - | - | Release final `v1.0.0` en backend, frontend, reporte y repo mobile alterno |
+| - | - | - | Deploy final backend, API Gateway y frontend verificado |
 
 **Resumen del Kanban Board al cierre del Sprint 3:**
 
 | Estado | Cantidad de ítems |
 |--------|------------------:|
-| To Do | 3 |
-| In Progress | 2 |
-| In Review | 2 |
-| Done | 10 |
+| To Do | 2 |
+| In Progress | 1 |
+| In Review | 1 |
+| Done | 12 |
 
 **Conclusión del Sprint 3:**
 
-El Sprint 3 permitió completar las capacidades críticas de ParkLink para la entrega final: backend robusto, frontend web validado, app Flutter funcional con Google Maps real, pruebas automatizadas y evidencia académica. Las tareas pendientes dependen principalmente de autenticación GitHub/creación del repositorio Flutter remoto y del cierre formal de release.
+El Sprint 3 permitió completar las capacidades críticas de ParkLink para la entrega final: backend robusto, frontend web validado, app Flutter funcional con Google Maps real, pruebas automatizadas y evidencia académica. El release `v1.0.0` fue publicado en backend, frontend, reporte y repositorio mobile alterno. La única deuda administrativa relevante es crear el repositorio remoto oficial `ParkLink-Flutter` cuando exista autenticación GitHub CLI disponible.
