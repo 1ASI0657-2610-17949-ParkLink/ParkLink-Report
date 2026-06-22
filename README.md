@@ -42,15 +42,15 @@
 ## Student Outcome
 | Criterio específico | Acciones realizadas | Conclusiones |
 |---------------------|---------------------|--------------|
-| **CO1:** Actualiza conceptos y conocimientos necesarios para su desarrollo profesional y en especial para su proyecto en soluciones de software. | **TB1 - Fabian Alejandro Oliva López:** Definí el ADN de la startup, estableciendo la visión, misión y valores como fundamento estratégico del proyecto. Supervisé el proceso Lean UX para garantizar la alineación con los objetivos del curso. Identifiqué y definí los segmentos objetivo, aplicando conocimientos de estrategia de producto. <br><br> **TB1 - Javier Masaru Nikaido Vargas:** Realicé investigación de competidores mediante benchmarking para entender el mercado. Ejecuté entrevistas y needfinding para validar el problema con usuarios reales, aplicando técnicas de UX Research. <br><br> **TB1 - Matias Rodolfo Salcedo Champi:** Diseñé el Solution Profile y nombre del producto, aplicando conceptos de product design. Creé User Personas y Empathy Maps para comprender las necesidades de los usuarios, integrando conocimientos de diseño centrado en el usuario. <br><br> **TB1 - Percy Alonso Muñiz Huayanca:** Desarrollé Lean UX Assumptions e Hypothesis Statements, aplicando metodologías de diseño ágil. Construí User Task Matrix, As-is y To-Be Scenario Mapping para analizar procesos actuales y futuros, integrando conocimientos de análisis de procesos. <br><br> **TB1 - Pietro Osores Marchese:** Elaboré el Lean UX Canvas para consolidar la propuesta de valor. Creé User Stories, Impact Map y Product Backlog para especificar requerimientos del proyecto, aplicando conocimientos de gestión de proyectos ágiles. <br><br> **TB2 - Fabian Alejandro Oliva López:** Elaboré los Principles Statements del Capítulo IV, participé en la definición de Architectural Drivers, apoyé la priorización de Quality Attribute Scenarios y revisé el Kanban Board de las iteraciones ADD. <br><br> **TB2 - Matias Rodolfo Salcedo Champi:** Desarrollé el System Landscape Diagram, apoyé los Context Level Diagrams de los bounded contexts, elaboré diagramas visuales para la Iteration 2 y refiné vistas C4 relacionadas con disponibilidad y reservas. <br><br> **TB2 - Javier Masaru Nikaido Vargas:** Documenté el Design Purpose, identifiqué Primary User Stories relevantes para arquitectura, apoyé la definición de Constraints y revisé la trazabilidad entre user stories y decisiones de diseño. <br><br> **TB2 - Pietro Osores Marchese:** Elaboré el Relational / Non-Relational Database Diagram, definí tablas principales como USERS, PARKING_SPACES, RESERVATIONS y PAYMENTS, apoyé la sección de Design Patterns y documenté decisiones relacionadas con persistencia y consistencia ACID. <br><br> **TB2 - Percy Alonso Muñiz Huayanca:** Desarrollé la Iteration 3 de ADD, documenté ADRs sobre pagos, webhooks, auditoría y notificaciones, elaboré vistas de integración con proveedores externos y completé el análisis final de drivers atendidos. <br><br> **AV3 - Fabian Alejandro Oliva Lopez:** Apoye en la integración inicial del repositorio `ParkLink-Frontend`, diferenciando la landing informativa de la aplicación funcional del sistema. <br><br> **AV3 - Javier Masaru Nikaido Vargas:** Trabaje en la mejora del API Gateway, rutas protegidas y documentación Swagger para validar la comunicación entre servicios. <br><br> **AV3 - Pietro Osores Marchese:** Desarrolle y consolide funcionalidades del backend relacionadas con autenticación, JWT, reservas, Prisma y conexión con PostgreSQL. <br><br> **AV3 - Percy Alonso Muñiz Huayanca:** Participe en la gestión de espacios de estacionamiento, seguimiento del tablero Kanban y validación básica de endpoints. <br><br> **AV3 - Matias Rodolfo Salcedo Champi:** Apoye en la consulta de espacios disponibles, estructura base de notificaciones y revisión cruzada entre Front-End, API Gateway y backend. | El equipo ha demostrado capacidad para integrar y aplicar conocimientos de arquitectura de software en un proyecto real de solución tecnológica. Cada integrante actualizó sus conocimientos en UX, diseño de producto, análisis de procesos, gestión de requerimientos, DDD, C4 Model, ADD, atributos de calidad, patrones de diseño, decisiones arquitectónicas documentadas, integración Front-End, despliegue web, API Gateway, backend serverless y validación de servicios mediante Swagger. |
-| **CO2:** Reconoce la necesidad del aprendizaje permanente para el desempeño profesional y el desarrollo de proyectos en soluciones de software. | **TB1 - Fabian Alejandro Oliva López:** Al definir la visión y estrategia de la startup, reconocí la importancia de actualizar constantemente los conocimientos en estrategia de producto y liderazgo de proyectos. <br><br> **TB1 - Javier Masaru Nikaido Vargas:** Al realizar entrevistas y needfinding, identifiqué la necesidad de mejorar continuamente las técnicas de investigación de usuarios y comunicación con stakeholders. <br><br> **TB1 - Matias Rodolfo Salcedo Champi:** Al crear User Personas y Empathy Maps, comprendí la relevancia del aprendizaje continuo en metodologías de diseño centrado en el usuario. <br><br> **TB1 - Percy Alonso Muñiz Huayanca:** Al desarrollar escenarios y mappings de procesos, reconocí la necesidad de actualizarse en herramientas de análisis y modelado de procesos de negocio. <br><br> **TB1 - Pietro Osores Marchese:** Al crear el Product Backlog y User Stories, entendí la importancia del aprendizaje continuo en gestión de requerimientos y priorización de funcionalidades en entornos ágiles. <br><br> **TB2 - Fabian Alejandro Oliva López:** Reconocí la necesidad de fortalecer criterios de diseño arquitectónico, trade-offs y priorización de drivers para sustentar decisiones más allá de la funcionalidad visible. <br><br> **TB2 - Matias Rodolfo Salcedo Champi:** Profundicé en el uso de C4 Model y Structurizr para comunicar arquitectura mediante vistas visuales claras, entendiendo que un diagrama debe explicar decisiones y no sólo decorar el informe. <br><br> **TB2 - Javier Masaru Nikaido Vargas:** Reforcé el aprendizaje sobre trazabilidad entre requisitos, restricciones, atributos de calidad y decisiones arquitectónicas, comprendiendo su impacto en la mantenibilidad del sistema. <br><br> **TB2 - Pietro Osores Marchese:** Actualicé conocimientos sobre consistencia transaccional, modelado relacional, restricciones ACID y separación entre cache de disponibilidad y base de datos como fuente de verdad. <br><br> **TB2 - Percy Alonso Muñiz Huayanca:** Aprendí a aplicar ADD para refinar arquitectura por iteraciones, documentar ADRs y manejar integraciones externas mediante adaptadores, idempotencia, auditoría y resiliencia. <br><br> **AV3 - Fabian Alejandro Oliva Lopez:** Aprendí la importancia de separar una landing de presentación de un Front-End funcional conectado a servicios reales. <br><br> **AV3 - Javier Masaru Nikaido Vargas:** Reforcé el aprendizaje sobre API Gateway, documentación Swagger y control de rutas protegidas. <br><br> **AV3 - Pietro Osores Marchese:** Fortalecí conocimientos sobre backend NestJS, autenticación JWT, Prisma y despliegue serverless. <br><br> **AV3 - Percy Alonso Muñiz Huayanca:** Aprendí a organizar mejor el seguimiento de tareas técnicas mediante Kanban y validación de endpoints. <br><br> **AV3 - Matias Rodolfo Salcedo Champi:** Reforcé conocimientos sobre integración entre Front-End, API Gateway, backend y módulos base de notificación. | El equipo reconoce que el desarrollo de soluciones de software requiere aprendizaje continuo. La aplicación de metodologías como Lean UX, Needfinding, User Stories, Impact Mapping, DDD, C4, ADD y ADRs evidencia el compromiso de cada miembro por adquirir nuevas competencias y adaptarse a decisiones técnicas propias de una plataforma de movilidad urbana. Además, el Sprint 2 permitió fortalecer aprendizajes relacionados con integración Front-End, despliegue, backend serverless, API Gateway, autenticación y validación de servicios en un entorno más cercano a producción. |
+| **CO1:** Actualiza conceptos y conocimientos necesarios para su desarrollo profesional y en especial para su proyecto en soluciones de software. | **TB1 - Fabian Alejandro Oliva López:** Definí el ADN de la startup, estableciendo la visión, misión y valores como fundamento estratégico del proyecto. Supervisé el proceso Lean UX para garantizar la alineación con los objetivos del curso. Identifiqué y definí los segmentos objetivo, aplicando conocimientos de estrategia de producto. <br><br> **TB1 - Javier Masaru Nikaido Vargas:** Realicé investigación de competidores mediante benchmarking para entender el mercado. Ejecuté entrevistas y needfinding para validar el problema con usuarios reales, aplicando técnicas de UX Research. <br><br> **TB1 - Matias Rodolfo Salcedo Champi:** Diseñé el Solution Profile y nombre del producto, aplicando conceptos de product design. Creé User Personas y Empathy Maps para comprender las necesidades de los usuarios, integrando conocimientos de diseño centrado en el usuario. <br><br> **TB1 - Percy Alonso Muñiz Huayanca:** Desarrollé Lean UX Assumptions e Hypothesis Statements, aplicando metodologías de diseño ágil. Construí User Task Matrix, As-is y To-Be Scenario Mapping para analizar procesos actuales y futuros, integrando conocimientos de análisis de procesos. <br><br> **TB1 - Pietro Osores Marchese:** Elaboré el Lean UX Canvas para consolidar la propuesta de valor. Creé User Stories, Impact Map y Product Backlog para especificar requerimientos del proyecto, aplicando conocimientos de gestión de proyectos ágiles. <br><br> **TB2 - Fabian Alejandro Oliva López:** Elaboré los Principles Statements del Capítulo IV, participé en la definición de Architectural Drivers, apoyé la priorización de Quality Attribute Scenarios y revisé el Kanban Board de las iteraciones ADD. <br><br> **TB2 - Matias Rodolfo Salcedo Champi:** Desarrollé el System Landscape Diagram, apoyé los Context Level Diagrams de los bounded contexts, elaboré diagramas visuales para la Iteration 2 y refiné vistas C4 relacionadas con disponibilidad y reservas. <br><br> **TB2 - Javier Masaru Nikaido Vargas:** Documenté el Design Purpose, identifiqué Primary User Stories relevantes para arquitectura, apoyé la definición de Constraints y revisé la trazabilidad entre user stories y decisiones de diseño. <br><br> **TB2 - Pietro Osores Marchese:** Elaboré el Relational / Non-Relational Database Diagram, definí tablas principales como USERS, PARKING_SPACES, RESERVATIONS y PAYMENTS, apoyé la sección de Design Patterns y documenté decisiones relacionadas con persistencia y consistencia ACID. <br><br> **TB2 - Percy Alonso Muñiz Huayanca:** Desarrollé la Iteration 3 de ADD, documenté ADRs sobre pagos, webhooks, auditoría y notificaciones, elaboré vistas de integración con proveedores externos y completé el análisis final de drivers atendidos. <br><br> **AV3 - Fabian Alejandro Oliva Lopez:** Apoye en la integración inicial del repositorio `ParkLink-Frontend`, diferenciando la landing informativa de la aplicación funcional del sistema. <br><br> **AV3 - Javier Masaru Nikaido Vargas:** Trabaje en la mejora del API Gateway, rutas protegidas y documentación Swagger para validar la comunicación entre servicios. <br><br> **AV3 - Pietro Osores Marchese:** Desarrolle y consolide funcionalidades del backend relacionadas con autenticación, JWT, reservas, Prisma y conexión con PostgreSQL. <br><br> **AV3 - Percy Alonso Muñiz Huayanca:** Participe en la gestión de espacios de estacionamiento, seguimiento del tablero Kanban y validación básica de endpoints. <br><br> **AV3 - Matias Rodolfo Salcedo Champi:** Apoye en la consulta de espacios disponibles, estructura base de notificaciones y revisión cruzada entre Front-End, API Gateway y backend. <br><br> **AV4 - Fabian Alejandro Oliva López:** Consolidó la documentación final del proyecto, validó la integración end-to-end de la app Flutter con el backend desplegado y generó el reporte final en PDF con todas las evidencias del Sprint 3. <br><br> **AV4 - Javier Masaru Nikaido Vargas:** Gestionó el despliegue del backend y API Gateway en Vercel, configuró la base de datos PostgreSQL en Render con data seed de Lima y verificó todos los endpoints en producción. <br><br> **AV4 - Pietro Osores Marchese:** Completó el backend transaccional con todas las technical stories pendientes, implementó el seed de datos reales de Lima y configuró el deploy serverless en Vercel con conexión exitosa a Render. <br><br> **AV4 - Percy Alonso Muñiz Huayanca:** Actualizó la documentación de despliegue (DEPLOY-GUIDE.md), elaboró el reporte de base de datos creada con data seed (RENDER-SEED-DATA.md) y aseguró la trazabilidad de todas las evidencias para el informe final. <br><br> **AV4 - Matias Rodolfo Salcedo Champi:** Completó la app Flutter nativa con Google Maps integrado, pantallas de auth, detalle de cocheras, reservas y pagos; subió el código al repositorio oficial de la organización ParkLink-App y validó la conexión con el backend desplegado en producción. | El equipo ha demostrado capacidad para integrar y aplicar conocimientos de arquitectura de software en un proyecto real de solución tecnológica. Cada integrante actualizó sus conocimientos en UX, diseño de producto, análisis de procesos, gestión de requerimientos, DDD, C4 Model, ADD, atributos de calidad, patrones de diseño, decisiones arquitectónicas documentadas, integración Front-End, despliegue web, API Gateway, backend serverless y validación de servicios mediante Swagger. |
+| **CO2:** Reconoce la necesidad del aprendizaje permanente para el desempeño profesional y el desarrollo de proyectos en soluciones de software. | **TB1 - Fabian Alejandro Oliva López:** Al definir la visión y estrategia de la startup, reconocí la importancia de actualizar constantemente los conocimientos en estrategia de producto y liderazgo de proyectos. <br><br> **TB1 - Javier Masaru Nikaido Vargas:** Al realizar entrevistas y needfinding, identifiqué la necesidad de mejorar continuamente las técnicas de investigación de usuarios y comunicación con stakeholders. <br><br> **TB1 - Matias Rodolfo Salcedo Champi:** Al crear User Personas y Empathy Maps, comprendí la relevancia del aprendizaje continuo en metodologías de diseño centrado en el usuario. <br><br> **TB1 - Percy Alonso Muñiz Huayanca:** Al desarrollar escenarios y mappings de procesos, reconocí la necesidad de actualizarse en herramientas de análisis y modelado de procesos de negocio. <br><br> **TB1 - Pietro Osores Marchese:** Al crear el Product Backlog y User Stories, entendí la importancia del aprendizaje continuo en gestión de requerimientos y priorización de funcionalidades en entornos ágiles. <br><br> **TB2 - Fabian Alejandro Oliva López:** Reconocí la necesidad de fortalecer criterios de diseño arquitectónico, trade-offs y priorización de drivers para sustentar decisiones más allá de la funcionalidad visible. <br><br> **TB2 - Matias Rodolfo Salcedo Champi:** Profundicé en el uso de C4 Model y Structurizr para comunicar arquitectura mediante vistas visuales claras, entendiendo que un diagrama debe explicar decisiones y no sólo decorar el informe. <br><br> **TB2 - Javier Masaru Nikaido Vargas:** Reforcé el aprendizaje sobre trazabilidad entre requisitos, restricciones, atributos de calidad y decisiones arquitectónicas, comprendiendo su impacto en la mantenibilidad del sistema. <br><br> **TB2 - Pietro Osores Marchese:** Actualicé conocimientos sobre consistencia transaccional, modelado relacional, restricciones ACID y separación entre cache de disponibilidad y base de datos como fuente de verdad. <br><br> **TB2 - Percy Alonso Muñiz Huayanca:** Aprendí a aplicar ADD para refinar arquitectura por iteraciones, documentar ADRs y manejar integraciones externas mediante adaptadores, idempotencia, auditoría y resiliencia. <br><br> **AV3 - Fabian Alejandro Oliva Lopez:** Aprendí la importancia de separar una landing de presentación de un Front-End funcional conectado a servicios reales. <br><br> **AV3 - Javier Masaru Nikaido Vargas:** Reforcé el aprendizaje sobre API Gateway, documentación Swagger y control de rutas protegidas. <br><br> **AV3 - Pietro Osores Marchese:** Fortalecí conocimientos sobre backend NestJS, autenticación JWT, Prisma y despliegue serverless. <br><br> **AV3 - Percy Alonso Muñiz Huayanca:** Aprendí a organizar mejor el seguimiento de tareas técnicas mediante Kanban y validación de endpoints. <br><br> **AV3 - Matias Rodolfo Salcedo Champi:** Reforcé conocimientos sobre integración entre Front-End, API Gateway, backend y módulos base de notificación. <br><br> **AV4 - Fabian Alejandro Oliva López:** Aprendió a generar reportes académicos con evidencias técnicas reales (deployments, seeds, validaciones) y consolidar documentación multi-repositorio para la entrega final. <br><br> **AV4 - Javier Masaru Nikaido Vargas:** Fortaleció habilidades en DevOps: creación de DB en Render vía API, seed de datos geo-referenciados de Lima, configuración de variables de entorno en Vercel y troubleshooting de deploy serverless. <br><br> **AV4 - Pietro Osores Marchese:** Aprendió a desplegar un backend NestJS con Prisma en Vercel, manejar conexiones SSL a PostgreSQL externo en Render y ejecutar seed scripts con Node para poblar la base de datos en producción. <br><br> **AV4 - Percy Alonso Muñiz Huayanca:** Desarrolló habilidades de documentación técnica de infraestructura, aprendiendo a detallar arquitectura de despliegue multi-plataforma (Render + Vercel + GitHub) con todos los componentes del sistema ParkLink. <br><br> **AV4 - Matias Rodolfo Salcedo Champi:** Aprendió a consumir APIs REST desde Flutter, integrar Google Maps real en emulador Android, manejar almacenamiento seguro de tokens JWT con flutter_secure_storage y probar la app móvil conectada al backend en producción. | El equipo reconoce que el desarrollo de soluciones de software requiere aprendizaje continuo. La aplicación de metodologías como Lean UX, Needfinding, User Stories, Impact Mapping, DDD, C4, ADD y ADRs evidencia el compromiso de cada miembro por adquirir nuevas competencias y adaptarse a decisiones técnicas propias de una plataforma de movilidad urbana. Además, el Sprint 2 permitió fortalecer aprendizajes relacionados con integración Front-End, despliegue, backend serverless, API Gateway, autenticación y validación de servicios en un entorno más cercano a producción. |
 
 ### Aportes del Trabajo Final al Student Outcome
 
 | Criterio | Aportes TF por integrante | Conclusiones TF |
 |----------|---------------------------|-----------------|
-| **CO1** | **Fabian Alejandro Oliva López:** consolidó criterios de experiencia de usuario y evidencias visuales para validar flujos web/mobile. <br><br> **Javier Masaru Nikaido Vargas:** reforzó prácticas de integración, rutas, API Gateway y validación de endpoints críticos. <br><br> **Pietro Osores Marchese:** aplicó arquitectura backend con transacciones, auditoría, idempotencia y despliegue serverless. <br><br> **Percy Alonso Muñiz Huayanca:** apoyó la trazabilidad entre user stories, backlog, evidencias y documentación final. <br><br> **Matias Rodolfo Salcedo Champi:** incorporó conocimientos de desarrollo móvil con Flutter, consumo de APIs, Google Maps y pruebas en emulador Android. | El Trabajo Final permitió actualizar conocimientos técnicos de arquitectura, backend transaccional, frontend, mobile, pruebas y despliegue, conectando decisiones técnicas con necesidades reales del producto ParkLink. |
-| **CO2** | **Equipo ParkTeam:** durante el cierre del proyecto se identificaron brechas que exigieron aprendizaje permanente: control de concurrencia en reservas, cache distribuido, configuración de Google Maps para Android, CI/CD, despliegue serverless y evidencia reproducible. Cada integrante fortaleció su capacidad de investigar, validar y corregir problemas técnicos bajo presión de entrega. | El equipo reconoce que una solución de software completa requiere iteración continua, revisión de documentación oficial, pruebas en entornos reales y adaptación ante restricciones de infraestructura, APIs externas y flujos de integración. |
+| **CO1** | **Fabian Alejandro Oliva López:** consolidó criterios de experiencia de usuario, evidencias visuales para flujos web/mobile y generó el reporte final en PDF con todas las validaciones del Sprint 3. <br><br> **Javier Masaru Nikaido Vargas:** gestionó el despliegue completo del backend y API Gateway en Vercel, creó la base de datos PostgreSQL en Render con data seed de Lima y verificó todos los endpoints en producción. <br><br> **Pietro Osores Marchese:** completó el backend transaccional con technical stories, implementó el seed de datos reales de Lima con 101 usuarios, 120 espacios y 160 reservas, y configuró el deploy serverless en Vercel. <br><br> **Percy Alonso Muñiz Huayanca:** documentó el despliegue multi-plataforma (DEPLOY-GUIDE.md), elaboró el reporte de base de datos seed (RENDER-SEED-DATA.md) y aseguró la trazabilidad de evidencias del Sprint 3. <br><br> **Matias Rodolfo Salcedo Champi:** completó la app Flutter nativa con Google Maps, autenticación JWT, detalle de cocheras, reservas y pagos; subió el código a GitHub y validó la conexión con el backend en producción. | El Trabajo Final permitió actualizar conocimientos técnicos de arquitectura, backend transaccional con NestJS + Prisma, frontend web, app móvil Flutter con Google Maps, despliegue serverless en Vercel, base de datos PostgreSQL en Render y documentación técnica de infraestructura, conectando cada decisión técnica con las necesidades reales del producto ParkLink y su despliegue en producción. |
+| **CO2** | **Equipo ParkTeam:** durante el cierre del proyecto se consolidaron aprendizajes críticos: despliegue serverless de backend NestJS en Vercel, manejo de conexiones SSL a PostgreSQL externo en Render, seed de datos geo-referenciados de Lima, integración de Google Maps en Flutter para Android, configuración de flutter_secure_storage para JWT, documentación técnica de infraestructura multi-plataforma y generación automatizada de reportes. Cada integrante fortaleció su capacidad de investigar, implementar, documentar y validar soluciones bajo presión de entrega académica. | El equipo reconoce que una solución de software completa requiere iteración continua, revisión de documentación oficial de cada plataforma (Vercel, Render, Flutter, Google Maps), pruebas en entornos reales (emulador Android, endpoints en producción) y adaptación ante restricciones de infraestructura free tier, APIs externas y flujos de integración multiplataforma. El aprendizaje permanente fue clave para superar cada obstáculo técnico del proyecto. |
 
 ## Contenido 
 
@@ -116,34 +116,37 @@
     - [5.2.2 Source Code Management](#522-source-code-management)
     - [5.2.3 Source Code Style Guide & Conventions](#523-source-code-style-guide--conventions)
     - [5.2.4 Software Deployment Configuration](#524-software-deployment-configuration)
-    - [5.3 Microservices Implementation](#53-microservices-implementation)
-    - [5.3.1 Sprint 1](#531-sprint-1)
-    - [5.3.1.1 Sprint Backlog 1](#5311-sprint-backlog-1)
-    - [5.3.1.2 Development Evidence for Sprint Review](#5312-development-evidence-for-sprint-review)
-    - [5.3.1.3 Testing Suite Evidence for Sprint Review](#5313-testing-suite-evidence-for-sprint-review)
-    - [5.3.1.4 Execution Evidence for Sprint Review](#5314-execution-evidence-for-sprint-review)
-    - [5.3.1.5 Microservices Documentation Evidence for Sprint Review](#5315-microservices-documentation-evidence-for-sprint-review)
-    - [5.3.1.6 Software Deployment Evidence for Sprint Review](#5316-software-deployment-evidence-for-sprint-review)
-    - [5.3.1.7 Team Collaboration Insights during Sprint](#5317-team-collaboration-insights-during-sprint)
-    - [5.3.1.8 Kanban Board](#5318-kanban-board)
-    - [5.3.2 Sprint 2](#532-sprint-2)
-    - [5.3.2.1 Sprint Backlog 2](#5321-sprint-backlog-2)
-    - [5.3.2.2 Development Evidence for Sprint Review](#5322-development-evidence-for-sprint-review)
-    - [5.3.2.3 Testing Suite Evidence for Sprint Review](#5323-testing-suite-evidence-for-sprint-review)
-    - [5.3.2.4 Execution Evidence for Sprint Review](#5324-execution-evidence-for-sprint-review)
-    - [5.3.2.5 Microservices Documentation Evidence for Sprint Review](#5325-microservices-documentation-evidence-for-sprint-review)
-    - [5.3.2.6 Software Deployment Evidence for Sprint Review](#5326-software-deployment-evidence-for-sprint-review)
-    - [5.3.2.7 Team Collaboration Insights during Sprint](#5327-team-collaboration-insights-during-sprint)
-    - [5.3.2.8 Kanban Board](#5328-kanban-board)
-    - [5.3.3 Sprint 3](#533-sprint-3)
-    - [5.3.3.1 Sprint Backlog 3](#5331-sprint-backlog-3)
-    - [5.3.3.2 Development Evidence for Sprint Review](#5332-development-evidence-for-sprint-review)
-    - [5.3.3.3 Testing Suite Evidence for Sprint Review](#5333-testing-suite-evidence-for-sprint-review)
-    - [5.3.3.4 Execution Evidence for Sprint Review](#5334-execution-evidence-for-sprint-review)
-    - [5.3.3.5 Microservices Documentation Evidence for Sprint Review](#5335-microservices-documentation-evidence-for-sprint-review)
-    - [5.3.3.6 Software Deployment Evidence for Sprint Review](#5336-software-deployment-evidence-for-sprint-review)
-    - [5.3.3.7 Team Collaboration Insights during Sprint](#5337-team-collaboration-insights-during-sprint)
-    - [5.3.3.8 Kanban Board](#5338-kanban-board)
+    - [5.3 Microservices Deployment](#53-microservices-deployment)
+    - [5.3.1 Cloud Architecture Diagram](#531-cloud-architecture-diagram)
+    - [5.3.2 Cloud Architecture Deployment](#532-cloud-architecture-deployment)
+    - [5.4 Sprint Reviews](#54-sprint-reviews)
+    - [5.4.1 Sprint 1](#541-sprint-1)
+    - [5.4.1.1 Sprint Backlog 1](#5411-sprint-backlog-1)
+    - [5.4.1.2 Development Evidence for Sprint Review](#5412-development-evidence-for-sprint-review)
+    - [5.4.1.3 Testing Suite Evidence for Sprint Review](#5413-testing-suite-evidence-for-sprint-review)
+    - [5.4.1.4 Execution Evidence for Sprint Review](#5414-execution-evidence-for-sprint-review)
+    - [5.4.1.5 Microservices Documentation Evidence for Sprint Review](#5415-microservices-documentation-evidence-for-sprint-review)
+    - [5.4.1.6 Software Deployment Evidence for Sprint Review](#5416-software-deployment-evidence-for-sprint-review)
+    - [5.4.1.7 Team Collaboration Insights during Sprint](#5417-team-collaboration-insights-during-sprint)
+    - [5.4.1.8 Kanban Board](#5418-kanban-board)
+    - [5.4.2 Sprint 2](#542-sprint-2)
+    - [5.4.2.1 Sprint Backlog 2](#5421-sprint-backlog-2)
+    - [5.4.2.2 Development Evidence for Sprint Review](#5422-development-evidence-for-sprint-review)
+    - [5.4.2.3 Testing Suite Evidence for Sprint Review](#5423-testing-suite-evidence-for-sprint-review)
+    - [5.4.2.4 Execution Evidence for Sprint Review](#5424-execution-evidence-for-sprint-review)
+    - [5.4.2.5 Microservices Documentation Evidence for Sprint Review](#5425-microservices-documentation-evidence-for-sprint-review)
+    - [5.4.2.6 Software Deployment Evidence for Sprint Review](#5426-software-deployment-evidence-for-sprint-review)
+    - [5.4.2.7 Team Collaboration Insights during Sprint](#5427-team-collaboration-insights-during-sprint)
+    - [5.4.2.8 Kanban Board](#5428-kanban-board)
+    - [5.4.3 Sprint 3](#543-sprint-3)
+    - [5.4.3.1 Sprint Backlog 3](#5431-sprint-backlog-3)
+    - [5.4.3.2 Development Evidence for Sprint Review](#5432-development-evidence-for-sprint-review)
+    - [5.4.3.3 Testing Suite Evidence for Sprint Review](#5433-testing-suite-evidence-for-sprint-review)
+    - [5.4.3.4 Execution Evidence for Sprint Review](#5434-execution-evidence-for-sprint-review)
+    - [5.4.3.5 Microservices Documentation Evidence for Sprint Review](#5435-microservices-documentation-evidence-for-sprint-review)
+    - [5.4.3.6 Software Deployment Evidence for Sprint Review](#5436-software-deployment-evidence-for-sprint-review)
+    - [5.4.3.7 Team Collaboration Insights during Sprint](#5437-team-collaboration-insights-during-sprint)
+    - [5.4.3.8 Kanban Board](#5438-kanban-board)
   
 # Capítulo I: Introducción
 
@@ -1938,9 +1941,9 @@ ParkLink selecciona deliberadamente tactics para cada Quality Attribute Scenario
 
 | QAS sustentado | Tactic | Decisión concreta | Evidencia |
 |----------------|--------|--------------------|-----------|
-| QAS-03 (99.5% mensual) | **Ping / Echo** — detección de fallos mediante health checks | Endpoint `/health` en cada microservicio; Render Health Check cada 30s; API Gateway agrega estado en `GET /health` | 5.3.1.5 Microservices Doc |
+| QAS-03 (99.5% mensual) | **Ping / Echo** — detección de fallos mediante health checks | Endpoint `/health` en cada microservicio; Render Health Check cada 30s; API Gateway agrega estado en `GET /health` | 5.4.1.5 Microservices Doc |
 | QAS-03 | **Exception Detection / Exception Handling** | `http-exception.filter.ts` centraliza captura de excepciones, devuelve formato uniforme y registra en logs | DP-04 Chain of Responsibility |
-| QAS-03 | **Heartbeat** — proceso monitorizado emite latido periódico | Render expone uptime; alertas configurables si `/health` cae > 1 min | Sección 5.3.1.6 Deployment |
+| QAS-03 | **Heartbeat** — proceso monitorizado emite latido periódico | Render expone uptime; alertas configurables si `/health` cae > 1 min | Sección 5.4.1.6 Deployment |
 | RNF04 (resiliencia terceros) | **Retry** | `axios-retry` con backoff exponencial (3 intentos, 200ms→1.6s) en adapters de Stripe, Maps, FCM, SendGrid | ADR-305 Circuit Breaker + Retry |
 | RNF04 | **Circuit Breaker** | `opossum` envuelve cada adapter externo; abre tras 50% de fallos en 10 requests, half-open tras 30s | DP-15 Circuit Breaker + ADR-305 |
 | RNF04 | **Rollback / Fallback** | Si pago falla tras retries, reserva queda en `CANCELLED` y se libera el lock; cache Redis sirve respuesta last-known-good si Discovery cae | 4.1.3.5 State Machine Reservation |
@@ -1950,10 +1953,10 @@ ParkLink selecciona deliberadamente tactics para cada Quality Attribute Scenario
 | QAS sustentado | Tactic | Decisión concreta | Evidencia |
 |----------------|--------|--------------------|-----------|
 | QAS-04 (100% HTTPS, contraseñas cifradas) | **Authenticate Actors** | JWT firmado con HS256 + secret rotable de 256 bits; validación en cada request por `authGuard` middleware | TS03 + ADR-302 |
-| QAS-04 | **Authorize Actors** | RBAC con `requireRole(['DRIVER','OWNER','ADMIN'])`; rechazo 403 sin filtrar información de existencia del recurso | DP-04 + 5.3.1.5 |
+| QAS-04 | **Authorize Actors** | RBAC con `requireRole(['DRIVER','OWNER','ADMIN'])`; rechazo 403 sin filtrar información de existencia del recurso | DP-04 + 5.4.1.5 |
 | QAS-04 | **Limit Exposure** — minimizar superficie de ataque | API Gateway como único punto de entrada; servicios internos no expuestos públicamente; CORS restringido a `arqsoft.vercel.app` | Container Diagram 4.1.3.3 |
-| QAS-04 | **Encrypt Data at Rest and in Transit** | TLS 1.3 en todas las conexiones (HTTPS Vercel + JDBC SSL Render); bcrypt factor 12 para `password_hash`; secretos en variables de entorno nunca en repo | ADR-301 bcrypt + 5.3.1.6 env vars |
-| QAS-04 | **Validate Input** — sanitizar y validar todo input externo | `class-validator` sobre DTOs; parámetros de query tipados; SQL via ORM parametrizado para prevenir injection | DTOs en 5.3.1.5 |
+| QAS-04 | **Encrypt Data at Rest and in Transit** | TLS 1.3 en todas las conexiones (HTTPS Vercel + JDBC SSL Render); bcrypt factor 12 para `password_hash`; secretos en variables de entorno nunca en repo | ADR-301 bcrypt + 5.4.1.6 env vars |
+| QAS-04 | **Validate Input** — sanitizar y validar todo input externo | `class-validator` sobre DTOs; parámetros de query tipados; SQL via ORM parametrizado para prevenir injection | DTOs en 5.4.1.5 |
 | TS04 (auditoría) | **Maintain Audit Trail** | Tabla `audit_events` inmutable con `actor`, `action`, `entity`, `timestamp`; alimentada por listener de eventos de dominio | ADR-308 + 4.3.3 Iter 3 |
 
 #### 4.1.7.4. Modifiability Tactics
@@ -1971,7 +1974,7 @@ ParkLink selecciona deliberadamente tactics para cada Quality Attribute Scenario
 | QAS sustentado | Tactic | Decisión concreta | Evidencia |
 |----------------|--------|--------------------|-----------|
 | QAS-06 (crecimiento sin degradación) | **Maintain Multiple Copies of Computation** — replicar procesamiento | Servicios stateless: cada microservicio puede correr en N réplicas tras load balancer sin sticky session | Container Diagram 4.1.3.3 |
-| QAS-06 | **Manage Resources** | Connection pool acotado por servicio + Render autoscaling vertical (free → standard cuando el tráfico lo justifique) | Sección 5.3.1.6 |
+| QAS-06 | **Manage Resources** | Connection pool acotado por servicio + Render autoscaling vertical (free → standard cuando el tráfico lo justifique) | Sección 5.4.1.6 |
 | QAS-06 | **Maintain Multiple Copies of Data** | Sharding futuro de `parking_spaces` por región geográfica cuando el volumen lo exija (documentado, no implementado) | ADR-203 Future Sharding |
 
 #### 4.1.7.6. Interoperability Tactics
@@ -1980,7 +1983,7 @@ ParkLink selecciona deliberadamente tactics para cada Quality Attribute Scenario
 |----------------|--------|--------------------|-----------|
 | QAS-08 (REST APIs externas) | **Orchestrate** — coordinar interacción de servicios para cumplir un fin común | API Gateway orquesta llamadas a Discovery + Maps + Reservation en flujos compuestos sin que el cliente conozca la topología | Container Diagram 4.1.3.3 |
 | QAS-08 | **Tailor Interface** — adaptar interfaz a cada consumidor | Backend For Frontend ligero: Gateway expone endpoints orientados al caso de uso (`GET /parking-spaces/search`) en vez de exponer servicios crudos | DP-11 Adapter aplicado a Gateway |
-| QAS-08 | **Manage Interfaces** — versionado explícito de APIs | Prefijo `/api/v1` en todas las rutas; cambios breaking suben a `/api/v2` manteniendo v1 hasta deprecación | 5.3.1.5 Endpoints |
+| QAS-08 | **Manage Interfaces** — versionado explícito de APIs | Prefijo `/api/v1` en todas las rutas; cambios breaking suben a `/api/v2` manteniendo v1 hasta deprecación | 5.4.1.5 Endpoints |
 
 #### 4.1.7.7. Trazabilidad Tactic → Driver → Evidencia
 
@@ -3452,21 +3455,37 @@ https://backend-silk-two-93.vercel.app/docs/
 https://api-gateway-xi-five.vercel.app/docs
 ```
 
-## 5.3 Microservices Implementation
+## 5.3 Microservices Deployment
 
 ParkLink fue diseñado bajo una arquitectura modular orientada a bounded contexts. Esta decisión permite iniciar con una implementación organizada y, posteriormente, evolucionar hacia microservicios independientes cuando el volumen de usuarios, búsquedas, reservas y pagos lo justifique.
 
+El despliegue actual distribuye la solución en servicios cloud administrados: backend y API Gateway en **Vercel**, persistencia en **Render PostgreSQL**, frontend web en **Vercel** y app móvil Flutter ejecutada en Android. Esta distribución permite separar responsabilidades, mantener HTTPS extremo a extremo y validar el comportamiento del sistema en un entorno cercano a producción.
+
 El diseño arquitectónico define como Core Domain el contexto de Reservation Management, debido a que la reserva de espacios representa la operación central del negocio. Si este contexto falla, el usuario perdería confianza en la disponibilidad y confirmación de estacionamientos.
 
-## Arquitectura General del Sistema
+### 5.3.1 Cloud Architecture Diagram
 
-La arquitectura propuesta para ParkLink se organiza bajo un enfoque basado en frontend, API Gateway y microservicios backend desplegados de manera independiente.
+La arquitectura cloud de ParkLink organiza los clientes, gateway, servicios backend, base de datos administrada e integraciones externas bajo una topología de despliegue desacoplada. El frontend web y la app Flutter consumen el API Gateway como punto de entrada, mientras que el backend conserva las reglas de negocio y accede a la base PostgreSQL administrada.
+
+![ParkLink Cloud Architecture Diagram](assets/deployment-diagram.svg)
+
+**Componentes principales del despliegue cloud:**
+
+| Capa | Componente | Plataforma | Responsabilidad |
+|------|------------|------------|-----------------|
+| Cliente móvil | ParkLink Flutter App | Android / Flutter | Permite login, búsqueda en mapa, detalle de cocheras, reservas y pago simulado. |
+| Cliente web | ParkLink Frontend | Vercel | Expone la experiencia web funcional para conductores y propietarios. |
+| Entrada del sistema | API Gateway | Vercel Serverless | Centraliza rutas, conserva headers de autorización y evita exponer servicios internos directamente. |
+| Servicios backend | ParkLink Backend | Vercel Serverless | Ejecuta reglas de negocio de autenticación, usuarios, espacios, reservas, pagos, auditoría y notificaciones. |
+| Persistencia | PostgreSQL | Render | Mantiene datos transaccionales, usuarios, espacios, reservas, pagos y auditoría. |
+| Integraciones externas | Google Maps / servicios futuros | APIs externas | Soporta geolocalización, mapas y futuras integraciones de pagos o notificaciones. |
+
+**Representación lógica del flujo entre componentes:**
 
 ```mermaid
 flowchart TD
-    A[Frontend / App Web] --> B[API Gateway / Redirector<br/>Desplegado en Vercel]
-
-    B --> C[Backend Services]
+    A[Frontend Web / App Flutter] --> B[API Gateway<br/>Vercel Serverless]
+    B --> C[Backend ParkLink<br/>NestJS + Prisma]
 
     C --> D[Auth Service]
     C --> E[Users Service]
@@ -3476,7 +3495,7 @@ flowchart TD
     C --> I[Notifications Service]
     C --> J[Maps Service]
 
-    D --> K[(Base de Datos en Render)]
+    D --> K[(PostgreSQL Render)]
     E --> K
     F --> K
     G --> K
@@ -3484,20 +3503,61 @@ flowchart TD
     I --> K
     J --> K
 
-    B --> J
-    J --> L[Google Maps API]
+    A --> L[Google Maps SDK / API]
+    J --> L
 ```
+
+### 5.3.2 Cloud Architecture Deployment
+
+El despliegue cloud final fue validado con evidencia real de las plataformas usadas por ParkLink. La infraestructura queda dividida en tres piezas principales: backend API, API Gateway y base de datos PostgreSQL administrada. Esta separación permite actualizar cada componente de forma independiente y mantener trazabilidad de despliegues por plataforma.
+
+**Resumen del despliegue final:**
+
+| Componente | Plataforma | URL / recurso | Estado |
+|------------|------------|---------------|--------|
+| Backend API | Vercel | `https://parklink-platform.vercel.app` | Desplegado y validado con health check, Swagger y endpoints funcionales. |
+| API Gateway | Vercel | `https://api-gateway-xi-five.vercel.app` | Desplegado y validado como punto de entrada hacia servicios backend. |
+| Base de datos | Render PostgreSQL | `parklink-db-lima-seed-20260622` | Creada, conectada al backend y poblada con data seed de Lima. |
+| Repositorio del reporte | GitHub | `ParkLink-Report` | Actualizado con evidencias y documentación final. |
+
+**Evidencia — Backend desplegado en Vercel**
+
+![Backend deploy evidence](screenshots/deployment/backend-deploy.png)
+
+**Evidencia — API Gateway desplegado en Vercel**
+
+![Gateway deploy evidence](screenshots/deployment/gateway-deploy.png)
+
+**Evidencia — Base de datos PostgreSQL en Render**
+
+![Render database evidence](screenshots/deployment/db-render.png)
+
+**Evidencia — colaboración y actividad del equipo**
+
+![Team collaboration evidence 1](screenshots/deployment/colaboration1.png)
+
+![Team collaboration evidence 2](screenshots/deployment/colaboration2.png)
+
+**Conclusión del despliegue cloud:**
+
+El despliegue final demuestra que ParkLink cuenta con una arquitectura cloud funcional y separada por responsabilidades. Vercel permite operar backend y API Gateway con HTTPS administrado y despliegues reproducibles; Render proporciona persistencia PostgreSQL administrada; y GitHub conserva la trazabilidad de cambios, ramas y evidencias. La solución queda preparada para evolucionar hacia microservicios independientes sin romper la estructura modular ya documentada.
 
 ---
 
-### 5.3.1 Sprint 1
+## 5.4 Sprint Reviews
+
+La siguiente sección consolida los Sprint Reviews del proyecto, incluyendo backlog, evidencias de desarrollo, pruebas, ejecución, documentación de microservicios, despliegue, colaboración y tablero Kanban por sprint.
+
+---
+
+### 5.4.1 Sprint 1
 
 **Sprint window:** 2026-05-08 → 2026-05-21 (14 días naturales, post-TB2).
 **Sprint Goal:** Habilitar el primer contacto del usuario con ParkLink mediante una landing pública desplegada en producción y un servicio de autenticación funcional que permita el registro y login de conductores y propietarios, dejando el cimiento operativo para los flujos de búsqueda y reserva de los siguientes sprints.
 
 El Sprint 1 prioriza dos entregables alineados con la estrategia de adopción del producto. Primero, una landing de marketing en producción que materializa el Solution Profile descrito en el Capítulo 1 y permite recoger interés temprano antes de abrir la app a usuarios. Segundo, el bounded context **User Identity & Access** del Capítulo 4, que sostiene los épicos EP05 (US17, US18, US19) y el driver técnico **TS03 — Autenticación y autorización por roles** vinculado al escenario de calidad QAS-04 (Security, 100% del tráfico bajo HTTPS y contraseñas cifradas).
 
-#### 5.3.1.1 Sprint Backlog 1
+#### 5.4.1.1 Sprint Backlog 1
 
 El siguiente cuadro consolida los work items asumidos por el equipo para el Sprint 1, su trazabilidad con los User Stories del Capítulo 3, el Technical Story arquitectónico del Capítulo 4, la estimación en story points (escala Fibonacci modificada: 1, 2, 3, 5, 8, 13) y el responsable principal. Cada item entra al sprint sólo si tiene criterios de aceptación claros y un Definition of Done compartido por el equipo.
 
@@ -3515,7 +3575,7 @@ El siguiente cuadro consolida los work items asumidos por el equipo para el Spri
 
 **Capacidad del equipo:** 5 integrantes × ~6 SP por integrante en 2 semanas ≈ **30 SP**. **Compromiso de Sprint 1:** 32 SP (ligera sobreestimación tolerada por ser el primer sprint sin velocity histórica).
 
-**Nota sobre la distribución real:** durante el Sprint 1 Pietro Osores Marchese asumió la totalidad del trabajo de backend y base de datos (SBI-02 a SBI-09 del lado servidor) como decisión del equipo para reducir riesgo de coordinación al estrenar el stack NestJS + Bun + Prisma + Vercel. Los otros cuatro integrantes (Javier, Fabian, Percy, Matias) se concentran en la documentación del informe, el tablero Kanban, las capturas de evidencia y la facilitación de los eventos Scrum descritos en la sección 5.3.1.7.
+**Nota sobre la distribución real:** durante el Sprint 1 Pietro Osores Marchese asumió la totalidad del trabajo de backend y base de datos (SBI-02 a SBI-09 del lado servidor) como decisión del equipo para reducir riesgo de coordinación al estrenar el stack NestJS + Bun + Prisma + Vercel. Los otros cuatro integrantes (Javier, Fabian, Percy, Matias) se concentran en la documentación del informe, el tablero Kanban, las capturas de evidencia y la facilitación de los eventos Scrum descritos en la sección 5.4.1.7.
 
 **Definition of Done aplicable a todo Sprint Backlog Item:**
 1. El código está mergeado a `main` en el repo correspondiente mediante Pull Request revisado por al menos un compañero.
@@ -3524,7 +3584,7 @@ El siguiente cuadro consolida los work items asumidos por el equipo para el Spri
 4. La documentación mínima (endpoint, payload, respuesta) está reflejada en el README del repo o en este informe.
 5. El item se mueve a la columna **Done** del tablero Kanban antes del Sprint Review.
 
-#### 5.3.1.2 Development Evidence for Sprint Review
+#### 5.4.1.2 Development Evidence for Sprint Review
 
 Durante el Sprint 1 se trabajaron dos repositorios bajo la organización GitHub `1ASI0657-2610-17949-ParkLink`. La evidencia de desarrollo se recoge directamente del historial de commits y del estado actual de las ramas.
 
@@ -3572,7 +3632,7 @@ Durante el Sprint 1 se trabajaron dos repositorios bajo la organización GitHub 
 
 **Convenciones de commit acordadas en Sprint 1:** Conventional Commits (`feat`, `fix`, `chore`, `docs`, `refactor`, `test`) con scope opcional indicando el módulo tocado (`feat(auth): ...`, `feat(landing): ...`). El equipo adoptó esta convención al observar que el repo de landing ya la seguía y aporta a la trazabilidad descrita en sección 5.2.2.
 
-#### 5.3.1.3 Testing Suite Evidence for Sprint Review
+#### 5.4.1.3 Testing Suite Evidence for Sprint Review
 
 El Sprint 1 establece el cimiento de testing en lugar de buscar cobertura amplia, dado que el código de producto recién nace y la prioridad arquitectónica del sprint es desplegar infraestructura en ambientes reales.
 
@@ -3588,7 +3648,7 @@ El Sprint 1 establece el cimiento de testing en lugar de buscar cobertura amplia
 
 **Resumen ejecutivo de testing en Sprint 1:** smoke tests manuales pasados, suite automatizada en planificación. Esta limitación queda registrada como riesgo de Sprint 1 y se mitiga con priorización explícita en Sprint 2.
 
-#### 5.3.1.4 Execution Evidence for Sprint Review
+#### 5.4.1.4 Execution Evidence for Sprint Review
 
 La evidencia de ejecución demuestra que los entregables del Sprint 1 corren en ambientes reales, no sólo en la máquina del desarrollador.
 
@@ -3621,7 +3681,7 @@ La evidencia de ejecución demuestra que los entregables del Sprint 1 corren en 
 - Tabla `users` operativa con columnas `id (uuid)`, `email (unique)`, `password_hash`, `role (enum)`, `created_at`, `verified_at`; migraciones gestionadas por Prisma (`prisma migrate deploy`).
 - Acceso restringido por SSL + credenciales inyectadas vía variables de entorno (`DATABASE_URL`) configuradas en el dashboard de Vercel — nunca commiteadas al repo, cumpliendo QAS-04. Las funciones serverless de Vercel se conectan a Render Postgres por TCP/TLS desde la región más cercana asignada por Vercel.
 
-#### 5.3.1.5 Microservices Documentation Evidence for Sprint Review
+#### 5.4.1.5 Microservices Documentation Evidence for Sprint Review
 
 Sprint 1 entrega el primer microservicio funcional del sistema: el **User Identity & Access Service**, correspondiente al bounded context `User Identity Context` descrito en el Capítulo 4. Los demás contextos (Parking Discovery, Parking Supply, Reservation Management, Payments) quedan documentados en arquitectura pero entran a implementación en sprints posteriores.
 
@@ -3660,7 +3720,7 @@ Sprint 1 entrega el primer microservicio funcional del sistema: el **User Identi
   ```
 - **Trazabilidad con Capítulo 4:** este servicio materializa el `User Identity Context` y satisface **TS03 — Autenticación y autorización por roles** así como el escenario de calidad **QAS-04 (Security)**. Implementa el ADR-301 de hashing con bcrypt (factor 12) y el ADR-302 de JWT firmado con HS256 + secret rotable. Las llamadas entre este servicio y el resto del sistema son síncronas vía HTTP/REST, alineado con la decisión arquitectónica del Capítulo 4 de evitar acoplamiento por mensajería en operaciones de autenticación.
 
-#### 5.3.1.6 Software Deployment Evidence for Sprint Review
+#### 5.4.1.6 Software Deployment Evidence for Sprint Review
 
 El Sprint 1 ejercita por primera vez la cadena de despliegue del proyecto, separando dos planos: **Vercel** para ejecutar todo el código (web estático y backend serverless) y **Render** para el plano persistente de datos (base PostgreSQL administrada). Esta separación aprovecha lo mejor de cada plataforma: Vercel ofrece deploy automático por push, funciones serverless globales y TLS gestionado; Render ofrece Postgres administrado con backups automáticos sin sysadmin.
 
@@ -3697,7 +3757,7 @@ Developer push → GitHub (main)
                                                                      └─ conecta a → Render PostgreSQL (TCP/TLS público + SSL)
 ```
 
-#### 5.3.1.7 Team Collaboration Insights during Sprint
+#### 5.4.1.7 Team Collaboration Insights during Sprint
 
 **Eventos Scrum ejecutados durante el Sprint 1:**
 
@@ -3713,9 +3773,9 @@ Developer push → GitHub (main)
 | Integrante | Foco asumido | SBI / responsabilidades | SP estimados |
 |------------|---------------|---------------------------|--------------|
 | Pietro Osores Marchese | Frontend, backend (monorepo NestJS), DB, infra Vercel + Render | SBI-01..SBI-09 (todo el plano técnico) | 32 |
-| Javier Masaru Nikaido Vargas | Documentación técnica del informe (5.3.1.2, 5.3.1.3, 5.3.1.5), facilitación de Sprint Planning | Sin SBI técnicos asignados | 0 |
-| Fabian Alejandro Oliva Lopez | Documentación de infra y ejecución (5.3.1.1, 5.3.1.4, 5.3.1.6), facilitación de Sprint Review | Sin SBI técnicos asignados | 0 |
-| Percy Alonso Muñiz Huayanca | Tablero Trello, documentación de proceso (5.3.1.7, 5.3.1.8), cierre del informe, facilitación de Sprint Retrospective | Sin SBI técnicos asignados | 0 |
+| Javier Masaru Nikaido Vargas | Documentación técnica del informe (5.4.1.2, 5.4.1.3, 5.4.1.5), facilitación de Sprint Planning | Sin SBI técnicos asignados | 0 |
+| Fabian Alejandro Oliva Lopez | Documentación de infra y ejecución (5.4.1.1, 5.4.1.4, 5.4.1.6), facilitación de Sprint Review | Sin SBI técnicos asignados | 0 |
+| Percy Alonso Muñiz Huayanca | Tablero Trello, documentación de proceso (5.4.1.7, 5.4.1.8), cierre del informe, facilitación de Sprint Retrospective | Sin SBI técnicos asignados | 0 |
 | Matias Rodolfo Salcedo Champi | Soporte a documentación y revisión cruzada | Sin SBI técnicos asignados | 0 |
 | **Total** |  |  | **32 SP** |
 
@@ -3732,9 +3792,9 @@ Esta concentración de carga técnica en un solo integrante es atípica para Scr
 - *Lo que mejorar:* La concentración del trabajo técnico en un único integrante (factor bus). No se configuró pipeline de CI (lint + test) durante el Sprint 1; quedó como deuda técnica prioritaria para Sprint 2. La falta de un tablero Kanban formal generó pequeñas duplicaciones de comunicación que se resolvieron en daily.
 - *Acuerdos para Sprint 2:* (1) habilitar Trello como tablero único; (2) pair-programming obligatorio entre Pietro y al menos otros dos integrantes en cada SBI técnico; (3) agregar GitHub Actions con `bun run lint && bun run test` en cada PR; (4) escribir la suite de Jest pendiente para los endpoints de IAM.
 
-#### 5.3.1.8 Kanban Board
+#### 5.4.1.8 Kanban Board
 
-Durante el Sprint 1 el equipo trabajó con un tablero Kanban informal compartido por Discord y mensajes directos. Como acuerdo de Retrospectiva (ver sección 5.3.1.7), a partir del Sprint 2 el tablero oficial será **Trello** (board "ParkLink — Sprint 1" gestionado por Percy Alonso Muñiz Huayanca) con URL pública compartida al equipo. La elección sobre GitHub Projects se debió a la familiaridad previa del equipo con Trello y a la facilidad para tomar capturas limpias de inicio y cierre de sprint como evidencia documental.
+Durante el Sprint 1 el equipo trabajó con un tablero Kanban informal compartido por Discord y mensajes directos. Como acuerdo de Retrospectiva (ver sección 5.4.1.7), a partir del Sprint 2 el tablero oficial será **Trello** (board "ParkLink — Sprint 1" gestionado por Percy Alonso Muñiz Huayanca) con URL pública compartida al equipo. La elección sobre GitHub Projects se debió a la familiaridad previa del equipo con Trello y a la facilidad para tomar capturas limpias de inicio y cierre de sprint como evidencia documental.
 
 **Estructura propuesta del tablero (a habilitar al inicio del Sprint 2):**
 
@@ -3760,7 +3820,7 @@ Durante el Sprint 1 el equipo trabajó con un tablero Kanban informal compartido
 | SBI-08 Deploy backend Render | Done |
 | SBI-09 Form de registro embebido en landing | In Progress al cierre (carry-over candidato a Sprint 2 si no se completa) |
 
-### 5.3.2 Sprint 2
+### 5.4.2 Sprint 2
 
 **Sprint window:** 2026-05-22 → 2026-06-04 (14 días naturales, Avance 3).  
 **Sprint Goal:** Implementar el frontend principal de ParkLink y mejorar el API Gateway para que la aplicación cliente consuma las rutas del sistema desde una entrada centralizada, ordenada y segura.
@@ -3798,7 +3858,7 @@ Al finalizar el Sprint 2, ParkLink debe contar con un frontend navegable que mue
 
 ---
 
-#### 5.3.2.1 Sprint Backlog 2
+#### 5.4.2.1 Sprint Backlog 2
 
 El Sprint Backlog 2 reúne los ítems seleccionados para cumplir el objetivo del Sprint 2. A diferencia del Sprint 1, este sprint no se orientó a extender el backend. El foco fue implementar el frontend principal de ParkLink y mejorar el API Gateway como punto de conexión entre la interfaz y los servicios disponibles.
 
@@ -3857,7 +3917,7 @@ El Sprint Backlog 2 permitió ordenar el trabajo del equipo hacia un objetivo co
 ---
 
 
-  #### 5.3.2.2 Development Evidence for Sprint Review
+  #### 5.4.2.2 Development Evidence for Sprint Review
 
   Durante el Sprint 2 el trabajo de desarrollo se concentró en el repositorio **`ParkLink-Frontend`**, correspondiente a la capa de presentación funcional del sistema. A diferencia del Sprint 1, donde el foco estuvo en el backend y la infraestructura, este sprint priorizó la construcción de la interfaz web que permite a los usuarios interactuar directamente con ParkLink desde un navegador.
 
@@ -3870,7 +3930,7 @@ El Sprint Backlog 2 permitió ordenar el trabajo del equipo hacia un objetivo co
   |--------|-------|-------|---------|------------------|
   | `f1435f4` | 2026-06-06 | Maximoff19 | `feat: initial frontend commit with premium map markers` | Implementación inicial del frontend funcional de ParkLink: pantalla de autenticación (`/auth/login`), flujo de registro, vista de mapa con marcadores de estacionamientos y estructura base de rutas de la aplicación |
 
-  #### 5.3.2.3 Testing Suite Evidence for Sprint Review
+  #### 5.4.2.3 Testing Suite Evidence for Sprint Review
 
   El Sprint 2 priorizó la validación funcional del frontend desplegado en producción. Las pruebas realizadas fueron de tipo exploratorio y smoke testing manual, verificando que cada vista principal de la aplicación cargara correctamente, respondiera a interacciones del usuario y se comunicara con los servicios del backend.
 
@@ -3943,7 +4003,7 @@ El Sprint Backlog 2 permitió ordenar el trabajo del equipo hacia un objetivo co
 
   ---
 
-  #### 5.3.2.4 Execution Evidence for Sprint Review
+  #### 5.4.2.4 Execution Evidence for Sprint Review
 
   El Sprint 2 entrega el frontend funcional de ParkLink desplegado en producción bajo la URL `https://parklink-eta.vercel.app`. A continuación se presenta la evidencia de ejecución de cada vista principal implementada durante el sprint.
 
@@ -4015,7 +4075,7 @@ El Sprint Backlog 2 permitió ordenar el trabajo del equipo hacia un objetivo co
 
   **Despliegue:** Vercel, rama `master` del repositorio `ParkLink-Frontend`, build automático por push, TLS gestionado por Vercel (100% HTTPS).
 
-  #### 5.3.2.5 Microservices Documentation Evidence for Sprint Review
+  #### 5.4.2.5 Microservices Documentation Evidence for Sprint Review
 
   El Sprint 2 se centró en la implementación del frontend funcional de ParkLink. A continuación se documenta la aplicación web desplegada en producción, sus vistas principales y las rutas implementadas durante el sprint.
 
@@ -4036,7 +4096,7 @@ El Sprint Backlog 2 permitió ordenar el trabajo del equipo hacia un objetivo co
   | Mis reservas | `/dashboard/reservations` | Listado de reservas activas con acciones de gestión |
   | Notificaciones | `/dashboard/notifications` | Centro de notificaciones del sistema |
 
-#### 5.3.2.6 Software Deployment Evidence for Sprint Review
+#### 5.4.2.6 Software Deployment Evidence for Sprint Review
 
 La evidencia de despliegue del Sprint 2 se enfocó en verificar que los componentes relacionados con frontend y API Gateway estén disponibles para revisión. El despliegue backend existente se mantiene como soporte, pero no representa el objetivo principal de este sprint.
 
@@ -4102,7 +4162,7 @@ El Sprint 2 permitió demostrar una interfaz frontend navegable y un API Gateway
 
 ---
 
-#### 5.3.2.7 Team Collaboration Insights during Sprint
+#### 5.4.2.7 Team Collaboration Insights during Sprint
 
 Durante el Sprint 2, el equipo organizó su trabajo alrededor de dos objetivos concretos: implementar frontend y mejorar API Gateway. La colaboración se dividió por vistas, componentes y validaciones de comunicación cliente-gateway.
 
@@ -4150,7 +4210,7 @@ El Sprint 2 fortaleció la coordinación del equipo en desarrollo frontend y org
 
 ---
 
-#### 5.3.2.8 Kanban Board
+#### 5.4.2.8 Kanban Board
 
 El Kanban Board del Sprint 2 refleja que el trabajo se concentró en frontend y API Gateway. Las tarjetas completadas corresponden a vistas, componentes, rutas, validación visual y comunicación cliente-gateway.
 
@@ -4213,14 +4273,14 @@ El Kanban Board evidencia que todos los ítems comprometidos para el Sprint 2 fu
 
 ---
 
-### 5.3.3 Sprint 3
+### 5.4.3 Sprint 3
 
 **Sprint window:** 17/06/2026 → 22/06/2026  
 **Sprint Goal:** Completar la entrega final de ParkLink integrando backend, frontend web y app móvil Flutter; cerrar technical stories pendientes; agregar pruebas automatizadas; preparar despliegue y generar evidencia reproducible para el Trabajo Final.
 
 Durante el Sprint 3, el equipo consolidó el producto como una solución multiplataforma. El backend incorporó controles de consistencia y trazabilidad; el frontend web recibió mejoras de flujo y pruebas; y la app Flutter permitió validar la experiencia móvil nativa en emulador Android con Google Maps real.
 
-#### 5.3.3.1 Sprint Backlog 3
+#### 5.4.3.1 Sprint Backlog 3
 
 | SBI | Epic / TS | User Story / Technical Story origen | Tareas técnicas principales | SP | Responsable principal | Estado |
 |-----|-----------|--------------------------------------|-----------------------------|----|------------------------|--------|
@@ -4235,7 +4295,7 @@ Durante el Sprint 3, el equipo consolidó el producto como una solución multipl
 | SBI-26 | Mobile Maps | Google Maps en Android | Configurar Maps SDK for Android, package `com.parklink.app`, API key local y validación en emulador | 5 | Matias Rodolfo Salcedo Champi | Done |
 | SBI-27 | Report & Evidence | Documentación Trabajo Final | Actualizar Student Outcome, tabla de versiones, Sprint 3 y capturas de evidencia | 5 | Equipo | Done |
 
-#### 5.3.3.2 Development Evidence for Sprint Review
+#### 5.4.3.2 Development Evidence for Sprint Review
 
 | Módulo / Componente | User Story / TS relacionada | Evidencia |
 |---------------------|-----------------------------|-----------|
@@ -4252,7 +4312,7 @@ Durante el Sprint 3, el equipo consolidó el producto como una solución multipl
 | Flutter — Reservation | Crear reserva | ![Flutter Reservation](screenshots/flutter/flutter-reservation.png) |
 | Flutter — Payment | Pago simulado | ![Flutter Payment](screenshots/flutter/flutter-payment.png) |
 
-#### 5.3.3.3 Testing Suite Evidence for Sprint Review
+#### 5.4.3.3 Testing Suite Evidence for Sprint Review
 
 **Backend / API Gateway**
 
@@ -4278,7 +4338,7 @@ Durante el Sprint 3, el equipo consolidó el producto como una solución multipl
 | `flutter test` | All tests passed |
 | `flutter build apk --debug --target-platform android-arm64` | APK generado correctamente en `build/app/outputs/flutter-apk/app-debug.apk` |
 
-#### 5.3.3.4 Execution Evidence for Sprint Review
+#### 5.4.3.4 Execution Evidence for Sprint Review
 
 La app Flutter fue ejecutada en el emulador **Pixel_9_Pro_XL**. Se validó autenticación, mapa real de Google Maps, selección de espacios, detalle, reserva y pago simulado.
 
@@ -4293,19 +4353,46 @@ La app Flutter fue ejecutada en el emulador **Pixel_9_Pro_XL**. Se validó auten
 
 La validación de Google Maps incluyó revisión de `logcat`, confirmando ausencia de errores actuales de autorización del Maps SDK luego de alinear el package Android a `com.parklink.app`.
 
-#### 5.3.3.5 Microservices Documentation Evidence for Sprint Review
+#### 5.4.3.5 Microservices Documentation Evidence for Sprint Review
+
+Para el Sprint Review del Trabajo Final se validó que la documentación OpenAPI estuviera publicada en producción y que permitiera evidenciar los contratos principales del backend y del API Gateway. La documentación Swagger se encuentra disponible en `/docs`, mientras que la especificación cruda OpenAPI se mantiene en `/docs-json`.
 
 | Servicio | Documentación / Endpoint | Descripción |
 |----------|---------------------------|-------------|
 | Backend | `GET /health` | Health check de la API principal |
 | Backend | `GET /docs` | Swagger del backend ParkLink |
+| Backend | `GET /docs-json` | Especificación OpenAPI 3.0 del backend |
+| Backend | `GET /parking-spaces/search?lat=-12.0464&lng=-77.0428&maxDistance=8` | Prueba real de búsqueda de espacios cercanos en Lima |
 | API Gateway | `GET /docs` | Swagger / documentación de entrada al sistema |
+| API Gateway | `GET /docs-json` | Especificación OpenAPI 3.0 del API Gateway |
+| API Gateway | `GET /health` | Validación de disponibilidad del gateway y backend downstream |
+| API Gateway | `GET /routes` | Evidencia de rutas proxy configuradas hacia el backend consolidado |
 | Parking | `POST /parking-spaces/:id/photos` | Registro de fotos para espacios de estacionamiento |
 | Audit | `GET /audit/events` | Auditoría de operaciones críticas, restringida a ADMIN |
 | Payment | `POST /payments` | Pago simulado con soporte de idempotencia |
 | Reservation | `POST /reservations` | Reserva con control transaccional para evitar solapamientos |
 
-#### 5.3.3.6 Software Deployment Evidence for Sprint Review
+**URLs de documentación publicadas:**
+
+| Componente | URL de Swagger | Estado validado |
+|------------|----------------|-----------------|
+| Backend API | `https://parklink-platform.vercel.app/docs` | Carga Swagger UI, expone contratos por bounded context y enlaza `/docs-json` |
+| API Gateway | `https://api-gateway-xi-five.vercel.app/docs` | Carga Swagger UI, muestra rutas proxy y health check del gateway |
+
+**Evidencia visual de Swagger y pruebas de endpoints:**
+
+| Evidencia | Captura |
+|----------|---------|
+| Swagger UI del Backend en producción | ![Backend Swagger Docs](screenshots/microservices/backend-swagger-docs.png) |
+| Prueba `GET /health` del Backend | ![Backend Health Endpoint](screenshots/microservices/backend-health-endpoint.png) |
+| Prueba `GET /parking-spaces/search` del Backend con coordenadas de Lima | ![Backend Parking Search Endpoint](screenshots/microservices/backend-parking-search-endpoint.png) |
+| Swagger UI del API Gateway en producción | ![Gateway Swagger Docs](screenshots/microservices/gateway-swagger-docs.png) |
+| Prueba `GET /health` del API Gateway | ![Gateway Health Endpoint](screenshots/microservices/gateway-health-endpoint.png) |
+| Prueba `GET /routes` del API Gateway | ![Gateway Routes Endpoint](screenshots/microservices/gateway-routes-endpoint.png) |
+
+Estas evidencias demuestran que la documentación técnica de los microservicios quedó disponible para revisión, que los contratos OpenAPI están publicados en producción y que los endpoints principales responden correctamente desde las URLs finales usadas por el frontend web y la app móvil.
+
+#### 5.4.3.6 Software Deployment Evidence for Sprint Review
 
 | Componente | URL / Artefacto | Estado |
 |------------|------------------|--------|
@@ -4317,7 +4404,7 @@ La validación de Google Maps incluyó revisión de `logcat`, confirmando ausenc
 | Flutter APK | `ParkLink-Flutter/build/app/outputs/flutter-apk/app-debug.apk` | Generado localmente y probado en emulador Android |
 | Flutter repo alterno | `https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-App` | Ramas `main`, `develop`, `feature/flutter/app-shell` y tag `v1.0.0` publicados como respaldo mientras se crea `ParkLink-Flutter` |
 
-#### 5.3.3.7 Team Collaboration Insights during Sprint
+#### 5.4.3.7 Team Collaboration Insights during Sprint
 
 | Evento Scrum | Resultado |
 |--------------|-----------|
@@ -4336,7 +4423,7 @@ La validación de Google Maps incluyó revisión de `logcat`, confirmando ausenc
 | Percy Alonso Muñiz Huayanca | Gestión de espacios, fotos, trazabilidad de backlog y documentación |
 | Matias Rodolfo Salcedo Champi | App Flutter, Google Maps, pruebas en emulador y evidencia móvil |
 
-#### 5.3.3.8 Kanban Board
+#### 5.4.3.8 Kanban Board
 
 El Kanban Board de Sprint 3 se enfocó en cerrar deuda técnica y convertir ParkLink en un producto ejecutable en web y mobile.
 
