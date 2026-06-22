@@ -36,14 +36,13 @@
 | ------- | ---------- | ---------------------------------------------- | -------------------------------------------------------------------------- |
 | 1ra     | 15/04/2026 | Javier Masaru Nikaido Vargas,Fabian Alejandro Oliva Lopez,Pietro Osores Marchese,Percy Alonso Muñiz Huayanca,Matias Rodolfo Salcedo Champi | Avance1: En esta primera entrega se avanzo con el capitulo 1,2 y 3 de forma organizada para empezar con el pryecto de ParkLink estbleciedo la idea y un estudio del contaxto y las features. |                                                                                                                                                                                        |
 | 2da     | 01/05/2026 | Javier Masaru Nikaido Vargas, Fabian Alejandro Oliva Lopez, Pietro Osores Marchese, Percy Alonso Muñiz Huayanca, Matias Rodolfo Salcedo Champi | Avance2: Se actualizo el Capitulo IV, incorporando el diseño de arquitectura del producto, drivers arquitectonicos, diagramas C4, diseño de base de datos, patrones, tacticas e iteraciones ADD para ParkLink. |
-| 3da     | 012/05/2026 | Javier Masaru Nikaido Vargas, Fabian Alejandro Oliva Lopez, Pietro Osores Marchese, Percy Alonso Muñiz Huayanca, Matias Rodolfo Salcedo Champi | Trabajo Parcial: Se actualizo el Capitulo V y de desarrollo el sprint 1. |
+| 3ra | 07/06/2026 | Javier Masaru Nikaido Vargas, Fabian Alejandro Oliva Lopez, Pietro Osores Marchese, Percy Alonso Muñiz Huayanca, Matias Rodolfo Salcedo Champi | Avance3: Se incorporo el desarrollo del Sprint 2, enfocandose en la integracion del Front-End funcional, su preparacion para el despliegue, la conexion progresiva con el backend y API Gateway, asi como la actualizacion de evidencias de despliegue, colaboracion del equipo y validaciones tecnicas del sistema ParkLink. |
 
 ## Student Outcome
-
 | Criterio específico | Acciones realizadas | Conclusiones |
 |---------------------|---------------------|--------------|
-| **CO1:** Actualiza conceptos y conocimientos necesarios para su desarrollo profesional y en especial para su proyecto en soluciones de software. | **TB1 - Fabian Alejandro Oliva López:** Definí el ADN de la startup, estableciendo la visión, misión y valores como fundamento estratégico del proyecto. Supervisé el proceso Lean UX para garantizar la alineación con los objetivos del curso. Identifiqué y definí los segmentos objetivo, aplicando conocimientos de estrategia de producto. **TB1 - Javier Masaru Nikaido Vargas:** Realicé investigación de competidores mediante benchmarking para entender el mercado. Ejecuté entrevistas y needfinding para validar el problema con usuarios reales, aplicando técnicas de UX Research. **TB1 - Matias Rodolfo Salcedo Champi:** Diseñé el Solution Profile y nombre del producto, aplicando conceptos de product design. Creé User Personas y Empathy Maps para comprender las necesidades de los usuarios, integrando conocimientos de diseño centrado en el usuario. **TB1 - Percy Alonso Muñiz Huayanca:** Desarrollé Lean UX Assumptions e Hypothesis Statements, aplicando metodologías de diseño ágil. Construí User Task Matrix, As-is y To-Be Scenario Mapping para analizar procesos actuales y futuros, integrando conocimientos de análisis de procesos. **TB1 - Pietro Osores Marchese:** Elaboré el Lean UX Canvas para consolidar la propuesta de valor. Creó User Stories, Impact Map y Product Backlog para especificar requerimientos del proyecto, aplicando conocimientos de gestión de proyectos ágiles. **TB2 - Fabian Alejandro Oliva López:** Elaboré los Principle Statements del Capítulo IV, participé en la definición de Architectural Drivers, apoyé la priorización de Quality Attribute Scenarios y revisé el Kanban Board de las iteraciones ADD. **TB2 - Matias Rodolfo Salcedo Champi:** Desarrollé el System Landscape Diagram, apoyé los Context Level Diagrams de los bounded contexts, elaboré diagramas visuales para la Iteration 2 y refiné vistas C4 relacionadas con disponibilidad y reservas. **TB2 - Javier Masaru Nikaido Vargas:** Documenté el Design Purpose, identifiqué Primary User Stories relevantes para arquitectura, apoyé la definición de Constraints y revisé la trazabilidad entre user stories y decisiones de diseño. **TB2 - Pietro Osores Marchese:** Elaboré el Relational / Non-Relational Database Diagram, definí tablas principales como USERS, PARKING_SPACES, RESERVATIONS y PAYMENTS, apoyé la sección de Design Patterns y documenté decisiones relacionadas con persistencia y consistencia ACID. **TB2 - Percy Alonso Muñiz Huayanca:** Desarrollé la Iteration 3 de ADD, documenté ADRs sobre pagos, webhooks, auditoría y notificaciones, elaboró vistas de integración con proveedores externos y completó el análisis final de drivers atendidos. **TP1 - Pietro Osores Marchese:** Lideré la mayor parte del desarrollo de código del proyecto ParkLink durante este sprint, enfocándome en la implementación técnica de la solución, la organización del código y el avance funcional de los componentes principales. Apliqué conocimientos de desarrollo de software, arquitectura modular, estructuración de funcionalidades y buenas prácticas de implementación para que el producto pueda alinearse con los bounded contexts definidos previamente. **TP1 - Javier Masaru Nikaido Vargas:** Apoyé en una parte de la implementación del proyecto y participé en el desarrollo del reporte correspondiente al avance de TP1. Contribuí a mantener la trazabilidad entre los requerimientos, las user stories, la arquitectura planteada y la documentación del Capítulo V, reforzando conceptos de arquitectura de software, gestión de configuración, validación técnica y documentación académica. **TP1 - Fabian Alejandro Oliva López:** Participé en el avance del reporte y apoyé en tareas complementarias del desarrollo, relacionando la implementación con la visión del producto, los objetivos de ParkTeam y el valor esperado para conductores y propietarios. Apliqué conceptos de estrategia de producto, validación de solución y alineación entre el MVP y las necesidades del usuario. **TP1 - Percy Alonso Muñiz Huayanca:** Contribuí en la elaboración y revisión del reporte de TP1, apoyando en la explicación de decisiones técnicas, validación de funcionalidades y organización de evidencias del avance. Reforcé conocimientos sobre arquitectura, atributos de calidad, testing, despliegue y documentación técnica aplicada al contexto de ParkLink. **TP1 - Matias Rodolfo Salcedo Champi:** Apoyé en una parte del desarrollo y en la documentación del reporte, contribuyendo a describir la implementación desde una perspectiva técnica y funcional. Relacioné los avances del sprint con los módulos del producto, los segmentos objetivo y las necesidades identificadas en etapas anteriores del proyecto. | El equipo ha demostrado capacidad para integrar y aplicar conocimientos de arquitectura de software en un proyecto real de solución tecnológica. En TB1 se fortalecieron conocimientos de UX, Lean UX, entrevistas, needfinding y gestión de requerimientos. En TB2 se aplicaron conocimientos de DDD, C4 Model, ADD, atributos de calidad, patrones, tácticas y decisiones arquitectónicas. En TP1 se avanzó hacia la implementación técnica del producto, destacando el trabajo de Pietro en el desarrollo de código y el aporte de los demás integrantes en implementación complementaria y documentación del Capítulo V. |
-| **CO2:** Reconoce la necesidad del aprendizaje permanente para el desempeño profesional y el desarrollo de proyectos en soluciones de software. | **TB1 - Fabian Alejandro Oliva López:** Al definir la visión y estrategia de la startup, reconocí la importancia de actualizar constantemente los conocimientos en estrategia de producto y liderazgo de proyectos. **TB1 - Javier Masaru Nikaido Vargas:** Al realizar entrevistas y needfinding, identifiqué la necesidad de mejorar continuamente las técnicas de investigación de usuarios y comunicación con stakeholders. **TB1 - Matias Rodolfo Salcedo Champi:** Al crear User Personas y Empathy Maps, comprendí la relevancia del aprendizaje continuo en metodologías de diseño centrado en el usuario. **TB1 - Percy Alonso Muñiz Huayanca:** Al desarrollar escenarios y mappings de procesos, reconocí la necesidad de actualizarse en herramientas de análisis y modelado de procesos de negocio. **TB1 - Pietro Osores Marchese:** Al crear el Product Backlog y User Stories, entendí la importancia del aprendizaje continuo en gestión de requerimientos y priorización de funcionalidades en entornos ágiles. **TB2 - Fabian Alejandro Oliva López:** Reconocí la necesidad de fortalecer criterios de diseño arquitectónico, trade-offs y priorización de drivers para sustentar decisiones más allá de la funcionalidad visible. **TB2 - Matias Rodolfo Salcedo Champi:** Profundicé en el uso de C4 Model y Structurizr para comunicar arquitectura mediante vistas visuales claras, entendiendo que un diagrama debe explicar decisiones y no solo decorar el informe. **TB2 - Javier Masaru Nikaido Vargas:** Reforcé el aprendizaje sobre trazabilidad entre requisitos, restricciones, atributos de calidad y decisiones arquitectónicas, comprendiendo su impacto en la mantenibilidad del sistema. **TB2 - Pietro Osores Marchese:** Actualicé conocimientos sobre consistencia transaccional, modelado relacional, restricciones ACID y separación entre cache de disponibilidad y base de datos como fuente de verdad. **TB2 - Percy Alonso Muñiz Huayanca:** Aprendí a aplicar ADD para refinar arquitectura por iteraciones, documentar ADRs y manejar integraciones externas mediante adaptadores, idempotencia, auditoría y resiliencia. **TP1 - Pietro Osores Marchese:** Al asumir la mayor parte del desarrollo de código, reforcé la importancia de seguir aprendiendo sobre implementación de software, organización de proyectos, integración de funcionalidades y buenas prácticas de programación. El avance técnico permitió reconocer que una solución como ParkLink requiere aprendizaje constante para transformar decisiones arquitectónicas en componentes funcionales. **TP1 - Javier Masaru Nikaido Vargas:** Al apoyar en la implementación y desarrollar parte importante del reporte, reconocí la necesidad de mejorar continuamente en documentación técnica, arquitectura de software y trazabilidad entre requerimientos, diseño e implementación. Este proceso permitió comprender que un proyecto no solo se evalúa por el código, sino también por la claridad con la que se justifican sus decisiones. **TP1 - Fabian Alejandro Oliva López:** Al colaborar con el reporte y apoyar en el avance general del producto, reconocí la importancia de aprender de forma continua sobre cómo conectar estrategia de producto, necesidades de usuarios y desarrollo técnico. Esto permitió reforzar la relación entre el propósito de ParkLink y las funcionalidades implementadas. **TP1 - Percy Alonso Muñiz Huayanca:** Al participar en la documentación y revisión del avance, reconocí la necesidad de seguir fortaleciendo conocimientos sobre pruebas, despliegue, patrones y validación técnica. El sprint evidenció que los proyectos de software requieren adaptación constante para responder a cambios, limitaciones y decisiones técnicas. **TP1 - Matias Rodolfo Salcedo Champi:** Al apoyar en implementación y documentación, reconocí la importancia del aprendizaje permanente en tecnologías de desarrollo, organización del código y comunicación de avances técnicos. La experiencia permitió reforzar la necesidad de mantener coherencia entre lo construido, lo documentado y lo esperado por el usuario final. | El equipo reconoce que el desarrollo de soluciones de software requiere aprendizaje continuo. En TB1 se evidenció este aprendizaje mediante investigación de usuarios, Lean UX y especificación de requerimientos. En TB2 se fortaleció mediante el diseño arquitectónico, uso de C4, DDD, ADD y ADRs. En TP1 se consolidó al convertir parte del diseño en implementación técnica, testing, despliegue y documentación, reconociendo que un producto como ParkLink requiere evolución constante y mejora continua. |
+| **CO1:** Actualiza conceptos y conocimientos necesarios para su desarrollo profesional y en especial para su proyecto en soluciones de software. | **TB1 - Fabian Alejandro Oliva López:** Definí el ADN de la startup, estableciendo la visión, misión y valores como fundamento estratégico del proyecto. Supervisé el proceso Lean UX para garantizar la alineación con los objetivos del curso. Identifiqué y definí los segmentos objetivo, aplicando conocimientos de estrategia de producto. <br><br> **TB1 - Javier Masaru Nikaido Vargas:** Realicé investigación de competidores mediante benchmarking para entender el mercado. Ejecuté entrevistas y needfinding para validar el problema con usuarios reales, aplicando técnicas de UX Research. <br><br> **TB1 - Matias Rodolfo Salcedo Champi:** Diseñé el Solution Profile y nombre del producto, aplicando conceptos de product design. Creé User Personas y Empathy Maps para comprender las necesidades de los usuarios, integrando conocimientos de diseño centrado en el usuario. <br><br> **TB1 - Percy Alonso Muñiz Huayanca:** Desarrollé Lean UX Assumptions e Hypothesis Statements, aplicando metodologías de diseño ágil. Construí User Task Matrix, As-is y To-Be Scenario Mapping para analizar procesos actuales y futuros, integrando conocimientos de análisis de procesos. <br><br> **TB1 - Pietro Osores Marchese:** Elaboré el Lean UX Canvas para consolidar la propuesta de valor. Creé User Stories, Impact Map y Product Backlog para especificar requerimientos del proyecto, aplicando conocimientos de gestión de proyectos ágiles. <br><br> **TB2 - Fabian Alejandro Oliva López:** Elaboré los Principles Statements del Capítulo IV, participé en la definición de Architectural Drivers, apoyé la priorización de Quality Attribute Scenarios y revisé el Kanban Board de las iteraciones ADD. <br><br> **TB2 - Matias Rodolfo Salcedo Champi:** Desarrollé el System Landscape Diagram, apoyé los Context Level Diagrams de los bounded contexts, elaboré diagramas visuales para la Iteration 2 y refiné vistas C4 relacionadas con disponibilidad y reservas. <br><br> **TB2 - Javier Masaru Nikaido Vargas:** Documenté el Design Purpose, identifiqué Primary User Stories relevantes para arquitectura, apoyé la definición de Constraints y revisé la trazabilidad entre user stories y decisiones de diseño. <br><br> **TB2 - Pietro Osores Marchese:** Elaboré el Relational / Non-Relational Database Diagram, definí tablas principales como USERS, PARKING_SPACES, RESERVATIONS y PAYMENTS, apoyé la sección de Design Patterns y documenté decisiones relacionadas con persistencia y consistencia ACID. <br><br> **TB2 - Percy Alonso Muñiz Huayanca:** Desarrollé la Iteration 3 de ADD, documenté ADRs sobre pagos, webhooks, auditoría y notificaciones, elaboré vistas de integración con proveedores externos y completé el análisis final de drivers atendidos. <br><br> **AV3 - Fabian Alejandro Oliva Lopez:** Apoye en la integración inicial del repositorio `ParkLink-Frontend`, diferenciando la landing informativa de la aplicación funcional del sistema. <br><br> **AV3 - Javier Masaru Nikaido Vargas:** Trabaje en la mejora del API Gateway, rutas protegidas y documentación Swagger para validar la comunicación entre servicios. <br><br> **AV3 - Pietro Osores Marchese:** Desarrolle y consolide funcionalidades del backend relacionadas con autenticación, JWT, reservas, Prisma y conexión con PostgreSQL. <br><br> **AV3 - Percy Alonso Muñiz Huayanca:** Participe en la gestión de espacios de estacionamiento, seguimiento del tablero Kanban y validación básica de endpoints. <br><br> **AV3 - Matias Rodolfo Salcedo Champi:** Apoye en la consulta de espacios disponibles, estructura base de notificaciones y revisión cruzada entre Front-End, API Gateway y backend. | El equipo ha demostrado capacidad para integrar y aplicar conocimientos de arquitectura de software en un proyecto real de solución tecnológica. Cada integrante actualizó sus conocimientos en UX, diseño de producto, análisis de procesos, gestión de requerimientos, DDD, C4 Model, ADD, atributos de calidad, patrones de diseño, decisiones arquitectónicas documentadas, integración Front-End, despliegue web, API Gateway, backend serverless y validación de servicios mediante Swagger. |
+| **CO2:** Reconoce la necesidad del aprendizaje permanente para el desempeño profesional y el desarrollo de proyectos en soluciones de software. | **TB1 - Fabian Alejandro Oliva López:** Al definir la visión y estrategia de la startup, reconocí la importancia de actualizar constantemente los conocimientos en estrategia de producto y liderazgo de proyectos. <br><br> **TB1 - Javier Masaru Nikaido Vargas:** Al realizar entrevistas y needfinding, identifiqué la necesidad de mejorar continuamente las técnicas de investigación de usuarios y comunicación con stakeholders. <br><br> **TB1 - Matias Rodolfo Salcedo Champi:** Al crear User Personas y Empathy Maps, comprendí la relevancia del aprendizaje continuo en metodologías de diseño centrado en el usuario. <br><br> **TB1 - Percy Alonso Muñiz Huayanca:** Al desarrollar escenarios y mappings de procesos, reconocí la necesidad de actualizarse en herramientas de análisis y modelado de procesos de negocio. <br><br> **TB1 - Pietro Osores Marchese:** Al crear el Product Backlog y User Stories, entendí la importancia del aprendizaje continuo en gestión de requerimientos y priorización de funcionalidades en entornos ágiles. <br><br> **TB2 - Fabian Alejandro Oliva López:** Reconocí la necesidad de fortalecer criterios de diseño arquitectónico, trade-offs y priorización de drivers para sustentar decisiones más allá de la funcionalidad visible. <br><br> **TB2 - Matias Rodolfo Salcedo Champi:** Profundicé en el uso de C4 Model y Structurizr para comunicar arquitectura mediante vistas visuales claras, entendiendo que un diagrama debe explicar decisiones y no sólo decorar el informe. <br><br> **TB2 - Javier Masaru Nikaido Vargas:** Reforcé el aprendizaje sobre trazabilidad entre requisitos, restricciones, atributos de calidad y decisiones arquitectónicas, comprendiendo su impacto en la mantenibilidad del sistema. <br><br> **TB2 - Pietro Osores Marchese:** Actualicé conocimientos sobre consistencia transaccional, modelado relacional, restricciones ACID y separación entre cache de disponibilidad y base de datos como fuente de verdad. <br><br> **TB2 - Percy Alonso Muñiz Huayanca:** Aprendí a aplicar ADD para refinar arquitectura por iteraciones, documentar ADRs y manejar integraciones externas mediante adaptadores, idempotencia, auditoría y resiliencia. <br><br> **AV3 - Fabian Alejandro Oliva Lopez:** Aprendí la importancia de separar una landing de presentación de un Front-End funcional conectado a servicios reales. <br><br> **AV3 - Javier Masaru Nikaido Vargas:** Reforcé el aprendizaje sobre API Gateway, documentación Swagger y control de rutas protegidas. <br><br> **AV3 - Pietro Osores Marchese:** Fortalecí conocimientos sobre backend NestJS, autenticación JWT, Prisma y despliegue serverless. <br><br> **AV3 - Percy Alonso Muñiz Huayanca:** Aprendí a organizar mejor el seguimiento de tareas técnicas mediante Kanban y validación de endpoints. <br><br> **AV3 - Matias Rodolfo Salcedo Champi:** Reforcé conocimientos sobre integración entre Front-End, API Gateway, backend y módulos base de notificación. | El equipo reconoce que el desarrollo de soluciones de software requiere aprendizaje continuo. La aplicación de metodologías como Lean UX, Needfinding, User Stories, Impact Mapping, DDD, C4, ADD y ADRs evidencia el compromiso de cada miembro por adquirir nuevas competencias y adaptarse a decisiones técnicas propias de una plataforma de movilidad urbana. Además, el Sprint 2 permitió fortalecer aprendizajes relacionados con integración Front-End, despliegue, backend serverless, API Gateway, autenticación y validación de servicios en un entorno más cercano a producción. |
 
 ## Contenido 
 
@@ -68,12 +67,12 @@
     - [2.3.2. User Task Matrix](#232-user-task-matrix)
     - [2.3.3. Empathy Mapping](#233-empathy-mapping)
     - [2.3.4. As-is Scenario Mapping](#234-as-is-scenario-mapping)
-- [Capítulo III: Requirements Specification](#capítulo-iii-requirements-specification)
-    - [3.1. To-Be Scenario Mapping](#31-to-be-scenario-mapping)
-    - [3.2. User Stories](#32-user-stories)
-    - [3.2.1. Technical Stories](#321-technical-stories)
-    - [3.3. Impact Mapping](#33-impact-mapping)
-    - [3.4. Product Backlog](#34-product-backlog)
+ - [Capítulo III: Requirements Specification](#capítulo-iii-requirements-specification)
+   - [3.1. To-Be Scenario Mapping](#31-to-be-scenario-mapping)
+   - [3.2. User Stories](#32-user-stories)
+   - [3.2.1. Technical Stories](#321-technical-stories)
+   - [3.3. Impact Mapping](#33-impact-mapping)
+   - [3.4. Product Backlog](#34-product-backlog)
 - [Capítulo IV: Product Architecture Design](#capítulo-iv-product-architecture-design)
     - [4.1. Strategic-Level Domain-Driven Design](#41-strategic-level-domain-driven-design)
     - [4.1.1. Principles Statements](#411-principles-statements)
@@ -119,6 +118,15 @@
     - [5.3.1.6 Software Deployment Evidence for Sprint Review](#5316-software-deployment-evidence-for-sprint-review)
     - [5.3.1.7 Team Collaboration Insights during Sprint](#5317-team-collaboration-insights-during-sprint)
     - [5.3.1.8 Kanban Board](#5318-kanban-board)
+    - [5.3.2 Sprint 2](#532-sprint-2)
+    - [5.3.2.1 Sprint Backlog 2](#5321-sprint-backlog-2)
+    - [5.3.2.2 Development Evidence for Sprint Review](#5322-development-evidence-for-sprint-review)
+    - [5.3.2.3 Testing Suite Evidence for Sprint Review](#5323-testing-suite-evidence-for-sprint-review)
+    - [5.3.2.4 Execution Evidence for Sprint Review](#5324-execution-evidence-for-sprint-review)
+    - [5.3.2.5 Microservices Documentation Evidence for Sprint Review](#5325-microservices-documentation-evidence-for-sprint-review)
+    - [5.3.2.6 Software Deployment Evidence for Sprint Review](#5326-software-deployment-evidence-for-sprint-review)
+    - [5.3.2.7 Team Collaboration Insights during Sprint](#5327-team-collaboration-insights-during-sprint)
+    - [5.3.2.8 Kanban Board](#5328-kanban-board)
   
 # Capítulo I: Introducción
 
@@ -1036,7 +1044,7 @@ Se aplica CQRS de forma liviana en el Parking Discovery Context. Las búsquedas 
 
 | Patrón | Contexto de aplicación |
 |--------|------------------------|
-| Repository Pattern | Abstracción del acceso a PostgreSQL para reservas, espacios, usuarios y pagos. Facilita testing y permite cambiar el motor de base de datos sin afectar el dominio. |
+| Repository Pattern | Abstracción del acceso a MySQL para reservas, espacios, usuarios y pagos. Facilita testing y permite cambiar el motor de base de datos sin afectar el dominio. |
 | Adapter Pattern | Encapsula la comunicación con proveedores externos: Stripe, MercadoPago, Google Maps, Firebase Cloud Messaging, SendGrid y S3-compatible storage. El dominio depende de interfaces, no de SDKs concretos. |
 | Circuit Breaker | Envuelve todas las llamadas a proveedores externos. Abre el circuito ante fallos repetidos y ejecuta un fallback controlado, evitando la propagación del fallo hacia operaciones internas. |
 | CQRS | Separación de comandos (crear, cancelar, extender reserva) y consultas (buscar espacios, ver disponibilidad) para optimizar rendimiento de lectura en búsquedas frecuentes. |
@@ -1064,7 +1072,7 @@ Los diagramas se modelan mediante **Structurizr DSL** como Architecture-as-Code,
 | Persona (caja con cabeza) | Actor humano externo al sistema | Conductor, Propietario |
 | Software System (caja azul oscura) | Sistema bajo análisis | ParkLink Platform |
 | External System (caja gris) | Sistema externo del que dependemos | Google Maps Platform, Stripe, SendGrid |
-| Container (caja azul clara) | Unidad ejecutable o de datos desplegable | Mobile App, Backend API, PostgreSQL, Redis |
+| Container (caja azul clara) | Unidad ejecutable o de datos desplegable | Mobile App, Backend API, MySQL, Redis |
 | Component (caja blanca dentro de container) | Pieza interna de código | ReservationController, AvailabilityService |
 | Code Element | Clase, interfaz, value object | `Reservation`, `ReservationStatus` enum |
 | Flecha sólida | Llamada síncrona (HTTPS, JDBC) | Mobile → API Gateway |
@@ -1203,7 +1211,7 @@ El Container Level Diagram muestra cómo los productos digitales y servicios té
 | Parking Discovery Service | Resolver búsquedas, filtros, detalle, disponibilidad visible, mapa y recomendación de estacionamientos. | Módulo backend REST optimizado para consultas e integración con mapas. | Consulta base de datos, cache de disponibilidad, Maps API y object storage. | Parking Discovery Context. |
 | Reservation Management Service | Crear reservas, bloquear espacios, cancelar, extender, consultar historial y controlar estados de reserva. | Módulo backend REST con reglas transaccionales y validaciones de concurrencia. | Lee/escribe en base de datos; actualiza cache; emite eventos; solicita notificaciones. | Reservation Management Context. |
 | Parking Supply & Monetization Service | Publicar espacios, configurar horarios y precios, habilitar/deshabilitar disponibilidad, gestionar reservas recibidas, ingresos, pagos, reembolsos y comprobantes. | Módulo backend REST con integración a pasarela de pagos y object storage. | Lee/escribe en base de datos; se integra con Payment Gateway, object storage y notificaciones. | Parking Supply & Monetization Context. |
-| Main Relational Database | Persistir usuarios, perfiles, espacios, disponibilidad base, reservas, pagos, comprobantes, reseñas y notificaciones. | PostgreSQL, coherente con la justificación relacional del informe. | Accedida únicamente por servicios backend; cada contexto mantiene propiedad lógica de sus datos. | Soporte persistente para los cuatro bounded contexts. |
+| Main Relational Database | Persistir usuarios, perfiles, espacios, disponibilidad base, reservas, pagos, comprobantes, reseñas y notificaciones. | MySQL, coherente con la justificación relacional del informe. | Accedida únicamente por servicios backend; cada contexto mantiene propiedad lógica de sus datos. | Soporte persistente para los cuatro bounded contexts. |
 | Availability Cache | Acelerar consultas de disponibilidad visible y reducir carga sobre la base de datos en búsquedas frecuentes. | Redis. | Actualizada por Reservation Management y Supply; consultada por Parking Discovery. | Parking Discovery y Reservation Management. |
 | Internal Domain Event Bus | Desacoplar efectos secundarios como notificaciones, actualización de disponibilidad visible y sincronización de vistas. | Bus de eventos interno o message broker según evolución del despliegue. | Recibe eventos desde servicios de dominio y los entrega a consumidores internos. | Principalmente Reservation Management, Parking Discovery y Parking Supply & Monetization. |
 | Object Storage S3-compatible | Almacenar imágenes de espacios de estacionamiento publicadas por propietarios. | Servicio compatible con S3. | Supply sube imágenes; Discovery recupera imágenes para detalle de espacios. | Parking Supply & Monetization y Parking Discovery. |
@@ -1215,7 +1223,7 @@ Esta estructura soporta las user stories principales del backlog. US01 a US04 se
 
 La base de datos relacional se mantiene como fuente de verdad para reservas y pagos porque estas operaciones requieren consistencia fuerte. La cache no reemplaza esa fuente de verdad; solo acelera la lectura de disponibilidad para el conductor. Esta decisión es clave: una disponibilidad mostrada en el mapa no equivale a una reserva confirmada hasta que el Reservation Management Context haya bloqueado el espacio y registrado el estado correspondiente.
 
-**Conectividad explícita a la base de datos relacional (lectura clave del Container Diagram).** Conforme a la notación C4, la base de datos `Main Relational Database (PostgreSQL)` no es un bounded context ni un servicio: es un **contenedor de datos** consultado y modificado **únicamente** por los servicios backend mediante JDBC/TCP cifrado. Cada microservicio mantiene la propiedad lógica de sus tablas pero comparte el motor por simplicidad operativa en la primera versión. El siguiente diagrama Mermaid complementa el SVG anterior para hacer explícita la conectividad servicio→base de datos exigida por el C4 Container Level:
+**Conectividad explícita a la base de datos relacional (lectura clave del Container Diagram).** Conforme a la notación C4, la base de datos `Main Relational Database (MySQL)` no es un bounded context ni un servicio: es un **contenedor de datos** consultado y modificado **únicamente** por los servicios backend mediante JDBC/TCP cifrado. Cada microservicio mantiene la propiedad lógica de sus tablas pero comparte el motor por simplicidad operativa en la primera versión. El siguiente diagrama Mermaid complementa el SVG anterior para hacer explícita la conectividad servicio→base de datos exigida por el C4 Container Level:
 
 ```mermaid
 flowchart LR
@@ -1224,7 +1232,7 @@ flowchart LR
     ReservationSvc["Reservation Management Service<br/>(Node.js / NestJS)"]
     SupplySvc["Parking Supply &amp; Monetization Service<br/>(Node.js / NestJS)"]
     Cache[("Availability Cache<br/>Redis 7")]
-    DB[("Main Relational Database<br/>PostgreSQL 16")]
+    DB[("Main Relational Database<br/>MySQL 8.0")]
     EventBus(["Internal Domain Event Bus"])
 
     UserSvc -- "Lee/escribe<br/>tablas USERS, REFRESH_TOKENS<br/>(JDBC/TLS)" --> DB
@@ -1247,7 +1255,7 @@ Los Component Diagrams corresponden al **C4 Nivel 3** y descomponen cada contain
 
 ##### Componentes del Parking Discovery Service
 
-El Parking Discovery Service expone búsqueda geoespacial, filtros por precio y horario, y detalle de espacios con disponibilidad proyectada. Internamente sigue un estilo **Hexagonal (Ports & Adapters)** que aísla el dominio (`SearchAvailability`) de los detalles de infraestructura (PostgreSQL, Redis, Google Maps).
+El Parking Discovery Service expone búsqueda geoespacial, filtros por precio y horario, y detalle de espacios con disponibilidad proyectada. Internamente sigue un estilo **Hexagonal (Ports & Adapters)** que aísla el dominio (`SearchAvailability`) de los detalles de infraestructura (MySQL, Redis, Google Maps).
 
 ```mermaid
 flowchart TB
@@ -1266,7 +1274,7 @@ flowchart TB
         AvailAdapter["RedisAvailabilityAdapter<br/>«adapter»"]
         MapsAdapter["GoogleMapsAdapter<br/>«adapter»"]
     end
-    DB[("PostgreSQL<br/>parking_spaces, availability")]
+    DB[("MySQL<br/>parking_spaces, availability")]
     Cache[("Redis<br/>avail:{space}:{slot}")]
     Maps(["Google Maps API"])
 
@@ -1323,7 +1331,7 @@ flowchart TB
         PayAdapter["HttpPaymentAdapter<br/>«adapter»"]
         EventAdapter["EventBusAdapter<br/>«adapter»"]
     end
-    DB[("PostgreSQL<br/>reservations, payments")]
+    DB[("MySQL<br/>reservations, payments")]
     PaySvc(["Payment Service"])
     Bus(["Internal Domain Event Bus"])
 
@@ -1495,7 +1503,7 @@ flowchart TD
 ```mermaid
 sequenceDiagram
     participant R as Reservation Service
-    participant DB as PostgreSQL
+    participant DB as MySQL
     participant Bus as Event Bus
     participant D as Discovery Service
     participant C as Redis Cache
@@ -1504,7 +1512,7 @@ sequenceDiagram
     R-->>Bus: ReservationConfirmed{ spaceId, interval }
     Bus-->>D: ReservationConfirmed
     D->>C: SET avail:{spaceId}:{slot} = "reserved" EX 3600
-    Note over D,C: La proyección se vuelve eventually consistent.<br/>Si el conductor busca antes del SET,<br/>verá el espacio brevemente disponible<br/>pero la reserva real lo rechazará en PostgreSQL.
+    Note over D,C: La proyección se vuelve eventually consistent.<br/>Si el conductor busca antes del SET,<br/>verá el espacio brevemente disponible<br/>pero la reserva real lo rechazará en MySQL.
 ```
 
 ##### Diagrama de clases — Adapter Pattern para Payment y Notification
@@ -1556,7 +1564,7 @@ classDiagram
 | Clases — Reservation Domain | EP02, US05, US06, US07, US08, TS01 | Modelo rico DDD: `Reservation` como aggregate root con invariantes encapsuladas |
 | Estados — Reservation Lifecycle | US05, US06, US08, QAS-02 | State Pattern: el aggregate controla las transiciones legales, rechaza saltos inválidos |
 | Actividad — Reserva concurrente | TS01, QAS-02, US05 | Locking pesimista `SELECT FOR UPDATE` + serializable previene doble reserva |
-| Secuencia — Proyección disponibilidad | TS02, RNF02, QAS-01 | CQRS ligero: comandos en PostgreSQL, lecturas rápidas en Redis con eventual consistency |
+| Secuencia — Proyección disponibilidad | TS02, RNF02, QAS-01 | CQRS ligero: comandos en MySQL, lecturas rápidas en Redis con eventual consistency |
 | Clases — Adapter Pattern | C-INT, RNF04, ADR-307 | Inversión de dependencias: el dominio depende de la interfaz, no del SDK del proveedor |
 
 Estos diagramas permiten que un desarrollador nuevo entienda no solo qué hace cada componente, sino también cómo está modelado el dominio a nivel de código y qué reglas protegen las transiciones críticas del sistema.
@@ -1573,7 +1581,7 @@ Los ViewPoints Diagrams complementan los diagramas C4 mostrando la arquitectura 
 **Driver:** US05, US14, QAS-02, AC-02
 **Preocupación:** ¿Cómo garantiza el sistema que mi reserva es confirmada sin duplicados y con pago procesado correctamente?
 
-Este viewpoint muestra el flujo funcional completo desde que el conductor selecciona un espacio hasta que recibe confirmación de reserva y pago. La decisión arquitectónica central es la separación entre disponibilidad visible (Redis) y disponibilidad confirmable (PostgreSQL con bloqueo transaccional), que previene la doble reserva bajo concurrencia.
+Este viewpoint muestra el flujo funcional completo desde que el conductor selecciona un espacio hasta que recibe confirmación de reserva y pago. La decisión arquitectónica central es la separación entre disponibilidad visible (Redis) y disponibilidad confirmable (MySQL con bloqueo transaccional), que previene la doble reserva bajo concurrencia.
 
 <table>
   <thead>
@@ -1589,7 +1597,7 @@ Este viewpoint muestra el flujo funcional completo desde que el conductor selecc
       <td>1</td>
       <td>Conductor → Parking Discovery Service</td>
       <td>Busca espacios cercanos con precio, horario y distancia</td>
-      <td>CQRS ligero: lectura desde Redis Cache sin tocar PostgreSQL</td>
+      <td>CQRS ligero: lectura desde Redis Cache sin tocar MySQL</td>
     </tr>
     <tr>
       <td>2</td>
@@ -1605,7 +1613,7 @@ Este viewpoint muestra el flujo funcional completo desde que el conductor selecc
     </tr>
     <tr>
       <td>4</td>
-      <td>Reservation Service → PostgreSQL</td>
+      <td>Reservation Service → MySQL</td>
       <td>Abre transacción ACID y bloquea disponibilidad con SELECT FOR UPDATE</td>
       <td>Locking pesimista; previene doble reserva bajo concurrencia</td>
     </tr>
@@ -1723,7 +1731,7 @@ Este viewpoint muestra las decisiones que optimizan el rendimiento actual y habi
   <tbody>
     <tr>
       <td>Redis como proyección de disponibilidad visible</td>
-      <td>Búsquedas responden sin consultar PostgreSQL; latencia sub-milisegundo en lecturas de cache</td>
+      <td>Búsquedas responden sin consultar MySQL; latencia sub-milisegundo en lecturas de cache</td>
       <td>Cache puede replicarse horizontalmente sin afectar la fuente de verdad</td>
       <td>ADR-104, ADR-204</td>
     </tr>
@@ -1734,7 +1742,7 @@ Este viewpoint muestra las decisiones que optimizan el rendimiento actual y habi
       <td>ADR-207</td>
     </tr>
     <tr>
-      <td>CQRS ligero: lecturas desde cache, escrituras en PostgreSQL</td>
+      <td>CQRS ligero: lecturas desde cache, escrituras en MySQL</td>
       <td>Desacopla la carga de lectura frecuente de la carga transaccional de comandos</td>
       <td>Read replicas pueden añadirse al modelo de lectura sin cambiar el dominio transaccional</td>
       <td>ADR-104</td>
@@ -1835,92 +1843,13 @@ Los datos de ParkLink tienen una estructura bien definida y relaciones claras:
 
 > reservas → espacios → usuarios → pagos
 
-- ✅ PostgreSQL es compatible con Node.js/Express.js y soporta claves foráneas.
+- ✅ MySQL es compatible con Node.js/Express.js y soporta claves foráneas.
 - ✅ El negocio requiere consistencia **ACID** (reservas, pagos, cancelaciones).
 - ✅ Las consultas (filtros por ubicación, precio, horario) se optimizan con **índices y JOINs**.
 
 ---
 
 #### Diagrama Entidad-Relación
-
-El siguiente DER representa las entidades principales del modelo relacional de ParkLink y sus relaciones clave. Se usa Mermaid `erDiagram` para que GitHub renderice el diagrama visual directamente en el README, manteniendo además el modelo versionado como texto.
-
-```mermaid
-erDiagram
-    USERS {
-        UUID user_id PK
-        VARCHAR name
-        VARCHAR email UK
-        VARCHAR password_hash
-        ENUM role
-        VARCHAR phone
-        DATETIME created_at
-    }
-
-    PARKING_SPACES {
-        UUID space_id PK
-        UUID owner_id FK
-        VARCHAR address
-        DECIMAL latitude
-        DECIMAL longitude
-        DECIMAL price_per_hour
-        ENUM status
-    }
-
-    AVAILABILITY {
-        UUID availability_id PK
-        UUID space_id FK
-        INT day_of_week
-        TIME start_time
-        TIME end_time
-        ENUM status
-    }
-
-    RESERVATIONS {
-        UUID reservation_id PK
-        UUID driver_id FK
-        UUID space_id FK
-        DATETIME start_datetime
-        DATETIME end_datetime
-        ENUM status
-        DECIMAL total_amount
-    }
-
-    PAYMENTS {
-        UUID payment_id PK
-        UUID reservation_id FK
-        DECIMAL amount
-        VARCHAR method
-        ENUM status
-        DATETIME transaction_date
-    }
-
-    REVIEWS {
-        UUID review_id PK
-        UUID reservation_id FK
-        UUID driver_id FK
-        INT rating
-        VARCHAR comment
-    }
-
-    NOTIFICATIONS {
-        UUID notification_id PK
-        UUID user_id FK
-        VARCHAR type
-        VARCHAR message
-        BOOLEAN is_read
-        DATETIME sent_at
-    }
-
-    USERS ||--o{ PARKING_SPACES : owns
-    USERS ||--o{ RESERVATIONS : makes
-    USERS ||--o{ REVIEWS : writes
-    USERS ||--o{ NOTIFICATIONS : receives
-    PARKING_SPACES ||--o{ AVAILABILITY : defines
-    PARKING_SPACES ||--o{ RESERVATIONS : is_reserved_in
-    RESERVATIONS ||--o{ PAYMENTS : generates
-    RESERVATIONS ||--o| REVIEWS : receives
-```
 
 ##### Descripción de Tablas
 
@@ -1940,15 +1869,15 @@ ParkLink aplica patrones **arquitectónicos**, **GoF** y **tácticos de DDD** de
 
 | ID | Patrón | Categoría | Bounded context | Driver / Decisión sustentada | Evidencia en el informe |
 |----|--------|-----------|------------------|-------------------------------|--------------------------|
-| **DP-01** | Repository | DDD táctico / Acceso a datos | Todos | Aísla el dominio del motor PostgreSQL, facilita tests con doubles y permite migrar a otro motor sin tocar dominio. Soporta C-06 (consistencia ACID) | 4.1.3.4 — `ReservationRepository`, `SpaceReadRepository` como ports |
+| **DP-01** | Repository | DDD táctico / Acceso a datos | Todos | Aísla el dominio del motor MySQL, facilita tests con doubles y permite migrar a otro motor sin tocar dominio. Soporta C-06 (consistencia ACID) | 4.1.3.4 — `ReservationRepository`, `SpaceReadRepository` como ports |
 | **DP-02** | Observer / Domain Event Bus | Arquitectónico | Reservation, Supply, Discovery, Notification | Desacopla efectos secundarios; notificaciones y proyección de disponibilidad no bloquean la transacción principal. Soporta US20, RNF04, ADR-306 | 4.1.3.5 — diagrama de secuencia `Availability Projection Flow` |
 | **DP-03** | Strategy | GoF Comportamental | Payment, Notification | Permite intercambiar métodos de pago (tarjeta, billetera, transferencia) y canales de notificación (push, email) sin alterar el flujo de reserva | 4.1.3.5 — `PaymentProvider`, `NotificationProvider` |
 | **DP-04** | Chain of Responsibility | GoF Comportamental | API Gateway / Backend | Pipeline de validación de requests: autenticación → autorización por rol → validación de DTO → rate limit, cada eslabón puede cortar la cadena. Soporta TS03, QAS-04 | Middleware en sección 5.2 y guards en componentes |
-| **DP-05** | Singleton | GoF Creacional | Todos | Una sola instancia del pool de conexiones a PostgreSQL y del cliente Redis por proceso; evita agotar conexiones del motor en VM | `prisma.service.ts` documentado en cap 5 |
+| **DP-05** | Singleton | GoF Creacional | Todos | Una sola instancia del pool de conexiones a MySQL y del cliente Redis por proceso; evita agotar conexiones del motor en VM | `prisma.service.ts` documentado en cap 5 |
 | **DP-06** | Factory Method | GoF Creacional | Notification | Crea el objeto de notificación correcto según el tipo de evento (`ReservationConfirmed` → push + email; `RefundProcessed` → solo email) | 4.1.3.4 — Notification Service Components |
 | **DP-07** | Command | GoF Comportamental | Reservation | Encapsula intenciones del conductor (`CreateReservationCommand`, `CancelReservationCommand`, `ExtendReservationCommand`) permitiendo logging, validación, retry y futura cola de comandos | 4.1.3.4 — diagrama de componentes Reservation |
 | **DP-08** | Decorator | GoF Estructural | Cross-cutting | Añade logging, métricas y circuit breaker alrededor de los adapters de Stripe, MercadoPago, FCM, SendGrid y Google Maps sin modificarlos. Soporta RNF04 y ADR-305 | ADR-305 (Circuit Breaker) en sección 4.3.3 |
-| **DP-09** | CQRS (ligero) | Arquitectónico | Parking Discovery + Reservation | Separa el modelo de lectura (proyección Redis para búsqueda rápida) del modelo de escritura (PostgreSQL como fuente de verdad). Soporta QAS-01, RNF02, TS02 | 4.1.3.5 — secuencia `Availability Projection Flow` |
+| **DP-09** | CQRS (ligero) | Arquitectónico | Parking Discovery + Reservation | Separa el modelo de lectura (proyección Redis para búsqueda rápida) del modelo de escritura (MySQL como fuente de verdad). Soporta QAS-01, RNF02, TS02 | 4.1.3.5 — secuencia `Availability Projection Flow` |
 | **DP-10** | State | GoF Comportamental | Reservation | Las transiciones legales del agregado `Reservation` se encapsulan dentro del propio agregado; estados ilegales rechazan la operación con excepción de dominio | 4.1.3.5 — `stateDiagram-v2` Reservation Lifecycle |
 | **DP-11** | Adapter | GoF Estructural | Payment, Notification, Maps | Convierte el SDK heterogéneo de cada proveedor a la interfaz uniforme que el dominio espera. Permite cambiar de Stripe a MercadoPago sin tocar reglas. Soporta C-INT, ADR-307 | 4.1.3.5 — `classDiagram` Adapter Pattern |
 | **DP-12** | Aggregate | DDD táctico | Reservation, Supply | `Reservation` y `ParkingSpace` son aggregate roots que mantienen invariantes y son la única puerta de modificación de su árbol de objetos. Soporta consistencia transaccional | 4.1.3.5 — `Reservation` con métodos `confirmPayment`, `cancel`, `extend` |
@@ -1982,7 +1911,7 @@ ParkLink selecciona deliberadamente tactics para cada Quality Attribute Scenario
 
 | QAS sustentado | Tactic | Decisión concreta en ParkLink | Evidencia |
 |----------------|--------|--------------------------------|-----------|
-| QAS-01 (95% búsquedas ≤ 3s) | **Increase Computational Efficiency** — usar estructuras de datos óptimas | Índices geoespaciales en PostgreSQL (`SPATIAL INDEX` sobre `latitude, longitude`) y B-Tree sobre `pricePerHour` y `status` | Schema 4.1.5 + ADR-201 |
+| QAS-01 (95% búsquedas ≤ 3s) | **Increase Computational Efficiency** — usar estructuras de datos óptimas | Índices geoespaciales en MySQL (`SPATIAL INDEX` sobre `latitude, longitude`) y B-Tree sobre `pricePerHour` y `status` | Schema 4.1.5 + ADR-201 |
 | QAS-01 | **Reduce Computational Overhead** — evitar cálculos costosos en cada request | Cache de disponibilidad proyectada en Redis (TTL 1h) consultada por Discovery Service en vez de recalcular intersecciones de horarios sobre MySQL | 4.1.3.5 Availability Projection Flow |
 | QAS-01 | **Introduce Concurrency** — paralelizar trabajo independiente | Connection pool MySQL (10 conexiones por servicio) + `Promise.all` para combinar resultados de Discovery + Maps en un solo response | Container Diagram 4.1.3.3 |
 | QAS-02 (reserva ≤ 5s, 0 dobles) | **Reduce Computational Overhead** | Pre-cálculo de `pricePerHour × duration` en `PriceCalculator` evitando JOIN adicional | 4.1.3.5 Reservation Domain |
@@ -3047,20 +2976,6 @@ La validación técnica de ParkLink debe mantener coherencia con los bounded con
 
 El objetivo principal de esta sección es describir cómo el backend y sus módulos pueden ser validados desde una perspectiva funcional y arquitectónica, sin depender únicamente de evidencias visuales. Para ello, se consideran los endpoints, módulos, responsabilidades, reglas de negocio y patrones de diseño definidos previamente en el informe.
 
-### Evidencia de contratos API con Swagger/OpenAPI
-
-Como evidencia complementaria para la sección **5.1. Testing Suites & General Patterns**, se validaron con Playwright las documentaciones Swagger desplegadas para las dos aplicaciones backend del Sprint 1: el backend principal y el API Gateway. Estas capturas demuestran que los contratos HTTP se encuentran publicados en ambientes reales, permitiendo inspeccionar endpoints, DTOs, respuestas esperadas y autenticación desde Swagger UI.
-
-**Backend Swagger Deployment:**  
-URL: [https://backend-silk-two-93.vercel.app/docs/](https://backend-silk-two-93.vercel.app/docs/)
-
-![Backend Swagger Deployment](assets/swagger-backend-docs.png)
-
-**API Gateway Swagger Deployment:**  
-URL: [https://api-gateway-xi-five.vercel.app/docs](https://api-gateway-xi-five.vercel.app/docs)
-
-![API Gateway Swagger Deployment](assets/swagger-api-gateway-docs.png)
-
 ### Objetivo de validación
 
 Validar que la estructura inicial de ParkLink permita soportar las funcionalidades principales del producto: registro e inicio de sesión de usuarios, búsqueda de estacionamientos, gestión de reservas, publicación de espacios y soporte futuro para pagos y notificaciones.
@@ -3231,9 +3146,9 @@ El refactoring permite que ParkLink mantenga una base técnica más limpia y coh
 
 La gestión de configuración de software en ParkLink tiene como objetivo organizar las herramientas, estándares, repositorios, convenciones de código y mecanismos de despliegue utilizados durante el desarrollo del producto. Esta sección permite asegurar que el equipo mantenga una forma ordenada de trabajar, controlar versiones, documentar cambios, ejecutar pruebas, desplegar componentes y mantener la trazabilidad del desarrollo.
 
-ParkLink se encuentra dividido en dos repositorios principales: uno correspondiente a la **landing page**, desarrollada con React, TypeScript y Vite, y otro correspondiente al **backend**, desarrollado como monorepo con NestJS, TypeScript, Prisma y Bun.
+ParkLink se organiza en cuatro repositorios bajo la organización GitHub `1ASI0657-2610-17949-ParkLink`: la **landing page** (React, TypeScript y Vite), el **frontend funcional** (React, TypeScript y Vite), el **backend** (monorepo con NestJS, TypeScript, Prisma y Bun) y el **report** (documentación del proyecto).
 
-El repositorio de la landing page contiene la capa de presentación pública del producto, mientras que el repositorio backend contiene la implementación de servicios, API Gateway, configuración de Prisma, testing, documentación Swagger y preparación para despliegue.
+El repositorio de la landing page contiene la capa de presentación pública del producto; el repositorio frontend contiene la aplicación web funcional con la que interactúan los usuarios; el repositorio backend contiene la implementación de servicios, API Gateway, configuración de Prisma, testing, documentación Swagger y preparación para despliegue; y el repositorio report contiene la documentación del proyecto.
 
 ### 5.2.1 Software Development Environment Configuration
 
@@ -3293,22 +3208,30 @@ Google Maps API será utilizada para funcionalidades de geocodificación, cálcu
 Git será utilizado como sistema de control de versiones para registrar cambios, mantener historial del código, crear ramas de trabajo y facilitar la colaboración entre integrantes.
 
 **16. GitHub:**  
-GitHub será utilizado como plataforma principal para alojar los repositorios del proyecto. ParkLink cuenta con un repositorio para la landing page y otro para el backend, permitiendo separar la capa pública del producto y la capa de servicios.
+GitHub será utilizado como plataforma principal para alojar los repositorios del proyecto. ParkLink cuenta con cuatro repositorios —landing page, frontend funcional, backend y report— permitiendo separar la capa pública, la aplicación funcional, la capa de servicios y la documentación del producto.
 
 **17. Vercel:**  
 Vercel será utilizado como plataforma de despliegue. La landing page se encuentra preparada para deployment en Vercel, mientras que el backend incluye configuración para desplegar sus componentes y servicios.
 
 ### 5.2.2 Source Code Management
 
-El proyecto ParkLink emplea Git y GitHub como herramientas principales para el control del código fuente. La gestión de versiones se organiza a partir de repositorios separados para frontend público y backend, permitiendo diferenciar la capa de presentación de la capa de servicios.
+El proyecto ParkLink emplea Git y GitHub como herramientas principales para el control del código fuente. La gestión de versiones se organiza a partir de cuatro repositorios separados —landing page, frontend funcional, backend y report— permitiendo diferenciar la capa de presentación, la aplicación funcional, la capa de servicios y la documentación del producto.
 
 ### Repositorio de Landing Page
 
-**Repositorio:**  [https://github.com/1ASI0657-2610-17949-ParkLink](https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Landing)
+**Repositorio:** [https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Landing](https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Landing)
+
+### Repositorio Frontend
+
+**Repositorio:** [https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Frontend](https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Frontend)
 
 ### Repositorio Backend
 
-**Repositorio:** https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Backend
+**Repositorio:** [https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Backend](https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Backend)
+
+### Repositorio Report
+
+**Repositorio:** [https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Report](https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Report)
 
 ### 5.2.3 Source Code Style Guide & Conventions
 
@@ -3480,10 +3403,22 @@ El backend se encuentra desarrollado con NestJS, Bun, Prisma y Swagger. Además,
 https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Landing
 ```
 
+**Frontend Repository:**
+
+```txt
+https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Frontend
+```
+
 **Backend Repository:**
 
 ```txt
 https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Backend
+```
+
+**Report Repository:**
+
+```txt
+https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Report
 ```
 
 ### Deployment Links
@@ -3807,3 +3742,454 @@ Durante el Sprint 1 el equipo trabajó con un tablero Kanban informal compartido
 | SBI-07 Provisión Postgres Render | Done |
 | SBI-08 Deploy backend Render | Done |
 | SBI-09 Form de registro embebido en landing | In Progress al cierre (carry-over candidato a Sprint 2 si no se completa) |
+
+### 5.3.2 Sprint 2
+
+**Sprint window:** 2026-05-22 → 2026-06-04 (14 días naturales, Avance 3).  
+**Sprint Goal:** Implementar el frontend principal de ParkLink y mejorar el API Gateway para que la aplicación cliente consuma las rutas del sistema desde una entrada centralizada, ordenada y segura.
+
+El Sprint 2 se enfocó **al 100% en el desarrollo del frontend y en la mejora del API Gateway**. En este sprint no se declaró la culminación del backend ni se implementó nueva lógica de negocio en los servicios internos. El trabajo del equipo se concentró en construir las pantallas principales del producto, organizar la navegación del usuario, preparar los formularios del MVP, conectar la interfaz con las rutas disponibles y ajustar el API Gateway para que funcione como capa de entrada entre el frontend y los servicios backend existentes.
+
+El frontend desarrollado representa los flujos principales de ParkLink para sus dos segmentos objetivo. Para los conductores, se implementaron vistas relacionadas con búsqueda de estacionamientos, visualización de disponibilidad, detalle del espacio, inicio de sesión, registro y flujo visual de reserva. Para los propietarios, se implementaron vistas relacionadas con publicación de espacios, configuración de horarios, configuración de precios y activación o desactivación visual de disponibilidad.
+
+La mejora del API Gateway se trabajó como una actividad técnica complementaria al frontend. El gateway se mantuvo como una capa de entrada y enrutamiento. Su responsabilidad en este sprint fue ordenar rutas, preparar el reenvío de solicitudes, conservar el header `Authorization` cuando corresponde y facilitar que el frontend consuma los servicios desde una estructura clara. El API Gateway no contiene reglas de negocio, no calcula disponibilidad, no procesa reservas y no ejecuta pagos. Esas responsabilidades permanecen en los servicios correspondientes.
+
+El resultado del Sprint 2 fue una versión frontend navegable del MVP y una capa de gateway más ordenada para futuras integraciones. Esta decisión permitió priorizar la experiencia del usuario y preparar una base visual demostrable para el Sprint Review.
+
+**Objetivos específicos del Sprint 2:**
+
+- Implementar las pantallas principales del frontend para conductores.
+- Implementar las pantallas principales del frontend para propietarios.
+- Construir el flujo visual de búsqueda de estacionamientos.
+- Construir la vista de detalle de un espacio de estacionamiento.
+- Construir el flujo visual de reserva desde el lado del conductor.
+- Implementar pantallas de registro e inicio de sesión.
+- Implementar vistas de publicación y configuración de espacios.
+- Separar la interfaz en componentes reutilizables.
+- Mejorar la organización de rutas del API Gateway.
+- Configurar el reenvío del header `Authorization` desde el API Gateway.
+- Validar comunicación básica entre frontend y API Gateway.
+- Preparar evidencia visual y funcional para el Sprint Review.
+
+**Alcance del Sprint 2:**
+
+El alcance del Sprint 2 incluye frontend, navegación, componentes visuales, formularios del MVP, validación básica de interfaz y mejora del API Gateway. El sprint no incluye culminación del backend, creación de nuevos microservicios, implementación completa de pagos reales, pruebas de carga, monitoreo avanzado ni automatización completa de CI/CD.
+
+**Resultado esperado del Sprint 2:**
+
+Al finalizar el Sprint 2, ParkLink debe contar con un frontend navegable que muestre los flujos principales del MVP y un API Gateway organizado para conectar la aplicación cliente con los servicios disponibles. El resultado es una versión demostrable centrada en experiencia de usuario, navegación e integración inicial cliente-gateway.
+
+---
+
+#### 5.3.2.1 Sprint Backlog 2
+
+El Sprint Backlog 2 reúne los ítems seleccionados para cumplir el objetivo del Sprint 2. A diferencia del Sprint 1, este sprint no se orientó a extender el backend. El foco fue implementar el frontend principal de ParkLink y mejorar el API Gateway como punto de conexión entre la interfaz y los servicios disponibles.
+
+La estimación utiliza escala Fibonacci modificada: 1, 2, 3, 5 y 8 story points.
+
+| Sprint Backlog Item | Epic / TS | User Story / Technical Story origen | Tareas técnicas | SP | Responsable principal |
+|---------------------|-----------|--------------------------------------|-----------------|----|-----------------------|
+| SBI-01 Vista de búsqueda de estacionamientos | EP01 | US01 Buscar estacionamientos por ubicación | Implementar pantalla de búsqueda con entrada de destino, contenedor de mapa, listado de resultados y estado vacío cuando no existan espacios disponibles. | 8 | Pietro Osores Marchese |
+| SBI-02 Vista de disponibilidad de espacios | EP01 | US02 Ver disponibilidad en tiempo real | Implementar componentes visuales para representar estados de espacio: disponible, reservado, ocupado y no disponible. | 8 | Matias Rodolfo Salcedo Champi |
+| SBI-03 Filtros de búsqueda por precio y horario | EP01 | US03 Filtrar estacionamientos por precio y horario | Implementar controles de filtro por precio mínimo, precio máximo, horario de inicio y horario de fin. | 5 | Fabian Alejandro Oliva Lopez |
+| SBI-04 Vista de detalle del estacionamiento | EP01 | US04 Ver detalle de un espacio de estacionamiento | Implementar pantalla de detalle con dirección, precio, horario, estado, imagen referencial y botón para iniciar reserva. | 5 | Javier Masaru Nikaido Vargas |
+| SBI-05 Flujo visual de reserva | EP02 | US05 Reservar un espacio de estacionamiento | Implementar interfaz para seleccionar fecha, hora de inicio, duración y confirmación visual de reserva. | 8 | Pietro Osores Marchese |
+| SBI-06 Vista de historial de reservas | EP02 | US07 Ver historial de reservas | Implementar pantalla de historial con cards de reservas, fecha, espacio, duración, monto y estado. | 3 | Matias Rodolfo Salcedo Champi |
+| SBI-07 Vista de publicación de espacio | EP03 | US09 Registrar un espacio de estacionamiento | Implementar formulario para registrar dirección, precio, horario, descripción y estado inicial del espacio. | 5 | Percy Alonso Muñiz Huayanca |
+| SBI-08 Vista de configuración de espacio | EP03 | US10 Configurar horarios y precio del espacio | Implementar interfaz para modificar precio, horario y disponibilidad del espacio publicado. | 5 | Percy Alonso Muñiz Huayanca |
+| SBI-09 Control visual de habilitar/deshabilitar espacio | EP03 | US11 Habilitar y deshabilitar un espacio | Implementar switch o botón de estado para activar y desactivar temporalmente un espacio desde el panel del propietario. | 3 | Matias Rodolfo Salcedo Champi |
+| SBI-10 Vista de reservas activas del propietario | EP03 | US12 Ver reservas activas de mi espacio | Implementar pantalla de propietario con listado de reservas activas asociadas a sus espacios. | 5 | Percy Alonso Muñiz Huayanca |
+| SBI-11 Pantallas de registro por rol | EP05 | US17 Registrarse como conductor / US18 Registrarse como propietario | Implementar formularios de registro diferenciando conductor y propietario. | 5 | Fabian Alejandro Oliva Lopez |
+| SBI-12 Pantalla de inicio de sesión | EP05 | US19 Iniciar sesión | Implementar vista de login y preparar almacenamiento del token de autenticación en el cliente. | 3 | Javier Masaru Nikaido Vargas |
+| SBI-13 Componentización del frontend | TS-FE01 | Soporte técnico para frontend | Separar la interfaz en componentes reutilizables para formularios, tarjetas, filtros, botones, layout y vistas principales. | 5 | Equipo |
+| SBI-14 Reorganización de rutas del API Gateway | TS-GW01 | Mejora técnica del API Gateway | Ordenar rutas expuestas por el gateway para que el frontend tenga una entrada clara hacia autenticación, espacios, reservas y propietario. | 5 | Javier Masaru Nikaido Vargas |
+| SBI-15 Reenvío de autorización desde el API Gateway | TS-GW02 | Seguridad de comunicación cliente-gateway | Configurar el gateway para conservar y reenviar el header `Authorization` hacia los servicios que requieren token JWT. | 5 | Javier Masaru Nikaido Vargas |
+| SBI-16 Validación de comunicación frontend-gateway | TS-GW03 | Integración frontend con gateway | Probar desde la aplicación cliente que las solicitudes llegan al API Gateway y que las respuestas se reciben sin romper la navegación. | 3 | Equipo |
+| SBI-17 Evidencia visual del frontend | TS-DOC01 | Evidencia para Sprint Review | Capturar pantallas de búsqueda, detalle, reserva, login, registro y panel de propietario para sustentar el Sprint Review. | 3 | Equipo |
+
+**Total estimado del Sprint 2:** 84 story points.
+
+**Nota sobre la estimación:**  
+El total del Sprint 2 es alto porque se implementaron múltiples vistas del frontend y, al mismo tiempo, se realizaron ajustes técnicos sobre el API Gateway. El esfuerzo no representa desarrollo nuevo de microservicios internos. El esfuerzo representa construcción de interfaz, navegación, componentización, integración visual y comunicación cliente-gateway.
+
+**Definition of Done aplicado al Sprint Backlog 2:**
+
+1. La vista frontend correspondiente se encuentra implementada.
+2. La vista puede navegarse desde la aplicación.
+3. Los formularios muestran campos claros y consistentes con la user story.
+4. Los componentes visuales mantienen una estructura reutilizable.
+5. Las rutas del frontend están organizadas.
+6. El API Gateway expone rutas claras para ser consumidas por el cliente.
+7. El API Gateway reenvía el header `Authorization` cuando la ruta lo requiere.
+8. El API Gateway no contiene reglas de negocio.
+9. La tarea cuenta con evidencia visual para el Sprint Review.
+10. La tarea se encuentra en estado Done dentro del tablero Kanban del Sprint 2.
+
+**Resumen del Sprint Backlog 2:**
+
+| Estado | Cantidad de ítems |
+|--------|------------------:|
+| Done | 17 |
+| In Progress | 0 |
+| To Do | 0 |
+
+**Conclusión del Sprint Backlog 2:**
+
+El Sprint Backlog 2 permitió ordenar el trabajo del equipo hacia un objetivo concreto: construir el frontend principal de ParkLink y mejorar el API Gateway. Al cierre del sprint, el equipo completó las pantallas principales para conductores y propietarios, preparó los flujos visuales del MVP y dejó el API Gateway organizado para conectar la interfaz con los servicios disponibles. El sprint no incluyó la culminación del backend; su resultado principal fue una versión frontend demostrable y una capa de entrada más clara para futuras integraciones.
+
+---
+
+
+  #### 5.3.2.2 Development Evidence for Sprint Review
+
+  Durante el Sprint 2 el trabajo de desarrollo se concentró en el repositorio **`ParkLink-Frontend`**, correspondiente a la capa de presentación funcional del sistema. A diferencia del Sprint 1, donde el foco estuvo en el backend y la infraestructura, este sprint priorizó la construcción de la interfaz web que permite a los usuarios interactuar directamente con ParkLink desde un navegador.
+
+  **Repositorio — `ParkLink-Frontend` (web frontend funcional):**
+  - URL: `https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Frontend`
+  - Rama principal: `master`
+  - Stack: React + TypeScript + Vite, desplegado en Vercel bajo la URL `https://parklink-eta.vercel.app`
+
+  | Commit | Fecha | Autor | Mensaje | Cambio relevante |
+  |--------|-------|-------|---------|------------------|
+  | `f1435f4` | 2026-06-06 | Maximoff19 | `feat: initial frontend commit with premium map markers` | Implementación inicial del frontend funcional de ParkLink: pantalla de autenticación (`/auth/login`), flujo de registro, vista de mapa con marcadores de estacionamientos y estructura base de rutas de la aplicación |
+
+  #### 5.3.2.3 Testing Suite Evidence for Sprint Review
+
+  El Sprint 2 priorizó la validación funcional del frontend desplegado en producción. Las pruebas realizadas fueron de tipo exploratorio y smoke testing manual, verificando que cada vista principal de la aplicación cargara correctamente, respondiera a interacciones del usuario y se comunicara con los servicios del backend.
+
+  **Enfoque de validación aplicado:**
+
+  Dado que el Sprint 2 introduce por primera vez la capa de presentación funcional de ParkLink, el equipo validó cada flujo principal desde el navegador utilizando el ambiente de producción desplegado en Vercel (`https://parklink-eta.vercel.app`). No se implementaron pruebas automatizadas en este sprint; esta deuda queda registrada para iteraciones futuras.
+
+  **Flujos validados:**
+
+  | ID | Flujo validado | Ruta | Resultado |
+  |----|---------------|------|-----------|
+  | FE-TC-01 | Visualización de pantalla de login | `/auth/login` | La pantalla carga correctamente con campos de email, contraseña y botón de ingreso |
+  | FE-TC-02 | Registro de conductor | `/auth/register` | El formulario muestra campos de nombre, email, contraseña, teléfono y placa del vehículo con selector de rol activo en "Conductor" |
+  | FE-TC-03 | Registro de propietario | `/auth/register` | Al seleccionar el rol "Propietario", el formulario adapta sus campos mostrando tipo de propietario (Particular / Empresa) y cuenta bancaria |
+  | FE-TC-04 | Dashboard principal con mapa | `/dashboard` | El mapa carga con marcadores de estacionamientos disponibles, barra de búsqueda, filtros de precio, hora y distancia, y contador de espacios disponibles |
+  | FE-TC-05 | Filtros de búsqueda | `/dashboard` | El panel de filtros despliega correctamente controles de distancia máxima (slider), rango de precio y hora de entrada/salida |
+  | FE-TC-06 | Detalle de espacio al seleccionar marcador | `/dashboard` | Al hacer clic en un marcador del mapa, se muestra un popup con la dirección del espacio y enlace a Google Maps |
+  | FE-TC-07 | Vista de reservas activas | `/dashboard/reservations` | La pantalla lista las reservas confirmadas del conductor con código, nombre del espacio, dirección, fechas de inicio y fin, total y acciones disponibles (Ver espacio, Extender, Cancelar) |
+  | FE-TC-08 | Vista de notificaciones | `/dashboard/notifications` | La pantalla muestra notificaciones del sistema con estado "Nuevo", descripción del evento (pago aprobado, reserva pendiente de pago) y tiempo transcurrido |
+
+  **Muestra de resultados de los casos de prueba:**
+
+  A continuación se presenta la captura del resultado real obtenido al ejecutar cada caso de prueba en el ambiente de producción (`https://parklink-eta.vercel.app`).
+
+  **FE-TC-01 — Visualización de pantalla de login (`/auth/login`) — Passed**
+
+  ![FE-TC-01 login](assets/login.png)
+
+  **FE-TC-02 — Registro de conductor (`/auth/register`) — Passed**
+
+  ![FE-TC-02 registro conductor](assets/register-conductor.png)
+
+  **FE-TC-03 — Registro de propietario (`/auth/register`) — Passed**
+
+  ![FE-TC-03 registro propietario](assets/register-propietario.png)
+
+  **FE-TC-04 — Dashboard principal con mapa (`/dashboard`) — Passed**
+
+  ![FE-TC-04 dashboard](assets/dashboard.png)
+
+  **FE-TC-05 — Filtros de búsqueda (`/dashboard`) — Passed**
+
+  ![FE-TC-05 filtros](assets/dashboard-filtros.png)
+
+  **FE-TC-06 — Detalle de espacio al seleccionar marcador (`/dashboard`) — Passed**
+
+  ![FE-TC-06 popup](assets/pop-up.png)
+
+  **FE-TC-07 — Vista de reservas activas (`/dashboard/reservations`) — Passed**
+
+  ![FE-TC-07 reservas](assets/reservations.png)
+
+  **FE-TC-08 — Vista de notificaciones (`/dashboard/notifications`) — Passed**
+
+  ![FE-TC-08 notificaciones](assets/notifications.png)
+
+  **Observaciones del proceso de validación:**
+
+  - Todas las rutas probadas respondieron correctamente bajo HTTPS en el ambiente de producción.
+  - La navegación lateral entre Mapa, Mis reservas y Notificaciones funciona sin recargas completas de página.
+  - El formulario de registro diferencia correctamente los campos según el rol seleccionado (Conductor / Propietario).
+  - Los marcadores del mapa se renderizan sobre Google Maps con datos reales provenientes del backend.
+  - Las notificaciones reflejan eventos reales de reservas y pagos registrados en el sistema.
+
+  **Deuda técnica de testing registrada para próximos sprints:**
+
+  - Implementar pruebas automatizadas con Vitest + React Testing Library para componentes críticos.
+  - Agregar pruebas de integración que validen el flujo completo desde login hasta creación de reserva.
+  - Configurar pipeline de CI en GitHub Actions que ejecute lint y tests en cada Pull Request.
+
+  ---
+
+  #### 5.3.2.4 Execution Evidence for Sprint Review
+
+  El Sprint 2 entrega el frontend funcional de ParkLink desplegado en producción bajo la URL `https://parklink-eta.vercel.app`. A continuación se presenta la evidencia de ejecución de cada vista principal implementada durante el sprint.
+
+  **Pantalla de inicio de sesión — `/auth/login`**
+
+  La pantalla de login permite al usuario autenticarse con su correo y contraseña. Incluye acceso directo al flujo de registro para usuarios nuevos.
+
+  ![login](assets/login.png)
+
+  ---
+
+  **Pantalla de registro — `/auth/register` (rol Conductor)**
+
+  El formulario de registro con rol Conductor solicita nombre completo, email, contraseña, teléfono y placa del vehículo. El selector de rol permite cambiar entre Conductor y Propietario de forma dinámica.
+
+  ![register-conductor](assets/register-conductor.png)
+
+  ---
+
+  **Pantalla de registro — `/auth/register` (rol Propietario)**
+
+  Al seleccionar el rol Propietario, el formulario adapta sus campos mostrando el tipo de propietario (Particular o Empresa) y el campo de cuenta bancaria necesario para recibir pagos de reservas.
+
+  ![register-propietario](assets/register-propietario.png)
+
+  ---
+
+  **Dashboard principal con mapa — `/dashboard`**
+
+  Vista principal del conductor. Muestra un mapa interactivo con Google Maps, marcadores de estacionamientos disponibles, barra de búsqueda por zona o dirección, filtros activos (Cerca mío, Filtros 5km, Precio, Hora) y contador de espacios disponibles en la zona actual (31 Espacios Disponibles).
+
+  ![dashboard](assets/dashboard.png)
+
+  ---
+
+  **Panel de filtros activo — `/dashboard`**
+
+  Al activar los filtros, se despliega un panel con control de distancia máxima mediante slider (5 km), rango de precio configurable (S/ 0.00 – S/ 30.00) y campos de hora de entrada y salida para acotar la búsqueda al horario requerido por el conductor.
+
+  ![dashboard-filtros](assets/dashboard-filtros.png)
+
+  ---
+
+  **Detalle de espacio al seleccionar marcador — `/dashboard`**
+
+  Al hacer clic sobre un marcador del mapa, se despliega un popup con la dirección exacta del espacio (John Fitzgerald Kennedy 500, Parcona 11003, Peru) y un enlace directo a Google Maps para facilitar la navegación al conductor.
+
+  ![pop-up](assets/pop-up.png)
+
+  ---
+
+  **Vista de mis reservas — `/dashboard/reservations`**
+
+  La pantalla muestra todas las reservas activas del conductor autenticado. Cada tarjeta incluye el código único de reserva, nombre y dirección del espacio, fechas y horas de inicio y fin, total en soles y acciones disponibles: Ver espacio, Extender y Cancelar.
+
+  ![reservations](assets/reservations.png)
+
+  ---
+
+  **Vista de notificaciones — `/dashboard/notifications`**
+
+  La pantalla centraliza todas las notificaciones del sistema relacionadas con la cuenta del conductor. Se muestran 4 notificaciones sin leer, incluyendo confirmaciones de pago aprobado y alertas de reservas pendientes de pago.
+
+  ![notifications](assets/notifications.png)
+
+  ---
+
+  **URL de producción del frontend:** `https://parklink-eta.vercel.app`
+
+  **Despliegue:** Vercel, rama `master` del repositorio `ParkLink-Frontend`, build automático por push, TLS gestionado por Vercel (100% HTTPS).
+
+  #### 5.3.2.5 Microservices Documentation Evidence for Sprint Review
+
+  El Sprint 2 se centró en la implementación del frontend funcional de ParkLink. A continuación se documenta la aplicación web desplegada en producción, sus vistas principales y las rutas implementadas durante el sprint.
+
+  **Frontend desplegado:**
+
+  | Componente | URL | Tecnología | Estado |
+  |------------|-----|------------|--------|
+  | ParkLink Frontend | `https://parklink-eta.vercel.app` | React + TypeScript + Vite | Activo |
+
+  **Vistas implementadas:**
+
+  | Vista | Ruta | Descripción |
+  |-------|------|-------------|
+  | Login | `/auth/login` | Pantalla de autenticación para conductores y propietarios |
+  | Registro de conductor | `/auth/register` | Formulario de creación de cuenta con rol Conductor |
+  | Registro de propietario | `/auth/register` | Formulario de creación de cuenta con rol Propietario |
+  | Dashboard con mapa | `/dashboard` | Mapa interactivo con marcadores de estacionamientos, búsqueda y filtros |
+  | Mis reservas | `/dashboard/reservations` | Listado de reservas activas con acciones de gestión |
+  | Notificaciones | `/dashboard/notifications` | Centro de notificaciones del sistema |
+
+#### 5.3.2.6 Software Deployment Evidence for Sprint Review
+
+La evidencia de despliegue del Sprint 2 se enfocó en verificar que los componentes relacionados con frontend y API Gateway estén disponibles para revisión. El despliegue backend existente se mantiene como soporte, pero no representa el objetivo principal de este sprint.
+
+**Componentes revisados para Sprint 2:**
+
+| Componente | Propósito en Sprint 2 | Estado |
+|------------|----------------------|--------|
+| Frontend ParkLink | Mostrar la interfaz navegable del MVP. | Validado para Sprint Review |
+| API Gateway | Centralizar las solicitudes del frontend. | Validado |
+| Swagger del API Gateway | Revisar rutas disponibles y documentación de entrada. | Disponible |
+| Backend Swagger existente | Servir como referencia de servicios disponibles. | Disponible |
+
+**Deployment links documentados:**
+
+**API Gateway Swagger Deployment:**
+
+```txt
+https://api-gateway-xi-five.vercel.app/docs
+```
+
+**Backend Swagger Deployment usado como referencia:**
+
+```txt
+https://backend-silk-two-93.vercel.app/docs/
+```
+
+**Repositorio de la capa pública / frontend documentado:**
+
+```txt
+https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Landing
+```
+
+**Repositorio backend documentado:**
+
+```txt
+https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Backend
+```
+
+**Validaciones realizadas:**
+
+| Validación | Resultado |
+|-----------|----------|
+| El frontend puede mostrar las vistas principales del Sprint 2. | Passed |
+| Las rutas del frontend permiten navegar entre pantallas. | Passed |
+| El API Gateway responde desde su URL desplegada. | Passed |
+| Swagger del API Gateway carga correctamente. | Passed |
+| El gateway conserva el header `Authorization` en rutas protegidas. | Passed |
+| El gateway no contiene lógica de negocio. | Passed |
+| El backend Swagger se mantiene disponible como referencia. | Passed |
+
+**Evidencias sugeridas para insertar:**
+
+```md
+![Frontend Deployment Evidence](assets/sprint2/frontend-deployment-evidence.png)
+![API Gateway Deployment Evidence](assets/sprint2/api-gateway-deployment-evidence.png)
+![API Gateway Swagger Sprint 2](assets/sprint2/api-gateway-swagger-sprint2.png)
+![Frontend Routes Evidence](assets/sprint2/frontend-routes-evidence.png)
+```
+
+**Conclusión del despliegue:**
+
+El Sprint 2 permitió demostrar una interfaz frontend navegable y un API Gateway accesible. La evidencia de despliegue confirma que el equipo puede presentar el avance visual del MVP y la capa de comunicación cliente-gateway. El despliegue no se presenta como culminación backend, sino como soporte para la demostración del frontend y la integración inicial.
+
+---
+
+#### 5.3.2.7 Team Collaboration Insights during Sprint
+
+Durante el Sprint 2, el equipo organizó su trabajo alrededor de dos objetivos concretos: implementar frontend y mejorar API Gateway. La colaboración se dividió por vistas, componentes y validaciones de comunicación cliente-gateway.
+
+**Aportes del equipo durante el Sprint 2:**
+
+| Integrante | Aporte durante el Sprint 2 |
+|------------|----------------------------|
+| Javier Masaru Nikaido Vargas | Implementó y revisó vistas relacionadas con detalle, login y conexión con el API Gateway. Apoyó la reorganización de rutas y el reenvío del header `Authorization`. |
+| Fabian Alejandro Oliva Lopez | Implementó pantallas de registro por rol y filtros visuales de búsqueda. Apoyó la revisión de consistencia visual en formularios. |
+| Pietro Osores Marchese | Implementó la vista de búsqueda de estacionamientos y el flujo visual de reserva. Apoyó la navegación principal del conductor. |
+| Percy Alonso Muñiz Huayanca | Implementó vistas del propietario para publicación, configuración de espacios y reservas activas. |
+| Matias Rodolfo Salcedo Champi | Implementó componentes de disponibilidad, historial de reservas y controles visuales de activación/desactivación de espacios. |
+
+**Decisiones de colaboración tomadas en el sprint:**
+
+| Decisión | Resultado |
+|----------|----------|
+| Priorizar frontend sobre backend. | El equipo concentró el sprint en pantallas y experiencia de usuario. |
+| Mantener el API Gateway sin lógica de negocio. | El gateway quedó limitado a entrada, rutas y reenvío de headers. |
+| Dividir el trabajo por flujo de usuario. | Cada integrante trabajó vistas conectadas a user stories específicas. |
+| Usar evidencia visual para Sprint Review. | Se prepararon capturas de las pantallas implementadas. |
+| Validar comunicación cliente-gateway. | Se redujo el riesgo de desconexión entre interfaz y rutas disponibles. |
+
+**Dificultades encontradas:**
+
+| Dificultad | Acción tomada |
+|-----------|---------------|
+| Algunas vistas dependían de datos backend todavía incompletos. | Se usaron estructuras visuales preparadas para consumir datos reales en futuras iteraciones. |
+| El frontend necesitaba rutas claras para integrarse con servicios. | Se reorganizaron rutas desde el API Gateway. |
+| Existía riesgo de colocar lógica de negocio en el gateway. | Se definió que el gateway sólo enruta y reenvía información. |
+| Las pantallas del conductor y propietario tenían flujos distintos. | Se dividieron las vistas por rol para evitar navegación confusa. |
+
+**Aprendizajes del Sprint 2:**
+
+- El equipo comprendió que un frontend navegable permite validar mejor la experiencia del usuario.
+- El equipo reconoció que el API Gateway debe mantenerse como capa de entrada, no como servicio de dominio.
+- La separación por roles mejora la claridad de las pantallas.
+- Los formularios deben alinearse con las user stories para evitar campos innecesarios.
+- La evidencia visual ayuda a sustentar el avance real del sprint.
+- La integración cliente-gateway debe validarse temprano para evitar problemas al conectar con backend completo.
+
+**Conclusión de colaboración:**
+
+El Sprint 2 fortaleció la coordinación del equipo en desarrollo frontend y organización de rutas. El equipo logró transformar historias de usuario en pantallas navegables y dejó el API Gateway en mejores condiciones para futuras integraciones. El avance fue concreto: interfaz principal del MVP y comunicación cliente-gateway más clara.
+
+---
+
+#### 5.3.2.8 Kanban Board
+
+El Kanban Board del Sprint 2 refleja que el trabajo se concentró en frontend y API Gateway. Las tarjetas completadas corresponden a vistas, componentes, rutas, validación visual y comunicación cliente-gateway.
+
+**Estado del Kanban Board al cierre del Sprint 2:**
+
+| To Do | In Progress | In Review | Done |
+|------|-------------|-----------|------|
+| Pruebas de carga backend | - | - | SBI-01 Vista de búsqueda de estacionamientos |
+| Implementación completa de pagos reales | - | - | SBI-02 Vista de disponibilidad de espacios |
+| Monitoreo avanzado de servicios | - | - | SBI-03 Filtros de búsqueda por precio y horario |
+| Automatización completa de CI/CD | - | - | SBI-04 Vista de detalle del estacionamiento |
+| Nuevos microservicios internos | - | - | SBI-05 Flujo visual de reserva |
+| - | - | - | SBI-06 Vista de historial de reservas |
+| - | - | - | SBI-07 Vista de publicación de espacio |
+| - | - | - | SBI-08 Vista de configuración de espacio |
+| - | - | - | SBI-09 Control visual de habilitar/deshabilitar espacio |
+| - | - | - | SBI-10 Vista de reservas activas del propietario |
+| - | - | - | SBI-11 Pantallas de registro por rol |
+| - | - | - | SBI-12 Pantalla de inicio de sesión |
+| - | - | - | SBI-13 Componentización del frontend |
+| - | - | - | SBI-14 Reorganización de rutas del API Gateway |
+| - | - | - | SBI-15 Reenvío de autorización desde el API Gateway |
+| - | - | - | SBI-16 Validación de comunicación frontend-gateway |
+| - | - | - | SBI-17 Evidencia visual del frontend |
+
+**Detalle de tarjetas finalizadas:**
+
+| SBI | Sprint Backlog Item | Responsable principal | Estado final |
+|-----|---------------------|-----------------------|--------------|
+| SBI-01 | Vista de búsqueda de estacionamientos | Pietro Osores Marchese | Done |
+| SBI-02 | Vista de disponibilidad de espacios | Matias Rodolfo Salcedo Champi | Done |
+| SBI-03 | Filtros de búsqueda por precio y horario | Fabian Alejandro Oliva Lopez | Done |
+| SBI-04 | Vista de detalle del estacionamiento | Javier Masaru Nikaido Vargas | Done |
+| SBI-05 | Flujo visual de reserva | Pietro Osores Marchese | Done |
+| SBI-06 | Vista de historial de reservas | Matias Rodolfo Salcedo Champi | Done |
+| SBI-07 | Vista de publicación de espacio | Percy Alonso Muñiz Huayanca | Done |
+| SBI-08 | Vista de configuración de espacio | Percy Alonso Muñiz Huayanca | Done |
+| SBI-09 | Control visual de habilitar/deshabilitar espacio | Matias Rodolfo Salcedo Champi | Done |
+| SBI-10 | Vista de reservas activas del propietario | Percy Alonso Muñiz Huayanca | Done |
+| SBI-11 | Pantallas de registro por rol | Fabian Alejandro Oliva Lopez | Done |
+| SBI-12 | Pantalla de inicio de sesión | Javier Masaru Nikaido Vargas | Done |
+| SBI-13 | Componentización del frontend | Equipo | Done |
+| SBI-14 | Reorganización de rutas del API Gateway | Javier Masaru Nikaido Vargas | Done |
+| SBI-15 | Reenvío de autorización desde el API Gateway | Javier Masaru Nikaido Vargas | Done |
+| SBI-16 | Validación de comunicación frontend-gateway | Equipo | Done |
+| SBI-17 | Evidencia visual del frontend | Equipo | Done |
+
+**Resumen del Kanban Board al cierre del Sprint 2:**
+
+| Estado | Cantidad de ítems |
+|--------|------------------:|
+| To Do | 5 |
+| In Progress | 0 |
+| In Review | 0 |
+| Done | 17 |
+
+**Conclusión del Kanban Board:**
+
+El Kanban Board evidencia que todos los ítems comprometidos para el Sprint 2 fueron completados. El avance entregado corresponde a frontend y mejora del API Gateway. Las tareas pendientes no forman parte del compromiso del Sprint 2; corresponden a futuras iteraciones relacionadas con backend avanzado, pagos reales, monitoreo, pruebas de carga y automatización CI/CD.
