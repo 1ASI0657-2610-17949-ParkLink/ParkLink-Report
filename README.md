@@ -3146,9 +3146,9 @@ El refactoring permite que ParkLink mantenga una base técnica más limpia y coh
 
 La gestión de configuración de software en ParkLink tiene como objetivo organizar las herramientas, estándares, repositorios, convenciones de código y mecanismos de despliegue utilizados durante el desarrollo del producto. Esta sección permite asegurar que el equipo mantenga una forma ordenada de trabajar, controlar versiones, documentar cambios, ejecutar pruebas, desplegar componentes y mantener la trazabilidad del desarrollo.
 
-ParkLink se encuentra dividido en dos repositorios principales: uno correspondiente a la **landing page**, desarrollada con React, TypeScript y Vite, y otro correspondiente al **backend**, desarrollado como monorepo con NestJS, TypeScript, Prisma y Bun.
+ParkLink se organiza en cuatro repositorios bajo la organización GitHub `1ASI0657-2610-17949-ParkLink`: la **landing page** (React, TypeScript y Vite), el **frontend funcional** (React, TypeScript y Vite), el **backend** (monorepo con NestJS, TypeScript, Prisma y Bun) y el **report** (documentación del proyecto).
 
-El repositorio de la landing page contiene la capa de presentación pública del producto, mientras que el repositorio backend contiene la implementación de servicios, API Gateway, configuración de Prisma, testing, documentación Swagger y preparación para despliegue.
+El repositorio de la landing page contiene la capa de presentación pública del producto; el repositorio frontend contiene la aplicación web funcional con la que interactúan los usuarios; el repositorio backend contiene la implementación de servicios, API Gateway, configuración de Prisma, testing, documentación Swagger y preparación para despliegue; y el repositorio report contiene la documentación del proyecto.
 
 ### 5.2.1 Software Development Environment Configuration
 
@@ -3208,22 +3208,30 @@ Google Maps API será utilizada para funcionalidades de geocodificación, cálcu
 Git será utilizado como sistema de control de versiones para registrar cambios, mantener historial del código, crear ramas de trabajo y facilitar la colaboración entre integrantes.
 
 **16. GitHub:**  
-GitHub será utilizado como plataforma principal para alojar los repositorios del proyecto. ParkLink cuenta con un repositorio para la landing page y otro para el backend, permitiendo separar la capa pública del producto y la capa de servicios.
+GitHub será utilizado como plataforma principal para alojar los repositorios del proyecto. ParkLink cuenta con cuatro repositorios —landing page, frontend funcional, backend y report— permitiendo separar la capa pública, la aplicación funcional, la capa de servicios y la documentación del producto.
 
 **17. Vercel:**  
 Vercel será utilizado como plataforma de despliegue. La landing page se encuentra preparada para deployment en Vercel, mientras que el backend incluye configuración para desplegar sus componentes y servicios.
 
 ### 5.2.2 Source Code Management
 
-El proyecto ParkLink emplea Git y GitHub como herramientas principales para el control del código fuente. La gestión de versiones se organiza a partir de repositorios separados para frontend público y backend, permitiendo diferenciar la capa de presentación de la capa de servicios.
+El proyecto ParkLink emplea Git y GitHub como herramientas principales para el control del código fuente. La gestión de versiones se organiza a partir de cuatro repositorios separados —landing page, frontend funcional, backend y report— permitiendo diferenciar la capa de presentación, la aplicación funcional, la capa de servicios y la documentación del producto.
 
 ### Repositorio de Landing Page
 
-**Repositorio:**  [https://github.com/1ASI0657-2610-17949-ParkLink](https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Landing)
+**Repositorio:** [https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Landing](https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Landing)
+
+### Repositorio Frontend
+
+**Repositorio:** [https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Frontend](https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Frontend)
 
 ### Repositorio Backend
 
-**Repositorio:** https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Backend
+**Repositorio:** [https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Backend](https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Backend)
+
+### Repositorio Report
+
+**Repositorio:** [https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Report](https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Report)
 
 ### 5.2.3 Source Code Style Guide & Conventions
 
@@ -3395,10 +3403,22 @@ El backend se encuentra desarrollado con NestJS, Bun, Prisma y Swagger. Además,
 https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Landing
 ```
 
+**Frontend Repository:**
+
+```txt
+https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Frontend
+```
+
 **Backend Repository:**
 
 ```txt
 https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Backend
+```
+
+**Report Repository:**
+
+```txt
+https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Report
 ```
 
 ### Deployment Links
@@ -3853,6 +3873,42 @@ El Sprint Backlog 2 permitió ordenar el trabajo del equipo hacia un objetivo co
   | FE-TC-06 | Detalle de espacio al seleccionar marcador | `/dashboard` | Al hacer clic en un marcador del mapa, se muestra un popup con la dirección del espacio y enlace a Google Maps |
   | FE-TC-07 | Vista de reservas activas | `/dashboard/reservations` | La pantalla lista las reservas confirmadas del conductor con código, nombre del espacio, dirección, fechas de inicio y fin, total y acciones disponibles (Ver espacio, Extender, Cancelar) |
   | FE-TC-08 | Vista de notificaciones | `/dashboard/notifications` | La pantalla muestra notificaciones del sistema con estado "Nuevo", descripción del evento (pago aprobado, reserva pendiente de pago) y tiempo transcurrido |
+
+  **Muestra de resultados de los casos de prueba:**
+
+  A continuación se presenta la captura del resultado real obtenido al ejecutar cada caso de prueba en el ambiente de producción (`https://parklink-eta.vercel.app`).
+
+  **FE-TC-01 — Visualización de pantalla de login (`/auth/login`) — Passed**
+
+  ![FE-TC-01 login](assets/login.png)
+
+  **FE-TC-02 — Registro de conductor (`/auth/register`) — Passed**
+
+  ![FE-TC-02 registro conductor](assets/register-conductor.png)
+
+  **FE-TC-03 — Registro de propietario (`/auth/register`) — Passed**
+
+  ![FE-TC-03 registro propietario](assets/register-propietario.png)
+
+  **FE-TC-04 — Dashboard principal con mapa (`/dashboard`) — Passed**
+
+  ![FE-TC-04 dashboard](assets/dashboard.png)
+
+  **FE-TC-05 — Filtros de búsqueda (`/dashboard`) — Passed**
+
+  ![FE-TC-05 filtros](assets/dashboard-filtros.png)
+
+  **FE-TC-06 — Detalle de espacio al seleccionar marcador (`/dashboard`) — Passed**
+
+  ![FE-TC-06 popup](assets/pop-up.png)
+
+  **FE-TC-07 — Vista de reservas activas (`/dashboard/reservations`) — Passed**
+
+  ![FE-TC-07 reservas](assets/reservations.png)
+
+  **FE-TC-08 — Vista de notificaciones (`/dashboard/notifications`) — Passed**
+
+  ![FE-TC-08 notificaciones](assets/notifications.png)
 
   **Observaciones del proceso de validación:**
 
