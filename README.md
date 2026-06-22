@@ -3520,23 +3520,17 @@ El despliegue cloud final fue validado con evidencia real de las plataformas usa
 | Base de datos | Render PostgreSQL | `parklink-db-lima-seed-20260622` | Creada, conectada al backend y poblada con data seed de Lima. |
 | Repositorio del reporte | GitHub | `ParkLink-Report` | Actualizado con evidencias y documentación final. |
 
-**Evidencia — Backend desplegado en Vercel**
-
-![Backend deploy evidence](screenshots/deployment/backend-deploy.png)
-
 **Evidencia — API Gateway desplegado en Vercel**
 
-![Gateway deploy evidence](screenshots/deployment/gateway-deploy.png)
+![Gateway deploy evidence](deployment/gateway-deploy.png)
+
+**Evidencia — Backend desplegado en Vercel**
+
+![Backend deploy evidence](deployment/backend-deploy.png)
 
 **Evidencia — Base de datos PostgreSQL en Render**
 
-![Render database evidence](screenshots/deployment/db-render.png)
-
-**Evidencia — colaboración y actividad del equipo**
-
-![Team collaboration evidence 1](screenshots/deployment/colaboration1.png)
-
-![Team collaboration evidence 2](screenshots/deployment/colaboration2.png)
+![Render database evidence](<deployment/db en render.png>)
 
 **Conclusión del despliegue cloud:**
 
@@ -4422,6 +4416,14 @@ Estas evidencias demuestran que la documentación técnica de los microservicios
 | Pietro Osores Marchese | Backend transaccional, pagos, auditoría y despliegue |
 | Percy Alonso Muñiz Huayanca | Gestión de espacios, fotos, trazabilidad de backlog y documentación |
 | Matias Rodolfo Salcedo Champi | App Flutter, Google Maps, pruebas en emulador y evidencia móvil |
+
+**Evidencia de colaboración y contribuciones del equipo:**
+
+La actividad de colaboración se respaldó con las métricas de contribución del repositorio, donde se observa la participación acumulada de los integrantes durante el periodo del proyecto.
+
+![Team collaboration evidence 1](deployment/colaboration1.png)
+
+![Team collaboration evidence 2](deployment/colaboration2.png)
 
 #### 5.4.3.8 Kanban Board
 
