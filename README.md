@@ -4309,10 +4309,11 @@ La validación de Google Maps incluyó revisión de `logcat`, confirmando ausenc
 
 | Componente | URL / Artefacto | Estado |
 |------------|------------------|--------|
-| Backend API | `https://parklink-platform.vercel.app` | Desplegado previamente; pendiente redeploy final con cambios Sprint 3 tras merge a rama de integración |
-| Backend Swagger | `https://parklink-platform.vercel.app/docs` | Verificación requerida para cierre final |
-| API Gateway | `https://api-gateway-xi-five.vercel.app` | Desplegado previamente; pendiente redeploy final si se actualiza gateway |
-| Frontend Web | `https://parklink-eta.vercel.app` / `https://parklink-web.vercel.app` | Desplegado previamente; pendiente redeploy final con cambios Sprint 3 |
+| Backend API | `https://parklink-platform.vercel.app` | Redeploy final realizado y validado con `GET /health` y búsqueda de espacios |
+| Backend Swagger | `https://parklink-platform.vercel.app/docs` | Swagger UI disponible |
+| API Gateway | `https://api-gateway-xi-five.vercel.app` | Redeploy final realizado y validado con `GET /health` |
+| API Gateway Swagger | `https://api-gateway-xi-five.vercel.app/docs` | Swagger UI disponible |
+| Frontend Web | `https://parklink-eta.vercel.app` | Redeploy final realizado y alias productivo actualizado |
 | Flutter APK | `ParkLink-Flutter/build/app/outputs/flutter-apk/app-debug.apk` | Generado localmente y probado en emulador Android |
 
 #### 5.3.3.7 Team Collaboration Insights during Sprint
