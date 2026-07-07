@@ -4291,46 +4291,147 @@ Durante el Sprint 3, el equipo consolidó el producto como una solución multipl
 
 #### 5.4.3.2 Development Evidence for Sprint Review
 
+Cada Sprint Backlog Item del Sprint 3 se evidencia a continuación conectando su Technical Story de origen, el archivo y método concreto que la implementa (mostrado como captura de código en la figura correspondiente) y el caso de prueba automatizado que la valida en la sección 5.4.3.3. Esta trazabilidad permite verificar que cada uno de los 10 ítems comprometidos fue efectivamente desarrollado y probado.
+
+| SBI | TS / User Story | Archivo y método (evidencia de código) | Figura | Caso de prueba que lo valida |
+|-----|-----------------|----------------------------------------|--------|------------------------------|
+| SBI-18 | TS01 Concurrencia | `reservations.service.ts` → `create()`: transacción con `$executeRaw` (advisory lock por `parkingSpaceId`) y `findFirst` de solapamiento previo a `create` | Fig. 3.1a, 3.1b | TB-01, TB-02 |
+| SBI-19 | TS02 Cache | `availability-cache.service.ts` → `get()`, `set()`, `invalidateAvailability()`: cache Redis opcional con fallback en memoria | Fig. 3.2 | TB-06, TB-07 |
+| SBI-20 | TS04 Auditoría | `audit-events.service.ts` → `record()` y `findMany()`; endpoint `GET /audit/events` restringido a ADMIN | Fig. 3.3 | (invocado por TB-01, TB-04, TB-08) |
+| SBI-21 | TS05 Fotos | `parking-spaces.service.ts` → `addPhoto()`: agrega URL pública/presigned al campo `photos` del espacio del propietario | Fig. 3.4, 3.4b | TB-08 |
+| SBI-22 | TS06 Idempotencia | `payments.service.ts` → `create()`: `normalizeIdempotencyKey` + `findUnique` por `idempotencyKey` antes de crear el pago | Fig. 3.5 | TB-03, TB-04 |
+| SBI-23 | Quality Engineering | Ejecución de las 5 suites (backend, API Gateway) y 6 tests de frontend en verde (ver sección 5.4.3.3) | Fig. 3.6 | Todos los casos de 5.4.3.3 |
+| SBI-24 | Frontend Web | `PaymentForm.tsx` (envío de `idempotencyKey` en el pago) y `MyParkingSpacesPage.tsx` (eliminación de espacios del propietario) | Fig. 3.7a, 3.7b | FE-01, FE-02, FE-03, FE-04, FE-05, FE-06 |
+| SBI-25 | Mobile App | Estructura modular `lib/features/` (auth, parking, reservation, payment, notification, home) de la app Flutter | Fig. 3.8 | MB-01 |
+| SBI-26 | Mobile Maps | Configuración de Google Maps SDK for Android (`android/`), package `com.parklink.app` y API key local | Fig. 3.9 | (validado en ejecución, sección 5.4.3.4) |
+| SBI-27 | Report & Evidence | Actualización del Student Outcome, tabla de versiones, Sprint 3 y capturas de este informe | Fig. 3.10 | — |
+
+**Evidencia de código por Technical Story (Fig. 3.1 a Fig. 3.10)**
+
+**Fig. 3.1a — `ReservationsService.create()` (TS01)**
+Transacción `Serializable`, bloqueo por espacio (`lockParkingSpaceAvailability`) y validación de horario antes de insertar la reserva en estado `PENDING_PAYMENT`.
+
+![Fig 3.1a - ReservationsService.create()](screenshots/sprint3/code/3.1a.png)
+
+**Fig. 3.1b — `ReservationsService.ensureNoOverlap()` (TS01, complemento)**
+Verifica solapamientos dentro de la misma transacción antes de confirmar la reserva; lanza `BadRequestException` si el espacio ya tiene una reserva bloqueante en ese intervalo.
+
+![Fig 3.1b - ensureNoOverlap()](screenshots/sprint3/code/3.1b.png)
+
+**Fig. 3.2 — `AvailabilityCacheService.get() / set() / invalidateAvailability()` (TS02)**
+Cache con Redis opcional y fallback en memoria; invalidación por versión ante cambios de disponibilidad.
+
+![Fig 3.2 - AvailabilityCacheService](screenshots/sprint3/code/3.2.png)
+
+**Fig. 3.3 — `AuditEventsService.record() / findMany()` (TS04)**
+Registro append-only de eventos críticos (actor, acción, entidad, metadata) y consulta filtrada para el endpoint admin.
+
+![Fig 3.3 - AuditEventsService](screenshots/sprint3/code/3.3.png)
+
+**Fig. 3.4 — `ParkingSpacesService.addPhoto()` (TS05)**
+Agrega la foto al arreglo `photos` del espacio, persiste el cambio y registra el evento de auditoría `PARKING_SPACE_PHOTO_ADDED`.
+
+![Fig 3.4 - addPhoto()](screenshots/sprint3/code/3.4.png)
+
+**Fig. 3.4b — `ParkingSpacesService.createPresignedPhotoUpload()` (TS05, complemento)**
+Genera la URL pre-firmada de subida hacia el bucket S3 (`PutObjectCommand`, TTL 900s) cuando el propietario no envía una URL pública directa.
+
+![Fig 3.4b - createPresignedPhotoUpload()](screenshots/sprint3/code/3.4b.png)
+
+**Fig. 3.5 — `PaymentsService.create()` (TS06)**
+Normaliza y busca la `idempotencyKey`; si ya existe, retorna el pago previo sin duplicar el cobro; si no, valida la reserva, procesa el pago, confirma vía notificación y registra auditoría + invalidación de cache en una sola operación.
+
+![Fig 3.5 - PaymentsService.create()](screenshots/sprint3/code/3.5.png)
+
+**Fig. 3.6 — Ejecución de las 5 suites de test (backend + API Gateway)**
+`bun run test`: 10 tests en total (TB-01 a TB-10) pasando en verde, incluyendo `reservations.service.spec.ts`, `payments.service.spec.ts`, `parking-spaces.service.spec.ts` y los dos specs del API Gateway.
+
+![Fig 3.6 - Test execution console](screenshots/sprint3/code/3.6.png)
+
+**Fig. 3.7a — `PaymentForm` → `handlePay()` (Frontend, SBI-24)**
+Construye el payload con `idempotencyKey` derivada del `reservationId`, envía el pago y sincroniza el estado de la reserva si es aprobado.
+
+![Fig 3.7a - handlePay()](screenshots/sprint3/code/3.7a.png)
+
+**Fig. 3.7b — `MyParkingSpacesPage` → `handleDelete()` (Frontend, SBI-24)**
+Confirma la eliminación, llama `DELETE /parking-spaces/:id` y refresca el listado del propietario.
+
+![Fig 3.7b - handleDelete()](screenshots/sprint3/code/3.7b.png)
+
+**Fig. 3.8 — Estructura modular de la app Flutter (SBI-25)**
+Organización por features (`auth`, `home`, `notification`, `parking`, `payment`, `reservation`) dentro de `lib/features/`.
+
+![Fig 3.8 - Flutter folder structure](screenshots/sprint3/code/3.8.png)
+
+**Fig. 3.9 — Configuración de Google Maps SDK for Android (SBI-26)**
+`meta-data` con la API key inyectada por variable de entorno (`${MAPS_API_KEY}`) y `applicationId = "com.parklink.app"` en `build.gradle`.
+
+![Fig 3.9 - Google Maps Android config](screenshots/sprint3/code/3.9.png)
+
+**Fig. 3.10 — Sprint Backlog 3 (SBI-27)**
+Vista de la tabla de Sprint Backlog 3 usada como respaldo documental de la planificación del sprint.
+
+![Fig 3.10 - Sprint Backlog 3](screenshots/sprint3/code/3.10.png)
+
+**Evidencia visual de la app Flutter (SBI-25, SBI-26):**
+
 | Módulo / Componente | User Story / TS relacionada | Evidencia |
 |---------------------|-----------------------------|-----------|
-| Backend — Reservation Service | TS01 Concurrencia | `reservations.service.ts`: transacción serializable y advisory lock por `parkingSpaceId` |
-| Backend — Availability Cache | TS02 Cache | `availability-cache.service.ts`: Redis opcional y fallback in-memory |
-| Backend — Audit Module | TS04 Auditoría | `modules/audit/`: registro de eventos críticos y endpoint `GET /audit/events` |
-| Backend — Parking Photos | TS05 Fotos | `parking-spaces.service.ts`: carga de fotos públicas o presigned URLs |
-| Backend — Payment Service | TS06 Idempotencia | `payments.service.ts`: manejo de `idempotencyKey` |
-| Frontend — Payment Form | Pago seguro | `PaymentForm.tsx`: envío de clave de idempotencia |
-| Frontend — Owner Spaces | Gestión de espacios | `MyParkingSpacesPage.tsx`: eliminación de espacios del propietario |
 | Flutter — Auth | Login/Register | ![Flutter Login](screenshots/flutter/flutter-login.png) |
 | Flutter — Google Maps | Búsqueda móvil | ![Flutter Google Maps](screenshots/flutter/flutter-map-googlemaps.png) |
 | Flutter — Parking Detail | Detalle de cochera | ![Flutter Detail](screenshots/flutter/flutter-parking-detail.png) |
 | Flutter — Reservation | Crear reserva | ![Flutter Reservation](screenshots/flutter/flutter-reservation.png) |
 | Flutter — Payment | Pago simulado | ![Flutter Payment](screenshots/flutter/flutter-payment.png) |
 
-#### 5.4.3.3 Testing Suite Evidence for Sprint Review
-
-**Backend / API Gateway**
-
-| Comando | Resultado |
-|---------|-----------|
-| `bun run test` | 5 suites ejecutadas correctamente, 10 tests en total considerando backend y API Gateway |
-| `bun run lint` | Ejecución correcta |
-| `bun run build:backend && bun run build:api-gateway` | Build correcto |
-
-**Frontend Web**
-
-| Comando | Resultado |
-|---------|-----------|
-| `bun run test` | 6 tests exitosos con Vitest / Testing Library |
-| `bun run lint` | Correcto con warnings no bloqueantes de hooks |
-| `bun run build` | Build correcto con advertencia de chunk grande |
-
-**Flutter Mobile**
-
-| Comando | Resultado |
-|---------|-----------|
-| `flutter analyze` | No issues found |
-| `flutter test` | All tests passed |
-| `flutter build apk --debug --target-platform android-arm64` | APK generado correctamente en `build/app/outputs/flutter-apk/app-debug.apk` |
+---
+ 
+**Backend / API Gateway — casos de prueba**
+ 
+| ID | Suite / archivo | Caso de prueba | Objetivo (qué valida) | TS |
+|----|-----------------|----------------|------------------------|----|
+| TB-01 | `reservations.service.spec.ts` | Serializa la creación de reserva con advisory lock antes de verificar solapamientos | Verifica que la reserva se crea dentro de una transacción con bloqueo por espacio, que se invalida el cache de disponibilidad y que se registra el evento de auditoría | TS01 |
+| TB-02 | `reservations.service.spec.ts` | Rechaza reservas solapadas dentro de la misma transacción | Verifica que si ya existe una reserva en el intervalo, se lanza `BadRequestException` y **no** se crea la reserva duplicada | TS01 |
+| TB-03 | `payments.service.spec.ts` | Retorna el pago existente cuando la idempotencyKey ya fue procesada | Verifica que un pago duplicado con la misma clave devuelve el pago previo sin crear uno nuevo | TS06 |
+| TB-04 | `payments.service.spec.ts` | Crea el pago una sola vez y confirma la reserva al aprobarse | Verifica que un pago aprobado se registra una única vez y transiciona la reserva a estado `CONFIRMED` | TS06 |
+| TB-05 | `payments.service.spec.ts` | Rechaza pagos sobre reservas de otro usuario | Verifica el control de autorización: un conductor no puede pagar una reserva que no le pertenece | Seguridad |
+| TB-06 | `parking-spaces.service.spec.ts` | Cachea resultados de búsqueda en proyecciones repetidas | Verifica que la búsqueda por ubicación guarda el resultado en el cache de disponibilidad | TS02 |
+| TB-07 | `parking-spaces.service.spec.ts` | Retorna disponibilidad cacheada sin consultar la base de datos | Verifica que, existiendo cache válido, **no** se consulta la base de datos | TS02 |
+| TB-08 | `parking-spaces.service.spec.ts` | Adjunta una URL pública de foto a un espacio del propietario | Verifica que el propietario puede agregar una foto a su espacio y que la operación queda auditada | TS05 |
+| TB-09 | `proxy.service.spec.ts` (API Gateway) | Reenvía método, body y header de autorización | Verifica que el gateway hace proxy correcto conservando el JWT y devuelve el status y data del backend downstream | Gateway routing |
+| TB-10 | `proxy.e2e-spec.ts` (API Gateway) | Declara todas las rutas proxy requeridas por el frontend | Verifica que el gateway expone las 7 rutas (`/auth`, `/users`, `/parking-spaces`, `/reservations`, `/payments`, `/notifications`, `/maps`) que consume el frontend | Gateway contract |
+ 
+**Frontend Web — casos de prueba**
+ 
+| ID | Archivo | Caso de prueba | Objetivo (qué valida) |
+|----|---------|----------------|------------------------|
+| FE-01 | `Button.test.tsx` | Botón en estado loading queda deshabilitado y accesible | Verifica que con la prop `isLoading` el botón se deshabilita y mantiene texto accesible por lector de pantalla |
+| FE-02 | `Button.test.tsx` | LinkButton renderiza el destino esperado | Verifica que `LinkButton to="/dashboard"` genera un enlace con el `href` correcto |
+| FE-03 | `ui-store.test.ts` | Alterna el estado del sidebar | Verifica que `toggleSidebar` abre y cierra correctamente el panel lateral |
+| FE-04 | `ui-store.test.ts` | Abre y cierra el estado del modal | Verifica que el modal de pago se abre con sus datos (reserva, monto, código) y luego se limpia al cerrarse |
+| FE-05 | `api.test.ts` | Une mensajes de validación del backend | Verifica que múltiples errores de validación del backend se concatenan en un único mensaje legible |
+| FE-06 | `api.test.ts` | Fallback ante errores desconocidos | Verifica que un error no-Axios devuelve el mensaje por defecto proporcionado |
+ 
+**Flutter Mobile — caso de prueba**
+ 
+| ID | Archivo | Caso de prueba | Objetivo (qué valida) |
+|----|---------|----------------|------------------------|
+| MB-01 | `auth_screen_test.dart` | La pantalla de autenticación muestra los modos login y registro | Verifica que al iniciar aparecen "ParkLink" e "Iniciar sesión"; al tocar "Registro" cambia a "Crear cuenta" y muestra la selección de rol Conductor / Propietario |
+ 
+**Evidencia de ejecución (build y análisis estático)**
+ 
+Los siguientes comandos no constituyen casos de prueba sino evidencia de que el código compila y pasa el análisis estático; se documentan por separado para no confundirlos con la validación funcional anterior.
+ 
+| Componente | Comando | Resultado |
+|------------|---------|-----------|
+| Backend / API Gateway | `bun run test` | 5 suites ejecutadas correctamente, 10 tests en total (TB-01 a TB-10) |
+| Backend / API Gateway | `bun run lint` | Ejecución correcta |
+| Backend / API Gateway | `bun run build:backend && bun run build:api-gateway` | Build correcto |
+| Frontend Web | `bun run test` | 6 tests exitosos con Vitest / Testing Library (FE-01 a FE-06) |
+| Frontend Web | `bun run lint` | Correcto, con warnings no bloqueantes de hooks |
+| Frontend Web | `bun run build` | Build correcto con advertencia de chunk grande |
+| Flutter Mobile | `flutter analyze` | No issues found |
+| Flutter Mobile | `flutter test` | 1 widget test ejecutado (MB-01), passed |
+| Flutter Mobile | `flutter build apk --debug --target-platform android-arm64` | APK generado en `build/app/outputs/flutter-apk/app-debug.apk` |
 
 #### 5.4.3.4 Execution Evidence for Sprint Review
 
