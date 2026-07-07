@@ -4456,3 +4456,217 @@ El Kanban Board de Sprint 3 se enfocó en cerrar deuda técnica y convertir Park
 **Conclusión del Sprint 3:**
 
 El Sprint 3 permitió completar las capacidades críticas de ParkLink para la entrega final: backend robusto, frontend web validado, app Flutter funcional con Google Maps real, pruebas automatizadas y evidencia académica. El release `v1.0.0` fue publicado en backend, frontend, reporte y repositorio mobile alterno. La única deuda administrativa relevante es crear el repositorio remoto oficial `ParkLink-Flutter` cuando exista autenticación GitHub CLI disponible.
+
+### 5.4.4 Sprint 4
+
+**Sprint window:** 23/06/2026 → 07/07/2026  
+**Sprint Goal:** Estabilizar la versión final de ParkLink con el frontend web y el backend completamente terminados, validando la integración end-to-end, corrigiendo errores de flujo, verificando despliegues productivos y cerrando la documentación técnica necesaria para sustentar la entrega final.
+
+Durante el Sprint 4, el equipo se enfocó en consolidar ParkLink como un producto funcional de extremo a extremo. A diferencia de sprints anteriores, el objetivo principal ya no fue crear módulos base, sino asegurar que las funcionalidades implementadas en frontend y backend trabajen correctamente en conjunto. Por ello, se revisaron los flujos de autenticación, búsqueda de estacionamientos, visualización de detalle, creación de reserva, pago simulado, gestión de espacios del propietario y consulta de información desde los servicios desplegados.
+
+#### 5.4.4.1 Sprint Backlog 4
+
+| SBI | Epic / TS | User Story / Technical Story origen | Tareas técnicas principales | SP | Responsable principal | Estado |
+|-----|-----------|--------------------------------------|-----------------------------|----|------------------------|--------|
+| SBI-28 | End-to-End Integration | US01, US04, US05, US14 | Validar flujo completo desde login hasta búsqueda, detalle, reserva y pago usando frontend conectado al backend desplegado | 8 | Javier Masaru Nikaido Vargas | Done |
+| SBI-29 | Frontend Completion | US03, US04, US07, US12 | Completar pantallas finales, estados de carga, mensajes de error, navegación y consumo correcto de endpoints | 8 | Fabian Alejandro Oliva López | Done |
+| SBI-30 | Backend Completion | TS01, TS02, TS04, TS06 | Normalizar respuestas de endpoints, validar DTOs, revisar consistencia transaccional, auditoría e idempotencia | 8 | Pietro Osores Marchese | Done |
+| SBI-31 | API Gateway & Routing | TS03 | Revisar rutas proxy, headers de autorización, CORS, variables de entorno y conexión con backend productivo | 5 | Javier Masaru Nikaido Vargas | Done |
+| SBI-32 | Database & Seed Data | US01, US09, US12 | Verificar datos semilla de Lima, usuarios de prueba, espacios, reservas y pagos simulados para demostración | 5 | Percy Alonso Muñiz Huayanca | Done |
+| SBI-33 | Smoke & Regression Testing | QAS-01, QAS-02, QAS-04 | Ejecutar pruebas manuales de regresión sobre login, búsqueda, reserva, pago, owner panel y endpoints críticos | 5 | Equipo | Done |
+| SBI-34 | Deployment Stabilization | RNF04, QAS-03 | Confirmar redeploys en Vercel, health checks, Swagger productivo y alias final del frontend | 5 | Percy Alonso Muñiz Huayanca | Done |
+| SBI-35 | UX Polish | QAS-05 | Ajustar textos, estructura visual, navegación responsive y continuidad del flujo para conductor y propietario | 3 | Fabian Alejandro Oliva López | Done |
+| SBI-36 | Documentation Finalization | Report & Evidence | Incorporar evidencias de Sprint 4, actualizar rutas, registrar checklist de validación y documentar cierre técnico | 5 | Equipo | Done |
+| SBI-37 | Mobile/API Compatibility | Flutter + Backend | Validar que los endpoints finales mantengan compatibilidad con la app Flutter creada en el Sprint 3 | 3 | Matias Rodolfo Salcedo Champi | Done |
+
+#### 5.4.4.2 Development Evidence for Sprint Review
+
+| Módulo / Componente | User Story / TS relacionada | Evidencia |
+|---------------------|-----------------------------|-----------|
+| Frontend Web — Login / Register | US17, US18, US19 | Pantallas conectadas al backend productivo mediante endpoints de autenticación y manejo de JWT |
+| Frontend Web — Parking Search | US01, US02, US03 | Búsqueda de espacios por ubicación, filtros y lectura de disponibilidad desde API desplegada |
+| Frontend Web — Parking Detail | US04 | Vista de detalle con dirección, precio, disponibilidad, fotos y acción de reserva |
+| Frontend Web — Reservation Flow | US05, US06, US08 | Flujo de creación, cancelación y extensión de reservas conectado al backend |
+| Frontend Web — Payment Flow | US14, US16 | Pago simulado desde el frontend con envío de `idempotencyKey` y visualización del resultado |
+| Frontend Web — Owner Panel | US09, US10, US11, US12, US13 | Gestión de espacios, horarios, precios, estado de disponibilidad y consulta de reservas del propietario |
+| Backend — Auth Module | TS03 | Validación de JWT, roles DRIVER / OWNER / ADMIN y protección de rutas críticas |
+| Backend — Reservation Service | TS01 | Validación de solapamientos, control transaccional y estados de reserva |
+| Backend — Availability Service | TS02 | Consulta de disponibilidad visible y actualización posterior a cambios de reserva |
+| Backend — Payment Service | TS06 | Soporte de idempotencia para evitar procesamiento duplicado de pagos simulados |
+| Backend — Audit Module | TS04 | Registro de eventos críticos vinculados a reservas, pagos y cambios de disponibilidad |
+| API Gateway | TS03, QAS-04 | Rutas proxy funcionales hacia backend, Swagger disponible y health check validado |
+| Database / Seed Data | US01, US09, US12 | Datos semilla disponibles para pruebas de búsqueda, espacios, reservas y usuarios de demostración |
+
+#### 5.4.4.3 Testing Suite Evidence for Sprint Review
+
+**Backend / API Gateway**
+
+| Comando / Validación | Resultado |
+|----------------------|-----------|
+| `bun run test` | Pruebas unitarias y de integración ejecutadas correctamente |
+| `bun run lint` | Revisión de estilo ejecutada correctamente |
+| `bun run build:backend` | Build del backend generado sin errores bloqueantes |
+| `bun run build:api-gateway` | Build del API Gateway generado correctamente |
+| `GET /health` en Backend API | Servicio disponible y respondiendo en producción |
+| `GET /health` en API Gateway | Gateway disponible y conectado al backend downstream |
+| `GET /docs` y `GET /docs-json` | Documentación Swagger / OpenAPI disponible |
+
+**Frontend Web**
+
+| Comando / Validación | Resultado |
+|----------------------|-----------|
+| `bun run test` | Pruebas de componentes y flujos principales ejecutadas correctamente |
+| `bun run lint` | Revisión de estilo ejecutada correctamente, sin errores bloqueantes |
+| `bun run build` | Build productivo generado correctamente |
+| Smoke test de navegación | Login, búsqueda, detalle, reserva, pago y owner panel validados manualmente |
+| Validación responsive | Flujo principal revisado en tamaños de pantalla desktop y mobile |
+
+**Checklist de regresión funcional**
+
+| Flujo validado | Resultado |
+|----------------|-----------|
+| Registro e inicio de sesión de conductor | Passed |
+| Registro e inicio de sesión de propietario | Passed |
+| Búsqueda de espacios disponibles | Passed |
+| Visualización de detalle de cochera | Passed |
+| Creación de reserva | Passed |
+| Pago simulado con idempotencia | Passed |
+| Visualización de historial / reservas | Passed |
+| Registro y edición de espacios del propietario | Passed |
+| Habilitación y deshabilitación de espacios | Passed |
+| Consulta de Swagger y health checks | Passed |
+
+#### 5.4.4.4 Execution Evidence for Sprint Review
+
+Durante la ejecución del Sprint 4 se validó el flujo completo de ParkLink desde el frontend web conectado al backend desplegado. La prueba principal consistió en iniciar sesión, buscar un estacionamiento, revisar su detalle, crear una reserva, ejecutar el pago simulado y verificar que el backend registre correctamente los cambios de estado.
+
+| Flujo | Evidencia |
+|-------|-----------|
+| Frontend web desplegado | `https://parklink-eta.vercel.app` |
+| Login / autenticación | Flujo validado contra backend productivo |
+| Búsqueda de estacionamientos | Resultados obtenidos desde `GET /parking-spaces/search` |
+| Detalle de estacionamiento | Información completa consumida desde API |
+| Creación de reserva | Reserva registrada correctamente desde frontend |
+| Pago simulado | Pago procesado con soporte de idempotencia |
+| Panel de propietario | Gestión de espacios y disponibilidad validada |
+| Health check backend | `GET /health` respondió correctamente |
+| Health check gateway | `GET /health` respondió correctamente |
+| Swagger backend y gateway | Documentación cargó correctamente en producción |
+
+**Evidencia visual sugerida para el repositorio:**
+
+| Evidencia | Ruta sugerida |
+|----------|---------------|
+| Login web conectado a backend | `screenshots/sprint4/web-login.png` |
+| Búsqueda web de estacionamientos | `screenshots/sprint4/web-parking-search.png` |
+| Detalle de estacionamiento | `screenshots/sprint4/web-parking-detail.png` |
+| Flujo de reserva | `screenshots/sprint4/web-reservation.png` |
+| Pago simulado | `screenshots/sprint4/web-payment.png` |
+| Panel del propietario | `screenshots/sprint4/web-owner-panel.png` |
+| Backend health check | `screenshots/sprint4/backend-health.png` |
+| API Gateway health check | `screenshots/sprint4/gateway-health.png` |
+| Swagger backend | `screenshots/sprint4/backend-swagger.png` |
+| Swagger gateway | `screenshots/sprint4/gateway-swagger.png` |
+
+#### 5.4.4.5 Microservices Documentation Evidence for Sprint Review
+
+Para el Sprint 4 se verificó que los contratos de backend y API Gateway continúen disponibles y sean consistentes con los flujos consumidos por el frontend web. Esta revisión permitió comprobar que la documentación técnica no quedó separada de la implementación real, sino alineada con los endpoints usados durante la validación end-to-end.
+
+| Servicio | Documentación / Endpoint | Descripción |
+|----------|---------------------------|-------------|
+| Backend API | `GET /health` | Verifica disponibilidad del backend principal |
+| Backend API | `GET /docs` | Swagger UI del backend ParkLink |
+| Backend API | `GET /docs-json` | Especificación OpenAPI 3.0 del backend |
+| Backend API | `POST /auth/login` | Autenticación de usuarios y emisión de JWT |
+| Backend API | `GET /parking-spaces/search` | Búsqueda de espacios por ubicación |
+| Backend API | `GET /parking-spaces/:id` | Detalle de espacio de estacionamiento |
+| Backend API | `POST /reservations` | Creación de reserva con validación de disponibilidad |
+| Backend API | `POST /payments` | Pago simulado con soporte de idempotencia |
+| Backend API | `GET /audit/events` | Consulta de eventos críticos restringida a ADMIN |
+| API Gateway | `GET /health` | Valida disponibilidad del gateway y conexión con backend |
+| API Gateway | `GET /routes` | Evidencia de rutas proxy configuradas |
+| API Gateway | `GET /docs` | Swagger UI del API Gateway |
+| API Gateway | `GET /docs-json` | Especificación OpenAPI 3.0 del API Gateway |
+
+**URLs de documentación publicadas:**
+
+| Componente | URL de Swagger / Servicio | Estado validado |
+|------------|---------------------------|-----------------|
+| Backend API | `https://parklink-platform.vercel.app/docs` | Disponible y alineado con endpoints usados por frontend |
+| API Gateway | `https://api-gateway-xi-five.vercel.app/docs` | Disponible con rutas proxy principales |
+| Frontend Web | `https://parklink-eta.vercel.app` | Disponible y conectado al backend productivo |
+| Backend Health | `https://parklink-platform.vercel.app/health` | Respuesta correcta |
+| API Gateway Health | `https://api-gateway-xi-five.vercel.app/health` | Respuesta correcta |
+
+#### 5.4.4.6 Software Deployment Evidence for Sprint Review
+
+| Componente | URL / Artefacto | Estado |
+|------------|------------------|--------|
+| Backend API | `https://parklink-platform.vercel.app` | Despliegue productivo validado con health check y endpoints funcionales |
+| Backend Swagger | `https://parklink-platform.vercel.app/docs` | Documentación disponible para revisión |
+| API Gateway | `https://api-gateway-xi-five.vercel.app` | Gateway desplegado y conectado al backend |
+| API Gateway Swagger | `https://api-gateway-xi-five.vercel.app/docs` | Swagger disponible con rutas proxy |
+| Frontend Web | `https://parklink-eta.vercel.app` | Frontend final desplegado y conectado al backend productivo |
+| PostgreSQL / Render | Base de datos con seed de Lima | Datos de prueba disponibles para búsqueda, reservas y pagos simulados |
+| Repositorios GitHub | Backend, Frontend, API Gateway y Reporte | Código actualizado con evidencias de Sprint 4 |
+| Variables de entorno | Vercel / Render | Variables verificadas para conexión frontend-backend, auth y base de datos |
+| Release académico | Sprint 4 / cierre final | Evidencia documentada en README y reporte |
+
+#### 5.4.4.7 Team Collaboration Insights during Sprint
+
+| Evento Scrum | Resultado |
+|--------------|-----------|
+| Sprint Planning | Se definió el Sprint 4 como cierre de estabilización, priorizando integración frontend-backend, regresión funcional y evidencias finales. |
+| Daily coordination | El equipo revisó errores por capa: frontend, backend, API Gateway, base de datos y despliegue. |
+| Sprint Review | Se presentó el flujo completo de ParkLink funcionando desde el frontend web contra servicios desplegados. |
+| Retrospective | El equipo concluyó que la mayor mejora fue pasar de módulos funcionales separados a un producto integrado y demostrable. |
+
+**Distribución de trabajo:**
+
+| Integrante | Contribución principal |
+|------------|------------------------|
+| Fabian Alejandro Oliva López | Ajustes finales de frontend, navegación, UX polish y validación visual de flujos web |
+| Javier Masaru Nikaido Vargas | Integración frontend-backend, API Gateway, health checks, rutas productivas y documentación técnica |
+| Pietro Osores Marchese | Cierre de backend, validaciones transaccionales, pagos, auditoría y consistencia de endpoints |
+| Percy Alonso Muñiz Huayanca | Revisión de datos semilla, evidencias de despliegue, trazabilidad de backlog y documentación |
+| Matias Rodolfo Salcedo Champi | Validación de compatibilidad de endpoints con la app Flutter y revisión de continuidad mobile/API |
+
+**Aprendizajes del Sprint 4:**
+
+| Área | Aprendizaje |
+|------|-------------|
+| Integración | Una funcionalidad no se considera completa hasta ser validada desde la interfaz real consumiendo servicios desplegados. |
+| Calidad | Los smoke tests y pruebas de regresión ayudaron a detectar errores de rutas, estados vacíos y respuestas inconsistentes. |
+| Arquitectura | La separación entre frontend, API Gateway, backend y base de datos facilitó aislar problemas sin romper todo el sistema. |
+| DevOps | La verificación de variables de entorno, health checks y Swagger fue clave para sostener una demo estable. |
+| Producto | El valor de ParkLink se evidenció mejor cuando los flujos de conductor y propietario quedaron conectados de inicio a fin. |
+
+#### 5.4.4.8 Kanban Board
+
+El Kanban Board del Sprint 4 se enfocó en cerrar la integración final del producto y dejar ParkLink listo para una demostración funcional con frontend y backend completos.
+
+| To Do | In Progress | In Review | Done |
+|------|-------------|-----------|------|
+| - | - | - | SBI-28 Integración end-to-end frontend-backend |
+| - | - | - | SBI-29 Cierre de pantallas frontend |
+| - | - | - | SBI-30 Cierre de endpoints backend |
+| - | - | - | SBI-31 Revisión de API Gateway y routing |
+| - | - | - | SBI-32 Validación de base de datos y seed |
+| - | - | - | SBI-33 Smoke testing y regresión funcional |
+| - | - | - | SBI-34 Estabilización de despliegue |
+| - | - | - | SBI-35 UX polish |
+| - | - | - | SBI-36 Documentación final de Sprint 4 |
+| - | - | - | SBI-37 Compatibilidad mobile/API |
+
+**Resumen del Kanban Board al cierre del Sprint 4:**
+
+| Estado | Cantidad de ítems |
+|--------|------------------:|
+| To Do | 0 |
+| In Progress | 0 |
+| In Review | 0 |
+| Done | 10 |
+
+**Conclusión del Sprint 4:**
+
+El Sprint 4 permitió cerrar ParkLink como un producto integrado, estable y demostrable. El frontend web y el backend quedaron conectados mediante servicios desplegados, el API Gateway fue validado como punto de entrada, los endpoints críticos respondieron correctamente y los flujos principales del conductor y propietario fueron revisados mediante pruebas de regresión. Con este cierre, ParkLink queda sustentado no solo como propuesta arquitectónica, sino como implementación funcional alineada a las historias de usuario, technical stories, atributos de calidad y decisiones de despliegue documentadas en el informe.
