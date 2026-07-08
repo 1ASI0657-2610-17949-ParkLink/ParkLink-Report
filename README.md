@@ -4842,7 +4842,6 @@ Para el Sprint 4 se verificó que los contratos de backend y API Gateway contin�
 | Backend API | `POST /auth/login` | Autenticación de usuarios y emisión de JWT |
 | Backend API | `GET /parking-spaces/search` | Búsqueda de espacios por ubicación |
 | Backend API | `GET /parking-spaces/:id` | Detalle de espacio de estacionamiento |
-
 | Backend API | `GET /maps/geocode` | Geocodificación de dirección usando integración Maps |
 | Backend API | `GET /maps/reverse-geocode` | Obtención de dirección a partir de coordenadas |
 | Backend API | `GET /maps/distance` | Cálculo de distancia y duración hacia una cochera |
@@ -4854,7 +4853,6 @@ Para el Sprint 4 se verificó que los contratos de backend y API Gateway contin�
 | Backend API | `GET /payments/:id` | Consulta protegida de pago |
 | Backend API | `GET /payments/:id/receipt` | Recibo de pago aprobado |
 | Backend API | `GET /notifications` | Notificaciones generadas por reserva y pago |
-
 | Backend API | `GET /audit/events` | Consulta de eventos críticos restringida a ADMIN |
 | API Gateway | `GET /health` | Valida disponibilidad del gateway y conexión con backend |
 | API Gateway | `GET /routes` | Evidencia de rutas proxy configuradas |
