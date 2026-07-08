@@ -3531,7 +3531,7 @@ https://github.com/1ASI0657-2610-17949-ParkLink/ParkLink-Report
 **Backend Swagger Deployment:**
 
 ```txt
-https://backend-silk-two-93.vercel.app/docs/
+https://parklink-platform.vercel.app/docs
 ```
 
 **API Gateway Swagger Deployment:**
@@ -4685,42 +4685,119 @@ Durante el Sprint 4, el equipo se enfocó en consolidar ParkLink como un product
 
 #### 5.4.4.3 Testing Suite Evidence for Sprint Review
 
-**Backend / API Gateway**
 
-| Comando / Validación | Resultado |
-|----------------------|-----------|
-| `bun run test` | Pruebas unitarias y de integración ejecutadas correctamente |
-| `bun run lint` | Revisión de estilo ejecutada correctamente |
-| `bun run build:backend` | Build del backend generado sin errores bloqueantes |
-| `bun run build:api-gateway` | Build del API Gateway generado correctamente |
-| `GET /health` en Backend API | Servicio disponible y respondiendo en producción |
-| `GET /health` en API Gateway | Gateway disponible y conectado al backend downstream |
-| `GET /docs` y `GET /docs-json` | Documentación Swagger / OpenAPI disponible |
+Las pruebas del Sprint 4 se ejecutaron contra los despliegues productivos de Vercel el **07/07/2026**. Se usó el API Gateway como entrada principal y Swagger/OpenAPI para confirmar los contratos publicados. Los JWT se usaron sólo durante la ejecución y no se documentan completos.
 
-**Frontend Web**
+**Pruebas automatizadas locales ejecutadas**
 
-| Comando / Validación | Resultado |
-|----------------------|-----------|
-| `bun run test` | Pruebas de componentes y flujos principales ejecutadas correctamente |
-| `bun run lint` | Revisión de estilo ejecutada correctamente, sin errores bloqueantes |
-| `bun run build` | Build productivo generado correctamente |
-| Smoke test de navegación | Login, búsqueda, detalle, reserva, pago y owner panel validados manualmente |
-| Validación responsive | Flujo principal revisado en tamaños de pantalla desktop y mobile |
+| Comando | Resultado real | Qué se está testeando |
+|---------|----------------|------------------------|
+| `bun run test:backend` | OK — 3 suites / 9 tests | Servicios de reservas, pagos, búsqueda, cache y regla anti doble-reserva. |
+| `bun run test:api-gateway` | OK — 2 suites / 3 tests | Proxy del gateway, reenvío de headers `Authorization` y retry ante `5xx`. |
+| `bun run build:backend && bun run build:api-gateway` | OK | Compilación productiva separada de backend y API Gateway. |
+| `bun run test` en frontend | OK — 3 files / 6 tests | Store, cliente API y componentes base del flujo web. |
+| `flutter test` | OK — 1 test passed | Pantalla mobile de login/registro. |
+
+**Pruebas reales de endpoints en producción**
+
+| # | Endpoint probado | Qué se está testeando | Respuesta real obtenida |
+|---:|-----------------|------------------------|-------------------------|
+| 1 | `GET https://parklink-platform.vercel.app/health` | Disponibilidad directa del backend desplegado en Vercel. | `200` — `{"status":"ok","service":"backend"}` |
+| 2 | `GET https://api-gateway-xi-five.vercel.app/health` | Disponibilidad del gateway y conexión con backend downstream. | `200` — `{"status":"ok","service":"api-gateway","backend":"available","backendLatencyMs":77}` |
+| 3 | `GET https://api-gateway-xi-five.vercel.app/routes` | Rutas proxy expuestas hacia Auth, Users, Parking, Reservations, Payments, Notifications, Maps y Health. | `200` — lista de rutas proxy `BACKEND_URL/*`. |
+| 4 | `GET https://parklink-platform.vercel.app/docs-json` | Contrato OpenAPI del backend. | `200` — `openapi: "3.0.0"`, título `ParkLink Backend API`. |
+| 5 | `GET https://api-gateway-xi-five.vercel.app/docs-json` | Contrato OpenAPI del API Gateway. | `200` — `openapi: "3.0.0"`, título `ParkLink API Gateway`. |
+| 6 | `POST /auth/login` vía gateway con `driver01@parklink.test` | Autenticación de conductor y emisión de JWT. | `201` — `success: true`, usuario `Mateo Torres Quispe`, rol `DRIVER`, token emitido. |
+| 7 | `POST /auth/login` vía gateway con `admin@parklink.test` | Autenticación de administrador para consultar auditoría. | `201` — `success: true`, rol `ADMIN`, token emitido. |
+| 8 | `GET /auth/me` vía gateway | Validación de JWT y perfil autenticado. | `200` — usuario `driver01@parklink.test`, rol `DRIVER`. |
+| 9 | `GET /users/me` vía gateway | Endpoint de usuario actual protegido por JWT. | `200` — perfil del conductor sin exponer `passwordHash`. |
+| 10 | `GET /parking-spaces/search?lat=-12.0464&lng=-77.0428&maxDistance=8&limit=1` vía gateway | Búsqueda paginada de cocheras cercanas en Lima. | `200` — `Cochera San Isidro 002`, estado `AVAILABLE`, distancia `6.64 km`. |
+| 11 | `GET /parking-spaces/fcae1baf-76d7-478e-a454-479b3c115a8f` vía gateway | Detalle completo de cochera seleccionada. | `200` — dirección `Av. Camino Real 129, San Isidro`, precio `7.5`, horario `07:00-21:00`. |
+| 12 | `GET /maps/geocode?address=Lima%2C%20Peru` vía gateway | Geocodificación con Google Maps desde backend. | `200` — `formattedAddress: "Lima, Peru"`, latitud `-12.0466888`. |
+| 13 | `GET /maps/reverse-geocode?lat=-12.0464&lng=-77.0428` vía gateway | Reverse geocode de coordenadas de Lima. | `200` — dirección formateada `XX34+CVP, BRT Metropolitano, Lima 15082, Peru`. |
+| 14 | `GET /maps/distance?...` vía gateway | Cálculo de distancia entre Lima centro y cochera encontrada. | `200` — `distanceText: "8.8 km"`, `durationText: "23 mins"`. |
+| 15 | `POST /reservations` vía gateway | Creación de reserva autenticada con validación de disponibilidad. | `201` — reserva `0ae90497-c9d8-4b16-ade6-119529b7263d`, estado `PENDING_PAYMENT`, total `7.5`. |
+| 16 | `GET /reservations/my` vía gateway | Historial del conductor autenticado. | `200` — incluye la reserva creada para la prueba Sprint 4. |
+| 17 | `GET /reservations/{id}` vía gateway | Consulta individual de reserva protegida. | `200` — misma reserva, horario `2030-01-15T14:00:00Z` a `15:00:00Z`. |
+| 18 | `POST /payments` vía gateway con `idempotency-key` | Pago simulado de la reserva y confirmación de idempotencia. | `201` — pago `4461a2ab-27ef-46d9-9c20-246067f4c47a`, estado `APPROVED`, recibo `RCT-MRBAZ4XW-1DHI93`. |
+| 19 | `POST /payments` repetido con la misma `idempotency-key` | Que un reintento no duplique el pago. | `201` — devuelve el mismo `paymentId` y el mismo `receiptCode`. |
+| 20 | `GET /payments/{id}` vía gateway | Consulta de pago protegido por JWT. | `200` — pago aprobado por `7.5`, método `mock-card`. |
+| 21 | `GET /payments/{id}/receipt` vía gateway | Recibo del pago aprobado. | `200` — recibo `RCT-MRBAZ4XW-1DHI93`. |
+| 22 | `GET /notifications` vía gateway | Notificaciones generadas por reserva y pago. | `200` — aparecen `PAYMENT_APPROVED` y `RESERVATION_CONFIRMED`. |
+| 23 | `GET https://parklink-platform.vercel.app/audit/events?limit=3` | Auditoría admin directa en backend. Este endpoint no se expone por el gateway. | `200` — eventos `RESERVATION_CANCELLED`, `PAYMENT_CREATED`, `RESERVATION_CREATED`. |
+| 24 | `PATCH /reservations/{id}/cancel` vía gateway | Limpieza de la reserva creada en la prueba para no dejar disponibilidad bloqueada. | `200` — reserva `0ae90497-c9d8-4b16-ade6-119529b7263d`, estado `CANCELLED`. |
+
+**Prueba específica de paso API Gateway → Backend**
+
+Para comprobar que las peticiones del usuario no se quedan en el gateway, sino que llegan al backend y ejecutan los servicios reales, se aplicaron tres validaciones:
+
+| Validación | Cómo se prueba | Resultado |
+|------------|----------------|-----------|
+| Reenvío de autenticación | Se obtiene JWT por `POST https://api-gateway-xi-five.vercel.app/auth/login` y se llama `GET /auth/me` por gateway y backend directo con el mismo token. | Ambos devuelven `200`, mismo `userId` y rol `DRIVER`. |
+| Reenvío de consulta | Se ejecuta `GET /parking-spaces/search?...` por gateway y backend directo con los mismos parámetros. | Ambos devuelven `200` y el mismo parking `fcae1baf-76d7-478e-a454-479b3c115a8f` (`Cochera San Isidro 002`). |
+| Reenvío con efecto de negocio | Se crea una reserva con `POST /reservations` vía gateway y luego se consulta `GET /audit/events` directo en backend. | La reserva creada por gateway aparece como evento `RESERVATION_CREATED` en auditoría del backend. Luego se cancela para limpiar datos. |
+
+```text
+authForwarding: gateway=200 backend=200 sameUserId=true
+searchForwarding: gateway=200 backend=200 sameParkingId=true
+sideEffectForwarding: createViaGateway=201 auditDirectBackend=200 auditHasCreated=true cleanup=CANCELLED
+```
+
+![Prueba API Gateway a Backend](screenshots/sprint4/gateway-backend-forwarding-proof.png)
+
+Además, el test automatizado `ParkLink-Backend/api-gateway/test/proxy.service.spec.ts` valida que `ProxyService.forward()` reenvía `method`, `originalUrl`, `body` y el header `Authorization`, excluyendo sólo headers propios de transporte como `host` y `content-length`.
+
+**Respuesta resumida del flujo reserva → pago → auditoría:**
+
+```text
+reservation=201 id=0ae90497-c9d8-4b16-ade6-119529b7263d status=PENDING_PAYMENT total=7.5
+payment=201 id=4461a2ab-27ef-46d9-9c20-246067f4c47a status=APPROVED receipt=RCT-MRBAZ4XW-1DHI93
+paymentRetry=201 samePaymentId=true sameReceipt=true
+audit=200 actions=[RESERVATION_CANCELLED, PAYMENT_CREATED, RESERVATION_CREATED]
+cleanupCancel=200 status=CANCELLED
+```
+
+**Capturas de pruebas ejecutadas desde Swagger UI**
+
+Las siguientes evidencias fueron tomadas con **Swagger UI → Try it out → Execute** sobre los despliegues productivos. En las capturas de autenticación se ocultaron el JWT completo y la contraseña de prueba.
+
+| Endpoint probado desde Swagger UI | Qué se está testeando | Captura |
+|-----------------------------------|------------------------|---------|
+| Gateway `GET /health` | Disponibilidad del API Gateway y backend downstream. | ![Swagger Gateway Health](screenshots/sprint4/swagger-gateway-test-01-health.png) |
+| Gateway `GET /routes` | Rutas proxy principales expuestas por el gateway. | ![Swagger Gateway Routes](screenshots/sprint4/swagger-gateway-test-02-routes.png) |
+| Backend `GET /health` | Disponibilidad directa del backend en Vercel. | ![Swagger Backend Health](screenshots/sprint4/swagger-test-01-health.png) |
+| Backend `POST /auth/login` | Login de conductor y emisión de JWT. | ![Swagger Auth Login](screenshots/sprint4/swagger-test-02-auth-login.png) |
+| Backend `GET /auth/me` | Validación del token y lectura del perfil autenticado. | ![Swagger Auth Me](screenshots/sprint4/swagger-test-03-auth-me.png) |
+| Backend `GET /parking-spaces/search` | Búsqueda paginada de cocheras disponibles en Lima. | ![Swagger Parking Search](screenshots/sprint4/swagger-test-04-parking-search.png) |
+| Backend `GET /parking-spaces/{id}` | Detalle de cochera seleccionada. | ![Swagger Parking Detail](screenshots/sprint4/swagger-test-05-parking-detail.png) |
+| Backend `GET /maps/geocode` | Conversión de dirección a coordenadas. | ![Swagger Maps Geocode](screenshots/sprint4/swagger-test-06-maps-geocode.png) |
+| Backend `GET /maps/reverse-geocode` | Conversión de coordenadas a dirección. | ![Swagger Maps Reverse Geocode](screenshots/sprint4/swagger-test-07-maps-reverse-geocode.png) |
+| Backend `GET /maps/distance` | Cálculo de distancia y duración hacia una cochera. | ![Swagger Maps Distance](screenshots/sprint4/swagger-test-08-maps-distance.png) |
+| Backend `POST /reservations` | Creación de reserva autenticada. | ![Swagger Reservation Create](screenshots/sprint4/swagger-test-09-reservation-create.png) |
+| Backend `GET /reservations/my` | Historial de reservas del conductor autenticado. | ![Swagger Reservations My](screenshots/sprint4/swagger-test-10-reservations-my.png) |
+| Backend `POST /payments` | Pago simulado aprobado con `idempotency-key`. | ![Swagger Payment Create](screenshots/sprint4/swagger-test-11-payment-create.png) |
+| Backend `GET /payments/{id}` | Consulta protegida del pago creado. | ![Swagger Payment Detail](screenshots/sprint4/swagger-test-12-payment-detail.png) |
+| Backend `GET /payments/{id}/receipt` | Recibo del pago aprobado. | ![Swagger Payment Receipt](screenshots/sprint4/swagger-test-13-payment-receipt.png) |
+| Backend `GET /notifications` | Notificaciones generadas por reserva y pago. | ![Swagger Notifications](screenshots/sprint4/swagger-test-14-notifications.png) |
+| Backend `PATCH /reservations/{id}/cancel` | Cancelación de la reserva de prueba para limpiar datos. | ![Swagger Reservation Cancel](screenshots/sprint4/swagger-test-15-reservation-cancel.png) |
+| Backend `GET /audit/events` | Auditoría admin de eventos críticos registrados. | ![Swagger Audit Events](screenshots/sprint4/swagger-test-16-audit-events.png) |
 
 **Checklist de regresión funcional**
 
-| Flujo validado | Resultado |
-|----------------|-----------|
-| Registro e inicio de sesión de conductor | Passed |
-| Registro e inicio de sesión de propietario | Passed |
-| Búsqueda de espacios disponibles | Passed |
-| Visualización de detalle de cochera | Passed |
-| Creación de reserva | Passed |
-| Pago simulado con idempotencia | Passed |
-| Visualización de historial / reservas | Passed |
-| Registro y edición de espacios del propietario | Passed |
-| Habilitación y deshabilitación de espacios | Passed |
-| Consulta de Swagger y health checks | Passed |
+| Flujo validado | Resultado | Qué se está testeando |
+|----------------|-----------|------------------------|
+| Inicio de sesión de conductor | Passed | Credenciales válidas generan JWT y perfil `DRIVER`. |
+| Inicio de sesión de administrador | Passed | Usuario `ADMIN` puede consultar auditoría directa del backend. |
+| Búsqueda de espacios disponibles | Passed | El gateway devuelve cocheras reales de Lima con paginación. |
+| Visualización de detalle de cochera | Passed | El detalle mantiene precio, horario, dirección y estado disponible. |
+| Creación de reserva | Passed | El backend calcula precio y deja la reserva en `PENDING_PAYMENT`. |
+| Validación visual de horario ocupado | Passed | El frontend muestra “Este horario ya está ocupado” cuando backend rechaza un solapamiento. |
+| Pago simulado con idempotencia | Passed | El pago aprobado genera recibo y el retry devuelve el mismo pago. |
+| Notificaciones | Passed | Reserva y pago producen notificaciones para el usuario. |
+| Auditoría | Passed | Backend registra eventos críticos consultables por `ADMIN`. |
+| Limpieza de datos de prueba | Passed | La reserva de prueba queda cancelada. |
+| Consulta de Swagger y health checks | Passed | Backend y gateway mantienen documentación y disponibilidad. |
+
 
 #### 5.4.4.4 Execution Evidence for Sprint Review
 
@@ -4739,20 +4816,19 @@ Durante la ejecución del Sprint 4 se validó el flujo completo de ParkLink desd
 | Health check gateway | `GET /health` respondió correctamente |
 | Swagger backend y gateway | Documentación cargó correctamente en producción |
 
-**Evidencia visual sugerida para el repositorio:**
 
-| Evidencia | Ruta sugerida |
-|----------|---------------|
-| Login web conectado a backend | `screenshots/sprint4/web-login.png` |
-| Búsqueda web de estacionamientos | `screenshots/sprint4/web-parking-search.png` |
-| Detalle de estacionamiento | `screenshots/sprint4/web-parking-detail.png` |
-| Flujo de reserva | `screenshots/sprint4/web-reservation.png` |
-| Pago simulado | `screenshots/sprint4/web-payment.png` |
-| Panel del propietario | `screenshots/sprint4/web-owner-panel.png` |
-| Backend health check | `screenshots/sprint4/backend-health.png` |
-| API Gateway health check | `screenshots/sprint4/gateway-health.png` |
-| Swagger backend | `screenshots/sprint4/backend-swagger.png` |
-| Swagger gateway | `screenshots/sprint4/gateway-swagger.png` |
+**Evidencia:**
+
+| Evidencia | Captura |
+|----------|---------|
+| Frontend web desplegado en Vercel | ![Frontend web producción Sprint 4](screenshots/sprint4/web-production.png) |
+| Backend health check en producción | ![Backend health Sprint 4](screenshots/sprint4/backend-health.png) |
+| API Gateway health check en producción | ![Gateway health Sprint 4](screenshots/sprint4/gateway-health.png) |
+| API Gateway routes en producción | ![Gateway routes Sprint 4](screenshots/sprint4/gateway-routes.png) |
+| Búsqueda real de cocheras por endpoint | ![Parking search Sprint 4](screenshots/sprint4/parking-search-response.png) |
+| Swagger backend en producción | ![Backend Swagger Sprint 4](screenshots/sprint4/backend-swagger.png) |
+| Swagger gateway en producción | ![Gateway Swagger Sprint 4](screenshots/sprint4/gateway-swagger.png) |
+
 
 #### 5.4.4.5 Microservices Documentation Evidence for Sprint Review
 
@@ -4766,8 +4842,19 @@ Para el Sprint 4 se verificó que los contratos de backend y API Gateway contin�
 | Backend API | `POST /auth/login` | Autenticación de usuarios y emisión de JWT |
 | Backend API | `GET /parking-spaces/search` | Búsqueda de espacios por ubicación |
 | Backend API | `GET /parking-spaces/:id` | Detalle de espacio de estacionamiento |
+
+| Backend API | `GET /maps/geocode` | Geocodificación de dirección usando integración Maps |
+| Backend API | `GET /maps/reverse-geocode` | Obtención de dirección a partir de coordenadas |
+| Backend API | `GET /maps/distance` | Cálculo de distancia y duración hacia una cochera |
 | Backend API | `POST /reservations` | Creación de reserva con validación de disponibilidad |
+| Backend API | `GET /reservations/my` | Historial de reservas del usuario autenticado |
+| Backend API | `GET /reservations/:id` | Detalle de reserva protegida por ownership |
+| Backend API | `PATCH /reservations/:id/cancel` | Cancelación usada para limpiar la reserva de prueba |
 | Backend API | `POST /payments` | Pago simulado con soporte de idempotencia |
+| Backend API | `GET /payments/:id` | Consulta protegida de pago |
+| Backend API | `GET /payments/:id/receipt` | Recibo de pago aprobado |
+| Backend API | `GET /notifications` | Notificaciones generadas por reserva y pago |
+
 | Backend API | `GET /audit/events` | Consulta de eventos críticos restringida a ADMIN |
 | API Gateway | `GET /health` | Valida disponibilidad del gateway y conexión con backend |
 | API Gateway | `GET /routes` | Evidencia de rutas proxy configuradas |
@@ -4797,6 +4884,18 @@ Para el Sprint 4 se verificó que los contratos de backend y API Gateway contin�
 | Repositorios GitHub | Backend, Frontend, API Gateway y Reporte | Código actualizado con evidencias de Sprint 4 |
 | Variables de entorno | Vercel / Render | Variables verificadas para conexión frontend-backend, auth y base de datos |
 | Release académico | Sprint 4 / cierre final | Evidencia documentada en README y reporte |
+
+
+**Evidencia:**
+
+| Evidencia de despliegue | Captura |
+|-------------------------|---------|
+| Backend API desplegado en Vercel | ![Backend deploy evidence](deployment/backend-deploy.png) |
+| API Gateway desplegado en Vercel | ![Gateway deploy evidence](deployment/gateway-deploy.png) |
+| Frontend web productivo en Vercel | ![Frontend web producción Sprint 4](screenshots/sprint4/web-production.png) |
+| Health check backend del despliegue | ![Backend health Sprint 4](screenshots/sprint4/backend-health.png) |
+| Health check gateway del despliegue | ![Gateway health Sprint 4](screenshots/sprint4/gateway-health.png) |
+
 
 #### 5.4.4.7 Team Collaboration Insights during Sprint
 
