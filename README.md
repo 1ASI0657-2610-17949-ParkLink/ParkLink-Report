@@ -43,99 +43,295 @@
 
 ### CO1: Actualiza conceptos y conocimientos necesarios para su desarrollo profesional y en especial para su proyecto en soluciones de software.
 
-| Ronda | Integrante | Acción realizada |
-|-------|------------|-------------------|
-| TB1 | Fabian Alejandro Oliva López | Definí el ADN de la startup, estableciendo la visión, misión y valores como fundamento estratégico del proyecto. Supervisé el proceso Lean UX para garantizar la alineación con los objetivos del curso. Identifiqué y definí los segmentos objetivo, aplicando conocimientos de estrategia de producto. |
-| TB1 | Javier Masaru Nikaido Vargas | Realicé investigación de competidores mediante benchmarking para entender el mercado. Ejecuté entrevistas y needfinding para validar el problema con usuarios reales, aplicando técnicas de UX Research. |
-| TB1 | Matias Rodolfo Salcedo Champi | Diseñé el Solution Profile y nombre del producto, aplicando conceptos de product design. Creé User Personas y Empathy Maps para comprender las necesidades de los usuarios, integrando conocimientos de diseño centrado en el usuario. |
-| TB1 | Percy Alonso Muñiz Huayanca | Desarrollé Lean UX Assumptions e Hypothesis Statements, aplicando metodologías de diseño ágil. Construí User Task Matrix, As-is y To-Be Scenario Mapping para analizar procesos actuales y futuros, integrando conocimientos de análisis de procesos. |
-| TB1 | Pietro Osores Marchese | Elaboré el Lean UX Canvas para consolidar la propuesta de valor. Creé User Stories, Impact Map y Product Backlog para especificar requerimientos del proyecto, aplicando conocimientos de gestión de proyectos ágiles. |
-| TB2 | Fabian Alejandro Oliva López | Elaboré los Principles Statements del Capítulo IV, participé en la definición de Architectural Drivers, apoyé la priorización de Quality Attribute Scenarios y revisé el Kanban Board de las iteraciones ADD. |
-| TB2 | Matias Rodolfo Salcedo Champi | Desarrollé el System Landscape Diagram, apoyé los Context Level Diagrams de los bounded contexts, elaboré diagramas visuales para la Iteration 2 y refiné vistas C4 relacionadas con disponibilidad y reservas. |
-| TB2 | Javier Masaru Nikaido Vargas | Documenté el Design Purpose, identifiqué Primary User Stories relevantes para arquitectura, apoyé la definición de Constraints y revisé la trazabilidad entre user stories y decisiones de diseño. |
-| TB2 | Pietro Osores Marchese | Elaboré el Relational / Non-Relational Database Diagram, definí tablas principales como USERS, PARKING_SPACES, RESERVATIONS y PAYMENTS, apoyé la sección de Design Patterns y documenté decisiones relacionadas con persistencia y consistencia ACID. |
-| TB2 | Percy Alonso Muñiz Huayanca | Desarrollé la Iteration 3 de ADD, documenté ADRs sobre pagos, webhooks, auditoría y notificaciones, elaboré vistas de integración con proveedores externos y completé el análisis final de drivers atendidos. |
-| AV3 | Fabian Alejandro Oliva Lopez | Apoye en la integración inicial del repositorio `ParkLink-Frontend`, diferenciando la landing informativa de la aplicación funcional del sistema. |
-| AV3 | Javier Masaru Nikaido Vargas | Trabaje en la mejora del API Gateway, rutas protegidas y documentación Swagger para validar la comunicación entre servicios. |
-| AV3 | Pietro Osores Marchese | Desarrolle y consolide funcionalidades del backend relacionadas con autenticación, JWT, reservas, Prisma y conexión con PostgreSQL. |
-| AV3 | Percy Alonso Muñiz Huayanca | Participe en la gestión de espacios de estacionamiento, seguimiento del tablero Kanban y validación básica de endpoints. |
-| AV3 | Matias Rodolfo Salcedo Champi | Apoye en la consulta de espacios disponibles, estructura base de notificaciones y revisión cruzada entre Front-End, API Gateway y backend. |
-| AV4 | Fabian Alejandro Oliva López | Consolidó la documentación final del proyecto, validó la integración end-to-end de la app Flutter con el backend desplegado y generó el reporte final en PDF con todas las evidencias del Sprint 3. |
-| AV4 | Javier Masaru Nikaido Vargas | Gestionó el despliegue del backend y API Gateway en Vercel, configuró la base de datos PostgreSQL en Render con data seed de Lima y verificó todos los endpoints en producción. |
-| AV4 | Pietro Osores Marchese | Completó el backend transaccional con todas las technical stories pendientes, implementó el seed de datos reales de Lima y configuró el deploy serverless en Vercel con conexión exitosa a Render. |
-| AV4 | Percy Alonso Muñiz Huayanca | Actualizó la documentación de despliegue (DEPLOY-GUIDE.md), elaboró el reporte de base de datos creada con data seed (RENDER-SEED-DATA.md) y aseguró la trazabilidad de todas las evidencias para el informe final. |
-| AV4 | Matias Rodolfo Salcedo Champi | Completó la app Flutter nativa con Google Maps integrado, pantallas de auth, detalle de cocheras, reservas y pagos; subió el código al repositorio oficial de la organización ParkLink-App y validó la conexión con el backend desplegado en producción. |
+**Acciones realizadas:**
 
-**Conclusiones CO1:**
+**TB1**
 
-| Conclusión |
-|------------|
-| El equipo ha demostrado capacidad para integrar y aplicar conocimientos de arquitectura de software en un proyecto real de solución tecnológica. Cada integrante actualizó sus conocimientos en UX, diseño de producto, análisis de procesos, gestión de requerimientos, DDD, C4 Model, ADD, atributos de calidad, patrones de diseño, decisiones arquitectónicas documentadas, integración Front-End, despliegue web, API Gateway, backend serverless y validación de servicios mediante Swagger. |
+**Fabian Alejandro Oliva López:** Definí el ADN de la startup, estableciendo la visión, misión y valores como fundamento estratégico del proyecto. Supervisé el proceso Lean UX para garantizar la alineación con los objetivos del curso. Identifiqué y definí los segmentos objetivo, aplicando conocimientos de estrategia de producto.
+
+**Javier Masaru Nikaido Vargas:** Realicé investigación de competidores mediante benchmarking para entender el mercado. Ejecuté entrevistas y needfinding para validar el problema con usuarios reales, aplicando técnicas de UX Research.
+
+**Matias Rodolfo Salcedo Champi:** Diseñé el Solution Profile y nombre del producto, aplicando conceptos de product design. Creé User Personas y Empathy Maps para comprender las necesidades de los usuarios, integrando conocimientos de diseño centrado en el usuario.
+
+**Percy Alonso Muñiz Huayanca:** Desarrollé Lean UX Assumptions e Hypothesis Statements, aplicando metodologías de diseño ágil. Construí User Task Matrix, As-is y To-Be Scenario Mapping para analizar procesos actuales y futuros, integrando conocimientos de análisis de procesos.
+
+**Pietro Osores Marchese:** Elaboré el Lean UX Canvas para consolidar la propuesta de valor. Creé User Stories, Impact Map y Product Backlog para especificar requerimientos del proyecto, aplicando conocimientos de gestión de proyectos ágiles.
+
+**TB2**
+
+**Fabian Alejandro Oliva López:** Elaboré los Principles Statements del Capítulo IV, participé en la definición de Architectural Drivers, apoyé la priorización de Quality Attribute Scenarios y revisé el Kanban Board de las iteraciones ADD.
+
+**Matias Rodolfo Salcedo Champi:** Desarrollé el System Landscape Diagram, apoyé los Context Level Diagrams de los bounded contexts, elaboré diagramas visuales para la Iteration 2 y refiné vistas C4 relacionadas con disponibilidad y reservas.
+
+**Javier Masaru Nikaido Vargas:** Documenté el Design Purpose, identifiqué Primary User Stories relevantes para arquitectura, apoyé la definición de Constraints y revisé la trazabilidad entre user stories y decisiones de diseño.
+
+**Pietro Osores Marchese:** Elaboré el Relational / Non-Relational Database Diagram, definí tablas principales como USERS, PARKING_SPACES, RESERVATIONS y PAYMENTS, apoyé la sección de Design Patterns y documenté decisiones relacionadas con persistencia y consistencia ACID.
+
+**Percy Alonso Muñiz Huayanca:** Desarrollé la Iteration 3 de ADD, documenté ADRs sobre pagos, webhooks, auditoría y notificaciones, elaboré vistas de integración con proveedores externos y completé el análisis final de drivers atendidos.
+
+**AV3**
+
+**Fabian Alejandro Oliva Lopez:** Apoye en la integración inicial del repositorio `ParkLink-Frontend`, diferenciando la landing informativa de la aplicación funcional del sistema.
+
+**Javier Masaru Nikaido Vargas:** Trabaje en la mejora del API Gateway, rutas protegidas y documentación Swagger para validar la comunicación entre servicios.
+
+**Pietro Osores Marchese:** Desarrolle y consolide funcionalidades del backend relacionadas con autenticación, JWT, reservas, Prisma y conexión con PostgreSQL.
+
+**Percy Alonso Muñiz Huayanca:** Participe en la gestión de espacios de estacionamiento, seguimiento del tablero Kanban y validación básica de endpoints.
+
+**Matias Rodolfo Salcedo Champi:** Apoye en la consulta de espacios disponibles, estructura base de notificaciones y revisión cruzada entre Front-End, API Gateway y backend.
+
+**AV4**
+
+**Fabian Alejandro Oliva López:** Consolidó la documentación final del proyecto, validó la integración end-to-end de la app Flutter con el backend desplegado y generó el reporte final en PDF con todas las evidencias del Sprint 3.
+
+**Javier Masaru Nikaido Vargas:** Gestionó el despliegue del backend y API Gateway en Vercel, configuró la base de datos PostgreSQL en Render con data seed de Lima y verificó todos los endpoints en producción.
+
+**Pietro Osores Marchese:** Completó el backend transaccional con todas las technical stories pendientes, implementó el seed de datos reales de Lima y configuró el deploy serverless en Vercel con conexión exitosa a Render.
+
+**Percy Alonso Muñiz Huayanca:** Actualizó la documentación de despliegue (DEPLOY-GUIDE.md), elaboró el reporte de base de datos creada con data seed (RENDER-SEED-DATA.md) y aseguró la trazabilidad de todas las evidencias para el informe final.
+
+**Matias Rodolfo Salcedo Champi:** Completó la app Flutter nativa con Google Maps integrado, pantallas de auth, detalle de cocheras, reservas y pagos; subió el código al repositorio oficial de la organización ParkLink-App y validó la conexión con el backend desplegado en producción.
+
+**Conclusiones:**
+
+El equipo ha demostrado capacidad para integrar y aplicar conocimientos de arquitectura de software en un proyecto real de solución tecnológica. Cada integrante actualizó sus conocimientos en UX, diseño de producto, análisis de procesos, gestión de requerimientos, DDD, C4 Model, ADD, atributos de calidad, patrones de diseño, decisiones arquitectónicas documentadas, integración Front-End, despliegue web, API Gateway, backend serverless y validación de servicios mediante Swagger.
 
 ---
 
 ### CO2: Reconoce la necesidad del aprendizaje permanente para el desempeño profesional y el desarrollo de proyectos en soluciones de software.
 
-| Ronda | Integrante | Acción realizada |
-|-------|------------|-------------------|
-| TB1 | Fabian Alejandro Oliva López | Al definir la visión y estrategia de la startup, reconocí la importancia de actualizar constantemente los conocimientos en estrategia de producto y liderazgo de proyectos. |
-| TB1 | Javier Masaru Nikaido Vargas | Al realizar entrevistas y needfinding, identifiqué la necesidad de mejorar continuamente las técnicas de investigación de usuarios y comunicación con stakeholders. |
-| TB1 | Matias Rodolfo Salcedo Champi | Al crear User Personas y Empathy Maps, comprendí la relevancia del aprendizaje continuo en metodologías de diseño centrado en el usuario. |
-| TB1 | Percy Alonso Muñiz Huayanca | Al desarrollar escenarios y mappings de procesos, reconocí la necesidad de actualizarse en herramientas de análisis y modelado de procesos de negocio. |
-| TB1 | Pietro Osores Marchese | Al crear el Product Backlog y User Stories, entendí la importancia del aprendizaje continuo en gestión de requerimientos y priorización de funcionalidades en entornos ágiles. |
-| TB2 | Fabian Alejandro Oliva López | Reconocí la necesidad de fortalecer criterios de diseño arquitectónico, trade-offs y priorización de drivers para sustentar decisiones más allá de la funcionalidad visible. |
-| TB2 | Matias Rodolfo Salcedo Champi | Profundicé en el uso de C4 Model y Structurizr para comunicar arquitectura mediante vistas visuales claras, entendiendo que un diagrama debe explicar decisiones y no sólo decorar el informe. |
-| TB2 | Javier Masaru Nikaido Vargas | Reforcé el aprendizaje sobre trazabilidad entre requisitos, restricciones, atributos de calidad y decisiones arquitectónicas, comprendiendo su impacto en la mantenibilidad del sistema. |
-| TB2 | Pietro Osores Marchese | Actualicé conocimientos sobre consistencia transaccional, modelado relacional, restricciones ACID y separación entre cache de disponibilidad y base de datos como fuente de verdad. |
-| TB2 | Percy Alonso Muñiz Huayanca | Aprendí a aplicar ADD para refinar arquitectura por iteraciones, documentar ADRs y manejar integraciones externas mediante adaptadores, idempotencia, auditoría y resiliencia. |
-| AV3 | Fabian Alejandro Oliva Lopez | Aprendí la importancia de separar una landing de presentación de un Front-End funcional conectado a servicios reales. |
-| AV3 | Javier Masaru Nikaido Vargas | Reforcé el aprendizaje sobre API Gateway, documentación Swagger y control de rutas protegidas. |
-| AV3 | Pietro Osores Marchese | Fortalecí conocimientos sobre backend NestJS, autenticación JWT, Prisma y despliegue serverless. |
-| AV3 | Percy Alonso Muñiz Huayanca | Aprendí a organizar mejor el seguimiento de tareas técnicas mediante Kanban y validación de endpoints. |
-| AV3 | Matias Rodolfo Salcedo Champi | Reforcé conocimientos sobre integración entre Front-End, API Gateway, backend y módulos base de notificación. |
-| AV4 | Fabian Alejandro Oliva López | Aprendió a generar reportes académicos con evidencias técnicas reales (deployments, seeds, validaciones) y consolidar documentación multi-repositorio para la entrega final. |
-| AV4 | Javier Masaru Nikaido Vargas | Fortaleció habilidades en DevOps: creación de DB en Render vía API, seed de datos geo-referenciados de Lima, configuración de variables de entorno en Vercel y troubleshooting de deploy serverless. |
-| AV4 | Pietro Osores Marchese | Aprendió a desplegar un backend NestJS con Prisma en Vercel, manejar conexiones SSL a PostgreSQL externo en Render y ejecutar seed scripts con Node para poblar la base de datos en producción. |
-| AV4 | Percy Alonso Muñiz Huayanca | Desarrolló habilidades de documentación técnica de infraestructura, aprendiendo a detallar arquitectura de despliegue multi-plataforma (Render + Vercel + GitHub) con todos los componentes del sistema ParkLink. |
-| AV4 | Matias Rodolfo Salcedo Champi | Aprendió a consumir APIs REST desde Flutter, integrar Google Maps real en emulador Android, manejar almacenamiento seguro de tokens JWT con flutter_secure_storage y probar la app móvil conectada al backend en producción. |
+**Acciones realizadas:**
 
-**Conclusiones CO2:**
+**TB1**
 
-| Conclusión |
-|------------|
-| El equipo reconoce que el desarrollo de soluciones de software requiere aprendizaje continuo. La aplicación de metodologías como Lean UX, Needfinding, User Stories, Impact Mapping, DDD, C4, ADD y ADRs evidencia el compromiso de cada miembro por adquirir nuevas competencias y adaptarse a decisiones técnicas propias de una plataforma de movilidad urbana. Además, el Sprint 2 permitió fortalecer aprendizajes relacionados con integración Front-End, despliegue, backend serverless, API Gateway, autenticación y validación de servicios en un entorno más cercano a producción. |
+**Fabian Alejandro Oliva López:** Al definir la visión y estrategia de la startup, reconocí la importancia de actualizar constantemente los conocimientos en estrategia de producto y liderazgo de proyectos.
+
+**Javier Masaru Nikaido Vargas:** Al realizar entrevistas y needfinding, identifiqué la necesidad de mejorar continuamente las técnicas de investigación de usuarios y comunicación con stakeholders.
+
+**Matias Rodolfo Salcedo Champi:** Al crear User Personas y Empathy Maps, comprendí la relevancia del aprendizaje continuo en metodologías de diseño centrado en el usuario.
+
+**Percy Alonso Muñiz Huayanca:** Al desarrollar escenarios y mappings de procesos, reconocí la necesidad de actualizarse en herramientas de análisis y modelado de procesos de negocio.
+
+**Pietro Osores Marchese:** Al crear el Product Backlog y User Stories, entendí la importancia del aprendizaje continuo en gestión de requerimientos y priorización de funcionalidades en entornos ágiles.
+
+**TB2**
+
+**Fabian Alejandro Oliva López:** Reconocí la necesidad de fortalecer criterios de diseño arquitectónico, trade-offs y priorización de drivers para sustentar decisiones más allá de la funcionalidad visible.
+
+**Matias Rodolfo Salcedo Champi:** Profundicé en el uso de C4 Model y Structurizr para comunicar arquitectura mediante vistas visuales claras, entendiendo que un diagrama debe explicar decisiones y no sólo decorar el informe.
+
+**Javier Masaru Nikaido Vargas:** Reforcé el aprendizaje sobre trazabilidad entre requisitos, restricciones, atributos de calidad y decisiones arquitectónicas, comprendiendo su impacto en la mantenibilidad del sistema.
+
+**Pietro Osores Marchese:** Actualicé conocimientos sobre consistencia transaccional, modelado relacional, restricciones ACID y separación entre cache de disponibilidad y base de datos como fuente de verdad.
+
+**Percy Alonso Muñiz Huayanca:** Aprendí a aplicar ADD para refinar arquitectura por iteraciones, documentar ADRs y manejar integraciones externas mediante adaptadores, idempotencia, auditoría y resiliencia.
+
+**AV3**
+
+**Fabian Alejandro Oliva Lopez:** Aprendí la importancia de separar una landing de presentación de un Front-End funcional conectado a servicios reales.
+
+**Javier Masaru Nikaido Vargas:** Reforcé el aprendizaje sobre API Gateway, documentación Swagger y control de rutas protegidas.
+
+**Pietro Osores Marchese:** Fortalecí conocimientos sobre backend NestJS, autenticación JWT, Prisma y despliegue serverless.
+
+**Percy Alonso Muñiz Huayanca:** Aprendí a organizar mejor el seguimiento de tareas técnicas mediante Kanban y validación de endpoints.
+
+**Matias Rodolfo Salcedo Champi:** Reforcé conocimientos sobre integración entre Front-End, API Gateway, backend y módulos base de notificación.
+
+**AV4**
+
+**Fabian Alejandro Oliva López:** Aprendió a generar reportes académicos con evidencias técnicas reales (deployments, seeds, validaciones) y consolidar documentación multi-repositorio para la entrega final.
+
+**Javier Masaru Nikaido Vargas:** Fortaleció habilidades en DevOps: creación de DB en Render vía API, seed de datos geo-referenciados de Lima, configuración de variables de entorno en Vercel y troubleshooting de deploy serverless.
+
+**Pietro Osores Marchese:** Aprendió a desplegar un backend NestJS con Prisma en Vercel, manejar conexiones SSL a PostgreSQL externo en Render y ejecutar seed scripts con Node para poblar la base de datos en producción.
+
+**Percy Alonso Muñiz Huayanca:** Desarrolló habilidades de documentación técnica de infraestructura, aprendiendo a detallar arquitectura de despliegue multi-plataforma (Render + Vercel + GitHub) con todos los componentes del sistema ParkLink.
+
+**Matias Rodolfo Salcedo Champi:** Aprendió a consumir APIs REST desde Flutter, integrar Google Maps real en emulador Android, manejar almacenamiento seguro de tokens JWT con flutter_secure_storage y probar la app móvil conectada al backend en producción.
+
+**Conclusiones:**
+
+El equipo reconoce que el desarrollo de soluciones de software requiere aprendizaje continuo. La aplicación de metodologías como Lean UX, Needfinding, User Stories, Impact Mapping, DDD, C4, ADD y ADRs evidencia el compromiso de cada miembro por adquirir nuevas competencias y adaptarse a decisiones técnicas propias de una plataforma de movilidad urbana. Además, el Sprint 2 permitió fortalecer aprendizajes relacionados con integración Front-End, despliegue, backend serverless, API Gateway, autenticación y validación de servicios en un entorno más cercano a producción.
 
 ---
 
 ### Aportes del Trabajo Final al Student Outcome
 
-#### CO1 — Aportes por integrante
+#### CO1
 
-| Integrante | Aporte TF |
-|------------|-----------|
-| Fabian Alejandro Oliva López | Consolidó criterios de experiencia de usuario, evidencias visuales para flujos web/mobile y generó el reporte final en PDF con todas las validaciones del Sprint 3. |
-| Javier Masaru Nikaido Vargas | Gestionó el despliegue completo del backend y API Gateway en Vercel, creó la base de datos PostgreSQL en Render con data seed de Lima y verificó todos los endpoints en producción. |
-| Pietro Osores Marchese | Completó el backend transaccional con technical stories, implementó el seed de datos reales de Lima con 101 usuarios, 120 espacios y 160 reservas, y configuró el deploy serverless en Vercel. |
-| Percy Alonso Muñiz Huayanca | Documentó el despliegue multi-plataforma (DEPLOY-GUIDE.md), elaboró el reporte de base de datos seed (RENDER-SEED-DATA.md) y aseguró la trazabilidad de evidencias del Sprint 3. |
-| Matias Rodolfo Salcedo Champi | Completó la app Flutter nativa con Google Maps, autenticación JWT, detalle de cocheras, reservas y pagos; subió el código a GitHub y validó la conexión con el backend en producción. |
+**Aportes TF por integrante:**
 
-**Conclusión CO1:**
+**Fabian Alejandro Oliva López:** consolidó criterios de experiencia de usuario, evidencias visuales para flujos web/mobile y generó el reporte final en PDF con todas las validaciones del Sprint 3.
 
-| Conclusión TF |
-|---------------|
-| El Trabajo Final permitió actualizar conocimientos técnicos de arquitectura, backend transaccional con NestJS + Prisma, frontend web, app móvil Flutter con Google Maps, despliegue serverless en Vercel, base de datos PostgreSQL en Render y documentación técnica de infraestructura, conectando cada decisión técnica con las necesidades reales del producto ParkLink y su despliegue en producción. |
+**Javier Masaru Nikaido Vargas:** gestionó el despliegue completo del backend y API Gateway en Vercel, creó la base de datos PostgreSQL en Render con data seed de Lima y verificó todos los endpoints en producción.
 
-#### CO2 — Aportes por integrante
+**Pietro Osores Marchese:** completó el backend transaccional con technical stories, implementó el seed de datos reales de Lima con 101 usuarios, 120 espacios y 160 reservas, y configuró el deploy serverless en Vercel.
 
-| Integrante(s) | Aporte TF |
-|----------------|-----------|
-| Equipo ParkTeam | Durante el cierre del proyecto se consolidaron aprendizajes críticos: despliegue serverless de backend NestJS en Vercel, manejo de conexiones SSL a PostgreSQL externo en Render, seed de datos geo-referenciados de Lima, integración de Google Maps en Flutter para Android, configuración de flutter_secure_storage para JWT, documentación técnica de infraestructura multi-plataforma y generación automatizada de reportes. Cada integrante fortaleció su capacidad de investigar, implementar, documentar y validar soluciones bajo presión de entrega académica. |
+**Percy Alonso Muñiz Huayanca:** documentó el despliegue multi-plataforma (DEPLOY-GUIDE.md), elaboró el reporte de base de datos seed (RENDER-SEED-DATA.md) y aseguró la trazabilidad de evidencias del Sprint 3.
 
-**Conclusión CO2:**
+**Matias Rodolfo Salcedo Champi:** completó la app Flutter nativa con Google Maps, autenticación JWT, detalle de cocheras, reservas y pagos; subió el código a GitHub y validó la conexión con el backend en producción.
 
-| Conclusión TF |
-|---------------|
-| El equipo reconoce que una solución de software completa requiere iteración continua, revisión de documentación oficial de cada plataforma (Vercel, Render, Flutter, Google Maps), pruebas en entornos reales (emulador Android, endpoints en producción) y adaptación ante restricciones de infraestructura free tier, APIs externas y flujos de integración multiplataforma. El aprendizaje permanente fue clave para superar cada obstáculo técnico del proyecto. |
+**Conclusiones TF:**
+
+El Trabajo Final permitió actualizar conocimientos técnicos de arquitectura, backend transaccional con NestJS + Prisma, frontend web, app móvil Flutter con Google Maps, despliegue serverless en Vercel, base de datos PostgreSQL en Render y documentación técnica de infraestructura, conectando cada decisión técnica con las necesidades reales del producto ParkLink y su despliegue en producción.
+
+#### CO2
+
+**Aportes TF por integrante:**
+
+**Equipo ParkTeam:** durante el cierre del proyecto se consolidaron aprendizajes críticos: despliegue serverless de backend NestJS en Vercel, manejo de conexiones SSL a PostgreSQL externo en Render, seed de datos geo-referenciados de Lima, integración de Google Maps en Flutter para Android, configuración de flutter_secure_storage para JWT, documentación técnica de infraestructura multi-plataforma y generación automatizada de reportes. Cada integrante fortaleció su capacidad de investigar, implementar, documentar y validar soluciones bajo presión de entrega académica.
+
+**Conclusiones TF:**
+
+El equipo reconoce que una solución de software completa requiere iteración continua, revisión de documentación oficial de cada plataforma (Vercel, Render, Flutter, Google Maps), pruebas en entornos reales (emulador Android, endpoints en producción) y adaptación ante restricciones de infraestructura free tier, APIs externas y flujos de integración multiplataforma. El aprendizaje permanente fue clave para superar cada obstáculo técnico del proyecto.## Student Outcome
+
+### CO1: Actualiza conceptos y conocimientos necesarios para su desarrollo profesional y en especial para su proyecto en soluciones de software.
+
+**Acciones realizadas:**
+
+**TB1**
+
+**Fabian Alejandro Oliva López:** Definí el ADN de la startup, estableciendo la visión, misión y valores como fundamento estratégico del proyecto. Supervisé el proceso Lean UX para garantizar la alineación con los objetivos del curso. Identifiqué y definí los segmentos objetivo, aplicando conocimientos de estrategia de producto.
+
+**Javier Masaru Nikaido Vargas:** Realicé investigación de competidores mediante benchmarking para entender el mercado. Ejecuté entrevistas y needfinding para validar el problema con usuarios reales, aplicando técnicas de UX Research.
+
+**Matias Rodolfo Salcedo Champi:** Diseñé el Solution Profile y nombre del producto, aplicando conceptos de product design. Creé User Personas y Empathy Maps para comprender las necesidades de los usuarios, integrando conocimientos de diseño centrado en el usuario.
+
+**Percy Alonso Muñiz Huayanca:** Desarrollé Lean UX Assumptions e Hypothesis Statements, aplicando metodologías de diseño ágil. Construí User Task Matrix, As-is y To-Be Scenario Mapping para analizar procesos actuales y futuros, integrando conocimientos de análisis de procesos.
+
+**Pietro Osores Marchese:** Elaboré el Lean UX Canvas para consolidar la propuesta de valor. Creé User Stories, Impact Map y Product Backlog para especificar requerimientos del proyecto, aplicando conocimientos de gestión de proyectos ágiles.
+
+**TB2**
+
+**Fabian Alejandro Oliva López:** Elaboré los Principles Statements del Capítulo IV, participé en la definición de Architectural Drivers, apoyé la priorización de Quality Attribute Scenarios y revisé el Kanban Board de las iteraciones ADD.
+
+**Matias Rodolfo Salcedo Champi:** Desarrollé el System Landscape Diagram, apoyé los Context Level Diagrams de los bounded contexts, elaboré diagramas visuales para la Iteration 2 y refiné vistas C4 relacionadas con disponibilidad y reservas.
+
+**Javier Masaru Nikaido Vargas:** Documenté el Design Purpose, identifiqué Primary User Stories relevantes para arquitectura, apoyé la definición de Constraints y revisé la trazabilidad entre user stories y decisiones de diseño.
+
+**Pietro Osores Marchese:** Elaboré el Relational / Non-Relational Database Diagram, definí tablas principales como USERS, PARKING_SPACES, RESERVATIONS y PAYMENTS, apoyé la sección de Design Patterns y documenté decisiones relacionadas con persistencia y consistencia ACID.
+
+**Percy Alonso Muñiz Huayanca:** Desarrollé la Iteration 3 de ADD, documenté ADRs sobre pagos, webhooks, auditoría y notificaciones, elaboré vistas de integración con proveedores externos y completé el análisis final de drivers atendidos.
+
+**AV3**
+
+**Fabian Alejandro Oliva Lopez:** Apoye en la integración inicial del repositorio `ParkLink-Frontend`, diferenciando la landing informativa de la aplicación funcional del sistema.
+
+**Javier Masaru Nikaido Vargas:** Trabaje en la mejora del API Gateway, rutas protegidas y documentación Swagger para validar la comunicación entre servicios.
+
+**Pietro Osores Marchese:** Desarrolle y consolide funcionalidades del backend relacionadas con autenticación, JWT, reservas, Prisma y conexión con PostgreSQL.
+
+**Percy Alonso Muñiz Huayanca:** Participe en la gestión de espacios de estacionamiento, seguimiento del tablero Kanban y validación básica de endpoints.
+
+**Matias Rodolfo Salcedo Champi:** Apoye en la consulta de espacios disponibles, estructura base de notificaciones y revisión cruzada entre Front-End, API Gateway y backend.
+
+**AV4**
+
+**Fabian Alejandro Oliva López:** Consolidó la documentación final del proyecto, validó la integración end-to-end de la app Flutter con el backend desplegado y generó el reporte final en PDF con todas las evidencias del Sprint 3.
+
+**Javier Masaru Nikaido Vargas:** Gestionó el despliegue del backend y API Gateway en Vercel, configuró la base de datos PostgreSQL en Render con data seed de Lima y verificó todos los endpoints en producción.
+
+**Pietro Osores Marchese:** Completó el backend transaccional con todas las technical stories pendientes, implementó el seed de datos reales de Lima y configuró el deploy serverless en Vercel con conexión exitosa a Render.
+
+**Percy Alonso Muñiz Huayanca:** Actualizó la documentación de despliegue (DEPLOY-GUIDE.md), elaboró el reporte de base de datos creada con data seed (RENDER-SEED-DATA.md) y aseguró la trazabilidad de todas las evidencias para el informe final.
+
+**Matias Rodolfo Salcedo Champi:** Completó la app Flutter nativa con Google Maps integrado, pantallas de auth, detalle de cocheras, reservas y pagos; subió el código al repositorio oficial de la organización ParkLink-App y validó la conexión con el backend desplegado en producción.
+
+**Conclusiones:**
+
+El equipo ha demostrado capacidad para integrar y aplicar conocimientos de arquitectura de software en un proyecto real de solución tecnológica. Cada integrante actualizó sus conocimientos en UX, diseño de producto, análisis de procesos, gestión de requerimientos, DDD, C4 Model, ADD, atributos de calidad, patrones de diseño, decisiones arquitectónicas documentadas, integración Front-End, despliegue web, API Gateway, backend serverless y validación de servicios mediante Swagger.
+
+---
+
+### CO2: Reconoce la necesidad del aprendizaje permanente para el desempeño profesional y el desarrollo de proyectos en soluciones de software.
+
+**Acciones realizadas:**
+
+**TB1**
+
+**Fabian Alejandro Oliva López:** Al definir la visión y estrategia de la startup, reconocí la importancia de actualizar constantemente los conocimientos en estrategia de producto y liderazgo de proyectos.
+
+**Javier Masaru Nikaido Vargas:** Al realizar entrevistas y needfinding, identifiqué la necesidad de mejorar continuamente las técnicas de investigación de usuarios y comunicación con stakeholders.
+
+**Matias Rodolfo Salcedo Champi:** Al crear User Personas y Empathy Maps, comprendí la relevancia del aprendizaje continuo en metodologías de diseño centrado en el usuario.
+
+**Percy Alonso Muñiz Huayanca:** Al desarrollar escenarios y mappings de procesos, reconocí la necesidad de actualizarse en herramientas de análisis y modelado de procesos de negocio.
+
+**Pietro Osores Marchese:** Al crear el Product Backlog y User Stories, entendí la importancia del aprendizaje continuo en gestión de requerimientos y priorización de funcionalidades en entornos ágiles.
+
+**TB2**
+
+**Fabian Alejandro Oliva López:** Reconocí la necesidad de fortalecer criterios de diseño arquitectónico, trade-offs y priorización de drivers para sustentar decisiones más allá de la funcionalidad visible.
+
+**Matias Rodolfo Salcedo Champi:** Profundicé en el uso de C4 Model y Structurizr para comunicar arquitectura mediante vistas visuales claras, entendiendo que un diagrama debe explicar decisiones y no sólo decorar el informe.
+
+**Javier Masaru Nikaido Vargas:** Reforcé el aprendizaje sobre trazabilidad entre requisitos, restricciones, atributos de calidad y decisiones arquitectónicas, comprendiendo su impacto en la mantenibilidad del sistema.
+
+**Pietro Osores Marchese:** Actualicé conocimientos sobre consistencia transaccional, modelado relacional, restricciones ACID y separación entre cache de disponibilidad y base de datos como fuente de verdad.
+
+**Percy Alonso Muñiz Huayanca:** Aprendí a aplicar ADD para refinar arquitectura por iteraciones, documentar ADRs y manejar integraciones externas mediante adaptadores, idempotencia, auditoría y resiliencia.
+
+**AV3**
+
+**Fabian Alejandro Oliva Lopez:** Aprendí la importancia de separar una landing de presentación de un Front-End funcional conectado a servicios reales.
+
+**Javier Masaru Nikaido Vargas:** Reforcé el aprendizaje sobre API Gateway, documentación Swagger y control de rutas protegidas.
+
+**Pietro Osores Marchese:** Fortalecí conocimientos sobre backend NestJS, autenticación JWT, Prisma y despliegue serverless.
+
+**Percy Alonso Muñiz Huayanca:** Aprendí a organizar mejor el seguimiento de tareas técnicas mediante Kanban y validación de endpoints.
+
+**Matias Rodolfo Salcedo Champi:** Reforcé conocimientos sobre integración entre Front-End, API Gateway, backend y módulos base de notificación.
+
+**AV4**
+
+**Fabian Alejandro Oliva López:** Aprendió a generar reportes académicos con evidencias técnicas reales (deployments, seeds, validaciones) y consolidar documentación multi-repositorio para la entrega final.
+
+**Javier Masaru Nikaido Vargas:** Fortaleció habilidades en DevOps: creación de DB en Render vía API, seed de datos geo-referenciados de Lima, configuración de variables de entorno en Vercel y troubleshooting de deploy serverless.
+
+**Pietro Osores Marchese:** Aprendió a desplegar un backend NestJS con Prisma en Vercel, manejar conexiones SSL a PostgreSQL externo en Render y ejecutar seed scripts con Node para poblar la base de datos en producción.
+
+**Percy Alonso Muñiz Huayanca:** Desarrolló habilidades de documentación técnica de infraestructura, aprendiendo a detallar arquitectura de despliegue multi-plataforma (Render + Vercel + GitHub) con todos los componentes del sistema ParkLink.
+
+**Matias Rodolfo Salcedo Champi:** Aprendió a consumir APIs REST desde Flutter, integrar Google Maps real en emulador Android, manejar almacenamiento seguro de tokens JWT con flutter_secure_storage y probar la app móvil conectada al backend en producción.
+
+**Conclusiones:**
+
+El equipo reconoce que el desarrollo de soluciones de software requiere aprendizaje continuo. La aplicación de metodologías como Lean UX, Needfinding, User Stories, Impact Mapping, DDD, C4, ADD y ADRs evidencia el compromiso de cada miembro por adquirir nuevas competencias y adaptarse a decisiones técnicas propias de una plataforma de movilidad urbana. Además, el Sprint 2 permitió fortalecer aprendizajes relacionados con integración Front-End, despliegue, backend serverless, API Gateway, autenticación y validación de servicios en un entorno más cercano a producción.
+
+---
+
+### Aportes del Trabajo Final al Student Outcome
+
+#### CO1
+
+**Aportes TF por integrante:**
+
+**Fabian Alejandro Oliva López:** consolidó criterios de experiencia de usuario, evidencias visuales para flujos web/mobile y generó el reporte final en PDF con todas las validaciones del Sprint 3.
+
+**Javier Masaru Nikaido Vargas:** gestionó el despliegue completo del backend y API Gateway en Vercel, creó la base de datos PostgreSQL en Render con data seed de Lima y verificó todos los endpoints en producción.
+
+**Pietro Osores Marchese:** completó el backend transaccional con technical stories, implementó el seed de datos reales de Lima con 101 usuarios, 120 espacios y 160 reservas, y configuró el deploy serverless en Vercel.
+
+**Percy Alonso Muñiz Huayanca:** documentó el despliegue multi-plataforma (DEPLOY-GUIDE.md), elaboró el reporte de base de datos seed (RENDER-SEED-DATA.md) y aseguró la trazabilidad de evidencias del Sprint 3.
+
+**Matias Rodolfo Salcedo Champi:** completó la app Flutter nativa con Google Maps, autenticación JWT, detalle de cocheras, reservas y pagos; subió el código a GitHub y validó la conexión con el backend en producción.
+
+**Conclusiones TF:**
+
+El Trabajo Final permitió actualizar conocimientos técnicos de arquitectura, backend transaccional con NestJS + Prisma, frontend web, app móvil Flutter con Google Maps, despliegue serverless en Vercel, base de datos PostgreSQL en Render y documentación técnica de infraestructura, conectando cada decisión técnica con las necesidades reales del producto ParkLink y su despliegue en producción.
+
+#### CO2
+
+**Aportes TF por integrante:**
+
+**Equipo ParkTeam:** durante el cierre del proyecto se consolidaron aprendizajes críticos: despliegue serverless de backend NestJS en Vercel, manejo de conexiones SSL a PostgreSQL externo en Render, seed de datos geo-referenciados de Lima, integración de Google Maps en Flutter para Android, configuración de flutter_secure_storage para JWT, documentación técnica de infraestructura multi-plataforma y generación automatizada de reportes. Cada integrante fortaleció su capacidad de investigar, implementar, documentar y validar soluciones bajo presión de entrega académica.
+
+**Conclusiones TF:**
+
+El equipo reconoce que una solución de software completa requiere iteración continua, revisión de documentación oficial de cada plataforma (Vercel, Render, Flutter, Google Maps), pruebas en entornos reales (emulador Android, endpoints en producción) y adaptación ante restricciones de infraestructura free tier, APIs externas y flujos de integración multiplataforma. El aprendizaje permanente fue clave para superar cada obstáculo técnico del proyecto.
 
 ## Contenido 
 
